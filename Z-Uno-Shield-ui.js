@@ -981,10 +981,11 @@ function createManualPages() {
             if (pins[i]['type'] != 'NC' && !htmlEl('manual_page_' + i)) {
                 countOfButtons++;
                 // add button
-                $("#manual_pages_control").append('<button class="manual_tablinks" id="manual_control_button_' + i + '" onclick="openTab(event, \'manual_page_' + i + '\')">' + 'pin #' + i + '</button>');
+                var pin_label = getPinLabelByNum(i);
+                $("#manual_pages_control").append('<button class="manual_tablinks" id="manual_control_button_' + i + '" onclick="openTab(event, \'manual_page_' + i + '\')">' + pin_label + '</button>');
                 // add page content
                 $("#manual_pages").append('<div id="manual_page_' + i + '" class="manual_tabcontent">');
-                $("#manual_page_" + i).append('<h3>Step for pin#' + i + '</h3>');
+                $("#manual_page_" + i).append('<h3>Step for ' + pin_label + '</h3>');
                 $("#manual_pages").append('</div>');
 
                 generateContentOfTab(i);
@@ -997,6 +998,37 @@ function createManualPages() {
 
             countOfButtons = htmlEl("manual_pages_control").getElementsByTagName("button").length;
         } catch(e) {}
+    }
+}
+
+function getPinLabelByNum(i) {
+    switch(i) {
+        case 3:
+            return "ADC0 / 0-10V / PWM0"
+        case 4:
+            return "ADC1"
+        case 5:
+            return "ADC2"
+        case 6:
+            return "ADC3"
+        case 8:
+            return "8, RS-B"
+        case 7:
+            return "7, RS-A"
+        case 11:
+            return "11, One Wire"
+        case 12:
+            return "12"
+        case 13:
+            return "PWM1"
+        case 14:
+            return "PWM2"
+        case 15:
+            return "PWM3"
+        case 16:
+            return "PWM4"
+        default:
+            return i
     }
 }
 
