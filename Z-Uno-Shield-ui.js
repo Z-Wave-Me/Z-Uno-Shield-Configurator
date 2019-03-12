@@ -56,7 +56,7 @@ function updateSetting(pin, group, mode) {
     // save pin mode parameters
     paramObjs = document.querySelectorAll('[id^=' + pin + '_' + mode + '_param_]');
     Object.keys(paramObjs).map(function(index) {
-        if (typeof index !== "number") return;
+        if (parseInt(index) != index) return; // unstrict == to allow "number"
         params[paramObjs[index].id] = paramObjs[index].value;
     });
     

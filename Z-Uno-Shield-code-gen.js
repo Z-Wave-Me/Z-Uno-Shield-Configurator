@@ -345,7 +345,7 @@ var codeTemplates = {
         "vars":     "OneWire ow(XXX);\n" +
                     "DS18B20Sensor ds18b20(&ow);\n" +
                     "\n" +
-                    "byte addresses[8 * PPP1PPP];\n" +
+                    "byte addresses[8 * PPP1PPP + 8]; // last one for search\n" +
                     "byte number_of_sensors; // Number of sensors found (if less than PPP1PPP connected)\n" +
                     "signed int temperature[PPP1PPP];",
         "channel":  "PPP2PPP",
