@@ -633,11 +633,15 @@ htmlEl('obj_2').onload = function() {
     ['pin3pwm', 'pin3', 'pin4', 'pin5', 'pin6', 'pin7', 'pin8', 'pin11', 'pin12', 'pin13', 'pin14', 'pin15', 'pin16'].forEach(function(pin) {
         htmlEl('settings_' + pin).onmouseover = function() {
             svgEl('connector_' + pin).style.fill = 'yellow';
-            svgEl('connector_' + pin, 'obj_2').style.fill = 'yellow';
+            svgEl('connector_' + pin + 'i', 'obj_2').style.fill = 'red';
+            svgEl('connector_' + pin + 'o', 'obj_2').style.fill = 'red';
+            svgEl('connector_' + pin + 't', 'obj_2').style.fill = 'red';
         };
         htmlEl('settings_' + pin).onmouseout = function() {
             svgEl('connector_' + pin).style.fill = '#358800';
-            svgEl('connector_' + pin, 'obj_2').style.fill = '#358800';
+            svgEl('connector_' + pin + 'i', 'obj_2').style.fill = 'white';
+            svgEl('connector_' + pin + 'o', 'obj_2').style.fill = '#5b4259';
+            svgEl('connector_' + pin + 't', 'obj_2').style.fill = 'black';
         };
     });
     
@@ -718,6 +722,8 @@ function openTab(evt, tab) {
 
         svgdGen(-1, null, false);
         svgdGen(currentTarget, deviceType, true);
+    } else {
+        svgdGen(-1, null, false);
     }
 
     createManualPages();
@@ -739,6 +745,7 @@ function getDeviceType(i) {
     }
 
     if (i == 11 && pins[11]['type'] == 'DS18B20') return 'DS18B20';
+    if (i == 3 && pins[i]['type'] == "SwitchMultilevelPWM0") return 'dimmer';
     if (pins[i]['params']['4'] == 'kPa') return 'pressure';
 
     return pins[i]['params']['1'];
@@ -764,7 +771,7 @@ function svgdGen(pinNum, deviceType, display) {
         // Pressure
         if (pinNum >= 3 && pinNum <= 6 && deviceType == "pressure") {
             if (pins[pinNum]['type'] == 'SensorMultilevel' && pins[pinNum]['params']['4'] == "kPa" && display) {
-                svgEl('layer6', 'obj_2').style.display = "block";
+                svgEl('layer1', 'obj_2').style.display = "block";
                 svgEl('leg_pin' + pinNum + '_pressure', 'obj_2').style.opacity = 1;
 
                 pressureLegs.push(pinNum);
@@ -793,6 +800,16 @@ function svgdGen(pinNum, deviceType, display) {
                 if (i in buttonLegs) buttonLegs = -1;
                 
                 svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 0;
+            }
+        }
+
+        // Dimmer 0-10V
+        if (pinNum == 3 && deviceType == "dimmer") {
+            if ((pins[3]['type'] == 'SwitchMultilevelPWM0') && display) {
+                svgEl('layer6', 'obj_2').style.display = "block";
+                svgEl('layer6', 'obj_2').style.display = "block";
+            } else if (!display) {
+                svgEl('layer6', 'obj_2').style.display = "none";
             }
         }
 
@@ -938,7 +955,7 @@ function svgdGen(pinNum, deviceType, display) {
         svgEl('layer9', 'obj_2').style.display = "none";
     }
     if (pressureLegs.length == 0 || (deviceType == "Pressure" && !display)) {
-        svgEl('layer6', 'obj_2').style.display = "none";
+        svgEl('layer1', 'obj_2').style.display = "none";
     }
 
     if (LED.length == 0 || (deviceType == "single" && !display)) {
@@ -958,14 +975,9 @@ function svgdGen(pinNum, deviceType, display) {
     }
 
     // Power supply select 
-    if (anyDevice && !LEDStrip || (contactorLegs.length > 0)) { // if any device exists and device !LED we use small power supply  
-        svgEl('layer1', 'obj_2').style.display = "none"
+    if (anyDevice) { // if any device exists and device !LED we use small power supply  
         svgEl('layer11', 'obj_2').style.display = "block";
-    } else if (anyDevice && LEDStrip) { // if device is LED we use 180W power supply
-        svgEl('layer11', 'obj_2').style.display = "none"
-        svgEl('layer1', 'obj_2').style.display = "block"
-    } else if (!anyDevice) {
-        svgEl('layer1', 'obj_2').style.display = "none"
+    }  else if (!anyDevice) {
         svgEl('layer11', 'obj_2').style.display = "none";
     }       
 }
