@@ -27,7 +27,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -25259,7 +25259,7 @@
          sodipodi:nodetypes="cccc" />
     </g>
     <g
-       id="g5233"
+       id="leg_14b_doorlock"
        style="display:inline"
        inkscape:label="leg_14b_doorlock">
       <path

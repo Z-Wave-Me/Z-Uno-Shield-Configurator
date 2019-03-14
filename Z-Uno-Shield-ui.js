@@ -729,10 +729,18 @@ function openTab(evt, tab) {
     createManualPages();
 }
 
-function amplifierInclude(include) {
-    if (include) {
+function connectDoorlockButton(id, isConnect) {
+    if (isConnect) {
+        svgEl('leg_' + id + 'b_doorlock', 'obj_2').style.display = 'block';
+    } else if (!isConnect) {
+        svgEl('leg_' + id + 'b_doorlock', 'obj_2').style.display = 'none';
+    }
+}
+
+function connectAmplifier(isConnect) {
+    if (isConnect) {
         svgEl('layer5', 'obj_2').style.display = "block";
-    } else if (!include) {
+    } else if (!isConnect) {
         svgEl('layer5', 'obj_2').style.display = "none";  
     }
 }
@@ -747,6 +755,7 @@ function getDeviceType(i) {
     if (i == 11 && pins[11]['type'] == 'DS18B20') return 'DS18B20';
     if (i == 3 && pins[i]['type'] == "SwitchMultilevelPWM0") return 'dimmer';
     if (pins[i]['params']['4'] == 'kPa') return 'pressure';
+    if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) return 'doorlock';
 
     return pins[i]['params']['1'];
 }
@@ -762,6 +771,7 @@ function svgdGen(pinNum, deviceType, display) {
         RGBLED = [],
         RGBWLED = [],
         pressureLegs = [],
+        doorLock = [],
         LEDStrip = false;
 
         if ((pinNum >= 3 && pinNum <=8) || (pinNum >= 11 && pinNum <= 16)) {
@@ -872,6 +882,25 @@ function svgdGen(pinNum, deviceType, display) {
             }
         }
 
+        // Door Lock
+        if (pinNum >= 13 && pinNum <= 16 && deviceType == "doorlock") {
+            if ((pins[pinNum]['type'] == 'SwitchBinary') && (pins[pinNum]['params']['1'] == 'doorlock') && display) {        
+                svgEl('layer20', 'obj_2').style.display = "block";
+                svgEl('leg_' + pinNum + '_doorlock', 'obj_2').style.display = 'block';
+                svgEl('leg_' + pinNum + 'b_doorlock', 'obj_2').style.display = 'block';
+
+                doorLock.push(pinNum);
+            }
+
+            for (var i = 13; i <= 16; i++) {
+                if (i == pinNum) continue;
+                if (i in doorLock) doorLock = -1;
+
+                svgEl('leg_' + i + '_doorlock', 'obj_2').style.display = 'none';
+                svgEl('leg_' + i + 'b_doorlock', 'obj_2').style.display = 'none';
+            }
+        }
+
         // White LED strip
         if (pinNum >= 13 && pinNum <= 16 && (deviceType == "single")) {
             if ((pins[pinNum]['type'] == 'SwitchMultilevel') && (pins[pinNum]['params']['1'] == 'single') && display) {
@@ -957,6 +986,9 @@ function svgdGen(pinNum, deviceType, display) {
     if (pressureLegs.length == 0 || (deviceType == "Pressure" && !display)) {
         svgEl('layer1', 'obj_2').style.display = "none";
     }
+    if (doorLock.length == 0 || (deviceType == "doorlock" && !display)) {
+        svgEl('layer20', 'obj_2').style.display = "none";
+    }
 
     if (LED.length == 0 || (deviceType == "single" && !display)) {
         svgEl('layer3', 'obj_2').style.display = "none";
@@ -997,7 +1029,6 @@ function createManualPages() {
                 $("#manual_pages_control").append('<button class="manual_tablinks" id="manual_control_button_' + i + '" onclick="openTab(event, \'manual_page_' + i + '\')">' + pin_label + '</button>');
                 // add page content
                 $("#manual_pages").append('<div id="manual_page_' + i + '" class="manual_tabcontent">');
-                $("#manual_page_" + i).append('<h3>Step for ' + pin_label + '</h3>');
                 $("#manual_pages").append('</div>');
 
                 generateContentOfTab(i);
@@ -1044,9 +1075,18 @@ function getPinLabelByNum(i) {
     }
 }
 
+// TODO: complete other devices (example: doorlock)
 function generateContentOfTab(i) {
-    if (htmlCEl("manual_step_p_" + i).length == 0) {
-        if (pins[i]['params']['4'] == 'kPa') { // Pressure
+        var pin_label = getPinLabelByNum(i);
+
+        if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) { // doorlock
+            $("#manual_page_" + i).html('<div class="manual_doorlock_button_select">\
+                                            <h3>Step for ' + pin_label + '</h3>\
+                                            <button class="manual_tablinks_off" onclick="event, connectDoorlockButton('+ i +', false)">Without button</button>\
+                                            <button class="manual_tablinks_on" onclick="event, connectDoorlockButton('+ i +', true)">With button</button></div>\
+                                            <p class="manual_step_p_'+ i +'">' + pagesContent["step_doorlock"] + '</p>');
+
+        } else if (pins[i]['params']['4'] == 'kPa') { // Pressure
             $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_pressure"] + '</p>');
 
         } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { // Buttons
@@ -1065,18 +1105,17 @@ function generateContentOfTab(i) {
             $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_reed"] + '</p>');
 
         } else if (pins[i]['params']['1'] == 'single') { // White LED
-            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
+            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, connectAmplifier(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, connectAmplifier(true)">With amplifier</button></div>');
             $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_white_led"] + '</p>');
 
         } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white') { // RGB LED strip
-            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
+            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, connectAmplifier(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, connectAmplifier(true)">With amplifier</button></div>');
             $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_rgb_led"] + '</p>');
 
         } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white') { // RGBW LED strip
-            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
+            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, connectAmplifier(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, connectAmplifier(true)">With amplifier</button></div>');
             $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_rgbw_led"] + '</p>');
         } 
-    }
 }
 
 pagesContent = {
@@ -1088,7 +1127,8 @@ pagesContent = {
     'step_buttons': 'Connect one side of button pins to GND and another to chosen pin.',
     'step_DS18B20': 'Connect middle leg of DS18B20 to pin #11 and add power supply 3V',
     'step_contactor': 'Connect logical pin of contactor to digital ouput',
-    'step_pressure': 'Connect pressure sensor'
+    'step_pressure': 'Connect pressure sensor',
+    'step_doorlock': 'Connect doorlocks'
 };
 
 // Issue with ADC0 - don't work page creation for this pin after reload page
