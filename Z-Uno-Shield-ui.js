@@ -1021,14 +1021,20 @@ function createManualPages() {
     for (var i = 3; i <= 16; i++) {
         if (i == 9) i = 11;
 
-        try {   // this need to prevent early calling pins P.S. try to use global boolean variable what will give access to this function only afler onload event  
+        // this need to prevent early calling pins 
+        try {   
             if (pins[i]['type'] != 'NC' && !htmlEl('manual_page_' + i)) {
                 countOfButtons++;
                 // add button
                 var pin_label = getPinLabelByNum(i);
-                $("#manual_pages_control").append('<button class="manual_tablinks" id="manual_control_button_' + i + '" onclick="openTab(event, \'manual_page_' + i + '\')">' + pin_label + '</button>');
+                $("#manual_pages_control").append('<button\
+                                                    class="manual_tablinks"\
+                                                    id="manual_control_button_' + i + '"\
+                                                    onclick="openTab(event, \'manual_page_' + i + '\')\
+                                                    ">' + pin_label + '</button>');
                 // add page content
-                $("#manual_pages").append('<div id="manual_page_' + i + '" class="manual_tabcontent">');
+                $("#manual_pages").append('<div id="manual_page_' + i + '"\
+                                            class="manual_tabcontent">');
                 $("#manual_pages").append('</div>');
 
                 generateContentOfTab(i);
@@ -1075,46 +1081,81 @@ function getPinLabelByNum(i) {
     }
 }
 
-// TODO: complete other devices (example: doorlock)
 function generateContentOfTab(i) {
         var pin_label = getPinLabelByNum(i);
 
-        if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) { // doorlock
-            $("#manual_page_" + i).html('<div class="manual_doorlock_button_select">\
-                                            <h3>Step for ' + pin_label + '</h3>\
-                                            <button class="manual_tablinks_off" onclick="event, connectDoorlockButton('+ i +', false)">Without button</button>\
-                                            <button class="manual_tablinks_on" onclick="event, connectDoorlockButton('+ i +', true)">With button</button></div>\
-                                            <p class="manual_step_p_'+ i +'">' + pagesContent["step_doorlock"] + '</p>');
-
-        } else if (pins[i]['params']['4'] == 'kPa') { // Pressure
-            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_pressure"] + '</p>');
-
-        } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { // Buttons
-            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_buttons"] + '</p>');
-        
-        } else if (pins[i]['type'] == 'DS18B20') { // DS18B20
-            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_DS18B20"] + '</p>');
-
-        } else if (pins[i]['type'] == 'DHT') { // DHT
-            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_DHT"] + '</p>');
-
-        } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch')) { // Contactor
-            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_contactor"] + '</p>');
-
-        } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door')) { // Reed Sensor       
-            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_reed"] + '</p>');
-
-        } else if (pins[i]['params']['1'] == 'single') { // White LED
-            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, connectAmplifier(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, connectAmplifier(true)">With amplifier</button></div>');
-            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_white_led"] + '</p>');
-
-        } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white') { // RGB LED strip
-            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, connectAmplifier(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, connectAmplifier(true)">With amplifier</button></div>');
-            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_rgb_led"] + '</p>');
-
-        } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white') { // RGBW LED strip
-            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, connectAmplifier(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, connectAmplifier(true)">With amplifier</button></div>');
-            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_rgbw_led"] + '</p>');
+        // doorlock
+        if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) {
+            $("#manual_page_" + i).html('<div class="manual_type_select">\
+                                            <button class="manual_tablinks_off"\
+                                                    onclick="event, connectDoorlockButton('+ i +', false)">\
+                                                    Without button</button>\
+                                            <button class="manual_tablinks_on"\
+                                                    onclick="event, connectDoorlockButton('+ i +', true)">\
+                                                    With button</button>\
+                                        </div>\
+                                        <h3>Step for ' + pin_label + '</h3>\
+                                        <p class="manual_step_p_'+ i +'">' + pagesContent["step_doorlock"] + '</p>');
+        // Pressure
+        } else if (pins[i]['params']['4'] == 'kPa') { 
+            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_pressure"] + '</p>');
+        // Buttons
+        } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { 
+            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_buttons"] + '</p>');
+        // DS18B20
+        } else if (pins[i]['type'] == 'DS18B20') {
+            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_DS18B20"] + '</p>');
+        // DHT
+        } else if (pins[i]['type'] == 'DHT') {
+            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_DHT"] + '</p>');
+        // Contactor
+        } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch')) {
+            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_contactor"] + '</p>');
+        // Reed Sensor
+        } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door')) {       
+            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_reed"] + '</p>');
+        // White LED
+        } else if (pins[i]['params']['1'] == 'single') {
+            $("#manual_page_" + i).html('<div class="manual_type_select">\
+                                            <button class="manual_tablinks_off"\
+                                                    onclick="event, connectAmplifier(false)">\
+                                                    Without amplifier</button>\
+                                            <button class="manual_tablinks_on"\
+                                                    onclick="event, connectAmplifier(true)">\
+                                                    With amplifier</button>\
+                                         </div>\
+                                         <h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_white_led"] + '</p>');
+        // RGB LED strip
+        } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white') {
+            $("#manual_page_" + i).html('<div class="manual_type_select">\
+                                            <button class="manual_tablinks_off"\
+                                                    onclick="event, connectAmplifier(false)">\
+                                                    Without amplifier</button>\
+                                            <button class="manual_tablinks_on"\
+                                                    onclick="event, connectAmplifier(true)">\
+                                                    With amplifier</button>\
+                                         </div>\
+                                         <h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_rgb_led"] + '</p>');
+        // RGBW LED strip
+        } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white') {
+            $("#manual_page_" + i).html('<div class="manual_type_select">\
+                                            <button class="manual_tablinks_off"\
+                                                    onclick="event, connectAmplifier(false)">\
+                                                    Without amplifier</button>\
+                                            <button class="manual_tablinks_on"\
+                                                    onclick="event, connectAmplifier(true)">\
+                                                    With amplifier</button>\
+                                         </div>\
+                                         <h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_rgbw_led"] + '</p>');
         } 
 }
 
