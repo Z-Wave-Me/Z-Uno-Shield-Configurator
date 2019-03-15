@@ -746,16 +746,21 @@ function connectAmplifier(isConnect) {
 }
 
 function getDeviceType(i) {
-    if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue' || pins[i]['params']['1'] == 'white') && (pins[13]['params']['1'] == 'white') && (pins[i]['params']['1'] != 'single')) {
-        return 'RGBWLED'
-    } else if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue') && (pins[13]['params']['1'] != 'white') && (pins[i]['params']['1'] != 'single')) {
-        return 'RGBLED'
-    }
+    if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' ||
+         pins[i]['params']['1'] == 'blue' || pins[i]['params']['1'] == 'white') && 
+         (pins[13]['params']['1'] == 'white') && (pins[i]['params']['1'] != 'single'))
+        return 'RGBWLED';
+
+    else if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' ||
+              pins[i]['params']['1'] == 'blue') && (pins[13]['params']['1'] != 'white') &&
+              (pins[i]['params']['1'] != 'single'))
+        return 'RGBLED';
 
     if (i == 11 && pins[11]['type'] == 'DS18B20') return 'DS18B20';
     if (i == 3 && pins[i]['type'] == "SwitchMultilevelPWM0") return 'dimmer';
     if (pins[i]['params']['4'] == 'kPa') return 'pressure';
     if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) return 'doorlock';
+    if (pins[i]['type'] == 'RS485' || pins[i]['type'] == 'RS485') return 'RS485';
 
     return pins[i]['params']['1'];
 }
@@ -773,10 +778,48 @@ function svgdGen(pinNum, deviceType, display) {
         pressureLegs = [],
         doorLock = [],
         LEDStrip = false;
-
-        if ((pinNum >= 3 && pinNum <=8) || (pinNum >= 11 && pinNum <= 16)) {
+    
+    if ((pinNum >= 3 && pinNum <=8) || (pinNum >= 11 && pinNum <= 16)) {
         var mode = pins[pinNum]['type'],
             pin  = 'pin' + pinNum;
+        var vmode = params[pin].split('_')[1];
+
+        // Dimmer 0-10V
+        if (pinNum == 3 && deviceType == "dimmer") {
+            if ((pins[3]['type'] == 'SwitchMultilevelPWM0') && display) {
+                svgEl('layer6', 'obj_2').style.display = "block";
+            }
+        } else {
+            svgEl('layer6', 'obj_2').style.display = "none";
+        }
+
+        // RS485
+        if ((pinNum == 7 || pinNum == 8) && deviceType == "RS485") {
+            if ((pins[pinNum]['type'] == 'RS485' || pins[pinNum]['type'] == 'RS485' ) && display)
+                svgEl('layer18', 'obj_2').style.display = "block";
+        } else {
+            svgEl('layer18', 'obj_2').style.display = "none";
+        }
+        
+
+        // DS18B20
+        if (pinNum == 11 && deviceType == "DS18B20") {
+            if ((pins[pinNum]['type'] == 'DS18B20') && display)
+                svgEl('layer13', 'obj_2').style.display = "block";
+        } else {
+            svgEl('layer13', 'obj_2').style.display = "none";
+        }
+
+        // DHT
+        if (pinNum == 11 || pinNum == 12 && (deviceType == "DHT11" || deviceType == "DHT22")) {
+            if ((pins[pinNum]['type'] == 'DHT') && display) {
+                svgEl('layer14', 'obj_2').style.display = "block";
+                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 1;
+            } else if (pins[pinNum]['type'] != 'DHT') 
+                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 0;
+        } else {
+            svgEl('layer14', 'obj_2').style.display = "none";
+        }       
 
         // Pressure
         if (pinNum >= 3 && pinNum <= 6 && deviceType == "pressure") {
@@ -811,40 +854,21 @@ function svgdGen(pinNum, deviceType, display) {
                 
                 svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 0;
             }
-        }
 
-        // Dimmer 0-10V
-        if (pinNum == 3 && deviceType == "dimmer") {
-            if ((pins[3]['type'] == 'SwitchMultilevelPWM0') && display) {
-                svgEl('layer6', 'obj_2').style.display = "block";
-                svgEl('layer6', 'obj_2').style.display = "block";
-            } else if (!display) {
-                svgEl('layer6', 'obj_2').style.display = "none";
+            svgEl('12v_gnd_button', 'obj_2').style.display = "none";
+            svgEl('5v_gnd_button', 'obj_2').style.display = "none";
+            svgEl('3v_gnd_button', 'obj_2').style.display = "none";
+            svgEl('free_gnd_button', 'obj_2').style.display = "block";
+            if (pins[pinNum]['params'][3] == "normal") {
+                if (vmode == 3) {
+                    svgEl('3v_gnd_button', 'obj_2').style.display = "block";
+
+                } else if (vmode == 5) {
+                    svgEl('5v_gnd_button', 'obj_2').style.display = "block";
+                } else if (vmode == 12) {
+                    svgEl('12v_gnd_button', 'obj_2').style.display = "block";
+                }
             }
-        }
-
-        // DS18B20
-        if (pinNum == 11 && deviceType == "DS18B20") {
-            if ((pins[11]['type'] == 'DS18B20') && display) {
-                svgEl('layer13', 'obj_2').style.display = "block";
-                svgEl('layer13', 'obj_2').style.display = "block";
-            } else if (!display) {
-                svgEl('layer13', 'obj_2').style.display = "none";
-            }
-        }
-
-        // DHT
-        if (pinNum == 11 || pinNum == 12 && (deviceType == "DHT11" || deviceType == "DHT22")) {
-            if ((pins[pinNum]['type'] == 'DHT') && display) {
-                svgEl('layer14', 'obj_2').style.display = "block";
-                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 1;
-            } else if (pins[pinNum]['type'] != 'DHT') {
-                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 0;
-            }
-
-            if (!display) {
-                svgEl('layer14', 'obj_2').style.display = "none";
-            }            
         }
 
         // Contactor
@@ -957,8 +981,8 @@ function svgdGen(pinNum, deviceType, display) {
             }
         }
         
-
-    } else if (pinNum == -1) { // hide all layers if we get pinNum with -1 value
+    // hide all layers if we get pinNum with -1 value
+    } else if (pinNum == -1) { 
         for (var i = 3; i <= 14; i++) {
             if (i == 10 || i == 11) i = 12; 
             svgEl('layer' + i, 'obj_2').style.display = 'none';
@@ -968,7 +992,7 @@ function svgdGen(pinNum, deviceType, display) {
     for (var i = 3; i <= 16; i++) {
         if (i > 8 && i < 11) i = 11; 
 
-        // this try need to prevent early calling pins P.S. try to use global boolean variable what will give access to this function only afler onload event  
+        // this try need to prevent early calling pins 
         try { if (pins[i]['type'] != 'NC') anyDevice = true; } catch(e) {}
 
     }
@@ -1084,26 +1108,18 @@ function getPinLabelByNum(i) {
 function generateContentOfTab(i) {
         var pin_label = getPinLabelByNum(i);
 
-        // doorlock
-        if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) {
-            $("#manual_page_" + i).html('<div class="manual_type_select">\
-                                            <button class="manual_tablinks_off"\
-                                                    onclick="event, connectDoorlockButton('+ i +', false)">\
-                                                    Without button</button>\
-                                            <button class="manual_tablinks_on"\
-                                                    onclick="event, connectDoorlockButton('+ i +', true)">\
-                                                    With button</button>\
-                                        </div>\
-                                        <h3>Step for ' + pin_label + '</h3>\
-                                        <p class="manual_step_p_'+ i +'">' + pagesContent["step_doorlock"] + '</p>');
         // Pressure
-        } else if (pins[i]['params']['4'] == 'kPa') { 
+        if (pins[i]['params']['4'] == 'kPa') { 
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
                                          <p class="manual_step_p_'+ i +'">' + pagesContent["step_pressure"] + '</p>');
         // Buttons
         } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { 
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
                                          <p class="manual_step_p_'+ i +'">' + pagesContent["step_buttons"] + '</p>');
+        // RS485
+        } else if (pins[i]['type'] == 'RS485') { 
+            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_RS485"] + '</p>');
         // DS18B20
         } else if (pins[i]['type'] == 'DS18B20') {
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
@@ -1120,6 +1136,18 @@ function generateContentOfTab(i) {
         } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door')) {       
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
                                          <p class="manual_step_p_'+ i +'">' + pagesContent["step_reed"] + '</p>');
+        // doorlock
+        } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) {
+            $("#manual_page_" + i).html('<div class="manual_type_select">\
+                                            <button class="manual_tablinks_off"\
+                                                    onclick="event, connectDoorlockButton('+ i +', false)">\
+                                                    Without button</button>\
+                                            <button class="manual_tablinks_on"\
+                                                    onclick="event, connectDoorlockButton('+ i +', true)">\
+                                                    With button</button>\
+                                        </div>\
+                                        <h3>Step for ' + pin_label + '</h3>\
+                                        <p class="manual_step_p_'+ i +'">' + pagesContent["step_doorlock"] + '</p>');
         // White LED
         } else if (pins[i]['params']['1'] == 'single') {
             $("#manual_page_" + i).html('<div class="manual_type_select">\
@@ -1169,7 +1197,8 @@ pagesContent = {
     'step_DS18B20': 'Connect middle leg of DS18B20 to pin #11 and add power supply 3V',
     'step_contactor': 'Connect logical pin of contactor to digital ouput',
     'step_pressure': 'Connect pressure sensor',
-    'step_doorlock': 'Connect doorlocks'
+    'step_doorlock': 'Connect doorlocks',
+    'step_RS485': 'Connect RS485'
 };
 
 // Issue with ADC0 - don't work page creation for this pin after reload page
