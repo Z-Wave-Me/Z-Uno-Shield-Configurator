@@ -771,6 +771,7 @@ function svgdGen(pinNum, deviceType, display) {
     var buttonLegs = [], // this arrays contains current selected legs for device. This will be helpful when we want hide layer of device
         pressureLegs = [],
         contactorLegs = [],
+        motionLegs = [],
         reedSensor = [],
         LED = [],
         RGBLED = [],
@@ -838,6 +839,23 @@ function svgdGen(pinNum, deviceType, display) {
             }
         }
 
+        // Motion sensor
+        if (pinNum >= 3 && pinNum <= 6 && deviceType == "motion") {
+            if (pins[pinNum]['type'] == 'SensorBinary' && pins[pinNum]['params']['1'] == "motion" && display) {
+                svgEl('layer17', 'obj_2').style.display = "block";
+                svgEl('leg_pin' + pinNum + '_motionSensor', 'obj_2').style.display = "block";
+
+                motionLegs.push(pinNum);
+            }
+
+            for (var i = 3; i <= 6; i++) {
+                if (i == pinNum) continue;
+                if (i in motionLegs) motionLegs = -1;
+                
+                svgEl('leg_pin' + i + '_motionSensor', 'obj_2').style.display = "none";
+            }
+        }
+
         // Buttons
         if (((pinNum >= 3 && pinNum <= 8) || pinNum == 11 || pinNum == 12) && deviceType == "general") {
             if ((pins[pinNum]['type'] == 'SensorBinary') && (pins[pinNum]['params']['1'] == 'general') && display) {        
@@ -872,7 +890,7 @@ function svgdGen(pinNum, deviceType, display) {
         }
 
         // Contactor
-        if (pinNum >= 13 && pinNum <= 16 && (deviceType == "switch")) {
+        if (!((pinNum == 3) && (pins[3]['type'] == "SwitchMultilevelPWM0")) && (deviceType == "switch")) {
             if ((pins[pinNum]['type'] == 'SwitchBinary') && (pins[pinNum]['params']['1'] == 'switch') && display) {
                 svgEl('layer12', 'obj_2').style.display = 'block';
                 svgEl('leg_pin' + pinNum + '_contactor', 'obj_2').style.display = 'block';
@@ -880,7 +898,8 @@ function svgdGen(pinNum, deviceType, display) {
                 contactorLegs.push(pinNum);
             }
 
-            for (var i = 13; i <= 16; i++) {
+            for (var i = 3; i <= 16; i++) {
+                if (i == 9) i = 11; // these pins can't be used
                 if (i == pinNum) continue;
                 if (i in contactorLegs) contactorLegs = -1;
              
@@ -889,7 +908,7 @@ function svgdGen(pinNum, deviceType, display) {
         }
 
         // Reed Sensor
-        if (((pinNum >= 3 && pinNum <= 8) || pinNum == 11 || pinNum == 12) && deviceType == "door") {
+        if ((pinNum >= 3 && pinNum <= 12) && deviceType == "door") {
             if ((pins[pinNum]['type'] == 'SensorBinary') && (pins[pinNum]['params']['1'] == 'door') && display) {        
                 svgEl('layer9', 'obj_2').style.display = "block";
                 svgEl('leg_pin' + pinNum + '_reedSensor', 'obj_2').style.opacity = 1;
@@ -898,7 +917,7 @@ function svgdGen(pinNum, deviceType, display) {
             }
 
             for (var i = 3; i <= 12; i++) {
-                if (i == 9) i = 12; // pins 9-11 can't be used in reed sensor
+                if (i == 9) i = 11; // pins 9-10 can't be used in reed sensor
                 if (i == pinNum) continue;
                 if (i in reedSensor) reedSensor = -1;
 
@@ -983,8 +1002,10 @@ function svgdGen(pinNum, deviceType, display) {
         
     // hide all layers if we get pinNum with -1 value
     } else if (pinNum == -1) { 
-        for (var i = 3; i <= 14; i++) {
-            if (i == 10 || i == 11) i = 12; 
+        for (var i = 1; i <= 20; i++) {
+            if (i == 10) i = 11; // z-uno + powersupply
+            if (i == 15) i = 17; // unexist
+            if (i == 19) i = 20; // jumpers
             svgEl('layer' + i, 'obj_2').style.display = 'none';
         }
     }
@@ -1013,6 +1034,10 @@ function svgdGen(pinNum, deviceType, display) {
     if (doorLock.length == 0 || (deviceType == "doorlock" && !display)) {
         svgEl('layer20', 'obj_2').style.display = "none";
     }
+    if (motionLegs.length == 0 || (deviceType == "motion" && !display)) {
+        svgEl('layer17', 'obj_2').style.display = "none";
+    }
+
 
     if (LED.length == 0 || (deviceType == "single" && !display)) {
         svgEl('layer3', 'obj_2').style.display = "none";
@@ -1138,7 +1163,8 @@ function generateContentOfTab(i) {
                                          <p class="manual_step_p_'+ i +'">' + pagesContent["step_reed"] + '</p>');
         // doorlock
         } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) {
-            $("#manual_page_" + i).html('<div class="manual_type_select">\
+            if (i >= 13 && i <= 16)
+                $("#manual_page_" + i).html('<div class="manual_type_select">\
                                             <button class="manual_tablinks_off"\
                                                     onclick="event, connectDoorlockButton('+ i +', false)">\
                                                     Without button</button>\
@@ -1147,7 +1173,11 @@ function generateContentOfTab(i) {
                                                     With button</button>\
                                         </div>\
                                         <h3>Step for ' + pin_label + '</h3>\
-                                        <p class="manual_step_p_'+ i +'">' + pagesContent["step_doorlock"] + '</p>');
+                                        <p class="manual_step_p_'+ i +'">' + pagesContent["step_doorlock_button"] + '</p>');
+            else
+                $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                             <p class="manual_step_p_'+ i +'">' + pagesContent["step_doorlock"] + '</p>');
+                
         // White LED
         } else if (pins[i]['params']['1'] == 'single') {
             $("#manual_page_" + i).html('<div class="manual_type_select">\
@@ -1197,7 +1227,8 @@ pagesContent = {
     'step_DS18B20': 'Connect middle leg of DS18B20 to pin #11 and add power supply 3V',
     'step_contactor': 'Connect logical pin of contactor to digital ouput',
     'step_pressure': 'Connect pressure sensor',
-    'step_doorlock': 'Connect doorlocks',
+    'step_doorlock': 'Connect doorlocks.<br>\tConnection examples you can see on PWM pins.<br>\t',
+    'step_doorlock_button': 'Connect doorlocks.<br>\tConnection examples you can see on PWM pins.<br>\tNote: if you use button, don\'t forget select accordly radio-button above.',
     'step_RS485': 'Connect RS485'
 };
 
