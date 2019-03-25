@@ -21,6 +21,9 @@ var codeTemplates = {
                 break;
               case "siren":
                 params[1] = "ZUNO_SIREN";
+                break;              
+              case "valve":
+                params[1] = "ZUNO_FLOWSTOP";
                 break;
             }
             params[3] = params[2] == "normal" ? "HIGH" : "LOW";
