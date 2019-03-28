@@ -373,15 +373,15 @@ var codeTemplates = {
         "note":     "- No channel is created for UART - define a channel if needed and write the code to send and parse commands.",
         "vars":     "",
         "channel":  "",
-        "setup":    "  Serial0.begin(PPP1PPP)",
+        "setup":    "  Serial1.begin(PPP1PPP);",
         "loop":     "",
-	"funcs":    "char readByteUART() {\n" +
-                    "  while(Serial0.available() <= 0) delay(1);\n" +
-                    "  return Serial0.read();\n" +
+    "funcs":    "char readByteUART() {\n" +
+                    "  while(Serial1.available() <= 0) delay(1);\n" +
+                    "  return Serial1.read();\n" +
                     "}\n" +
                     "\n" +
                     "void writeUART(char b) {\n" +
-                    "  Serial0.write(b);\n" +
+                    "  Serial1.write(b);\n" +
                     "}",
         "xetter":   "",
         "preAction": function(params, pin) {
@@ -395,11 +395,11 @@ var codeTemplates = {
                     "- Pin 2 is also occupied by RS485.",
         "vars":     "",
         "channel":  "",
-        "setup":    "  Serial0.begin(PPP1PPP)\n" +
+        "setup":    "  Serial0.begin(PPP1PPP);\n" +
                     "  pinMode(2, OUTPUT);\n" +
                     "  digitalWrite(2, LOW);",
         "loop":     "",
-	"funcs":    "char readByteRS485() {\n" +
+    "funcs":    "char readByteRS485() {\n" +
                     "  while(Serial0.available() <= 0) delay(1);\n" +
                     "  return Serial0.read();\n" +
                     "}\n" +
