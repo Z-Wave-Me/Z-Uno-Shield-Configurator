@@ -1232,4 +1232,14 @@ pagesContent = {
     'step_RS485': 'Connect RS485'
 };
 
+function slideAction(slide, event) {
+    var x = document.getElementById(slide);
+    if (x.style.display === "block") {
+        x.style.display = "none";
+        event.innerHTML = "Show code"
+    } else {
+        x.style.display = "block";
+        event.innerHTML = "Hide code"
+    }
+}
 // Issue with ADC0 - don't work page creation for this pin after reload page
