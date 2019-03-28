@@ -282,15 +282,20 @@ var codeTemplates = {
                 "ppm": 2,
             }[params[4]];
             
+            var voltage_offset = {
+                "3": 1023,
+                "5": 831,
+                "12": 862,
+            }[params[5]];
+
             var size_str = {
                 1: "SENSOR_MULTILEVEL_SIZE_ONE_BYTE",
                 2: "SENSOR_MULTILEVEL_SIZE_TWO_BYTES",
                 4: "SENSOR_MULTILEVEL_SIZE_FOUR_BYTES"
             }[size];
             
-
             var m = params[1] * Math.pow(10, precision), M = params[2] * Math.pow(10, precision);
-            var frac = floatToRatio((M - m) / 1023, 64);
+            var frac = floatToRatio((M - m) / voltage_offset, 64);
             params[1] = frac[0];
             params[2] = frac[1];
             params[3] = Math.round(m);
