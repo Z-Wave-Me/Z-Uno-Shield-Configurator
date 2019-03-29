@@ -629,24 +629,8 @@ htmlEl('obj').onload = function() {
 }
 
 htmlEl('obj_2').onload = function() {
-    ['pin3pwm', 'pin3', 'pin4', 'pin5', 'pin6', 'pin7', 'pin8', 'pin11', 'pin12', 'pin13', 'pin14', 'pin15', 'pin16'].forEach(function(pin) {
-        htmlEl('settings_' + pin).onmouseover = function() {
-            svgEl('connector_' + pin).style.fill = 'yellow';
-            svgEl('connector_' + pin + 'i', 'obj_2').style.fill = 'red';
-            svgEl('connector_' + pin + 'o', 'obj_2').style.fill = 'red';
-            // svgEl('connector_' + pin + 't', 'obj_2').style.fill = 'red';
-        };
-        htmlEl('settings_' + pin).onmouseout = function() {
-            svgEl('connector_' + pin).style.fill = '#358800';
-            svgEl('connector_' + pin + 'i', 'obj_2').style.fill = 'white';
-            svgEl('connector_' + pin + 'o', 'obj_2').style.fill = '#5b4259';
-            // svgEl('connector_' + pin + 't', 'obj_2').style.fill = 'black';
-        };
-    });
-    
     loadConfiguration();
-};
-
+}
 // Default params
 
 defaultParams = {
