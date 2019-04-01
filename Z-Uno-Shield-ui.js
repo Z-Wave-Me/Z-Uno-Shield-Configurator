@@ -1221,7 +1221,7 @@ function updatePagesContent(page, pin) {
     
     res = page in pagesContent ? pagesContent[page] : "";
 
-    var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$1').split('.');
+    var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$1').split('.\n');
 
     if(notes[generateCode(pins).keys.split(',').indexOf(pin+"")])
         res += "<br><hr style='\
