@@ -322,7 +322,7 @@ var codeTemplates = {
         }
     },
     "DHT": {
-        "note":     "- Connect PPP1PPP sensor",
+        "note":     "- Connect PPP1PPP sensor.",
         "includes": "#include \"ZUNO_DHT.h\"",
         "vars":     "DHT pinXXXDHT(XXX, PPP1PPP);\n" +
                     "\n" +
