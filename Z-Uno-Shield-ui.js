@@ -1212,7 +1212,11 @@ function updatePagesContent(page, pin) {
     var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$1').split('.');
 
     if(notes[generateCode(pins).keys.split(',').indexOf(pin+"")])
-        res += "<br>" + notes[generateCode(pins).keys.split(',').indexOf(pin+"")];
+        res += "<br><hr style='\
+                                border: 0; height: 0;\
+                                border-top: 1px solid rgba(0, 0, 0, 0.1);\
+                                border-bottom: 1px solid rgba(255, 255, 255, 0.3);'>" +
+             "<i>" + notes[generateCode(pins).keys.split(',').indexOf(pin+"")] + "</i>";
     return res;
 }
 
