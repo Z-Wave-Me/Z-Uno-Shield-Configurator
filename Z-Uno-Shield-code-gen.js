@@ -461,6 +461,7 @@ function pinsToTemplates(pins) {
             "loop": !params.suppressLoop && detemplate(templ.loop, key, channelNum, assocNum, params),
             "xetter": !params.suppressXetter && detemplate(templ.xetter, key, channelNum, assocNum, params),
             "funcs": !params.suppressFuncs && detemplate(templ.funcs, key, channelNum, assocNum, params),
+            "key": key,
         });
         
         channelNum += params.channels !== undefined ? params.channels : 1;
@@ -514,7 +515,7 @@ function generateCode(pins) {
     var xetter = templates.map(function(ch) { return ch.xetter; } ).filter(function(value) { return !!value; }).join('\n\n');
     var funcs = templates.map(function(ch) { return ch.funcs; } ).filter(function(value) { return !!value; }).join('\n\n');
     var notes = templates.map(function(ch) { return ch.note; } ).filter(function(value) { return !!value; }).filter(function(value, index, self) { return self.indexOf(value) === index && !!value; }).join('\n\n');
-
+    var keys = templates.map(function(ch) { return ch.key; } ).filter(function(value) { return !!value; }).join(',');
     if (!includes && !vars && !channels && !setup && !loop && !xetter && !notes && !funcs)
         return {
             "code": "// Please select features",
@@ -540,6 +541,7 @@ function generateCode(pins) {
             xetter + "" +
             "" + (reports ? ("\n\nvoid reportHandler(void) {\n" + reports + "\n}") : "") +
             "" + (funcs ? ("\n\n// Functions\n" + funcs) : ""),
-        "notes": notes ? notes : "No notes"
+        "notes": notes ? notes : "No notes",
+        "keys": keys ? keys : "No keys"
     };
 };
