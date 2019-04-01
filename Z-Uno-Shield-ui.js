@@ -744,6 +744,7 @@ function getDeviceType(i) {
     if (pins[i]['params']['4'] == 'kPa') return 'pressure';
     if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) return 'doorlock';
     if (pins[i]['type'] == 'RS485' || pins[i]['type'] == 'RS485') return 'RS485';
+    if (pins[i]['type'] == 'UART') return 'UART';
 
     return pins[i]['params']['1'];
 }
@@ -1128,6 +1129,10 @@ function generateContentOfTab(i) {
         } else if (pins[i]['type'] == 'RS485') { 
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
                                          <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_RS485", i) + '</p>');
+        // UART
+        } else if (pins[i]['type'] == 'UART') { 
+            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_UART", i) + '</p>');
         // DS18B20
         } else if (pins[i]['type'] == 'DS18B20') {
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
@@ -1223,7 +1228,9 @@ pagesContent = {
     'step_pressure': 'Connect pressure sensor',
     'step_doorlock': 'Connect doorlocks.<br>\tConnection examples you can see on PWM pins.<br>\t',
     'step_doorlock_button': 'Connect doorlocks.<br>\tConnection examples you can see on PWM pins.<br>\tNote: if you use button, don\'t forget select accordly radio-button above.',
-    'step_RS485': 'Connect RS485'
+    'step_RS485': 'Connect RS485',
+    'step_UART': 'Connect UART',
+    'step_DHT': 'Connect DHT'
 };
 
 function slideAction(slide, event) {
