@@ -515,7 +515,7 @@ function generateCode(pins) {
     var xetter = templates.map(function(ch) { return ch.xetter; } ).filter(function(value) { return !!value; }).join('\n\n');
     var funcs = templates.map(function(ch) { return ch.funcs; } ).filter(function(value) { return !!value; }).join('\n\n');
     var notes = templates.map(function(ch) { return ch.note; } ).filter(function(value) { return !!value; }).join('\n\n');
-    var keys = templates.map(function(ch) { return ch.key; } ).filter(function(value) { return !!value; }).join(',');
+    var keys = templates.map(function(ch) { if (ch.note) return ch.key; } ).filter(function(value) { return !!value; }).join(',');
     if (!includes && !vars && !channels && !setup && !loop && !xetter && !notes && !funcs)
         return {
             "code": "// Please select features",
