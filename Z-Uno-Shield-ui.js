@@ -1133,6 +1133,18 @@ function generateContentOfTab(i) {
         } else if (pins[i]['type'] == 'UART') { 
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
                                          <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_UART", i) + '</p>');
+        // Valve
+        } else if (pins[i]['params']['1'] == 'valve') { 
+            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_valve", i) + '</p>');
+        // Siren
+        } else if (pins[i]['params']['1'] == 'siren') { 
+            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_siren", i) + '</p>');
+        // THERMOSTAT
+        } else if (pins[i]['params']['1'] == "heatingThermostat" || pins[i]['params']['1'] == "coolingThermostat") { 
+            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_thermostat", i) + '</p>');
         // DS18B20
         } else if (pins[i]['type'] == 'DS18B20') {
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
@@ -1231,10 +1243,13 @@ pagesContent = {
     'step_contactor': 'Connect logical pin of contactor to digital ouput',
     'step_pressure': 'Connect pressure sensor',
     'step_doorlock': 'Connect doorlocks.<br>\tConnection examples you can see on PWM pins.<br>\t',
-    'step_doorlock_button': 'Connect doorlocks.<br>\tConnection examples you can see on PWM pins.<br>\tNote: if you use button, don\'t forget select accordly radio-button above.',
+    'step_doorlock_button': 'Connect doorlocks.<br>\tConnection examples you can see on PWM pins.<br>\tIf you use button, don\'t forget select accordly radio-button above.',
     'step_RS485': 'Connect RS485',
     'step_UART': 'Connect UART',
-    'step_DHT': 'Connect DHT'
+    'step_DHT': 'Connect DHT',
+    'step_siren': 'Connect siren',
+    'step_valve': 'Connect valve',
+    'step_thermostat': 'Follow instructions'
 };
 
 function slideAction(slide, event) {
