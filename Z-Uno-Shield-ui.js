@@ -743,7 +743,7 @@ function getDeviceType(i) {
     if (i == 3 && pins[i]['type'] == "SwitchMultilevelPWM0") return 'dimmer';
     if (pins[i]['params']['4'] == 'kPa') return 'pressure';
     if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) return 'doorlock';
-    if (pins[i]['type'] == 'RS485' || pins[i]['type'] == 'RS485') return 'RS485';
+    if (pins[i]['type'] == 'RS485') return 'RS485';
     if (pins[i]['type'] == 'UART') return 'UART';
 
     return pins[i]['params']['1'];
