@@ -13,12 +13,11 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.92.4 (unknown)"
-   width="1700mm"
-   height="1100mm"
-   viewBox="0 0 6425.197 4157.4805"
+   width="1639.4425mm"
+   height="1037.152mm"
+   viewBox="0 0 6196.3183 3919.9447"
    sodipodi:docname="Z-Uno-Shield-Details.svg"
-   style="opacity:1"
-   enable-background="new">
+   style="opacity:1;enable-background:new">
   <metadata
      id="metadata8">
     <rdf:RDF>
@@ -27,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -840,14 +839,14 @@
     </marker>
     <inkscape:perspective
        id="perspective3472"
-       inkscape:persp3d-origin="105.00001 : 99.000002 : 1"
+       inkscape:persp3d-origin="105.00001 : 99.000004 : 1"
        inkscape:vp_z="210.00001 : 148.50001 : 1"
        inkscape:vp_y="0 : 1000.0001 : 0"
        inkscape:vp_x="0 : 148.5 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
        id="perspective3472-3"
-       inkscape:persp3d-origin="105.00001 : 99.000002 : 1"
+       inkscape:persp3d-origin="105.00001 : 99.000004 : 1"
        inkscape:vp_z="210.00001 : 148.50001 : 1"
        inkscape:vp_y="0 : 1000.0001 : 0"
        inkscape:vp_x="0 : 148.5 : 1"
@@ -855,9 +854,9 @@
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999997 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999999 : 1"
        id="perspective3472-7" />
     <marker
        inkscape:isstock="true"
@@ -877,15 +876,15 @@
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        id="perspective3472-39" />
     <inkscape:perspective
        id="perspective3472-8"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <marker
@@ -1641,22 +1640,22 @@
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        id="perspective3472-0" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        id="perspective3472-3-6" />
     <inkscape:perspective
        id="perspective3472-7-2"
-       inkscape:persp3d-origin="105.00001 : 98.999991 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999993 : 1"
        inkscape:vp_z="210.00002 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99991 : 0"
+       inkscape:vp_y="0 : 999.99993 : 0"
        inkscape:vp_x="0 : 148.49998 : 1"
        sodipodi:type="inkscape:persp3d" />
     <marker
@@ -1676,17 +1675,17 @@
     </marker>
     <inkscape:perspective
        id="perspective3472-39-2"
-       inkscape:persp3d-origin="105.00001 : 98.99999 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999992 : 1"
        inkscape:vp_z="210.00002 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.9999 : 0"
+       inkscape:vp_y="0 : 999.99992 : 0"
        inkscape:vp_x="0 : 148.49998 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49998 : 1"
-       inkscape:vp_y="0 : 999.9999 : 0"
+       inkscape:vp_y="0 : 999.99992 : 0"
        inkscape:vp_z="210.00002 : 148.49999 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.99999 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999992 : 1"
        id="perspective3472-8-2" />
     <marker
        inkscape:isstock="true"
@@ -2443,20 +2442,20 @@
        inkscape:vp_x="0 : 148.5 : 1"
        inkscape:vp_y="0 : 1000.0001 : 0"
        inkscape:vp_z="210.00001 : 148.50001 : 1"
-       inkscape:persp3d-origin="105.00001 : 99.000002 : 1"
+       inkscape:persp3d-origin="105.00001 : 99.000004 : 1"
        id="perspective3472-1" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.5 : 1"
        inkscape:vp_y="0 : 1000.0001 : 0"
        inkscape:vp_z="210.00001 : 148.50001 : 1"
-       inkscape:persp3d-origin="105.00001 : 99.000002 : 1"
+       inkscape:persp3d-origin="105.00001 : 99.000004 : 1"
        id="perspective3472-3-4" />
     <inkscape:perspective
        id="perspective3472-7-6"
-       inkscape:persp3d-origin="105.00001 : 98.999997 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999999 : 1"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <marker
@@ -2476,23 +2475,23 @@
     </marker>
     <inkscape:perspective
        id="perspective3472-39-22"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        id="perspective3472-8-1" />
     <inkscape:perspective
        id="perspective3472-2"
-       inkscape:persp3d-origin="105.00001 : 98.999997 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999999 : 1"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <marker
@@ -3248,16 +3247,16 @@
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        id="perspective3472-4" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        id="perspective3472-3-7" />
     <style
        type="text/css"
@@ -4044,16 +4043,16 @@
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        id="perspective3472-9" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        id="perspective3472-3-64" />
     <style
        id="style69628"
@@ -4906,20 +4905,20 @@
        inkscape:vp_x="0 : 148.5 : 1"
        inkscape:vp_y="0 : 1000.0001 : 0"
        inkscape:vp_z="210.00001 : 148.50001 : 1"
-       inkscape:persp3d-origin="105.00001 : 99.000002 : 1"
+       inkscape:persp3d-origin="105.00001 : 99.000004 : 1"
        id="perspective3472-6" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.5 : 1"
        inkscape:vp_y="0 : 1000.0001 : 0"
        inkscape:vp_z="210.00001 : 148.50001 : 1"
-       inkscape:persp3d-origin="105.00001 : 99.000002 : 1"
+       inkscape:persp3d-origin="105.00001 : 99.000004 : 1"
        id="perspective3472-3-8" />
     <inkscape:perspective
        id="perspective3472-7-25"
-       inkscape:persp3d-origin="105.00001 : 98.999997 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999999 : 1"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <marker
@@ -4939,17 +4938,17 @@
     </marker>
     <inkscape:perspective
        id="perspective3472-39-9"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        id="perspective3472-8-5" />
     <marker
        inkscape:stockid="Arrow1Lstart"
@@ -5703,24 +5702,24 @@
     </marker>
     <inkscape:perspective
        id="perspective3472-0-0"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
        id="perspective3472-3-6-1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49998 : 1"
-       inkscape:vp_y="0 : 999.99991 : 0"
+       inkscape:vp_y="0 : 999.99993 : 0"
        inkscape:vp_z="210.00002 : 148.49999 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999991 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999993 : 1"
        id="perspective3472-7-2-3" />
     <marker
        inkscape:isstock="true"
@@ -5740,15 +5739,15 @@
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49998 : 1"
-       inkscape:vp_y="0 : 999.9999 : 0"
+       inkscape:vp_y="0 : 999.99992 : 0"
        inkscape:vp_z="210.00002 : 148.49999 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.99999 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999992 : 1"
        id="perspective3472-39-2-0" />
     <inkscape:perspective
        id="perspective3472-8-2-7"
-       inkscape:persp3d-origin="105.00001 : 98.99999 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999992 : 1"
        inkscape:vp_z="210.00002 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.9999 : 0"
+       inkscape:vp_y="0 : 999.99992 : 0"
        inkscape:vp_x="0 : 148.49998 : 1"
        sodipodi:type="inkscape:persp3d" />
     <marker
@@ -6503,14 +6502,14 @@
     </marker>
     <inkscape:perspective
        id="perspective3472-1-5"
-       inkscape:persp3d-origin="105.00001 : 99.000002 : 1"
+       inkscape:persp3d-origin="105.00001 : 99.000004 : 1"
        inkscape:vp_z="210.00001 : 148.50001 : 1"
        inkscape:vp_y="0 : 1000.0001 : 0"
        inkscape:vp_x="0 : 148.5 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
        id="perspective3472-3-4-9"
-       inkscape:persp3d-origin="105.00001 : 99.000002 : 1"
+       inkscape:persp3d-origin="105.00001 : 99.000004 : 1"
        inkscape:vp_z="210.00001 : 148.50001 : 1"
        inkscape:vp_y="0 : 1000.0001 : 0"
        inkscape:vp_x="0 : 148.5 : 1"
@@ -6518,9 +6517,9 @@
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999997 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999999 : 1"
        id="perspective3472-7-6-6" />
     <marker
        inkscape:isstock="true"
@@ -6540,23 +6539,23 @@
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        id="perspective3472-39-22-1" />
     <inkscape:perspective
        id="perspective3472-8-1-2"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 148.49999 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_z="210.00001 : 148.5 : 1"
-       inkscape:persp3d-origin="105.00001 : 98.999997 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999999 : 1"
        id="perspective3472-2-5" />
     <marker
        inkscape:stockid="Arrow1Lstart"
@@ -7310,16 +7309,16 @@
     </marker>
     <inkscape:perspective
        id="perspective3472-4-9"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
        id="perspective3472-3-7-5"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <style
@@ -8090,16 +8089,16 @@
     </marker>
     <inkscape:perspective
        id="perspective3472-9-1"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <inkscape:perspective
        id="perspective3472-3-64-8"
-       inkscape:persp3d-origin="105.00001 : 98.999996 : 1"
+       inkscape:persp3d-origin="105.00001 : 98.999998 : 1"
        inkscape:vp_z="210.00002 : 148.5 : 1"
-       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_y="0 : 999.99998 : 0"
        inkscape:vp_x="0 : 148.49999 : 1"
        sodipodi:type="inkscape:persp3d" />
     <style
@@ -8261,16 +8260,16 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1043"
+     inkscape:window-height="1016"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="0.125"
-     inkscape:cx="3384.3196"
-     inkscape:cy="2900.419"
+     inkscape:zoom="0.0625"
+     inkscape:cx="-1758.8947"
+     inkscape:cy="1052.0595"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="1107"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="layer11"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
@@ -8284,7 +8283,7 @@
      id="layer10"
      inkscape:label="Z-UnoShield"
      style="display:inline"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <rect
        style="display:inline;fill:#ffdd73;stroke-width:1.66198564"
        id="rect3131"
@@ -12593,7 +12592,7 @@
      id="layer11"
      inkscape:label="PowerSupplySmall"
      style="display:inline"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <g
        id="layer2-4"
        inkscape:label="Layer 2"
@@ -13026,8 +13025,8 @@
      inkscape:groupmode="layer"
      id="layer19"
      inkscape:label="Jumpers"
-     style="display:inline"
-     transform="translate(0,1700.7875)">
+     style="display:none"
+     transform="translate(-43.125,1548.0074)">
     <rect
        y="247.60474"
        x="978.29614"
@@ -13246,7 +13245,7 @@
      id="layer3"
      inkscape:label="LedStrip1"
      style="display:none"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <g
        gorn="0.1.0.0.0.0"
        display="none"
@@ -13290,7 +13289,7 @@
        id="R3-9"
        transform="matrix(0,-11.499739,11.499739,0,2070.3057,466.0066)">
       <polygon
-         points="40.647,31.715 40.932,32.18 47.77,32.18 47.771,22.358 47.427,21.794 47.422,31.772 "
+         points="47.427,21.794 47.422,31.772 40.647,31.715 40.932,32.18 47.77,32.18 47.771,22.358 "
          enable-background="new    "
          id="polygon15"
          style="opacity:0.23999999" />
@@ -13378,7 +13377,7 @@
        id="R2-8"
        transform="matrix(0,-11.499739,11.499739,0,2070.3057,466.0066)">
       <polygon
-         points="34.416,31.99 34.418,22.171 34.073,21.605 34.068,31.586 27.294,31.526 27.577,31.99 "
+         points="27.294,31.526 27.577,31.99 34.416,31.99 34.418,22.171 34.073,21.605 34.068,31.586 "
          enable-background="new    "
          id="polygon46"
          style="opacity:0.23999999" />
@@ -13466,7 +13465,7 @@
        id="R1_2_-6"
        transform="matrix(0,-11.499739,11.499739,0,2070.3057,443.0071)">
       <polygon
-         points="-8.62,31.397 -15.394,31.34 -15.109,31.805 -8.272,31.805 -8.27,21.983 -8.615,21.419 "
+         points="-8.27,21.983 -8.615,21.419 -8.62,31.397 -15.394,31.34 -15.109,31.805 -8.272,31.805 "
          enable-background="new    "
          id="polygon77"
          style="opacity:0.23999999" />
@@ -13603,7 +13602,7 @@
          height="2.678" />
     </g>
     <polygon
-       points="53.397,33.573 53.975,34.24 67.894,34.24 67.896,20.063 67.321,19.395 67.317,33.573 "
+       points="67.321,19.395 67.317,33.573 53.397,33.573 53.975,34.24 67.894,34.24 67.896,20.063 "
        enable-background="new    "
        id="polygon115"
        style="opacity:0.23999999"
@@ -13670,7 +13669,7 @@
          height="2.678" />
     </g>
     <polygon
-       points="6.1,34.24 20.019,34.24 20.021,20.063 19.446,19.395 19.442,33.573 5.522,33.573 "
+       points="19.442,33.573 5.522,33.573 6.1,34.24 20.019,34.24 20.021,20.063 19.446,19.395 "
        enable-background="new    "
        id="polygon151"
        style="opacity:0.23999999"
@@ -13735,7 +13734,7 @@
          height="2.678" />
     </g>
     <polygon
-       points="-29.058,33.573 -42.978,33.573 -42.4,34.24 -28.481,34.24 -28.479,20.063 -29.054,19.395 "
+       points="-28.479,20.063 -29.054,19.395 -29.058,33.573 -42.978,33.573 -42.4,34.24 -28.481,34.24 "
        enable-background="new    "
        id="polygon189"
        style="opacity:0.23999999"
@@ -14146,7 +14145,7 @@
      id="layer4"
      inkscape:label="RGBStrip"
      style="display:none"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <g
        style="display:none"
        gorn="0.1.0.0.0.0"
@@ -14191,7 +14190,7 @@
        transform="matrix(0,11.499739,-11.499739,0,2683.6903,175.9372)">
       <polygon
          style="opacity:0.23999999"
-         points="40.932,32.18 47.77,32.18 47.771,22.358 47.427,21.794 47.422,31.772 40.647,31.715 "
+         points="47.422,31.772 40.647,31.715 40.932,32.18 47.77,32.18 47.771,22.358 47.427,21.794 "
          enable-background="new    "
          id="polygon3831" />
       <rect
@@ -14279,7 +14278,7 @@
        transform="matrix(0,11.499739,-11.499739,0,2683.6903,175.9372)">
       <polygon
          style="opacity:0.23999999"
-         points="34.418,22.171 34.073,21.605 34.068,31.586 27.294,31.526 27.577,31.99 34.416,31.99 "
+         points="27.577,31.99 34.416,31.99 34.418,22.171 34.073,21.605 34.068,31.586 27.294,31.526 "
          enable-background="new    "
          id="polygon3862" />
       <rect
@@ -14367,7 +14366,7 @@
        transform="matrix(0,11.499739,-11.499739,0,2683.6903,175.9372)">
       <polygon
          style="opacity:0.23999999"
-         points="-8.62,31.397 -15.394,31.34 -15.109,31.805 -8.272,31.805 -8.27,21.983 -8.615,21.419 "
+         points="-8.27,21.983 -8.615,21.419 -8.62,31.397 -15.394,31.34 -15.109,31.805 -8.272,31.805 "
          enable-background="new    "
          id="polygon3893" />
       <rect
@@ -14510,7 +14509,7 @@
          id="Base_2_">
         <polygon
            style="opacity:0.23999999"
-           points="67.321,19.395 67.317,33.573 53.397,33.573 53.975,34.24 67.894,34.24 67.896,20.063 "
+           points="67.894,34.24 67.896,20.063 67.321,19.395 67.317,33.573 53.397,33.573 53.975,34.24 "
            enable-background="new    "
            id="polygon3931" />
         <rect
@@ -14540,7 +14539,7 @@
            id="Conducters_2_">
           <polygon
              style="fill:#8c8c8c"
-             points="58.786,25.956 58.109,26.814 58.599,27.42 59.271,27.986 59.302,29.111 59.088,30.314 58.302,30.736 58.609,30.898 59.927,31.175 61.817,31.003 61.411,30.564 60.802,30.212 60.817,29.081 60.802,28.003 61.266,27.461 61.859,26.878 61.599,26.236 61.239,25.956 61.302,25.518 61.213,24.878 60.192,24.831 59.192,24.878 "
+             points="59.302,29.111 59.088,30.314 58.302,30.736 58.609,30.898 59.927,31.175 61.817,31.003 61.411,30.564 60.802,30.212 60.817,29.081 60.802,28.003 61.266,27.461 61.859,26.878 61.599,26.236 61.239,25.956 61.302,25.518 61.213,24.878 60.192,24.831 59.192,24.878 58.786,25.956 58.109,26.814 58.599,27.42 59.271,27.986 "
              id="polygon3939" />
           <path
              style="fill:#8c8c8c"
@@ -14660,7 +14659,7 @@
          id="Base_1_">
         <polygon
            style="opacity:0.23999999"
-           points="5.522,33.573 6.1,34.24 20.019,34.24 20.021,20.063 19.446,19.395 19.442,33.573 "
+           points="19.446,19.395 19.442,33.573 5.522,33.573 6.1,34.24 20.019,34.24 20.021,20.063 "
            enable-background="new    "
            id="polygon3967" />
         <rect
@@ -14690,7 +14689,7 @@
            id="Conducters_1_">
           <polygon
              style="fill:#8c8c8c"
-             points="10.724,27.42 11.396,27.986 11.427,29.111 11.213,30.314 10.427,30.736 10.734,30.898 12.052,31.175 13.942,31.003 13.536,30.564 12.927,30.212 12.942,29.081 12.927,28.003 13.391,27.462 13.984,26.878 13.724,26.236 13.364,25.956 13.427,25.518 13.338,24.878 12.317,24.831 11.317,24.878 10.911,25.956 10.234,26.814 "
+             points="10.427,30.736 10.734,30.898 12.052,31.175 13.942,31.003 13.536,30.564 12.927,30.212 12.942,29.081 12.927,28.003 13.391,27.462 13.984,26.878 13.724,26.236 13.364,25.956 13.427,25.518 13.338,24.878 12.317,24.831 11.317,24.878 10.911,25.956 10.234,26.814 10.724,27.42 11.396,27.986 11.427,29.111 11.213,30.314 "
              id="polygon3975" />
           <path
              style="fill:#8c8c8c"
@@ -14809,7 +14808,7 @@
          id="Base">
         <polygon
            style="opacity:0.23999999"
-           points="-42.978,33.573 -42.4,34.24 -28.481,34.24 -28.479,20.063 -29.054,19.395 -29.058,33.573 "
+           points="-29.054,19.395 -29.058,33.573 -42.978,33.573 -42.4,34.24 -28.481,34.24 -28.479,20.063 "
            enable-background="new    "
            id="polygon4005" />
         <rect
@@ -14839,7 +14838,7 @@
            id="Conducters">
           <polygon
              style="fill:#8c8c8c"
-             points="-36.448,31.175 -34.558,31.003 -34.964,30.564 -35.573,30.212 -35.558,29.081 -35.573,28.003 -35.109,27.461 -34.516,26.878 -34.776,26.236 -35.136,25.956 -35.073,25.518 -35.162,24.878 -36.183,24.831 -37.183,24.878 -37.589,25.956 -38.266,26.814 -37.776,27.42 -37.104,27.986 -37.073,29.111 -37.287,30.314 -38.073,30.736 -37.766,30.898 "
+             points="-35.558,29.081 -35.573,28.003 -35.109,27.461 -34.516,26.878 -34.776,26.236 -35.136,25.956 -35.073,25.518 -35.162,24.878 -36.183,24.831 -37.183,24.878 -37.589,25.956 -38.266,26.814 -37.776,27.42 -37.104,27.986 -37.073,29.111 -37.287,30.314 -38.073,30.736 -37.766,30.898 -36.448,31.175 -34.558,31.003 -34.964,30.564 -35.573,30.212 "
              id="polygon4013" />
           <path
              style="fill:#8c8c8c"
@@ -15421,7 +15420,7 @@
      id="layer8"
      inkscape:label="RGBWStrip"
      style="display:none"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <g
        id="g6690"
        display="none"
@@ -15463,7 +15462,7 @@
       <polygon
          id="polygon6696"
          enable-background="new    "
-         points="40.647,31.715 40.932,32.18 47.77,32.18 47.771,22.358 47.427,21.794 47.422,31.772 "
+         points="47.427,21.794 47.422,31.772 40.647,31.715 40.932,32.18 47.77,32.18 47.771,22.358 "
          style="opacity:0.23999999" />
       <rect
          id="rect6698"
@@ -15551,7 +15550,7 @@
       <polygon
          id="polygon6728"
          enable-background="new    "
-         points="34.416,31.99 34.418,22.171 34.073,21.605 34.068,31.586 27.294,31.526 27.577,31.99 "
+         points="27.294,31.526 27.577,31.99 34.416,31.99 34.418,22.171 34.073,21.605 34.068,31.586 "
          style="opacity:0.23999999" />
       <rect
          id="rect6730"
@@ -15639,7 +15638,7 @@
       <polygon
          id="polygon6760"
          enable-background="new    "
-         points="-8.615,21.419 -8.62,31.397 -15.394,31.34 -15.109,31.805 -8.272,31.805 -8.27,21.983 "
+         points="-8.272,31.805 -8.27,21.983 -8.615,21.419 -8.62,31.397 -15.394,31.34 -15.109,31.805 "
          style="opacity:0.23999999" />
       <rect
          id="rect6762"
@@ -15782,7 +15781,7 @@
         <polygon
            id="polygon6806"
            enable-background="new    "
-           points="67.894,34.24 67.896,20.063 67.321,19.395 67.317,33.573 53.397,33.573 53.975,34.24 "
+           points="53.397,33.573 53.975,34.24 67.894,34.24 67.896,20.063 67.321,19.395 67.317,33.573 "
            style="opacity:0.23999999" />
         <rect
            id="rect6808"
@@ -15811,7 +15810,7 @@
            gorn="0.1.0.0.0.5.1.4">
           <polygon
              id="polygon6814"
-             points="58.109,26.814 58.599,27.42 59.271,27.986 59.302,29.111 59.088,30.314 58.302,30.736 58.609,30.898 59.927,31.175 61.817,31.003 61.411,30.564 60.802,30.212 60.817,29.081 60.802,28.003 61.266,27.461 61.859,26.878 61.599,26.236 61.239,25.956 61.302,25.518 61.213,24.878 60.192,24.831 59.192,24.878 58.786,25.956 "
+             points="59.088,30.314 58.302,30.736 58.609,30.898 59.927,31.175 61.817,31.003 61.411,30.564 60.802,30.212 60.817,29.081 60.802,28.003 61.266,27.461 61.859,26.878 61.599,26.236 61.239,25.956 61.302,25.518 61.213,24.878 60.192,24.831 59.192,24.878 58.786,25.956 58.109,26.814 58.599,27.42 59.271,27.986 59.302,29.111 "
              style="fill:#8c8c8c" />
           <path
              id="path6816"
@@ -15932,7 +15931,7 @@
         <polygon
            id="polygon6854"
            enable-background="new    "
-           points="19.446,19.395 19.442,33.573 5.522,33.573 6.1,34.24 20.019,34.24 20.021,20.063 "
+           points="20.019,34.24 20.021,20.063 19.446,19.395 19.442,33.573 5.522,33.573 6.1,34.24 "
            style="opacity:0.23999999" />
         <rect
            id="rect6856"
@@ -15961,7 +15960,7 @@
            gorn="0.1.0.0.0.6.1.4">
           <polygon
              id="polygon6862"
-             points="11.396,27.986 11.427,29.111 11.213,30.314 10.427,30.736 10.734,30.898 12.052,31.175 13.942,31.003 13.536,30.564 12.927,30.212 12.942,29.081 12.927,28.003 13.391,27.462 13.984,26.878 13.724,26.236 13.364,25.956 13.427,25.518 13.338,24.878 12.317,24.831 11.317,24.878 10.911,25.956 10.234,26.814 10.724,27.42 "
+             points="10.734,30.898 12.052,31.175 13.942,31.003 13.536,30.564 12.927,30.212 12.942,29.081 12.927,28.003 13.391,27.462 13.984,26.878 13.724,26.236 13.364,25.956 13.427,25.518 13.338,24.878 12.317,24.831 11.317,24.878 10.911,25.956 10.234,26.814 10.724,27.42 11.396,27.986 11.427,29.111 11.213,30.314 10.427,30.736 "
              style="fill:#8c8c8c" />
           <path
              id="path6864"
@@ -16080,7 +16079,7 @@
         <polygon
            id="polygon6902"
            enable-background="new    "
-           points="-42.978,33.573 -42.4,34.24 -28.481,34.24 -28.479,20.063 -29.054,19.395 -29.058,33.573 "
+           points="-29.054,19.395 -29.058,33.573 -42.978,33.573 -42.4,34.24 -28.481,34.24 -28.479,20.063 "
            style="opacity:0.23999999" />
         <rect
            id="rect6904"
@@ -16109,7 +16108,7 @@
            gorn="0.1.0.0.0.7.1.4">
           <polygon
              id="polygon6910"
-             points="-37.287,30.314 -38.073,30.736 -37.766,30.898 -36.448,31.175 -34.558,31.003 -34.964,30.564 -35.573,30.212 -35.558,29.081 -35.573,28.003 -35.109,27.461 -34.516,26.878 -34.776,26.236 -35.136,25.956 -35.073,25.518 -35.162,24.878 -36.183,24.831 -37.183,24.878 -37.589,25.956 -38.266,26.814 -37.776,27.42 -37.104,27.986 -37.073,29.111 "
+             points="-34.558,31.003 -34.964,30.564 -35.573,30.212 -35.558,29.081 -35.573,28.003 -35.109,27.461 -34.516,26.878 -34.776,26.236 -35.136,25.956 -35.073,25.518 -35.162,24.878 -36.183,24.831 -37.183,24.878 -37.589,25.956 -38.266,26.814 -37.776,27.42 -37.104,27.986 -37.073,29.111 -37.287,30.314 -38.073,30.736 -37.766,30.898 -36.448,31.175 "
              style="fill:#8c8c8c" />
           <path
              id="path6912"
@@ -16758,7 +16757,7 @@
      id="layer5"
      inkscape:label="Led Amplifier Нужно доработать"
      style="display:none;opacity:1"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <path
        style="fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M -439.18506,1601.3506 H 5628.5 v -473.242"
@@ -17747,7 +17746,7 @@
                  id="g5060">
                 <polygon
                    style="opacity:0.23999999"
-                   points="47.77,32.18 47.771,22.358 47.427,21.794 47.422,31.772 40.647,31.715 40.932,32.18 "
+                   points="47.422,31.772 40.647,31.715 40.932,32.18 47.77,32.18 47.771,22.358 47.427,21.794 "
                    enable-background="new    "
                    id="polygon5030" />
                 <rect
@@ -17834,7 +17833,7 @@
                  id="g5092">
                 <polygon
                    style="opacity:0.23999999"
-                   points="34.416,31.99 34.418,22.171 34.073,21.605 34.068,31.586 27.294,31.526 27.577,31.99 "
+                   points="34.068,31.586 27.294,31.526 27.577,31.99 34.416,31.99 34.418,22.171 34.073,21.605 "
                    enable-background="new    "
                    id="polygon5062" />
                 <rect
@@ -17921,7 +17920,7 @@
                  id="g5124">
                 <polygon
                    style="opacity:0.23999999"
-                   points="-8.272,31.805 -8.27,21.983 -8.615,21.419 -8.62,31.397 -15.394,31.34 -15.109,31.805 "
+                   points="-8.62,31.397 -15.394,31.34 -15.109,31.805 -8.272,31.805 -8.27,21.983 -8.615,21.419 "
                    enable-background="new    "
                    id="polygon5094" />
                 <rect
@@ -18063,7 +18062,7 @@
                    id="g5162">
                   <polygon
                      style="opacity:0.23999999"
-                     points="53.397,33.573 53.975,34.24 67.894,34.24 67.896,20.063 67.321,19.395 67.317,33.573 "
+                     points="67.896,20.063 67.321,19.395 67.317,33.573 53.397,33.573 53.975,34.24 67.894,34.24 "
                      enable-background="new    "
                      id="polygon5140" />
                   <rect
@@ -18093,7 +18092,7 @@
                      id="g5160">
                     <polygon
                        style="fill:#8c8c8c"
-                       points="59.192,24.878 58.786,25.956 58.109,26.814 58.599,27.42 59.271,27.986 59.302,29.111 59.088,30.314 58.302,30.736 58.609,30.898 59.927,31.175 61.817,31.003 61.411,30.564 60.802,30.212 60.817,29.081 60.802,28.003 61.266,27.461 61.859,26.878 61.599,26.236 61.239,25.956 61.302,25.518 61.213,24.878 60.192,24.831 "
+                       points="59.927,31.175 61.817,31.003 61.411,30.564 60.802,30.212 60.817,29.081 60.802,28.003 61.266,27.461 61.859,26.878 61.599,26.236 61.239,25.956 61.302,25.518 61.213,24.878 60.192,24.831 59.192,24.878 58.786,25.956 58.109,26.814 58.599,27.42 59.271,27.986 59.302,29.111 59.088,30.314 58.302,30.736 58.609,30.898 "
                        id="polygon5148" />
                     <path
                        style="fill:#8c8c8c"
@@ -18212,7 +18211,7 @@
                    id="g5211">
                   <polygon
                      style="opacity:0.23999999"
-                     points="5.522,33.573 6.1,34.24 20.019,34.24 20.021,20.063 19.446,19.395 19.442,33.573 "
+                     points="20.021,20.063 19.446,19.395 19.442,33.573 5.522,33.573 6.1,34.24 20.019,34.24 "
                      enable-background="new    "
                      id="polygon5188" />
                   <rect
@@ -18242,7 +18241,7 @@
                      id="g5209">
                     <polygon
                        style="fill:#8c8c8c"
-                       points="11.317,24.878 10.911,25.956 10.234,26.814 10.724,27.42 11.396,27.986 11.427,29.111 11.213,30.314 10.427,30.736 10.734,30.898 12.052,31.175 13.942,31.003 13.536,30.564 12.927,30.212 12.942,29.081 12.927,28.003 13.391,27.462 13.984,26.878 13.724,26.236 13.364,25.956 13.427,25.518 13.338,24.878 12.317,24.831 "
+                       points="12.052,31.175 13.942,31.003 13.536,30.564 12.927,30.212 12.942,29.081 12.927,28.003 13.391,27.462 13.984,26.878 13.724,26.236 13.364,25.956 13.427,25.518 13.338,24.878 12.317,24.831 11.317,24.878 10.911,25.956 10.234,26.814 10.724,27.42 11.396,27.986 11.427,29.111 11.213,30.314 10.427,30.736 10.734,30.898 "
                        id="polygon5196" />
                     <path
                        style="fill:#8c8c8c"
@@ -18359,7 +18358,7 @@
                    id="g5259">
                   <polygon
                      style="opacity:0.23999999"
-                     points="-42.978,33.573 -42.4,34.24 -28.481,34.24 -28.479,20.063 -29.054,19.395 -29.058,33.573 "
+                     points="-28.479,20.063 -29.054,19.395 -29.058,33.573 -42.978,33.573 -42.4,34.24 -28.481,34.24 "
                      enable-background="new    "
                      id="polygon5237" />
                   <rect
@@ -18389,7 +18388,7 @@
                      id="g5257">
                     <polygon
                        style="fill:#8c8c8c"
-                       points="-37.183,24.878 -37.589,25.956 -38.266,26.814 -37.776,27.42 -37.104,27.986 -37.073,29.111 -37.287,30.314 -38.073,30.736 -37.766,30.898 -36.448,31.175 -34.558,31.003 -34.964,30.564 -35.573,30.212 -35.558,29.081 -35.573,28.003 -35.109,27.461 -34.516,26.878 -34.776,26.236 -35.136,25.956 -35.073,25.518 -35.162,24.878 -36.183,24.831 "
+                       points="-36.448,31.175 -34.558,31.003 -34.964,30.564 -35.573,30.212 -35.558,29.081 -35.573,28.003 -35.109,27.461 -34.516,26.878 -34.776,26.236 -35.136,25.956 -35.073,25.518 -35.162,24.878 -36.183,24.831 -37.183,24.878 -37.589,25.956 -38.266,26.814 -37.776,27.42 -37.104,27.986 -37.073,29.111 -37.287,30.314 -38.073,30.736 -37.766,30.898 "
                        id="polygon5245" />
                     <path
                        style="fill:#8c8c8c"
@@ -18923,7 +18922,7 @@
      id="layer9"
      inkscape:label="ReedSensor"
      style="display:none"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <g
        id="g4194"
        transform="translate(-887.81462,-1072.5)"
@@ -19180,7 +19179,7 @@
        sodipodi:nodetypes="ccccc" />
   </g>
   <g
-     transform="translate(0,1360.6299)"
+     transform="translate(-43.125,1207.8498)"
      style="display:none"
      inkscape:label="Button(deprecated)"
      id="g12171"
@@ -19970,7 +19969,7 @@
      id="layer17"
      inkscape:label="MotionSensor"
      style="display:none"
-     transform="translate(0,1700.7875)">
+     transform="translate(-43.125,1548.0074)">
     <path
        sodipodi:nodetypes="ccccc"
        inkscape:connector-curvature="0"
@@ -20093,7 +20092,7 @@
                              id="_x30_.1.2.0.0.0.0.4"
                              style="fill:#ffdd55"
                              gorn="0.3.0.0.0.2.0.0.0.0.0.0.0"
-                             points="6.611,12.861 8.125,14.372 12.057,14.372 13.566,12.861 13.566,8.927 13.566,5.587 13.566,1.654 12.057,0.143 8.125,0.143 6.611,1.654 6.611,5.587 6.611,8.927 " />
+                             points="13.566,8.927 13.566,5.587 13.566,1.654 12.057,0.143 8.125,0.143 6.611,1.654 6.611,5.587 6.611,8.927 6.611,12.861 8.125,14.372 12.057,14.372 13.566,12.861 " />
                         </g>
                       </g>
                     </g>
@@ -20249,7 +20248,7 @@
                           <polygon
                              id="polygon31664"
                              style="fill:#ffdd55"
-                             points="6.611,5.587 6.611,8.927 6.611,12.861 8.125,14.372 12.057,14.372 13.566,12.861 13.566,8.927 13.566,5.587 13.566,1.654 12.057,0.143 8.125,0.143 6.611,1.654 "
+                             points="12.057,14.372 13.566,12.861 13.566,8.927 13.566,5.587 13.566,1.654 12.057,0.143 8.125,0.143 6.611,1.654 6.611,5.587 6.611,8.927 6.611,12.861 8.125,14.372 "
                              gorn="0.3.0.0.0.2.0.0.0.2.0.0.0" />
                         </g>
                       </g>
@@ -20407,7 +20406,7 @@
                              id="polygon31698"
                              style="fill:#ffdd55"
                              gorn="0.3.0.0.0.2.0.0.0.4.0.0.0"
-                             points="8.125,0.143 6.611,1.654 6.611,5.587 6.611,8.927 6.611,12.861 8.125,14.372 12.057,14.372 13.566,12.861 13.566,8.927 13.566,5.587 13.566,1.654 12.057,0.143 " />
+                             points="6.611,12.861 8.125,14.372 12.057,14.372 13.566,12.861 13.566,8.927 13.566,5.587 13.566,1.654 12.057,0.143 8.125,0.143 6.611,1.654 6.611,5.587 6.611,8.927 " />
                         </g>
                       </g>
                     </g>
@@ -20595,7 +20594,7 @@
      id="layer2"
      inkscape:label="Soil Moisture Sensor"
      style="display:none"
-     transform="translate(0,1700.7875)">
+     transform="translate(-43.125,1548.0074)">
     <path
        id="path7523"
        d="m 2548.0556,-292.47375 h -311.1112 c -24.5493,0 -44.4444,19.90124 -44.4444,44.44444 V -7.7577 h 133.7531 c 1.9568,-10.2716 10.9568,-18.0494 21.8025,-18.0494 h 88.8888 c 10.8457,0 19.8457,7.7778 21.8025,18.0494 H 2592.5 v -240.27778 c 0,-24.54321 -19.8951,-44.43827 -44.4444,-44.43827 z m -282.2223,44.43827 c 0,15.95679 -12.9259,28.89506 -28.8827,28.89506 -15.9506,0 -28.8889,-12.93209 -28.895,-28.88271 0,0 0,-0.006 0,-0.0123 -0.01,-15.95062 12.9259,-28.88889 28.8765,-28.89506 15.9568,-0.006 28.8951,12.92593 28.9012,28.88272 0,0 0,0.006 0,0.0123 z m 61.9568,28.7284 c -5.7963,0 -10.5,-4.70371 -10.5,-10.5 0,-5.7963 4.6976,-10.5 10.5,-10.5 5.8025,0 10.5,4.69753 10.5,10.5 0,5.80247 -4.6975,10.5 -10.5,10.5 z m 29.1543,37.94444 c 0,4.90741 -3.9814,8.88889 -8.8888,8.88889 -4.9075,0 -8.8889,-3.98148 -8.8889,-8.88889 -0.01,-4.90741 3.9753,-8.88889 8.8765,-8.89506 4.9074,-0.006 8.8951,3.97531 8.8951,8.87654 0.01,0.006 0.01,0.0123 0.01,0.0185 z m 35.5556,8.88889 c -4.9074,0 -8.8889,-3.98148 -8.8889,-8.88889 0,-4.90741 3.9815,-8.88889 8.8889,-8.88889 4.9074,0 8.8827,3.98148 8.8827,8.88889 0,4.90741 -3.9753,8.88889 -8.8827,8.88889 z m -0.3519,-46.83333 c -5.7962,0 -10.5,-4.70371 -10.5,-10.5 0,-5.7963 4.6976,-10.5 10.5,-10.5 5.8025,0 10.5,4.69753 10.5,10.5 0,5.80247 -4.6975,10.5 -10.5,10.5 z m 44.7963,46.83333 c -4.9135,0 -8.8888,-3.98148 -8.8888,-8.88889 0,-4.90741 3.9814,-8.88889 8.8888,-8.88889 4.9075,0 8.8889,3.98148 8.8889,8.88889 0,4.90741 -3.9753,8.88889 -8.8889,8.88889 z m 19.5556,-46.83333 c -5.7963,0 -10.4938,-4.70371 -10.4938,-10.5 0,-5.7963 4.6975,-10.5 10.4938,-10.5 5.7963,0 10.4938,4.69753 10.4938,10.5 0,5.80247 -4.6913,10.5 -10.4938,10.5 z m 91.5556,0.16666 c -15.9568,0 -28.8951,-12.93209 -28.8951,-28.88889 0,-15.95061 12.9383,-28.88888 28.8951,-28.88888 15.9567,0 28.895,12.93209 28.895,28.88888 0,15.95062 -12.9383,28.88889 -28.895,28.88889 z"
@@ -21432,7 +21431,7 @@
      id="layer12"
      inkscape:label="Contactor"
      style="display:none"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <rect
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect4138-52"
@@ -22281,7 +22280,7 @@
      id="layer13"
      inkscape:label="DS18B20"
      style="display:none"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <rect
        id="connector1pin-9"
        x="2192.5017"
@@ -22620,7 +22619,7 @@
      id="layer14"
      inkscape:label="DHT22"
      style="display:none"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <g
        style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
        id="g69943"
@@ -23571,7 +23570,7 @@
      id="layer6"
      inkscape:label="0-10V"
      style="display:none"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <rect
        style="opacity:1;fill:#d2d1d6;fill-opacity:1;stroke:#6d6e72;stroke-width:5.67000008;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect5832"
@@ -24035,7 +24034,8 @@
      inkscape:groupmode="layer"
      id="layer1"
      inkscape:label="Pressure"
-     style="display:none">
+     style="display:none"
+     transform="translate(-43.125,-152.78012)">
     <g
        style="display:inline;opacity:1"
        id="g3332"
@@ -24131,7 +24131,7 @@
      id="layer7"
      inkscape:label="Buttons"
      style="display:none"
-     transform="translate(0,1360.6299)">
+     transform="translate(-43.125,1207.8498)">
     <path
        inkscape:label="leg_pin3_button"
        sodipodi:nodetypes="cccc"
@@ -24385,7 +24385,7 @@
      id="layer18"
      inkscape:label="RS485"
      style="display:none"
-     transform="translate(0,1700.7875)">
+     transform="translate(-43.125,1548.0074)">
     <path
        d="M 2192.5,774.1488 H 3516.8427 V -857.85116 H 2192.5 Z"
        style="fill:#74a78c;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.33713675"
@@ -25284,7 +25284,7 @@
      id="layer20"
      inkscape:label="DoorLock"
      style="display:none"
-     transform="translate(0,1700.7875)">
+     transform="translate(-43.125,1548.0074)">
     <g
        id="leg_13b_doorlock"
        inkscape:label="leg_13b_doorlock"
