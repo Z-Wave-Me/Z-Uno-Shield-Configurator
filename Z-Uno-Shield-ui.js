@@ -1119,31 +1119,31 @@ function generateContentOfTab(i) {
         // Pressure
         if (pins[i]['params']['4'] == 'kPa') { 
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_pressure"] + '</p>');
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_pressure", i) + '</p>');
         // Buttons
         } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { 
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_buttons"] + '</p>');
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_buttons", i) + '</p>');
         // RS485
         } else if (pins[i]['type'] == 'RS485') { 
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_RS485"] + '</p>');
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_RS485", i) + '</p>');
         // DS18B20
         } else if (pins[i]['type'] == 'DS18B20') {
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_DS18B20"] + '</p>');
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_DS18B20", i) + '</p>');
         // DHT
         } else if (pins[i]['type'] == 'DHT') {
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_DHT"] + '</p>');
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_DHT", i) + '</p>');
         // Contactor
         } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch')) {
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_contactor"] + '</p>');
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_contactor", i) + '</p>');
         // Reed Sensor
         } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door')) {       
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_reed"] + '</p>');
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_reed", i) + '</p>');
         // doorlock
         } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) {
             if (i >= 13 && i <= 16)
@@ -1156,10 +1156,10 @@ function generateContentOfTab(i) {
                                                     With button</button>\
                                         </div>\
                                         <h3>Step for ' + pin_label + '</h3>\
-                                        <p class="manual_step_p_'+ i +'">' + pagesContent["step_doorlock_button"] + '</p>');
+                                        <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_doorlock_button", i) + '</p>');
             else
                 $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                             <p class="manual_step_p_'+ i +'">' + pagesContent["step_doorlock"] + '</p>');
+                                             <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_doorlock", i) + '</p>');
                 
         // White LED
         } else if (pins[i]['params']['1'] == 'single') {
@@ -1172,7 +1172,7 @@ function generateContentOfTab(i) {
                                                     With amplifier</button>\
                                          </div>\
                                          <h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_white_led"] + '</p>');
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_white_led", i) + '</p>');
         // RGB LED strip
         } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white') {
             $("#manual_page_" + i).html('<div class="manual_type_select">\
@@ -1184,7 +1184,7 @@ function generateContentOfTab(i) {
                                                     With amplifier</button>\
                                          </div>\
                                          <h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_rgb_led"] + '</p>');
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_rgb_led", i) + '</p>');
         // RGBW LED strip
         } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white') {
             $("#manual_page_" + i).html('<div class="manual_type_select">\
@@ -1196,8 +1196,19 @@ function generateContentOfTab(i) {
                                                     With amplifier</button>\
                                          </div>\
                                          <h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + pagesContent["step_rgbw_led"] + '</p>');
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_rgbw_led", i) + '</p>');
         } 
+}
+function updatePagesContent(page, pin) {
+    var res;
+    
+    res = page in pagesContent ? pagesContent[page] : "";
+
+    var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$1').split('.');
+
+    if(notes[generateCode(pins).keys.split(',').indexOf(pin+"")])
+        res += "<br>" + notes[generateCode(pins).keys.split(',').indexOf(pin+"")];
+    return res;
 }
 
 pagesContent = {
