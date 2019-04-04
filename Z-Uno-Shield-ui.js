@@ -1218,17 +1218,17 @@ function generateContentOfTab(i) {
 }
 function updatePagesContent(page, pin) {
     var res;
-    
+    var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$1').split('.\n');
+    var note_pinnum = generateCode(pins).keys.split(',').indexOf(pin+"")
+
     res = page in pagesContent ? pagesContent[page] : "";
 
-    var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$1').split('.\n');
-
-    if(notes[generateCode(pins).keys.split(',').indexOf(pin+"")])
+    if(notes[note_pinnum])
         res += "<br><hr style='\
                                 border: 0; height: 0;\
                                 border-top: 1px solid rgba(0, 0, 0, 0.1);\
                                 border-bottom: 1px solid rgba(255, 255, 255, 0.3);'>" +
-             "<i>" + notes[generateCode(pins).keys.split(',').indexOf(pin+"")] + "</i>";
+               "<i>" + notes[note_pinnum] + "</i>";
     return res;
 }
 
