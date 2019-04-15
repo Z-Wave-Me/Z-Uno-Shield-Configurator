@@ -828,7 +828,7 @@ function svgdGen(pinNum, deviceType, display) {
             if (pins[pinNum]['type'] == 'SensorBinary' && pins[pinNum]['params']['1'] == "motion" && display) {
                 svgEl('layer17', 'obj_2').style.display = "block";
                 svgEl('leg_pin' + pinNum + '_motionSensor', 'obj_2').style.display = "block";
-
+ 
                 motionLegs.push(pinNum);
             }
 
@@ -1223,7 +1223,7 @@ function updatePagesContent(page, pin) {
 
     res = page in pagesContent ? pagesContent[page] : "";
 
-    if(notes[note_pinnum])
+    if (notes[note_pinnum])
         res += "<br><hr style='\
                                 border: 0; height: 0;\
                                 border-top: 1px solid rgba(0, 0, 0, 0.1);\
