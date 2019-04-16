@@ -1129,12 +1129,7 @@ function generateContentOfTab(i) {
                                          <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_" + i, i) + '</p>');
             return;
         }
-        // } else if (i == 1) {
-        //     $("#manual_page_" + i).html('<h3>Step one</h3>\
-        //                                  <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_" + i, i) + '</p>');
-        //     return;            
-        // }
-
+        
         // Pressure
         if (pins[i]['params']['4'] == 'kPa') { 
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
@@ -1255,8 +1250,8 @@ function updatePagesContent(page, pin) {
 }
 
 pagesContent = {
-    'step_0': 'Burn the sketch in the Arduino IDE',
-    'step_1': 'Put the Shield in the DIN rail (pic. 1) or in the waterproof case (pic. 2)\
+    'step_0': 'Copy the sketch below and use Arduino IDE to burn it in your Z-Uno',
+    'step_1': 'Insert Z-Uno in the Shield. Put the Shield in the DIN rail (pic. 1) or in the waterproof case (pic. 2)\
                 <table border="0"><tbody>\
                     <tr>\
                         <td>\
