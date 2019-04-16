@@ -1218,7 +1218,8 @@ function generateContentOfTab(i) {
 }
 function updatePagesContent(page, pin) {
     var res;
-    var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$1').split('.\n');
+    // var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$1').split('\n');
+    var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$&').split('\n').filter(function(v){return v.length > 0})
     var note_pinnum = generateCode(pins).keys.split(',').indexOf(pin+"")
 
     res = page in pagesContent ? pagesContent[page] : "";
