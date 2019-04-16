@@ -1260,10 +1260,10 @@ pagesContent = {
                 <table border="0"><tbody>\
                     <tr>\
                         <td>\
-                            <img src="./Z-Uno_Shield_Configurator_files/DIN_case.jpg" style="width: 100%;" alt="Z-Uno Shield in Sealed Case">\
+                            <img src="/wa-data/public/photos/66/15/1566/1566.970.jpg" style="width: 100%;" alt="Z-Uno Shield in Sealed Case">\
                         </td>\
                         <td>\
-                            <img src="./Z-Uno_Shield_Configurator_files/wp_case.jpg" style="width: 100%;" alt="Z-Uno Shield in DIN-rail case">\
+                            <img src="/wa-data/public/photos/65/15/1565/1565.970.jpg" style="width: 100%;" alt="Z-Uno Shield in DIN-rail case">\
                         </td>\
                     </tr>\
                 </tbody></table>',
