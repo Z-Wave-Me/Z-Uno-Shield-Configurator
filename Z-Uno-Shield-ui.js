@@ -1050,8 +1050,6 @@ function svgdGen(pinNum, deviceType, display) {
 
 // Issue with tabs for pin 3
 function createManualPages() {
-    var countOfButtons = htmlEl("manual_pages_control").getElementsByTagName("button").length;
-
     for (var i = 0; i <= 16; i++) {
         // this need to update content of first and second pages
         if (i < 2) {
@@ -1059,33 +1057,41 @@ function createManualPages() {
             continue;
         }
 
+
+        
         if (i == 9) i = 11;
 
         // this need to prevent early calling pins 
         try {   
-            if (pins[i]['type'] != 'NC' && !htmlEl('manual_page_' + i)) {
-                countOfButtons++;
-                // add button
+            if (pins[i]['type'] != 'NC') {
+                // for sorting
+                if (htmlEl('manual_page_' + i) && htmlEl('manual_control_button_' + i)) {
+                    $("#manual_control_button_" + i).remove();
+                }
+             
                 var pin_label = getPinLabelByNum(i);
-                $("#manual_pages_control").append('<button\
-                                                    class="manual_tablinks"\
-                                                    id="manual_control_button_' + i + '"\
-                                                    onclick="openTab(event, \'manual_page_' + i + '\')\
-                                                    ">' + pin_label + '</button>');
-                // add page content
-                $("#manual_pages").append('<div id="manual_page_' + i + '"\
-                                            class="manual_tabcontent">');
-                $("#manual_pages").append('</div>');
 
+                // add button
+                if (!htmlEl('manual_control_button_' + i)) 
+                    $("#manual_pages_control").append('<button\
+                                                        class="manual_tablinks"\
+                                                        id="manual_control_button_' + i + '"\
+                                                        onclick="openTab(event, \'manual_page_' + i + '\')\
+                                                        ">' + pin_label + '</button>');
+
+                // add page content
+                if (!htmlEl('manual_page_' + i)) {
+                    $("#manual_pages").append('<div id="manual_page_' + i + '"\
+                                                class="manual_tabcontent">');
+                }
+                
                 generateContentOfTab(i);
+
             } else if (pins[i]['type'] == 'NC' && htmlEl('manual_page_' + i)) {
                 $("#manual_control_button_" + i).remove();
                 $("#manual_page_" + i).remove();
-            } else if (pins[i]['type'] != 'NC') {
-                generateContentOfTab(i);
             }
 
-            countOfButtons = htmlEl("manual_pages_control").getElementsByTagName("button").length;
         } catch(e) {}
     }
 }
@@ -1129,7 +1135,7 @@ function generateContentOfTab(i) {
                                          <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_" + i, i) + '</p>');
             return;
         }
-        
+
         // Pressure
         if (pins[i]['params']['4'] == 'kPa') { 
             $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
