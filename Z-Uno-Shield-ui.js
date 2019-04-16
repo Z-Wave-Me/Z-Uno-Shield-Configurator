@@ -752,7 +752,8 @@ function getDeviceType(i) {
 function svgdGen(pinNum, deviceType, display) {
     var anyDevice = false;
 
-    var buttonLegs = [], // this arrays contains current selected legs for device. This will be helpful when we want hide layer of device
+    // this arrays contains current selected legs for device. This will be helpful when we want hide layer of device
+    var buttonLegs = [], 
         pressureLegs = [],
         contactorLegs = [],
         motionLegs = [],
@@ -1051,7 +1052,13 @@ function svgdGen(pinNum, deviceType, display) {
 function createManualPages() {
     var countOfButtons = htmlEl("manual_pages_control").getElementsByTagName("button").length;
 
-    for (var i = 3; i <= 16; i++) {
+    for (var i = 0; i <= 16; i++) {
+        // this need to update content of first and second pages
+        if (i < 2) {
+            generateContentOfTab(i);
+            continue;
+        }
+
         if (i == 9) i = 11;
 
         // this need to prevent early calling pins 
@@ -1116,6 +1123,17 @@ function getPinLabelByNum(i) {
 
 function generateContentOfTab(i) {
         var pin_label = getPinLabelByNum(i);
+
+        if (i < 2) {
+            $("#manual_page_" + i).html('<h3>Step ' + (i+1) + '</h3>\
+                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_" + i, i) + '</p>');
+            return;
+        }
+        // } else if (i == 1) {
+        //     $("#manual_page_" + i).html('<h3>Step one</h3>\
+        //                                  <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_" + i, i) + '</p>');
+        //     return;            
+        // }
 
         // Pressure
         if (pins[i]['params']['4'] == 'kPa') { 
@@ -1218,7 +1236,10 @@ function generateContentOfTab(i) {
 }
 function updatePagesContent(page, pin) {
     var res;
-    // var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$1').split('\n');
+
+    if (pin < 2)
+        return pagesContent[page]; 
+
     var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$&').split('\n').filter(function(v){return v.length > 0})
     var note_pinnum = generateCode(pins).keys.split(',').indexOf(pin+"")
 
@@ -1234,8 +1255,18 @@ function updatePagesContent(page, pin) {
 }
 
 pagesContent = {
-    'step_one': 'Burn the sketch in the Arduino IDE',
-    'step_two': 'Put the Shield in the DIN rail (pic. 1) or in the waterproof case (pic. 2)',
+    'step_0': 'Burn the sketch in the Arduino IDE',
+    'step_1': 'Put the Shield in the DIN rail (pic. 1) or in the waterproof case (pic. 2)\
+                <table border="0"><tbody>\
+                    <tr>\
+                        <td>\
+                            <img src="./Z-Uno_Shield_Configurator_files/DIN_case.jpg" style="width: 100%;" alt="Z-Uno Shield in Sealed Case">\
+                        </td>\
+                        <td>\
+                            <img src="./Z-Uno_Shield_Configurator_files/wp_case.jpg" style="width: 100%;" alt="Z-Uno Shield in DIN-rail case">\
+                        </td>\
+                    </tr>\
+                </tbody></table>',
     'step_white_led': 'Include ground of single color strip.',
     'step_rgb_led': 'Connect: <br>\tRed -> PWM4(pin16); <br>Green -> PWM3(pin15); <br>Blue -> PWM2(pin14).',
     'step_rgbw_led': 'Connect: <br>\tRed -> PWM4(pin16); <br>Green -> PWM3(pin15); <br>Blue -> PWM2(pin14); <br>White -> PWM1(pin13).',
