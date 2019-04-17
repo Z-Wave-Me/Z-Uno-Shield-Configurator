@@ -56,6 +56,101 @@
 {/literal}
 </style>
 
+<style type="text/css">
+    .settings_row_connection {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        display: grid;
+        grid-template-rows: auto auto;
+        grid-template-columns: 1fr;
+    }
+    .settings_svg_connection {
+        grid-row: 1;
+    }
+    .settings_manual_connection {
+        width: 70%;
+        margin: 10px auto 10px auto;
+        grid-row: 2;
+        display: block;
+    }
+    .settings_manual_connection ul {
+        list-style: none;
+    }
+
+
+    .pages {
+        width: 100%;
+    }
+    .pages_control {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+    .pages_control button {
+        background-color: #ddd;
+        border: 1px solid #ddd;
+        color: white;
+        padding: 15px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        float: left;
+    }
+    .pages_control button:not(:last-child) {
+        border-right: none; /* Prevent double borders */
+    }
+    .pages_control button:hover {
+        background-color: #ccc;
+    }
+    .pages_control button.manual_active {
+        background-color: #bbb;
+    }
+
+
+    .manual_tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+    .manual_tabcontent h3 {
+        padding-top: 1em;
+    }
+
+
+    .manual_type_select {
+        width: fit-content;
+        margin-left: -6px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+    .manual_type_select button {
+        background-color: #ddd;
+        border: 1px solid #ddd;
+        color: white;
+        padding: 15px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        float: left;
+    }
+    .manual_type_select button:not(:last-child) {
+        border-right: none; /* Prevent double borders */
+    }
+    .manual_type_select button:hover {
+        background-color: #ccc;
+    }
+    .manual_type_select button.manual_active {
+        background-color: #bbb;
+    }
+</style>
+
+
 <h1 style="display: inline;">Z-Uno Shield Configurator</h1>
 <span id="copyURL" class="jslink">Copy permanent link to this configuration</span>
 <span id="resetConfig" style="margin-left: 1em; cursor: pointer; color: blue; text-decoration: underline; text-decoration-style: dotted;">Reset configuration</span>
@@ -1227,96 +1322,7 @@
 </div>
 </div>
 
-<style type="text/css">
-    .settings_row_connection {
-        margin-top: 30px;
-        margin-bottom: 30px;
-        display: grid;
-        grid-template-rows: auto auto;
-        grid-template-columns: 1fr;
-    }
-    .settings_svg_connection {
-        grid-row: 1;
-    }
-    .settings_manual_connection {
-        width: 70%;
-        margin: 10px auto 10px auto;
-        grid-row: 2;
-        display: block;
-    }
-    .settings_manual_connection ul {
-        list-style: none;
-    }
 
-    #manual_pages {
-        width: 100%;
-    }
-    #manual_pages_control {
-        overflow: hidden;
-        border: 1px solid #ccc;
-        background-color: #f1f1f1;
-    }
-    #manual_pages_control button {
-        background-color: #ddd;
-        border: 1px solid #ddd;
-        color: white;
-        padding: 15px 15px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        cursor: pointer;
-        float: left;
-    }
-    #manual_pages_control button:not(:last-child) {
-        border-right: none; /* Prevent double borders */
-    }
-    #manual_pages_control button:hover {
-        background-color: #ccc;
-    }
-    #manual_pages_control button.manual_active {
-        background-color: #bbb;
-    }
-    .manual_tabcontent {
-        display: none;
-        padding: 6px 12px;
-        border: 1px solid #ccc;
-        border-top: none;
-    }
-    .manual_tabcontent h3 {
-        padding-top: 1em;
-    }
-
-
-    .manual_type_select {
-        width: fit-content;
-        margin-left: -6px;
-        overflow: hidden;
-        border: 1px solid #ccc;
-        background-color: #f1f1f1;
-    }
-    .manual_type_select button {
-        background-color: #ddd;
-        border: 1px solid #ddd;
-        color: white;
-        padding: 15px 15px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        cursor: pointer;
-        float: left;
-    }
-    .manual_type_select button:not(:last-child) {
-        border-right: none; /* Prevent double borders */
-    }
-    .manual_type_select button:hover {
-        background-color: #ccc;
-    }
-    .manual_type_select button.manual_active {
-        background-color: #bbb;
-    }
-</style>
 
 <div class="settings_row_connection">
     <div class="settings_svg_connection">
