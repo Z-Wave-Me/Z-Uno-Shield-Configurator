@@ -786,6 +786,14 @@ function svgdGen(pinNum, deviceType, display) {
         } else {
             svgEl('layer18', 'obj_2').style.display = "none";
         }
+
+        // UART
+        if ((pinNum == 7 || pinNum == 8) && deviceType == "UART") {
+            if ((pins[pinNum]['type'] == 'UART') && display)
+                svgEl('layer15', 'obj_2').style.display = "block";
+        } else {
+            svgEl('layer15', 'obj_2').style.display = "none";
+        }
         
 
         // DS18B20
