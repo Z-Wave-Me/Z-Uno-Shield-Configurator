@@ -780,7 +780,7 @@ function svgdGen(pinNum, deviceType, display) {
 
         // RS485
         if ((pinNum == 7 || pinNum == 8) && deviceType == "RS485") {
-            if ((pins[pinNum]['type'] == 'RS485' || pins[pinNum]['type'] == 'RS485' ) && display)
+            if ((pins[pinNum]['type'] == 'RS485') && display)
                 svgEl('layer18', 'obj_2').style.display = "block";
         } else {
             svgEl('layer18', 'obj_2').style.display = "none";
