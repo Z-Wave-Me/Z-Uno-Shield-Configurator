@@ -677,7 +677,6 @@ var pins = {};
 function updateCode() {
     var ret = generateCode(pins);
     htmlEl('code').innerHTML = ret.code;
-    // htmlEl('notes').innerHTML = ("\n" + ret.notes + "\n").replace(/\n-([^\n]*)\n/g, '\n<li>$1</li>\n');
 }
 
 
@@ -1007,7 +1006,7 @@ function svgdGen(pinNum, deviceType, display) {
         if (i > 8 && i < 11) i = 11; 
 
         // this try need to prevent early calling pins 
-        try { if (pins[i]['type'] != 'NC') anyDevice = true; } catch(e) {}
+        try { if (pins[i]['type'] != 'NC') anyDevice = true; } catch(e) { Error(e) }
 
     }
 
@@ -1100,7 +1099,7 @@ function createManualPages() {
                 $("#manual_page_" + i).remove();
             }
 
-        } catch(e) {}
+        } catch(e) {  Error(e)  }
     }
 }
 
