@@ -14,6 +14,7 @@
 
   #configurator_pages_control, #configurator_pages_control button { text-align: center; font-size: 1em; }
   #configurator_pages_control button { padding: 1em; cursor: pointer; margin: 0; }
+
   .pin_default_disabled,
   .relation_hidden,
   .relation_notes,
@@ -25,7 +26,7 @@
   .relation_conditionvalue_input { display: none; }
 
   .svg { width: 100%; height: 100%; }
-  .features { display: inline-block; margin: auto; }
+  #features { display: inline-block; margin: auto; }
   .settings { margin: 0.25em; display: inline-block; vertical-align: top;}
   .settings h3 { width: 100%; margin: 0.5em auto; text-decoration: underline; }
   #pin3_disabled span, #pin3pwm_disabled span { color: red; }
@@ -69,14 +70,13 @@
     <v-app>
       <v-content>
         <v-container id="appcontent" class="mb-10">
-          <!-- * toolbar -->
+          
+          <!--*_____MENU TOP_____*-->
           <v-toolbar dark>
-            <!-- * title -->
             <v-toolbar-title>Z-Uno Shield Configurator</v-toolbar-title>
-            
+
             <div class="flex-grow-1"></div>
-            
-            <!-- * items -->
+
             <v-toolbar-items v-model="pages">
               <v-btn value="0" text>Select peripherals</v-btn>
               <v-btn value="1" text>Define relations</v-btn>
@@ -85,15 +85,16 @@
 
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <v-btn id="copyURL" v-on="on" @click="copyURL" icon>
+                <v-btn id="copyURL" v-on="on" @click="copyURL" text>
                   <v-icon>mdi-export-variant</v-icon>
                 </v-btn>
               </template>
               <span>Copy permanent link to this configuration</span>
             </v-tooltip>
+
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <v-btn v-on="on" @click="resetConfig" icon>
+                <v-btn v-on="on" @click="resetConfig" text>
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </template>
@@ -103,11 +104,11 @@
 
           <v-card id="settings_row" class="page">
             <v-card-text class="d-flex flex-wrap">
-              <div class="svg-container col-lg-3">
-                <object id="obj" class="svg" data="/Z-Uno-Shield.svg" type="image/svg+xml">Your browser do
+              <div class="svg-container col-md-4">
+                <object id="obj" class="svg" data="Z-Uno-Shield.svg" type="image/svg+xml">Your browser do
                   not support SVG</object>
-              </div> 
-              <div class="features col-auto">
+              </div>
+              <div id="features" class="col-auto">
                 <div id="settings_pin3pwm" class="settings">
                   <h3>0-10V / PWM0</h3>
                   <div id="pin3pwm_disabled">
@@ -1356,7 +1357,7 @@
           <v-card id="settings_row_connection" class="page">
             <v-card-text>
               <div class="svg_container">
-                <object id="obj_2" class="svg" data="/Z-Uno-Shield-Details.svg" type="image/svg+xml">
+                <object id="obj_2" class="svg" data="Z-Uno-Shield-Details.svg" type="image/svg+xml">
                   Your browser do not support SVG
                 </object>
               </div>
