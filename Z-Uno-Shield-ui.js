@@ -1,4 +1,6 @@
 // Helpers
+document.addEventListener("DOMContentLoaded", ready);
+
 
 function svgEl(id, obj) { 
     return document.getElementById(obj ? obj : 'obj').contentDocument.getElementById(id);
@@ -103,6 +105,7 @@ function updateParams() {
     updateSetting(pin, group, mode);
     updateParamsUI(pin, group);
     updateCode();
+    updateRelations();
     createManualPages();
 }
 
@@ -220,6 +223,7 @@ function jumersADC() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    updateRelations();
 }
 
 function jumersPWM() {
@@ -256,6 +260,7 @@ function jumersPWM() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    updateRelations();
 }
 
 function jumersPWM0() {
@@ -294,6 +299,7 @@ function jumersPWM0() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    updateRelations();
 }
 
 function jumersGPIO() {
@@ -340,6 +346,7 @@ function jumersGPIO() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    updateRelations();
 }
 
 function jumersOneWire() {
@@ -398,6 +405,7 @@ function jumersOneWire() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    updateRelations();
 }
 
 function jumersUART() {
@@ -557,6 +565,7 @@ function jumersUART() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    updateRelations();
 }
 // Prototypes
 
@@ -613,9 +622,15 @@ function loadConfiguration() {
         htmlEl('pin11_NC').click();
         htmlEl('pin12_NC').click();
     }
+    Object.defineProperty(pins, "isLoaded", {
+        enumerable: false,
+        writable: true
+    });
+    pins.isLoaded = true;
 }
-
 // Default
+// temporary workaround
+var isfirstloaded = false;
 htmlEl('obj').onload = function() {
     document.getElementsByClassName('zoom_svg')[0].onclick = function() {
         var flex = parseFloat(this.parentNode.style.flexGrow);
@@ -626,11 +641,21 @@ htmlEl('obj').onload = function() {
         
         this.parentNode.style.flexGrow = flex;
     };
+
+    if (isfirstloaded)
+        loadConfiguration();
+    else 
+        isfirstloaded = true;
 }
 
-htmlEl('obj_2').onload = function() {
-    loadConfiguration();
+htmlEl('obj_2').onload = loadConfiguration;
+
+function ready() {
+    // note, if we open page with relations before, we have issue with reseted relations
+    htmlCEl('configurator_tablinks')[0].click();
+    htmlEl('add_relation_button').click();
 }
+
 // Default params
 
 defaultParams = {
@@ -673,12 +698,62 @@ defaultParams = {
 // Code generation
 
 var pins = {};
+var old_pins = {};
 
 function updateCode() {
     var ret = generateCode(pins);
     htmlEl('code').innerHTML = ret.code;
 }
+function updateRelations() {
+    // prevent early call before pins obj are fully collected
+    if (pins.isLoaded == true) {
+        // compare to prevent bug with relation reseting 
+        if (JSON.stringify(old_pins) !== JSON.stringify(pins)) {
+            old_pins = pins;
+            var rels = htmlCEl('relation');
+            for (var i = 0; i < rels.length; i++)
+                loadRelationContent(rels[i]);
+        }
+    }
+}
 
+
+function openPage(evt, page) {
+    var i,
+        need_load_config = htmlCEl('settings_row')[0].style.display == "none" ? true : false,
+        p0 = htmlCEl('settings_row')[0],
+        p1 = htmlCEl('settings_row_relations')[0],
+        p2 = htmlCEl('settings_row_connection')[0];
+
+    var pages = htmlCEl('configurator_tablinks');
+
+    for (var i = 0; i < pages.length; i++) {
+        pages[i].className = pages[i].className.replace(" manual_active", "");
+    }
+
+    evt.currentTarget.className += " manual_active";
+
+    switch(page) {
+        case 0:
+            p0.style.display = "flex";
+            p1.style.display = "none";
+            p2.style.display = "none";
+            break;
+
+        case 1:
+            p0.style.display = "none";
+            p1.style.display = "block";
+            p2.style.display = "none";
+            break;
+        
+        case 2:
+            p0.style.display = "none";
+            p1.style.display = "none";
+            p2.style.display = "block";
+            break;
+    }
+
+}
 
 function openTab(evt, tab) {
     // Tabcontrol part
@@ -1063,8 +1138,6 @@ function createManualPages() {
             generateContentOfTab(i);
             continue;
         }
-
-
         
         if (i == 9) i = 11;
 
