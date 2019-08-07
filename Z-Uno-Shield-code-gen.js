@@ -505,7 +505,8 @@ function floatToRatio(x, maxNumerator) {
 
 function generateCode(pins) {
     var templates = pinsToTemplates(pins);
-    
+
+    // filter uses for bool condition
     var includes = templates.map(function(ch) { return ch.includes; }).filter(function(value, index, self) { return self.indexOf(value) === index && !!value; }).join('\n');
     var vars = templates.map(function(ch) { return ch.vars; } ).filter(function(value) { return !!value; }).join('\n\n');
     var channels = templates.map(function(ch) { return ch.channel; } ).filter(function(value) { return !!value; }).join(',\n');
@@ -516,6 +517,50 @@ function generateCode(pins) {
     var funcs = templates.map(function(ch) { return ch.funcs; } ).filter(function(value) { return !!value; }).join('\n\n');
     var notes = templates.map(function(ch) { return ch.note; } ).filter(function(value) { return !!value; }).join('\n\n');
     var keys = templates.map(function(ch) { if (ch.note) return ch.key; } ).filter(function(value) { return !!value; }).join(',');
+
+    var htmlrels = htmlCEl('relation');
+
+
+    if (htmlrels.length > 1) {
+        var cvars = templates.map(
+            function(ch) {
+                return ch.vars.split(/\s+/).map(
+                        // remove punctuation
+                        function(value) {
+                            return value.replace(/[;,]/g, "") 
+                        }
+                ).filter(
+                    // filter for vars
+                    function(value) { 
+                        if (value.indexOf("pin") != -1 || value.indexOf("temperature") != -1) return value;
+                    }
+                )
+            } 
+        ).filter(
+            // bool
+            function(value) { 
+                return !!value; 
+        });
+
+        for (i = 1; i < htmlrels.length; i++) {
+            // update relelems obj
+            findRelationEl(i);
+            var sensor_sb = relelems.sensor.select,
+                condition_sb = relelems.condition.select,
+                device_sb = relelems.device.select,
+                mode_sb = relelems.mode.select,
+                condition_input = relelems.condition.input,
+                swmul_input = relelems.device.input;
+
+            console.log(sensor_sb.options[sensor_sb.selectedIndex].value)
+            console.log(condition_sb.options[condition_sb.selectedIndex].value)
+            console.log(device_sb.options[device_sb.selectedIndex].value)
+            console.log(condition_input.value)
+            console.log(swmul_input.value)
+        }
+    }
+
+
     if (!includes && !vars && !channels && !setup && !loop && !xetter && !notes && !funcs)
         return {
             "code": "// Please select features",
