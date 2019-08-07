@@ -52,18 +52,18 @@ function eventHandler(ev) {
 			case evscmp('add_relation_button', ev):
 				addRelation();
 				// checkRelationCorectness();
-					return;
+				return;
 
-			case evscmp('relation_swmul_input', ev) && ev.type == 'focus':
+			case (evscmp('relation_swmul_input', ev) || evscmp('relation_conditionvalue_input', ev)) && ev.type == 'focus':
 				if (ev.srcElement.value === 'value') {
 					ev.srcElement.value = "";
 					ev.srcElement.style.color = "#000";
 				}
 				return;
 
-			case evscmp('relation_swmul_input', ev) && ev.type == 'blur':
+			case (evscmp('relation_swmul_input', ev) || evscmp('relation_conditionvalue_input', ev)) && ev.type == 'blur':
 				if (ev.srcElement.value === '') {
-					ev.srcElement.value = "value";
+					ev.srcElement.value = 'value';
 					ev.srcElement.style.color = "#bbb";
 				}
 				return;
@@ -188,8 +188,7 @@ function updateRelationDependencies(ev) {
 			condition_input.style.display = 'none';
 			condition_sb.style.display = 'block';
 			condition_sb.selectedIndex = 4;
-			condition_input.disabled = true;
-			condition_input.value = "255";
+			// condition_input.value = "255";
 		// multilevel
 		} else {
 			// options
@@ -203,8 +202,7 @@ function updateRelationDependencies(ev) {
 			condition_sb.style.display = 'block';
 			condition_input.style.display = 'block';
 			condition_sb.selectedIndex = 0;
-			condition_input.disabled = false;
-			condition_input.value = "";
+			// condition_input.value = "";
 		}
 	
 	// device -> mode 
@@ -243,6 +241,8 @@ function addRelation() {
 
 	swmul_input.onfocus = eventHandler;
 	swmul_input.onblur = eventHandler;
+	condition_input.onfocus = eventHandler;
+	condition_input.onblur = eventHandler;
 	for (var i = 0; i < relation_select.length; i++) {
 		relation_select[i].onchange = eventHandler;
 		relation_select[i].onclick = eventHandler;
@@ -270,19 +270,39 @@ function evscmp(str, ev) {
 }
 
 function findRelationEl(relation) {
-	relelems.sensor = { 
-		select: relation.getElementsByClassName("relation_sensor_select")[0]
-	};
-	relelems.condition = {
-		select: relation.getElementsByClassName("relation_condition_select")[0],
-		input: relation.getElementsByClassName("relation_conditionvalue_input")[0]
-	};
-	relelems.device = {
-		select: relation.getElementsByClassName("relation_device_select")[0],
-		input: relation.getElementsByClassName("relation_swmul_input")[0]
-	};
-	relelems.mode = {
-		select: relation.getElementsByClassName("relation_mode_select")[0]
+	switch (typeof(relation)) {
+		case 'object':
+			relelems.sensor = { 
+				select: relation.getElementsByClassName("relation_sensor_select")[0]
+			};
+			relelems.condition = {
+				select: relation.getElementsByClassName("relation_condition_select")[0],
+				input: relation.getElementsByClassName("relation_conditionvalue_input")[0]
+			};
+			relelems.device = {
+				select: relation.getElementsByClassName("relation_device_select")[0],
+				input: relation.getElementsByClassName("relation_swmul_input")[0]
+			};
+			relelems.mode = {
+				select: relation.getElementsByClassName("relation_mode_select")[0]
+			}
+			break;
+		case 'number':
+			relelems.sensor = { 
+				select: htmlCEl('relation')[relation].getElementsByClassName("relation_sensor_select")[0]
+			};
+			relelems.condition = {
+				select: htmlCEl('relation')[relation].getElementsByClassName("relation_condition_select")[0],
+				input: htmlCEl('relation')[relation].getElementsByClassName("relation_conditionvalue_input")[0]
+			};
+			relelems.device = {
+				select: htmlCEl('relation')[relation].getElementsByClassName("relation_device_select")[0],
+				input: htmlCEl('relation')[relation].getElementsByClassName("relation_swmul_input")[0]
+			};
+			relelems.mode = {
+				select: htmlCEl('relation')[relation].getElementsByClassName("relation_mode_select")[0]
+			}
+			break;
 	}
 
 	return relelems;
