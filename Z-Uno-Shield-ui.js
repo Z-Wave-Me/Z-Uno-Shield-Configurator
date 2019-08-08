@@ -701,8 +701,10 @@ var pins = {};
 var old_pins = {};
 
 function updateCode() {
-    var ret = generateCode(pins);
-    htmlEl('code').innerHTML = ret.code;
+    if (pins.isLoaded) {
+        var ret = generateCode(pins);
+        htmlEl('code').innerHTML = ret.code;
+    }
 }
 function updateRelations() {
     // prevent early call before pins obj are fully collected
@@ -720,7 +722,6 @@ function updateRelations() {
 
 function openPage(evt, page) {
     var i,
-        need_load_config = htmlCEl('settings_row')[0].style.display == "none" ? true : false,
         p0 = htmlCEl('settings_row')[0],
         p1 = htmlCEl('settings_row_relations')[0],
         p2 = htmlCEl('settings_row_connection')[0];
