@@ -733,26 +733,35 @@ function openPage(evt, page) {
 
     evt.currentTarget.className += " manual_active";
 
+// аккуратно скрываем страницы что бы не сбросить svg
     switch(page) {
         case 0:
-            p0.style.display = "flex";
-            p1.style.display = "none";
-            p2.style.display = "none";
+            p0.style.position = null;
+            p0.style.opacity = 1;
+            p1.style.position = 'absolute';
+            p1.style.opacity = 0;
+            p2.style.position = 'absolute';
+            p2.style.opacity = 0;
             break;
 
         case 1:
-            p0.style.display = "none";
-            p1.style.display = "block";
-            p2.style.display = "none";
+            p0.style.position = 'absolute';
+            p0.style.opacity = 0;
+            p1.style.position = null;
+            p1.style.opacity = 1;
+            p2.style.position = 'absolute';
+            p2.style.opacity = 0;
             break;
         
         case 2:
-            p0.style.display = "none";
-            p1.style.display = "none";
-            p2.style.display = "block";
+            p0.style.position = 'absolute';
+            p0.style.opacity = 0;
+            p1.style.position = 'absolute';
+            p1.style.opacity = 0;
+            p2.style.position = null;
+            p2.style.opacity = 1;
             break;
     }
-
 }
 
 function openTab(evt, tab) {
