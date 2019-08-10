@@ -126,9 +126,9 @@ var codeTemplates = {
         "vars":     "byte pinXXXSwitchMultilevelState = 0, _pinXXXSwitchMultilevelState = 1;",
         "channel":  "  ZUNO_SWITCH_MULTILEVEL(pinXXXSwitchMultilevelGetter, pinXXXSwitchMultilevelSetter)",
         "setup":    "  pinMode(XXX, OUTPUT);\n  zunoFastPWMInit(0);",
-        "loop":     "  if (pin3pwmSwitchMultilevelState != _pin3pwmSwitchMultilevelState) {\n" +
-                    "    _pin3pwmSwitchMultilevelState = pin3pwmSwitchMultilevelState;\n" +
-                    "    zunoFastPWMSet(255 - pin3pwmSwitchMultilevelState, pin3pwmSwitchMultilevelState);\n" +
+        "loop":     "  if (pinXXXSwitchMultilevelState != _pinXXXSwitchMultilevelState) {\n" +
+                    "    _pinXXXSwitchMultilevelState = pinXXXSwitchMultilevelState;\n" +
+                    "    zunoFastPWMSet(255 - pinXXXSwitchMultilevelState, pinXXXSwitchMultilevelState);\n" +
                     "    zunoFastPWMEnable(0);\n" +
                     "    zunoFastPWMEnable(1);\n" +
                     "  }",
