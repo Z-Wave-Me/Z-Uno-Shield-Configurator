@@ -721,49 +721,45 @@ function updateRelations() {
 
 
 function openPage(evt, page) {
-    var i,
-        p0 = htmlCEl('settings_row')[0],
-        p1 = htmlCEl('settings_row_relations')[0],
-        p2 = htmlCEl('settings_row_connection')[0];
+    var p = [ htmlCEl('settings_row')[0],
+              htmlCEl('settings_row_relations')[0],
+              htmlCEl('settings_row_connection')[0] ];
 
-    var pages = htmlCEl('configurator_tablinks');
+    var p_buttons = htmlCEl('configurator_tablinks');
 
-    for (var i = 0; i < pages.length; i++) {
-        pages[i].className = pages[i].className.replace(" manual_active", "");
+    for (var i = 0; i < p_buttons.length; i++) {
+        p_buttons[i].className = p_buttons[i].className.replace(" manual_active", "");
+    
+        // аккуратно скрываем страницы что бы не сбросить svg
+        // var display = page == i ? true : false; 
+        // var display = i === page;
+        softPageSwitch(p[i], i === page);
     }
 
-    evt.currentTarget.className += " manual_active";
+    p_buttons[page].className += " manual_active";
+    // softPageSwitch(p[page], true);
+}
 
-// аккуратно скрываем страницы что бы не сбросить svg
-    switch(page) {
-        case 0:
-            p0.style.position = null;
-            p0.style.opacity = 1;
-            p1.style.position = 'absolute';
-            p1.style.opacity = 0;
-            p2.style.position = 'absolute';
-            p2.style.opacity = 0;
-            break;
-
-        case 1:
-            p0.style.position = 'absolute';
-            p0.style.opacity = 0;
-            p1.style.position = null;
-            p1.style.opacity = 1;
-            p2.style.position = 'absolute';
-            p2.style.opacity = 0;
-            break;
-        
-        case 2:
-            p0.style.position = 'absolute';
-            p0.style.opacity = 0;
-            p1.style.position = 'absolute';
-            p1.style.opacity = 0;
-            p2.style.position = null;
-            p2.style.opacity = 1;
-            break;
+function softPageSwitch(el, display) {
+    // change sizes need to replace el
+    // hide pages for pins to shortcut page
+    if (display) {
+        el.style.overflow = null;
+        el.style.position = null;
+        el.style.opacity = 1;
+        el.style.width = null;
+        el.style.height = null;
+        el.style.top = null;
+    } else {
+        el.style.overflow = 'hidden';
+        el.style.position = 'absolute';
+        el.style.opacity = 0;
+        el.style.width = 0;
+        el.style.height = 0;
+        el.style.top = 0;
     }
 }
+
 
 function openTab(evt, tab) {
     // Tabcontrol part
