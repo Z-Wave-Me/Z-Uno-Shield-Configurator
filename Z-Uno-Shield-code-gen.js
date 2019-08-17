@@ -441,7 +441,8 @@ function pinsToTemplates(pins) {
         
         var templ = codeTemplates[pins[key].type];
         if (!templ) {
-            alert("Can not find code template for " + pins[key].type);
+            // alert("Can not find code template for " + pins[key].type);
+            console.log("Can not find code template for " + pins[key].type);
             return;
         }
         var params = clone(pins[key].params);
