@@ -503,65 +503,29 @@ function floatToRatio(x, maxNumerator) {
     return [h1 * Math.sign(x), k1];
 }
 
-
 function generateCode(pins) {
-    var templates = pinsToTemplates(pins);
+    // исправление множественного вызова
+    if (!pins.isReadyToCode) return;
+    var templates = pinsToTemplates(pins),
+        _relation = templatesToRelations(templates),
+        used_pins = []; 
+    // Собираем используемые в связях пины
+    Object.keys(_relation).map(function(i){ used_pins.push(_relation[i].device_sb.pin); })
 
-    // filter uses for bool condition
     var includes = templates.map(function(ch) { return ch.includes; }).filter(function(value, index, self) { return self.indexOf(value) === index && !!value; }).join('\n');
     var vars = templates.map(function(ch) { return ch.vars; } ).filter(function(value) { return !!value; }).join('\n\n');
     var channels = templates.map(function(ch) { return ch.channel; } ).filter(function(value) { return !!value; }).join(',\n');
     var reports = templates.map(function(ch) { return ch.report; } ).filter(function(value) { return !!value; }).join(',\n');
     var setup = templates.map(function(ch) { return ch.setup; } ).filter(function(value) { return !!value; }).join('\n\n');
-    var loop = templates.map(function(ch) { return ch.loop; } ).filter(function(value) { return !!value; }).join('\n\n');
+    // убираем кусок, если устройство уже используется в связях (предполгается, что в лупе только запись значения на пин)
+    var loop = templates.map(function(ch) { if (!used_pins.includes(ch.key)) return ch.loop;} ).filter(function(value) { return !!value; }).join('\n\n');
     var xetter = templates.map(function(ch) { return ch.xetter; } ).filter(function(value) { return !!value; }).join('\n\n');
     var funcs = templates.map(function(ch) { return ch.funcs; } ).filter(function(value) { return !!value; }).join('\n\n');
     var notes = templates.map(function(ch) { return ch.note; } ).filter(function(value) { return !!value; }).join('\n\n');
     var keys = templates.map(function(ch) { if (ch.note) return ch.key; } ).filter(function(value) { return !!value; }).join(',');
 
-    var htmlrels = htmlCEl('relation');
-
-
-    if (htmlrels.length > 1) {
-        var cvars = templates.map(
-            function(ch) {
-                return ch.vars.split(/\s+/).map(
-                        // remove punctuation
-                        function(value) {
-                            return value.replace(/[;,]/g, "") 
-                        }
-                ).filter(
-                    // filter for vars
-                    function(value) { 
-                        if (value.indexOf("pin") != -1 || value.indexOf("temperature") != -1) return value;
-                    }
-                )
-            } 
-        ).filter(
-            // bool
-            function(value) { 
-                return !!value; 
-        });
-
-        for (i = 1; i < htmlrels.length; i++) {
-            // update relelems obj
-            findRelationEl(i);
-            var sensor_sb = relelems.sensor.select,
-                condition_sb = relelems.condition.select,
-                device_sb = relelems.device.select,
-                mode_sb = relelems.mode.select,
-                condition_input = relelems.condition.input,
-                swmul_input = relelems.device.input;
-
-            console.log(sensor_sb.options[sensor_sb.selectedIndex].value)
-            console.log(condition_sb.options[condition_sb.selectedIndex].value)
-            console.log(device_sb.options[device_sb.selectedIndex].value)
-            console.log(condition_input.value)
-            console.log(swmul_input.value)
-        }
-    }
-
-
+    var rloop = '\n' + relations2code(_relation).map(function(ch) { return ch.rloop }).join('\n\n');
+    
     if (!includes && !vars && !channels && !setup && !loop && !xetter && !notes && !funcs)
         return {
             "code": "// Please select features",
@@ -580,7 +544,7 @@ function generateCode(pins) {
               setup + "\n" +
             "}\n\n" +
             "void loop() {\n" +
-              loop + "\n\n" +
+              loop + "\n" + rloop + "\n\n" +
             "  delay(20);\n" +
             "}\n\n" +
             "// Getters and setters\n\n" +
@@ -591,3 +555,166 @@ function generateCode(pins) {
         "keys": keys ? keys : "No keys"
     };
 };
+
+function templatesToRelations(templates) {
+    _relation = {};
+    var cvars = {};
+    var rel_el = htmlCEl('relation'),
+        rel_length = rel_el.length;
+    
+    if (rel_length > 0) {
+        templates.map(function(ch) {
+            cvars[ch.key] = [];
+            var regex = /pin.[a-zA-Z0-9]+/gm;
+            while ((m = regex.exec(ch.vars)) !== null) {
+                // This is necessary to avoid infinite loops with zero-width matches
+                if (m.index === regex.lastIndex)
+                    regex.lastIndex++;
+                
+                // The result can be accessed through the `m`-variable.
+                m.forEach((match, groupIndex) => {
+                        cvars[ch.key].push(match);
+                });
+            }
+        });        
+
+        for (i = 0; i < rel_length; i++) {
+            // update relelems obj
+            findRelationEl(rel_el[i]);
+            var sensor_pin = extractPinFromOption(relelems.sensor.select),
+                device_pin = extractPinFromOption(relelems.device.select);
+
+            _relation[i] = {'sensor_sb': {
+                                'value': relelems.sensor.select.value,
+                                'vars': cvars[sensor_pin],
+                                'pin': sensor_pin
+                            },
+                            'device_sb': {
+                                'value': relelems.device.select.value,
+                                'vars': cvars[device_pin],
+                                'pin': device_pin
+                            },
+                            'dht': relelems.dht.select.value,
+                            'ds18b20': relelems.ds18b20.select.value,
+                            'condition_sb': relelems.condition.select.value,
+                            'mode_sb': relelems.mode.select.value,
+                            'condition_input': relelems.condition.input.value,
+                            'swmul_input': relelems.device.input.value,
+                            'el': rel_el[i],
+                            'disabled': false };
+        }
+        var check_res = checkRelationsCorectness(_relation);
+        if (check_res.ready.length)
+            return _relation;
+    }
+    return 0;
+}
+
+
+function extractPinFromOption(sb) {
+    var text = sb.options[sb.selectedIndex].text;
+    try {
+        return text.match(/\[\d+\]/g)[0].replace(/(^.*\[|\].*$)/g, '');
+    } catch (e) {
+        return null;
+    }
+}
+
+
+function relations2code(_relation) {
+    var r_templates = [];
+
+    Object.keys(_relation).map(function(index) {
+        var __relation = _relation[index];
+
+        // uncompleted relation
+        if (__relation.disabled) return;
+        // rebuild relation with specific types 
+        if (__relation.sensor_sb.value === 'DS18B20') {
+            __relation.sensor_sb.vars = ['temperature[' + __relation.ds18b20 + ']'];
+            __relation.sensor_sb.value = 'SensorMultilevel';
+        }
+        if (__relation.sensor_sb.value === 'DHT') {
+            if (__relation.dht === 'temperature')
+                __relation.sensor_sb.vars = [__relation.sensor_sb.vars[1]]; //"pin12DHTTemperatureState"
+            else
+                __relation.sensor_sb.vars = [__relation.sensor_sb.vars[2]]; //"pin12DHTHumidityState"
+
+            __relation.sensor_sb.value = 'SensorMultilevel';
+        }
+
+        var r_templ = relationCodeTemplates[__relation.sensor_sb.value + '_' + __relation.device_sb.value];
+        if (!r_templ) {
+            console.log("Can not find relation code template for relation.\nS: " + __relation.sensor_sb.value + "\nD: " + __relation.device_sb.value);
+            return;
+        }
+       
+        r_params = r_templ.preAction(__relation);
+        
+
+        r_templates.push({
+            "rloop": reldetemplate(r_templ.rloop, __relation, r_params)
+        });
+    });
+    return r_templates;
+}
+
+function reldetemplate(r_templ, __relation, r_params) {
+    if (!r_templ) return r_templ;
+    if (r_params) r_params.map(function(value, index) { r_templ = r_templ.replace(new RegExp('PPP' + index + 'PPP', 'g'), value); })
+    return r_templ.replace(/SSS/g, __relation.sensor_sb.vars[0]).replace(/DDD/g, __relation.device_sb.vars[0]).replace(/SXSXSX/g, __relation.sensor_sb.pin).replace(/DXDXDX/g, __relation.device_sb.pin);
+}
+
+var r_params = [];
+var relationCodeTemplates = {
+    "SensorBinary_SwitchBinary": {
+        // s - sensor, m - mode, 
+        "rloop":"  if (SSS ? PPP1PPP : PPP2PPP) {\n" +
+                "    DDD = PPP3PPP;\n" +
+                "    digitalWrite(DXDXDX, DDD);\n" +
+                "  }",
+        "preAction": function(rel) {
+            r_params[1] = rel.condition_sb;
+            r_params[2] = rel.condition_sb == 0xFF ? 0x00 : 0xFF;
+            r_params[3] = rel.mode_sb;
+            return r_params;
+        }
+    },
+    "SensorMultilevel_SwitchBinary": {
+        // sensor condition value
+        "rloop":"  if (SSS PPP1PPP PPP2PPP) {\n" +
+                "    DDD = PPP3PPP;\n" +
+                "    digitalWrite(DXDXDX, DDD);\n" +
+                "  }",
+        "preAction": function(rel) {
+            r_params[1] = rel.condition_sb;
+            r_params[2] = rel.condition_input;
+            r_params[3] = rel.mode_sb;
+            return r_params;
+        }
+    },
+    "SensorBinary_SwitchMultilevel": {
+        "rloop":"  if (SSS ? PPP1PPP : PPP2PPP) {\n" +
+                "    DDD = PPP3PPP;\n" +
+                "    analogWrite(DXDXDX, (word)DDD * 255 / 99);\n" +
+                "  }",
+        "preAction": function(rel) {
+            r_params[1] = rel.condition_sb;
+            r_params[2] = rel.condition_sb == 0xFF ? 0x00 : 0xFF;
+            r_params[3] = rel.swmul_input;
+            return r_params;
+        }
+    },
+    "SensorMultilevel_SwitchMultilevel": {
+        "rloop":"  if (SSS PPP1PPP PPP2PPP) {\n" +
+                "    DDD = PPP3PPP;\n" +
+                "    analogWrite(DXDXDX, (word)DDD * 255 / 99);\n" +
+                "  }",
+        "preAction": function(rel) {
+            r_params[1] = rel.condition_sb;
+            r_params[2] = rel.condition_input;
+            r_params[3] = rel.swmul_input;
+            return r_params;
+        }
+    }
+}
