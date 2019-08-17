@@ -42,8 +42,6 @@ function updateSettings() {
         '?' + 
         Object.keys(params).map(function(key) { return key + '=' + params[key]; }).join('&')
     );
-
-    createManualPages();
 }
 
 function updateSetting(pin, group, mode) {
@@ -106,7 +104,6 @@ function updateParams() {
     updateParamsUI(pin, group);
     updateCode();
     updateRelations();
-    createManualPages();
 }
 
 function updateParamsUI(pin, group) {
@@ -732,11 +729,12 @@ function openPage(ev) {
 
     for (var i = 0; i < p_buttons.length; i++) {
         p_buttons[i].className = p_buttons[i].className.replace(" manual_active", "");
-    
+        // обновляем вкладки пошагового руководства
+        if (page == 2) 
+            createManualPages();
         // аккуратно скрываем страницы что бы не сбросить svg
         softPageSwitch(p[i], i == page);
     }
-
     p_buttons[page].className += " manual_active";
 }
 
@@ -789,8 +787,6 @@ function openTab(ev, tab) {
     } else {
         svgdGen(-1, null, false);
     }
-
-    createManualPages();
 }
 
 function connectDoorlockButton(id, isConnect) {
@@ -1161,7 +1157,6 @@ function createManualPages() {
                     htmlEl('manual_pages_control').appendChild(bu);
                 }
 
-                // add htmlEl('manual_page_' + i) content
                 if (!htmlEl('manual_page_' + i)) {
                     var div = document.createElement('div');
                     div.classList.add('manual_tabcontent');
