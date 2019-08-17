@@ -518,20 +518,22 @@ function generateCode(pins) {
     var reports = templates.map(function(ch) { return ch.report; } ).filter(function(value) { return !!value; }).join(',\n');
     var setup = templates.map(function(ch) { return ch.setup; } ).filter(function(value) { return !!value; }).join('\n\n');
     // убираем кусок, если устройство уже используется в связях (предполгается, что в лупе только запись значения на пин)
-    var loop = templates.map(function(ch) { if (!used_pins.includes(ch.key)) return ch.loop;} ).filter(function(value) { return !!value; }).join('\n\n');
+    var loop = templates.map(function(ch) { if (!used_pins.includes(ch.key)) return ch.loop;} ).filter(function(value) { return !!value; }).join('\n\n') + '\n';
     var xetter = templates.map(function(ch) { return ch.xetter; } ).filter(function(value) { return !!value; }).join('\n\n');
     var funcs = templates.map(function(ch) { return ch.funcs; } ).filter(function(value) { return !!value; }).join('\n\n');
     var notes = templates.map(function(ch) { return ch.note; } ).filter(function(value) { return !!value; }).join('\n\n');
     var keys = templates.map(function(ch) { if (ch.note) return ch.key; } ).filter(function(value) { return !!value; }).join(',');
 
-    var rloop = '\n' + relations2code(_relation).map(function(ch) { return ch.rloop }).join('\n\n');
+    var rloop = '\n' + relations2code(_relation).map(function(ch) { return ch.rloop }).join('\n\n') +  "\n\n";
     
     if (!includes && !vars && !channels && !setup && !loop && !xetter && !notes && !funcs)
         return {
             "code": "// Please select features",
             "notes": "No notes"
         };
-    
+    if (!loop.match(/\S/gm)) loop = '';
+    if (!rloop.match(/\S/gm)) rloop = '';
+
     return {
         "code":
             "" + includes + (includes ? "\n\n" : "") + "" +
@@ -544,7 +546,7 @@ function generateCode(pins) {
               setup + "\n" +
             "}\n\n" +
             "void loop() {\n" +
-              loop + "\n" + rloop + "\n\n" +
+              loop + rloop +
             "  delay(20);\n" +
             "}\n\n" +
             "// Getters and setters\n\n" +
