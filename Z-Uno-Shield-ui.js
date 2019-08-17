@@ -622,11 +622,12 @@ function loadConfiguration() {
         htmlEl('pin11_NC').click();
         htmlEl('pin12_NC').click();
     }
-    Object.defineProperty(pins, "isLoaded", {
+    Object.defineProperty(pins, "isReadyToCode", {
         enumerable: false,
         writable: true
     });
-    pins.isLoaded = true;
+    pins.isReadyToCode = true;
+    updateCode();
 }
 // Default
 // temporary workaround
@@ -696,19 +697,18 @@ defaultParams = {
 };
 
 // Code generation
-
 var pins = {};
 var old_pins = {};
 
 function updateCode() {
-    if (pins.isLoaded) {
+    if (pins.isReadyToCode) {
         var ret = generateCode(pins);
         htmlEl('code').innerHTML = ret.code;
     }
 }
 function updateRelations() {
     // prevent early call before pins obj are fully collected
-    if (pins.isLoaded == true) {
+    if (pins.isReadyToCode == true) {
         // compare to prevent bug with relation reseting 
         if (JSON.stringify(old_pins) !== JSON.stringify(pins)) {
             old_pins = pins;
