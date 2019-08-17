@@ -761,9 +761,10 @@ function softPageSwitch(el, display) {
 }
 
 
-function openTab(evt, tab) {
+function openTab(ev, tab) {
     // Tabcontrol part
     var i, tabcontent, tablinks;
+    tab = 'manual_page_' + ev.srcElement.id.replace(/\D+/g, '');
 
     tabcontent = htmlCEl("manual_tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -772,11 +773,11 @@ function openTab(evt, tab) {
 
     tablinks = htmlCEl("manual_tablinks");
     for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" manual_active", "");
+        tablinks[i].classList.remove('manual_active');
     }
 
     htmlEl(tab).style.display = "block";
-    evt.currentTarget.className += " manual_active";
+    ev.srcElement.classList.add('manual_active');
 
     // SVG display part
     var currentTarget = parseInt(tab.replace(/[^0-9\.]/g, ''), 10);
@@ -1137,48 +1138,44 @@ function svgdGen(pinNum, deviceType, display) {
 }
 
 // Issue with tabs for pin 3
+htmlCEl('manual_tablinks')[0].onclick = openTab;
+htmlCEl('manual_tablinks')[1].onclick = openTab;
+// Issue with tabs for pin 3
 function createManualPages() {
     for (var i = 0; i <= 16; i++) {
-        // this need to update content of first and second pages
         if (i < 2) {
             generateContentOfTab(i);
             continue;
         }
-        
         if (i == 9) i = 11;
-
-        // this need to prevent early calling pins 
         try {   
             if (pins[i]['type'] != 'NC') {
-                // for sorting
-                if (htmlEl('manual_page_' + i) && htmlEl('manual_control_button_' + i)) {
-                    $("#manual_control_button_" + i).remove();
-                }
-             
                 var pin_label = getPinLabelByNum(i);
+                // add htmlEl('manual_control_button_' + i)
+                if (!htmlEl('manual_control_button_' + i)) {
+                    var bu = document.createElement('button');
+                    bu.classList.add('manual_tablinks');
+                    bu.id = 'manual_control_button_' + i;
+                    bu.onclick = openTab;
+                    bu.innerText = pin_label;
+                    htmlEl('manual_pages_control').appendChild(bu);
+                }
 
-                // add button
-                if (!htmlEl('manual_control_button_' + i)) 
-                    $("#manual_pages_control").append('<button\
-                                                        class="manual_tablinks"\
-                                                        id="manual_control_button_' + i + '"\
-                                                        onclick="openTab(event, \'manual_page_' + i + '\')\
-                                                        ">' + pin_label + '</button>');
-
-                // add page content
+                // add htmlEl('manual_page_' + i) content
                 if (!htmlEl('manual_page_' + i)) {
-                    $("#manual_pages").append('<div id="manual_page_' + i + '"\
-                                                class="manual_tabcontent">');
+                    var div = document.createElement('div');
+                    div.classList.add('manual_tabcontent');
+                    div.id = 'manual_page_' + i;
+                    htmlEl('manual_pages').appendChild(div);
                 }
                 
                 generateContentOfTab(i);
 
             } else if (pins[i]['type'] == 'NC' && htmlEl('manual_page_' + i)) {
-                $("#manual_control_button_" + i).remove();
-                $("#manual_page_" + i).remove();
+                htmlEl('manual_control_button_' + i).remove();
+                htmlEl('manual_page_' + i).remove();
             }
-
-        } catch(e) {  Error(e)  }
+        } catch(e) {  }
     }
 }
 
