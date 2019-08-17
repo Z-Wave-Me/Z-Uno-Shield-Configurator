@@ -719,11 +719,14 @@ function updateRelations() {
     }
 }
 
-
-function openPage(evt, page) {
+htmlCEl('configurator_tablinks')[0].onclick = openPage;
+htmlCEl('configurator_tablinks')[1].onclick = openPage;
+htmlCEl('configurator_tablinks')[2].onclick = openPage;
+function openPage(ev) {
     var p = [ htmlCEl('settings_row')[0],
               htmlCEl('settings_row_relations')[0],
-              htmlCEl('settings_row_connection')[0] ];
+              htmlCEl('settings_row_connection')[0] ],
+        page = ev.srcElement.id.replace(/\D+/g,'');
 
     var p_buttons = htmlCEl('configurator_tablinks');
 
@@ -731,13 +734,10 @@ function openPage(evt, page) {
         p_buttons[i].className = p_buttons[i].className.replace(" manual_active", "");
     
         // аккуратно скрываем страницы что бы не сбросить svg
-        // var display = page == i ? true : false; 
-        // var display = i === page;
-        softPageSwitch(p[i], i === page);
+        softPageSwitch(p[i], i == page);
     }
 
     p_buttons[page].className += " manual_active";
-    // softPageSwitch(p[page], true);
 }
 
 function softPageSwitch(el, display) {
