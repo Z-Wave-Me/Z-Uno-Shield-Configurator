@@ -405,24 +405,45 @@ function checkRelationsCorectness(_relation) {
 		ready: [],
 		alert: []
 	};
+	
     for (var i = 0; i < length; i++) {
         var relel = findRelationEl(_relation[i].el);
+
         // sensor select
-        if (relel[0].value === "default_state" || 
-        		// sensor input
-                (relel[4].value === "value" && relel[4].style.display !== 'none') ||
-                	// debive select
-                    relel[2].value === "default_state" || 
-                    	// device input
-                        (relel[5].value === "value" && relel[5].style.display !== 'none')) {
-            relel[6].style.display = "block";
-            _relation[i].disabled = true;
-            res.alert.push(i);
+        if (relel[0].value === "default_state")
+        	res.alert.push(0);
+        else
+        	res.ready.push(0);
+
+        // sensor input
+        if (relel[4].value === "value" && relel[4].style.display !== 'none')
+        	res.alert.push(4);
+        else
+        	res.ready.push(4);
+
+    	// device select
+        if (relel[2].value === "default_state") 
+        	res.alert.push(2);
+        else
+        	res.ready.push(2);
+
+    	// device input
+        if (relel[5].value === "value" && relel[5].style.display !== 'none') 
+        	res.alert.push(5);
+        else
+        	res.ready.push(5);
+
+        if (res.alert.length) {
+        	_relation[i].disabled = true;
+    	    relelems.icon.alert.style.display = "block";
+
+    	    res.alert.map(function(el) { relel[el].style.borderColor = 'red' });
         } else {
-            relel[6].style.display = "none";
-            _relation[i].disabled = false;
-            res.ready.push(i);
+        	_relation[i].disabled = false;
+    	    relelems.icon.alert.style.display = "none";
         }
+        if (res.ready.length)
+		    res.ready.map(function(el) { relel[el].style.borderColor = '' });
     }
     return res;
 }
