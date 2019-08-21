@@ -1363,14 +1363,19 @@ pagesContent = {
     'step_thermostat': 'Follow instructions'
 };
 
-function slideAction(slide, event) {
-    var x = document.getElementById(slide);
-    if (x.style.display === "block") {
-        x.style.display = "none";
-        event.innerHTML = "Show code"
-    } else {
-        x.style.display = "block";
-        event.innerHTML = "Hide code"
+htmlEl('jslink_code').onmousedown = collapseAction;
+function collapseAction() {
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].classList.toggle("collapsible_active");
+        var content = coll[i].nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        } 
     }
 }
 // Issue with ADC0 - don't work page creation for this pin after reload page
