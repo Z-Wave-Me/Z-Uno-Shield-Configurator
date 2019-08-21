@@ -1206,112 +1206,112 @@ function getPinLabelByNum(i) {
 }
 
 function generateContentOfTab(i) {
-        var pin_label = getPinLabelByNum(i);
+    var pin_label = getPinLabelByNum(i);
+    var content;
 
-        if (i < 2) {
-            $("#manual_page_" + i).html('<h3>Step ' + (i+1) + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_" + i, i) + '</p>');
-            return;
-        }
+    if (i < 2) {
+        htmlEl("manual_page_" + i).innerHTML = 
+        '<h3>Step ' + (i + 1) + '</h3>\
+         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_" + i, i) + '</p>';
 
-        // Pressure
-        if (pins[i]['params']['4'] == 'kPa') { 
-            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_pressure", i) + '</p>');
-        // Buttons
-        } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { 
-            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_buttons", i) + '</p>');
-        // RS485
-        } else if (pins[i]['type'] == 'RS485') { 
-            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_RS485", i) + '</p>');
-        // UART
-        } else if (pins[i]['type'] == 'UART') { 
-            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_UART", i) + '</p>');
-        // Valve
-        } else if (pins[i]['params']['1'] == 'valve') { 
-            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_valve", i) + '</p>');
-        // Siren
-        } else if (pins[i]['params']['1'] == 'siren') { 
-            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_siren", i) + '</p>');
-        // THERMOSTAT
-        } else if (pins[i]['params']['1'] == "heatingThermostat" || pins[i]['params']['1'] == "coolingThermostat") { 
-            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_thermostat", i) + '</p>');
-        // DS18B20
-        } else if (pins[i]['type'] == 'DS18B20') {
-            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_DS18B20", i) + '</p>');
-        // DHT
-        } else if (pins[i]['type'] == 'DHT') {
-            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_DHT", i) + '</p>');
-        // Contactor
-        } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch')) {
-            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_contactor", i) + '</p>');
-        // Reed Sensor
-        } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door')) {       
-            $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_reed", i) + '</p>');
-        // doorlock
-        } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) {
-            if (i >= 13 && i <= 16)
-                $("#manual_page_" + i).html('<div class="manual_type_select">\
-                                            <button class="manual_tablinks_off"\
-                                                    onclick="event, connectDoorlockButton('+ i +', false)">\
-                                                    Without button</button>\
-                                            <button class="manual_tablinks_on"\
-                                                    onclick="event, connectDoorlockButton('+ i +', true)">\
-                                                    With button</button>\
-                                        </div>\
-                                        <h3>Step for ' + pin_label + '</h3>\
-                                        <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_doorlock_button", i) + '</p>');
-            else
-                $("#manual_page_" + i).html('<h3>Step for ' + pin_label + '</h3>\
-                                             <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_doorlock", i) + '</p>');
-                
-        // White LED
-        } else if (pins[i]['params']['1'] == 'single') {
-            $("#manual_page_" + i).html('<div class="manual_type_select">\
-                                            <button class="manual_tablinks_off"\
-                                                    onclick="event, connectAmplifier(false)">\
-                                                    Without amplifier</button>\
-                                            <button class="manual_tablinks_on"\
-                                                    onclick="event, connectAmplifier(true)">\
-                                                    With amplifier</button>\
-                                         </div>\
-                                         <h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_white_led", i) + '</p>');
-        // RGB LED strip
-        } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white') {
-            $("#manual_page_" + i).html('<div class="manual_type_select">\
-                                            <button class="manual_tablinks_off"\
-                                                    onclick="event, connectAmplifier(false)">\
-                                                    Without amplifier</button>\
-                                            <button class="manual_tablinks_on"\
-                                                    onclick="event, connectAmplifier(true)">\
-                                                    With amplifier</button>\
-                                         </div>\
-                                         <h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_rgb_led", i) + '</p>');
-        // RGBW LED strip
-        } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white') {
-            $("#manual_page_" + i).html('<div class="manual_type_select">\
-                                            <button class="manual_tablinks_off"\
-                                                    onclick="event, connectAmplifier(false)">\
-                                                    Without amplifier</button>\
-                                            <button class="manual_tablinks_on"\
-                                                    onclick="event, connectAmplifier(true)">\
-                                                    With amplifier</button>\
-                                         </div>\
-                                         <h3>Step for ' + pin_label + '</h3>\
-                                         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_rgbw_led", i) + '</p>');
-        } 
+        return;
+    }
+
+    // Pressure
+    if (pins[i]['params']['4'] == 'kPa') {
+        createpinpage(i, 'step_pressure');
+    // Buttons
+    } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { 
+        createpinpage(i, 'step_buttons');
+    // RS485
+    } else if (pins[i]['type'] == 'RS485') { 
+        createpinpage(i, 'step_RS485');
+    // UART
+    } else if (pins[i]['type'] == 'UART') { 
+        createpinpage(i, 'step_UART');
+    // Valve
+    } else if (pins[i]['params']['1'] == 'valve') { 
+        createpinpage(i, 'step_valve');
+    // Siren
+    } else if (pins[i]['params']['1'] == 'siren') { 
+        createpinpage(i, 'step_siren');
+    // THERMOSTAT
+    } else if (pins[i]['params']['1'] == "heatingThermostat" || pins[i]['params']['1'] == "coolingThermostat") { 
+        createpinpage(i, 'step_thermostat');
+    // DS18B20
+    } else if (pins[i]['type'] == 'DS18B20') {
+        createpinpage(i, 'step_DS18B20');
+    // DHT
+    } else if (pins[i]['type'] == 'DHT') {
+        createpinpage(i, 'step_DHT');
+    // Contactor
+    } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch')) {
+        createpinpage(i, 'step_contactor');
+    // Reed Sensor
+    } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door')) {       
+        createpinpage(i, 'step_reed');
+    // doorlock
+    } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) {
+        if (i >= 13 && i <= 16)
+            content = '<div class="manual_type_select">\
+                                        <button class="manual_tablinks_off"\
+                                                onclick="event, connectDoorlockButton('+ i +', false)">\
+                                                Without button</button>\
+                                        <button class="manual_tablinks_on"\
+                                                onclick="event, connectDoorlockButton('+ i +', true)">\
+                                                With button</button>\
+                                    </div>\
+                                    <h3>Step for ' + pin_label + '</h3>\
+                                    <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_doorlock_button", i) + '</p>';
+        else
+            createpinpage(i, 'step_doorlock');
+            
+    // White LED
+    } else if (pins[i]['params']['1'] == 'single') {
+        content = '<div class="manual_type_select">\
+                                        <button class="manual_tablinks_off"\
+                                                onclick="event, connectAmplifier(false)">\
+                                                Without amplifier</button>\
+                                        <button class="manual_tablinks_on"\
+                                                onclick="event, connectAmplifier(true)">\
+                                                With amplifier</button>\
+                                     </div>\
+                                     <h3>Step for ' + pin_label + '</h3>\
+                                     <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_white_led", i) + '</p>';
+    // RGB LED strip
+    } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white') {
+        content = '<div class="manual_type_select">\
+                                        <button class="manual_tablinks_off"\
+                                                onclick="event, connectAmplifier(false)">\
+                                                Without amplifier</button>\
+                                        <button class="manual_tablinks_on"\
+                                                onclick="event, connectAmplifier(true)">\
+                                                With amplifier</button>\
+                                     </div>\
+                                     <h3>Step for ' + pin_label + '</h3>\
+                                     <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_rgb_led", i) + '</p>';
+    // RGBW LED strip
+    } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white') {
+        content = '<div class="manual_type_select">\
+                                        <button class="manual_tablinks_off"\
+                                                onclick="event, connectAmplifier(false)">\
+                                                Without amplifier</button>\
+                                        <button class="manual_tablinks_on"\
+                                                onclick="event, connectAmplifier(true)">\
+                                                With amplifier</button>\
+                                     </div>\
+                                     <h3>Step for ' + pin_label + '</h3>\
+                                     <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_rgbw_led", i) + '</p>';
+    } 
+    if (content) htmlEl("manual_page_" + i).innerHTML = content;
+}
+function createpinpage(i, name) {
+    var h = document.createElement('h3'),
+        p = document.createElement('p');
+    h.innerHTML = ' Step for ' + getPinLabelByNum(i);
+    p.innerHTML = updatePagesContent(name, i);
+    p.classList.add('manual_step_p_' + i);
+    htmlEl("manual_page_" + i).innerHTML = h.outerHTML + p.outerHTML;
 }
 function updatePagesContent(page, pin) {
     var res;
