@@ -623,6 +623,7 @@ function loadConfiguration() {
     });
     pins.isReadyToCode = true;
     updateCode();
+    addRelation();
 }
 // Default
 // temporary workaround
@@ -654,7 +655,7 @@ function ready() {
 
     tabs[0].click();
     // REMOVE BEFORE COMMIT
-    // tabs[1].click();
+    tabs[2].click();
 }
 
 // Default params
@@ -1351,6 +1352,8 @@ function collapseAction(event) {
       content.style.maxHeight = null;
     else
       content.style.maxHeight = content.scrollHeight + "px";
+ 
+    content.scrollIntoView({block: "center", behavior: "smooth"});
 }
 
 //Returns true if it is a DOM node

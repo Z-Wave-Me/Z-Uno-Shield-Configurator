@@ -1,25 +1,27 @@
-/*/ 	TODO list:
-/
-/  [!]	1. Сохранять значения установленных связей (например в урл)
-/		2. Добавить UART / RS
-/		3. Обрабатывать 3pwm
-/		4. Разобраться с zunoSendReport() (нужен ли после изменения состояния в связке)
-/		5. Обновление списков c устройствами для связей при изменении пинов
-/		6. Сделать баннер на вторую вкладку, исчезающий при создании первой связи. Содержание и необходимость в процессе.
-/		7. Реализовать фичи или просто вставлять шаблоны, если не актуально и предупреждать о необходимости ручного дозаполнения. Например: 
-/			7.1  Запись состояния датчика в EEPROM (без связи) 
-/			7.2  
-/			7.3  Fast PWM (без связи)
-/			7.4  External Interrupts
-/			7.5  Если используются кейсы, где устройство на батарейках и необходимо управлять устройствами по уровню заряда, то:
-/				7.5.1 Сделать устройство спящим. Например: засыпать начнет после определенного заряда батареи (если это возможно). 
-/				7.5.2 Добавить связь "заряд->действие над устройством"
-/			7.6  ZUNO_SETUP_S2ACCESS
-/			7.7  Соритировка сетапа
-/
-/
-/
-/*/ 
+// 	TODO:		//
+//__________//
+//
+// 	? 	1. Сохранять значения установленных связей (например в урл)
+//			2. Добавить UART / RS
+//	!		3. Обрабатывать 3pwm
+////		  4. Разобраться с zunoSendReport() (нужен ли после изменения состояния в связке)
+//	?		5. Обновление списков c устройствами для связей при изменении пинов
+////			6. Сделать баннер на вторую вкладку, исчезающий при создании первой связи. Содержание и необходимость в процессе.
+//	*		7. Пользовательские конфиг-параметры
+//				7.1  Запись состояния датчика в EEPROM
+//				7.2  ZUNO_SETUP_S2ACCESS
+//				7.3  Fast PWM
+//				7.4  External Interrupts
+//				7.5  Если используются кейсы, где устройство на батарейках и необходимо управлять устройствами по уровню заряда, то:
+//					7.5.1 Сделать устройство спящим. Например: засыпать начнет после определенного заряда батареи (если это возможно). 
+//					7.5.2 Добавить связь "заряд->действие над устройством"
+//				7.6  
+//				7.7  Соритировка сетапа
+//	!		8. Установить правильные пути для ассерта
+//
+//
+//
+//
 
 var conditions = {
 	'>': ">",
@@ -43,8 +45,9 @@ var modes = {
 var dht_states = {
 	temperature: "Temperature",
 	humidity: "Humidity"
-}
+};
 var boolean_answer = ["Yes", "No"];
+// TODO: arr to {src:val} 
 var default_state = ["Select sensor", "Select device"];
 // list with all selected pins and their types
 var pins_relationtypes = {};
@@ -52,41 +55,41 @@ var pins_relationtypes = {};
 var relelems = {};
 
 // follow add relation button
-htmlEl("add_relation_button").onclick =	eventHandler;
+htmlEl("add_relation_button").onclick = eventHandler;
 
 function findParentRelation(el) {
 	if (htmlEl('relations').contains(el)) {
 		var DOM_rels = htmlCEl('relation');
-		for (i=0;i<DOM_rels.length;i++) 
-			if (DOM_rels[i].contains(el)) 
+		for (i = 0; i < DOM_rels.length; i++)
+			if (DOM_rels[i].contains(el))
 				return DOM_rels[i];
 	}
 }
 
 function eventHandler(ev) {
 	if (ev.isTrusted) {
-		if (evscmp(/relation/, ev)) 
+		if (evscmp(/relation/, ev))
 			relation = findParentRelation(ev.srcElement);
 		// определяем вызывающий элемент по классу
-		switch(true) {
+		switch (true) {
 			case evscmp(/collapsible/, ev):
-				if (evscmp(/advanced_relation_button/,ev))
+				findRelationEl(relation);
+				if (evscmp(/advanced_relation_button/, ev))
 					collapseRelationEl(ev, relelems.advanced.content);
 				else
 					collapseAction(ev);
 				break;
+
 			case evscmp(/remove_relation_button/, ev):
 				removeRelation(relation);
 				updateCode(pins);
 				break;
-
 			case evscmp(/add_relation_button/, ev, 'id'):
 				addRelation();
-				// updateRelationDependencies(_relation[_relation.length]);
 				break;
 
-
 			case evscmp(/relation_.*_input/, ev) && (ev.type == 'blur' || ev.type == 'focus'):
+				findRelationEl(relation);
 				if (ev.srcElement.value == 'value') {
 					ev.srcElement.value = "";
 					ev.srcElement.style.color = "#000";
@@ -94,6 +97,7 @@ function eventHandler(ev) {
 					ev.srcElement.value = 'value';
 					ev.srcElement.style.color = "#bbb";
 				}
+				
 				// 0-100
 				if (evscmp(/relation_swmul_input/, ev) && ev.srcElement.value != 'value' && ev.srcElement.value != '') {
 					var val = relelems.device.input.value;
@@ -104,23 +108,29 @@ function eventHandler(ev) {
 						if (val > 99) relelems.device.input.value = 255;
 					}
 				}
+
+				findRelationEl(findParentRelation(ev.srcElement));
+				updateRelationDependencies();
+				updateCode(pins);
 				break;
 
-			case (evscmp(/relation_.*_select/, ev) || evscmp(/relation_.*_input/, ev)) && ev.type == "change":
-				updateRelationDependencies(ev);
+			case (evscmp(/relation_.*_select/, ev) || evscmp(/relation_.*_input/, ev)) && (ev.type == "change"):
+				findRelationEl(findParentRelation(ev.srcElement));
+				updateRelationDependencies();
 				updateCode(pins);
 				break;
 		}
+		updateCode(pins);
 	}
 }
 
 function collapseRelationEl(event, content) {
 	event.srcElement.classList.toggle("collapsible_active");
-	if (content.style.maxHeight){
+	if (content.style.maxHeight) {
 		content.style.maxHeight = null;
 	} else {
 		content.style.maxHeight = content.scrollHeight + "px";
-	} 
+	}
 }
 
 // add to tab onclick event
@@ -136,32 +146,32 @@ function pinsType2relationsType() {
 		pins_relationtypes = {
 			sensor: {},
 			device: {}
-		}
-	
-	    for (var i = 3; i <= 16; i++) {
-		    if (i == 9) i = 11;
+		};
+
+		for (var i = 3; i <= 16; i++) {
+			if (i == 9) i = 11;
 			var pin_type = pins[i]['type'];
-	
-	        if (pin_type != 'NC') {
-	        	for (var cc in pin_types) 
-	        		if (pin_types[cc].includes(pin_type))
-		        		switch (cc) {
-		        			case "SensorBinary":
-		        			case "SensorMultilevel":
-				        		pins_relationtypes.sensor[i] = pin_type;
-				        		break;
-		        			case "SwitchBinary":
-		        			case "SwitchMultilevel":
-				        		pins_relationtypes.device[i] = pin_type;
-				        		break;
-		        			case "interface_types":
-		        				break;
-		        			default:
-			        			console.log('Unknown pin type: ' + pin_type);
-			        			break;
-		        		}
-	    	}
-	    }
+
+			if (pin_type != 'NC') {
+				for (var cc in pin_types)
+					if (pin_types[cc].includes(pin_type))
+						switch (cc) {
+							case "SensorBinary":
+							case "SensorMultilevel":
+								pins_relationtypes.sensor[i] = pin_type;
+								break;
+							case "SwitchBinary":
+							case "SwitchMultilevel":
+								pins_relationtypes.device[i] = pin_type;
+								break;
+							case "interface_types":
+								break;
+							default:
+								console.log('Unknown pin type: ' + pin_type);
+								break;
+						}
+			}
+		}
 	} catch (e) { console.log(e); }
 }
 
@@ -173,50 +183,49 @@ function fillRelationSelectBoxes(relation) {
 		dht_sb = relelems.dht.select,
 		condition_sb = relelems.condition.select,
 		device_sb = relelems.device.select,
-		mode_sb = relelems.mode.select,
-		condition_input = relelems.condition.input,
-		device_input = relelems.device.input;
+		mode_sb = relelems.mode.select;
 
 
-	// if (sensor_sb.childNodes.length !== 0) {
-	// 	removeOptions(ds18b20_sb);
-	// }
-	
+	if (sensor_sb.childNodes.length !== 0) {
+		removeOptions(ds18b20_sb);
+	}
+
 	// default
-	default_state.forEach(function(state) {
-	    var opt = document.createElement('option');
-	    opt.innerHTML = state;
-	    opt.value = 'default_state';
-		switch(state) {
-			case 'Select sensor':
-				for (i = 0; i < sensor_sb.options.length; i++)
-					if (sensor_sb.options[i] == opt) 
-						continue;
-					else
-						sensor_sb.appendChild(opt);
-				break;
-			case 'Select device':				
-				for (i = 0; i < device_sb.options.length; i++)
-					if (device_sb.options[i] == opt) 
-						continue;
-					else
-						device_sb.appendChild(opt);
-				break;
-		}
-	});
+	// default_state.forEach(function (state) {
+	// 	var opt = document.createElement('option');
+	// 	opt.innerHTML = state;
+	// 	opt.value = 'default_state';
+	// 	switch (state) {
+	// 		case 'Select sensor':
+	// 			for (i = 0; i < sensor_sb.options.length; i++)
+	// 				if (sensor_sb.options[i] == opt)
+	// 					continue;
+	// 				else
+	// 					sensor_sb.appendChild(opt);
+	// 			break;
+	// 		case 'Select device':
+	// 			for (i = 0; i < device_sb.options.length; i++)
+	// 				if (device_sb.options[i] == opt)
+	// 					continue;
+	// 				else
+	// 					device_sb.appendChild(opt);
+	// 			break;
+	// 	}
+	// });
 
 	// sensors
 	for (var pin in pins_relationtypes.sensor) {
-	    var opt = document.createElement('option');
-	    opt.innerHTML = pins_relationtypes.sensor[pin] + ' [' + pin + ']';
-	    opt.value = pins_relationtypes.sensor[pin];
-	    sensor_sb.appendChild(opt);
+		var opt = document.createElement('option');
+		opt.innerHTML = pins_relationtypes.sensor[pin] + ' [' + pin + ']';
+		opt.value = pins_relationtypes.sensor[pin];
+		sensor_sb.appendChild(opt);
 	}
 	// ds18b20
 	if (pins[11]['type'] === 'DS18B20') {
-		for (var i = 0; i < pins[11]["params"][1]; i++) {
+		for (var i = 1; i <= pins[11]["params"][1]; i++) {
 			var opt = document.createElement('option');
-			opt.innerHTML = opt.value = i + 1;
+			opt.innerHTML = i;
+			opt.value = i;
 			ds18b20_sb.appendChild(opt);
 		}
 	}
@@ -229,29 +238,29 @@ function fillRelationSelectBoxes(relation) {
 	}
 	// condition
 	for (var condition in conditions) {
-	    var opt = document.createElement('option');
-	    opt.innerHTML = conditions[condition];
-	    opt.value = condition;
-	    condition_sb.appendChild(opt);
-	};
+		var opt = document.createElement('option');
+		opt.innerHTML = conditions[condition];
+		opt.value = condition;
+		condition_sb.appendChild(opt);
+	}
 	// devices
 	for (var pin in pins_relationtypes.device) {
-	    var opt = document.createElement('option');
-	    opt.innerHTML = pins_relationtypes.device[pin] + ' [' + pin + ']';
-	    opt.value = pins_relationtypes.device[pin];
-	    device_sb.appendChild(opt);
+		var opt = document.createElement('option');
+		opt.innerHTML = pins_relationtypes.device[pin] + ' [' + pin + ']';
+		opt.value = pins_relationtypes.device[pin];
+		device_sb.appendChild(opt);
 	}
 	// modes
 	for (var mode in modes) {
-	    var opt = document.createElement('option');
-	    opt.innerHTML = modes[mode];
-	    opt.value = mode;
-	    mode_sb.appendChild(opt);
-	};
+		var opt = document.createElement('option');
+		opt.innerHTML = modes[mode];
+		opt.value = mode;
+		mode_sb.appendChild(opt);
+	}
 }
 
 
-function updateRelationDependencies(ev) {
+function updateRelationDependencies() {
 	var sensor_sb = relelems.sensor.select,
 		ds18b20_sb = relelems.ds18b20.select,
 		dht_sb = relelems.dht.select,
@@ -260,60 +269,66 @@ function updateRelationDependencies(ev) {
 		mode_sb = relelems.mode.select,
 		condition_input = relelems.condition.input,
 		device_input = relelems.device.input;
-
-		// default
-		if (sensor_sb.value.indexOf('default_state') > -1) {
-			condition_sb.style.display = condition_input.style.display = ds18b20_sb.style.display = 'none';
-		// binary
-		} else if (sensor_sb.value.indexOf('SensorBinary') > -1) {
-			// options
-			for (var i = 0; i < condition_sb.options.length; i++) 
-				if (i > 3) 
-					condition_sb.options[i].style.display = 'block';
-				else
-					condition_sb.options[i].style.display = 'none';
-			
-			// elements
-			dht_sb.style.display = 'none';
-			ds18b20_sb.style.display = 'none';
-			condition_input.style.display = 'none';
-			condition_sb.style.display = 'block';
-			condition_sb.selectedIndex = 4;
-		// multilevel
-		} else {
-			// options
-			for (var i = 0; i < condition_sb.options.length; i++)
-				if (i < 4)
-					condition_sb.options[i].style.display = 'block';
-				else
-					condition_sb.options[i].style.display = 'none';
-
-			// elements
-			if (ds18b20_sb.options)
-				ds18b20_sb.style.display = 'block';
-			else
-				ds18b20_sb.style.display = 'none';
-			if (dht_sb.options)
-				dht_sb.style.display = 'block';
-			else
-				dht_sb.style.display = 'none';
-
-			condition_sb.style.display = 'block';
-			condition_input.style.display = 'block';
-			condition_sb.selectedIndex = 0;
-		}
+	var els = [ relelems.sensor.select, relelems.device.select, relelems.ds18b20.select, 
+		relelems.dht.select, relelems.condition.select, relelems.mode.select, 
+		relelems.condition.input, relelems.device.input ];
 	
+	els.forEach(function(el, i) { if (i > 1) el.style.display = 'none'; });
+	// *default
+	if (sensor_sb.value.indexOf('default_state') > -1) {
+		condition_sb.style.display = 'none';
+		condition_input.style.display = 'none';
+		ds18b20_sb.style.display = 'none';
+	// *binary
+	} else if (sensor_sb.value.indexOf('SensorBinary') > -1) {
+		for (var i = 0; i < condition_sb.options.length; i++)
+			if (i > 3)
+				condition_sb.options[i].style.display = 'block';
+			else
+				condition_sb.options[i].style.display = 'none';
+
+		dht_sb.style.display = 'none';
+		ds18b20_sb.style.display = 'none';
+		condition_input.style.display = 'none';
+		condition_sb.style.display = 'block';
+		// manual update selected index
+		if (!([4,5].includes(condition_sb.selectedIndex))) condition_sb.selectedIndex = 4;
+	// *multilevel
+	} else {
+		for (var i = 0; i < condition_sb.options.length; i++)
+			if (i < 4)
+				condition_sb.options[i].style.display = 'block';
+			else
+				condition_sb.options[i].style.display = 'none';
+
+		// elements
+		if (sensor_sb.selectedOptions[0].value == "DS18B20")
+			ds18b20_sb.style.display = 'block';
+		else
+			ds18b20_sb.style.display = 'none';
+
+		if (sensor_sb.selectedOptions[0].value == "DHT")
+			dht_sb.style.display = 'block';
+		else
+			dht_sb.style.display = 'none';
+
+		condition_sb.style.display = 'block';
+		condition_input.style.display = 'block';
+		// manual update selected index
+		if (([4,5].includes(condition_sb.selectedIndex))) condition_sb.selectedIndex = 0;
+	}
+
 	// device -> mode 
-		if (device_sb.value.indexOf('default_state') > -1) {
-			mode_sb.style.display = "none";
-			device_input.style.display = "none";
-		} else if (device_sb.value.indexOf('SwitchBinary') > -1) {
-			mode_sb.style.display = "block";
-			device_input.style.display = "none";
-		} else {
-			mode_sb.style.display = "none";
-			device_input.style.display = "block";
-		}
+	if (device_sb.value.indexOf('default_state') > -1) {
+		mode_sb.style.display = "none";
+		device_input.style.display = "none";
+	} else if (device_sb.value.indexOf('SwitchBinary') > -1) {
+		mode_sb.style.display = "block";
+		device_input.style.display = "none";
+	} else {
+		mode_sb.style.display = "none";
+		device_input.style.display = "block";
+	}
 
 	relelems.advanced.hr.width = relelems.local.main.scrollWidth;
 }
@@ -321,22 +336,17 @@ function updateRelationDependencies(ev) {
 function addRelation() {
 	// clone hidden element
 	var relation = htmlEl('relations').appendChild(htmlCEl('relation_hidden')[0].cloneNode(true));
-	relation.classList.replace('relation_hidden', 'relation');
+	findRelationEl(relation);
 	// load content
 	loadRelationContent(relation);
 	// subcribe
-	findRelationEl(relation);
-	var sensor_sb = relelems.sensor.select,
-		ds18b20_sb = relelems.ds18b20.select,
-		dht_sb = relelems.dht.select,
-		condition_sb = relelems.condition.select,
-		device_sb = relelems.device.select,
-		mode_sb = relelems.mode.select,
-		condition_input = relelems.condition.input,
+	var condition_input = relelems.condition.input,
 		device_input = relelems.device.input,
 		collapse_button = relelems.advanced.button,
 		remove_button = relelems.local.remove;
-	
+		// TODO: organize
+	// var els = [relelems.sensor.select, relelems.ds18b20.select]
+
 	remove_button.onclick = eventHandler;
 	collapse_button.onclick = eventHandler;
 	device_input.onfocus = eventHandler;
@@ -350,6 +360,7 @@ function addRelation() {
 		relation_select[i].onchange = eventHandler;
 		relation_select[i].onclick = eventHandler;
 	}
+	relation.classList.replace('relation_hidden', 'relation');
 }
 
 function removeRelation(relation) {
@@ -358,18 +369,18 @@ function removeRelation(relation) {
 
 // _____ // HELPERS \\ _____ \\
 function removeOptions(selectbox) {
-    for (var i = 0; i < selectbox.options.length; i++)
-        selectbox.option[i].remove();
+	for (var i = 0; i < selectbox.options.length; i++)
+		selectbox.options[i].remove();
 }
 function evscmp(regex, ev, selector) {
 	if (selector == 'id')
-		return !!regex.test(ev.srcElement.id);
-	else 
-		return !!regex.test(ev.srcElement.className);
+		return !!regex.exec(ev.srcElement.id);
+	else
+		return !!regex.exec(ev.srcElement.className);
 }
 function findRelationEl(el) {
 	// TODO: set var name according with project 
-	if (typeof(el) == 'number') el = htmlCEl('relation')[el];
+	if (typeof (el) == 'number') el = htmlCEl('relation')[el];
 
 	relelems.local = {
 		main: el.getElementsByClassName("relation_main")[0],
@@ -377,7 +388,7 @@ function findRelationEl(el) {
 		remove: el.getElementsByClassName("remove_relation_button")[0],
 		notes: el.getElementsByClassName("relation_notes")[0]
 	};
-	relelems.sensor = { 
+	relelems.sensor = {
 		select: el.getElementsByClassName("relation_sensor_select")[0]
 	};
 	relelems.ds18b20 = {
@@ -405,8 +416,7 @@ function findRelationEl(el) {
 		button: el.getElementsByClassName("collapsible")[0],
 		hr: el.getElementsByClassName("relation_hr")[0]
 	};
-
-	return el.el;
+	return el;
 }
 
 function checkRelationsCorectness(_relation) {
@@ -416,48 +426,52 @@ function checkRelationsCorectness(_relation) {
 		alert: []
 	};
 
-    for (var i = 0; i < length; i++) {
-        findRelationEl(_relation[i].el);
+	for (var i = 0; i < length; i++) {
+		findRelationEl(i);
 		var sensor_sb = relelems.sensor.select,
 			device_sb = relelems.device.select,
 			condition_input = relelems.condition.input,
 			device_input = relelems.device.input;
 
-        // sensor select
-	    if (sensor_sb.value === "default_state")
-        	res.alert.push(sensor_sb);
-	    else 
-        	res.ready.push(sensor_sb);
-    	// device select
-        if (device_sb.value === "default_state")
-        	res.alert.push(device_sb);
-        else
-        	res.ready.push(device_sb);
+		// sensor select
+		if (sensor_sb.value === "default_state")
+			res.alert.push(sensor_sb);
+		else
+			res.ready.push(sensor_sb);
+		// device select
+		if (device_sb.value === "default_state")
+			res.alert.push(device_sb);
+		else
+			res.ready.push(device_sb);
 
-        // sensor input
-        if (condition_input.value != "value" && 
-        	condition_input.value != "" && 
-        	condition_input.style.display != 'none')
-        	res.ready.push(condition_input);
-        else
-        	res.alert.push(condition_input);
-    	// device input
-        if (device_input.value != "value" && 
-        	device_input.value != "" && 
-        	device_input.style.display != 'none') 
-        	res.ready.push(device_input);
-        else
-        	res.alert.push(device_input);
+		// sensor input
+		if ((condition_input.value != "value") &&
+					(condition_input.value != "") &&
+						(condition_input.style.display != 'none'))
+			res.ready.push(condition_input);
+		else
+			res.alert.push(condition_input);
+		// device input
+		if (device_input.value != "value" &&
+			device_input.value != "" &&
+			device_input.style.display != 'none')
+			res.ready.push(device_input);
+		else
+			res.alert.push(device_input);
 
+		res.alert.forEach(function (el, i) {
+			if (el.style.display == 'none') res.alert.splice(i, 1); 
+		});
+		
+		if (res.alert.length) {
+			_relation[i].disabled = true;
+			res.alert.map(function (el) { el.style.borderColor = 'red'; });
+		} else
+			_relation[i].disabled = false;
 
-        if (res.alert.length) {
-        	_relation[i].disabled = true;
-    	    res.alert.map(function(el) { el.style.borderColor = 'red' });
-        } else 
-        	_relation[i].disabled = false;
-
-        if (res.ready.length)
-		    res.ready.map(function(el) { el.style.borderColor = '' });
-    }
-    return res;
+		if (res.ready.length)
+			res.ready.map(function (el) { el.style.borderColor = null; });
+	} 
+	console.log(res);
+	return res;
 }
