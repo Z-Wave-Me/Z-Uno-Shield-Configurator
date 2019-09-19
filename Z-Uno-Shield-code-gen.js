@@ -510,37 +510,38 @@ function generateCode(pins) {
         _relation = templatesToRelations(templates),
         used_pins = []; 
     // Собираем используемые в связях пины
-    Object.keys(_relation).map(function(i){ used_pins.push(_relation[i].device_sb.pin); })
+    if (_relation) Object.keys(_relation).map(function(i){ used_pins.push(_relation[i].device_sb.pin); });
 
     var includes = templates.map(function(ch) { return ch.includes; }).filter(function(value, index, self) { return self.indexOf(value) === index && !!value; }).join('\n');
     var vars = templates.map(function(ch) { return ch.vars; } ).filter(function(value) { return !!value; }).join('\n\n');
     var channels = templates.map(function(ch) { return ch.channel; } ).filter(function(value) { return !!value; }).join(',\n');
     var reports = templates.map(function(ch) { return ch.report; } ).filter(function(value) { return !!value; }).join(',\n');
-    var setup = templates.map(function(ch) { return ch.setup; } ).filter(function(value) { return !!value; }).join('\n\n');
+    var setup = templates.map(function(ch) { return ch.setup; } ).filter(function(value) { return !!value; }).join('\n');
     // убираем кусок, если устройство уже используется в связях (предполгается, что в лупе только запись значения на пин)
     var loop = templates.map(function(ch) { if (!used_pins.includes(ch.key)) return ch.loop;} ).filter(function(value) { return !!value; }).join('\n\n') + '\n';
     var xetter = templates.map(function(ch) { return ch.xetter; } ).filter(function(value) { return !!value; }).join('\n\n');
     var funcs = templates.map(function(ch) { return ch.funcs; } ).filter(function(value) { return !!value; }).join('\n\n');
     var notes = templates.map(function(ch) { return ch.note; } ).filter(function(value) { return !!value; }).join('\n\n');
     var keys = templates.map(function(ch) { if (ch.note) return ch.key; } ).filter(function(value) { return !!value; }).join(',');
-
-    var rloop = '\n' + relations2code(_relation).map(function(ch) { return ch.rloop }).join('\n\n') +  "\n\n";
+ 
+    var rloop = _relation ? ('\n' + relations2code(_relation).map(function(ch) { return ch.rloop }).join('\n\n') +  "\n\n") : '';
     
     if (!includes && !vars && !channels && !setup && !loop && !xetter && !notes && !funcs)
         return {
             "code": "// Please select features",
             "notes": "No notes"
         };
-    if (!loop.match(/\S/gm)) loop = '';
-    if (!rloop.match(/\S/gm)) rloop = '';
+    // if (!loop.match(/\S/gm)) loop = '';
+    // if (!rloop.match(/\S/gm)) rloop = '';
+    // if channel are empty setup_channels will be hidden
+    if (channels.match(/\S/gm)) channels = "// Z-Wave channels\n ZUNO_SETUP_CHANNELS(\n" + channels + "\n);\n\n";
 
     return {
         "code":
             "" + includes + (includes ? "\n\n" : "") + "" +
             "// Global variables\n\n" +
             vars + "\n\n" +
-            "// Z-Wave channels\n" +
-            "ZUNO_SETUP_CHANNELS(\n" + channels + "\n);\n\n" +
+            channels +
             "" + (reports ? ("ZUNO_REPORTS_HANDLER(reportHandler);\n\n") : "") + "" +
             "void setup() {\n" +
               setup + "\n" +
@@ -559,12 +560,11 @@ function generateCode(pins) {
 };
 
 function templatesToRelations(templates) {
-    _relation = {};
-    var cvars = {};
-    var rel_el = htmlCEl('relation'),
-        rel_length = rel_el.length;
-    
-    if (rel_length > 0) {
+    var cvars = {},
+        relation = htmlCEl('relation'),
+        _relation = {};
+
+    if (relation.length) {
         templates.map(function(ch) {
             cvars[ch.key] = [];
             var regex = /pin.[a-zA-Z0-9]+/gm;
@@ -580,36 +580,42 @@ function templatesToRelations(templates) {
             }
         });        
 
-        for (i = 0; i < rel_length; i++) {
+        for (i = 0; i < relation.length; i++) {
             // update relelems obj
-            findRelationEl(rel_el[i]);
+            findRelationEl(relation[i]);
             var sensor_pin = extractPinFromOption(relelems.sensor.select),
                 device_pin = extractPinFromOption(relelems.device.select);
 
-            _relation[i] = {'sensor_sb': {
-                                'value': relelems.sensor.select.value,
-                                'vars': cvars[sensor_pin],
-                                'pin': sensor_pin
-                            },
-                            'device_sb': {
-                                'value': relelems.device.select.value,
-                                'vars': cvars[device_pin],
-                                'pin': device_pin
-                            },
-                            'dht': relelems.dht.select.value,
-                            'ds18b20': relelems.ds18b20.select.value,
-                            'condition_sb': relelems.condition.select.value,
-                            'mode_sb': relelems.mode.select.value,
-                            'condition_input': relelems.condition.input.value,
-                            'swmul_input': relelems.device.input.value,
-                            'el': rel_el[i],
-                            'disabled': false };
+
+            _relation[i] = {
+                'sensor_sb': {
+                    'value': relelems.sensor.select.value,
+                    'vars': cvars[sensor_pin],
+                    'pin': sensor_pin
+                },
+                'device_sb': {
+                    'value': relelems.device.select.value,
+                    'vars': cvars[device_pin],
+                    'pin': device_pin
+                },
+                'dht': relelems.dht.select.value,
+                'ds18b20': relelems.ds18b20.select.value,
+                'condition_sb': relelems.condition.select.value,
+                'mode_sb': relelems.mode.select.value,
+                'condition_input': relelems.condition.input.value,
+                'swmul_input': relelems.device.input.value,
+                'el': relation[i],
+                'disabled': false,
+                'length': i
+            };
         }
+
+
         var check_res = checkRelationsCorectness(_relation);
         if (check_res.ready.length)
             return _relation;
     }
-    return 0;
+    return;
 }
 
 
@@ -632,22 +638,30 @@ function relations2code(_relation) {
         // uncompleted relation
         if (__relation.disabled) return;
         // rebuild relation with specific types 
-        if (__relation.sensor_sb.value === 'DS18B20') {
-            __relation.sensor_sb.vars = ['temperature[' + __relation.ds18b20 + ']'];
-            __relation.sensor_sb.value = 'SensorMultilevel';
-        }
-        if (__relation.sensor_sb.value === 'DHT') {
-            if (__relation.dht === 'temperature')
-                __relation.sensor_sb.vars = [__relation.sensor_sb.vars[1]]; //"pin12DHTTemperatureState"
-            else
-                __relation.sensor_sb.vars = [__relation.sensor_sb.vars[2]]; //"pin12DHTHumidityState"
+        switch(true) {
+            // DS18B20            
+            case __relation.sensor_sb.value === 'DS18B20':
+                __relation.sensor_sb.vars = ['temperature[' + __relation.ds18b20 + ']'];
+                __relation.sensor_sb.value = 'SensorMultilevel';
+                break;
+            // DHT            
+            case __relation.sensor_sb.value === 'DHT':
+                if (__relation.dht === 'temperature')
+                    __relation.sensor_sb.vars = [__relation.sensor_sb.vars[1]]; //"pin12DHTTemperatureState"
+                else
+                    __relation.sensor_sb.vars = [__relation.sensor_sb.vars[2]]; //"pin12DHTHumidityState"
 
-            __relation.sensor_sb.value = 'SensorMultilevel';
+                __relation.sensor_sb.value = 'SensorMultilevel';
+                break;
+            // 0-10V
+            case __relation.device_sb.value === 'SwitchMultilevelPWM0':
+                __relation.device_sb.value = 'SwitchMultilevel';
+                break;
         }
 
         var r_templ = relationCodeTemplates[__relation.sensor_sb.value + '_' + __relation.device_sb.value];
         if (!r_templ) {
-            console.log("Can not find relation code template for relation.\nS: " + __relation.sensor_sb.value + "\nD: " + __relation.device_sb.value);
+            console.log("Can not find relation code template for this.\nS: " + __relation.sensor_sb.value + "\nD: " + __relation.device_sb.value);
             return;
         }
        
@@ -677,7 +691,7 @@ var relationCodeTemplates = {
                 "  }",
         "preAction": function(rel) {
             r_params[1] = rel.condition_sb;
-            r_params[2] = rel.condition_sb == 0xFF ? 0x00 : 0xFF;
+            r_params[2] = rel.condition_sb == "0xFF" ? "0x00" : "0xFF";
             r_params[3] = rel.mode_sb;
             return r_params;
         }
@@ -702,7 +716,7 @@ var relationCodeTemplates = {
                 "  }",
         "preAction": function(rel) {
             r_params[1] = rel.condition_sb;
-            r_params[2] = rel.condition_sb == 0xFF ? 0x00 : 0xFF;
+            r_params[2] = rel.condition_sb == "0xFF" ? "0x00" : "0xFF";
             r_params[3] = rel.swmul_input;
             return r_params;
         }

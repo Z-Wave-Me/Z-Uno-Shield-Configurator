@@ -602,14 +602,12 @@ function loadConfiguration() {
         });
     } else {
         // All NC
-        
-        for (var n = 3; n <= 6; n++) {
+        for (n = 3; n <= 6; n++)
             htmlEl('pin' + n + '_NC').click();
-        }
-        
-        for (var n = 13; n <= 16; n++) {
+
+        for (n = 13; n <= 16; n++)
             htmlEl('pin' + n + '_NC').click();
-        }
+        
         
         htmlEl('pin3pwm_NC').click();
         
@@ -644,14 +642,19 @@ htmlEl('obj').onload = function() {
         loadConfiguration();
     else 
         isfirstloaded = true;
-}
+};
 
 htmlEl('obj_2').onload = loadConfiguration;
 
 function ready() {
     // note, if we open page with relations before, we have issue with reseted relations
-    htmlCEl('configurator_tablinks')[0].click();
-    htmlEl('add_relation_button').click();
+    var tabs = htmlCEl('configurator_tablinks');
+    for(i = 0; i < tabs.length; i++)
+        tabs[i].onclick = openPage;
+
+    tabs[0].click();
+    // REMOVE BEFORE COMMIT
+    // tabs[1].click();
 }
 
 // Default params
@@ -716,28 +719,23 @@ function updateRelations() {
     }
 }
 
-htmlCEl('configurator_tablinks')[0].onclick = openPage;
-htmlCEl('configurator_tablinks')[1].onclick = openPage;
-htmlCEl('configurator_tablinks')[2].onclick = openPage;
+
 function openPage(ev) {
-    var p = [ htmlCEl('settings_row')[0],
+    var pages = [ htmlCEl('settings_row')[0],
               htmlCEl('settings_row_relations')[0],
               htmlCEl('settings_row_connection')[0] ],
-        page = ev.srcElement.id.replace(/\D+/g,'');
+        buttons = htmlCEl('configurator_tablinks'),
+        target = ev.srcElement.id.replace(/\D+/g,'');
 
-    var p_buttons = htmlCEl('configurator_tablinks');
-
-    for (var i = 0; i < p_buttons.length; i++) {
-        p_buttons[i].className = p_buttons[i].className.replace(" manual_active", "");
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("configurator_active");
         // обновляем вкладки пошагового руководства
-        if (page == 2) 
-            createManualPages();
+        if (target == 2) createManualPages();
         // аккуратно скрываем страницы что бы не сбросить svg
-        softPageSwitch(p[i], i == page);
+        softPageSwitch(pages[i], i == target);
     }
-    p_buttons[page].className += " manual_active";
+    buttons[target].classList.add("configurator_active");
 }
-
 function softPageSwitch(el, display) {
     // change sizes need to replace el
     // hide pages for pins to shortcut page
@@ -757,7 +755,6 @@ function softPageSwitch(el, display) {
         el.style.top = 0;
     }
 }
-
 
 function openTab(ev, tab) {
     // Tabcontrol part
@@ -838,9 +835,7 @@ function svgdGen(pinNum, deviceType, display) {
         LED = [],
         RGBLED = [],
         RGBWLED = [],
-        pressureLegs = [],
-        doorLock = [],
-        LEDStrip = false;
+        doorLock = [];
     
     if ((pinNum >= 3 && pinNum <=8) || (pinNum >= 11 && pinNum <= 16)) {
         var mode = pins[pinNum]['type'],
@@ -918,7 +913,7 @@ function svgdGen(pinNum, deviceType, display) {
                 motionLegs.push(pinNum);
             }
 
-            for (var i = 3; i <= 6; i++) {
+            for (i = 3; i <= 6; i++) {
                 if (i == pinNum) continue;
                 if (i in motionLegs) motionLegs = -1;
                 
@@ -935,7 +930,7 @@ function svgdGen(pinNum, deviceType, display) {
                 buttonLegs.push(pinNum);
             }
 
-            for (var i = 3; i <= 12; i++) {
+            for (i = 3; i <= 12; i++) {
                 if (i == 9) i = 11; // these pins can't be used for button connect
                 if (i == pinNum) continue;
                 if (i in buttonLegs) buttonLegs = -1;
@@ -968,7 +963,7 @@ function svgdGen(pinNum, deviceType, display) {
                 contactorLegs.push(pinNum);
             }
 
-            for (var i = 3; i <= 16; i++) {
+            for (i = 3; i <= 16; i++) {
                 if (i == 9) i = 11; // these pins can't be used
                 if (i == pinNum) continue;
                 if (i in contactorLegs) contactorLegs = -1;
@@ -986,7 +981,7 @@ function svgdGen(pinNum, deviceType, display) {
                 reedSensor.push(pinNum);
             }
 
-            for (var i = 3; i <= 12; i++) {
+            for (i = 3; i <= 12; i++) {
                 if (i == 9) i = 11; // pins 9-10 can't be used in reed sensor
                 if (i == pinNum) continue;
                 if (i in reedSensor) reedSensor = -1;
@@ -1005,7 +1000,7 @@ function svgdGen(pinNum, deviceType, display) {
                 doorLock.push(pinNum);
             }
 
-            for (var i = 13; i <= 16; i++) {
+            for (i = 13; i <= 16; i++) {
                 if (i == pinNum) continue;
                 if (i in doorLock) doorLock = -1;
 
@@ -1023,7 +1018,7 @@ function svgdGen(pinNum, deviceType, display) {
                 LED.push(pinNum);
             }
 
-            for (var i = 13; i <= 16; i++) {
+            for (i = 13; i <= 16; i++) {
                 if (i == pinNum) continue; 
                 if (i in LED) LED = -1;
                 
@@ -1042,7 +1037,7 @@ function svgdGen(pinNum, deviceType, display) {
                 RGBLED.push(pinNum);
             }
 
-            for (var i = 14; i <= 16; i++) {
+            for (i = 14; i <= 16; i++) {
                 if (i == pinNum) continue;
                 if (i in RGBLED) RGBLED = -1;
                 
@@ -1109,37 +1104,26 @@ function svgdGen(pinNum, deviceType, display) {
     }
 
 
-    if (LED.length == 0 || (deviceType == "single" && !display)) {
+    if (!LED.length || (deviceType == "single" && !display)) 
         svgEl('layer3', 'obj_2').style.display = "none";
-    } else if (LED.length != 0) {
-        LEDStrip = true;
-    }
-    if (RGBLED.length == 0 || (deviceType == "RGBLED" && !display)) {
-        svgEl('layer4', 'obj_2').style.display = "none";
-    } else if (RGBLED.length != 0) {
-        LEDStrip = true;
-    }
-    if (RGBWLED.length == 0 || (deviceType == "RGBWLED" && !display)) {
-        svgEl('layer8', 'obj_2').style.display = "none";
-    } else if (RGBWLED.length != 0) {
-        LEDStrip = true;
-    }
 
-    // Power supply select 
-    if (anyDevice) { // if any device exists and device !LED we use small power supply  
-        svgEl('layer11', 'obj_2').style.display = "block";
-    }  else if (!anyDevice) {
-        svgEl('layer11', 'obj_2').style.display = "none";
-    }       
+    if (!RGBLED.length || (deviceType == "RGBLED" && !display))
+        svgEl("layer4", "obj_2").style.display = "none";
+
+    if (!RGBWLED.length || (deviceType == "RGBWLED" && !display))
+        svgEl("layer8", "obj_2").style.display = "none";
+
+    // power supply
+    anyDevice ? svgEl('layer11', 'obj_2').style.display = "block"
+        : svgEl('layer11', 'obj_2').style.display = "none";
 }
 
 // Issue with tabs for pin 3
-htmlCEl('manual_tablinks')[0].onclick = openTab;
-htmlCEl('manual_tablinks')[1].onclick = openTab;
 // Issue with tabs for pin 3
 function createManualPages() {
     for (var i = 0; i <= 16; i++) {
         if (i < 2) {
+            htmlCEl('manual_tablinks')[i].onclick = openTab;
             generateContentOfTab(i);
             continue;
         }
@@ -1184,10 +1168,10 @@ function getPinLabelByNum(i) {
             return "ADC2"
         case 6:
             return "ADC3"
-        case 8:
-            return "8, RS-B"
         case 7:
             return "7, RS-A"
+        case 8:
+            return "8, RS-B"
         case 11:
             return "11, One Wire"
         case 12:
@@ -1206,58 +1190,54 @@ function getPinLabelByNum(i) {
 }
 
 function generateContentOfTab(i) {
-    var pin_label = getPinLabelByNum(i);
-    var content;
+    if (i < 2) return;
 
-    if (i < 2) {
-        htmlEl("manual_page_" + i).innerHTML = 
-        '<h3>Step ' + (i + 1) + '</h3>\
-         <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_" + i, i) + '</p>';
-
-        return;
-    }
+    var pin_label = getPinLabelByNum(i),
+        type = pins[i]['type'],
+        prms = function (parameter) { return pins[i]['params'][parameter]; },
+        content;
 
     // Pressure
-    if (pins[i]['params']['4'] == 'kPa') {
+    if (prms(4) == 'kPa')
         createpinpage(i, 'step_pressure');
     // Buttons
-    } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { 
+    else if ((type == 'SensorBinary') && (prms(1) == 'general')) 
         createpinpage(i, 'step_buttons');
     // RS485
-    } else if (pins[i]['type'] == 'RS485') { 
+    else if (type == 'RS485') 
         createpinpage(i, 'step_RS485');
     // UART
-    } else if (pins[i]['type'] == 'UART') { 
+    else if (type == 'UART') 
         createpinpage(i, 'step_UART');
     // Valve
-    } else if (pins[i]['params']['1'] == 'valve') { 
+    else if (prms(1) == 'valve') 
         createpinpage(i, 'step_valve');
     // Siren
-    } else if (pins[i]['params']['1'] == 'siren') { 
+    else if (prms(1) == 'siren') 
         createpinpage(i, 'step_siren');
     // THERMOSTAT
-    } else if (pins[i]['params']['1'] == "heatingThermostat" || pins[i]['params']['1'] == "coolingThermostat") { 
+    else if (prms(1) == "heatingThermostat" || prms(1) == "coolingThermostat") 
         createpinpage(i, 'step_thermostat');
     // DS18B20
-    } else if (pins[i]['type'] == 'DS18B20') {
+    else if (type == 'DS18B20')
         createpinpage(i, 'step_DS18B20');
     // DHT
-    } else if (pins[i]['type'] == 'DHT') {
+    else if (type == 'DHT')
         createpinpage(i, 'step_DHT');
     // Contactor
-    } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch')) {
+    else if ((type == 'SwitchBinary') && (prms(1) == 'switch'))
         createpinpage(i, 'step_contactor');
     // Reed Sensor
-    } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door')) {       
+    else if ((type == 'SensorBinary') && (prms(1) == 'door'))       
         createpinpage(i, 'step_reed');
     // doorlock
-    } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'doorlock')) {
+    else if ((type == 'SwitchBinary') && (prms(1) == 'doorlock'))
         if (i >= 13 && i <= 16)
             content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off"\
+                                        <button class="manual_tablinks_off manual_tablinks"\
                                                 onclick="event, connectDoorlockButton('+ i +', false)">\
                                                 Without button</button>\
-                                        <button class="manual_tablinks_on"\
+                                        <button class="manual_tablinks_on manual_tablinks"\
                                                 onclick="event, connectDoorlockButton('+ i +', true)">\
                                                 With button</button>\
                                     </div>\
@@ -1267,42 +1247,42 @@ function generateContentOfTab(i) {
             createpinpage(i, 'step_doorlock');
             
     // White LED
-    } else if (pins[i]['params']['1'] == 'single') {
+    else if (prms(1) == 'single')
         content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off"\
+                                        <button class="manual_tablinks_off manual_tablinks"\
                                                 onclick="event, connectAmplifier(false)">\
                                                 Without amplifier</button>\
-                                        <button class="manual_tablinks_on"\
+                                        <button class="manual_tablinks_on manual_tablinks"\
                                                 onclick="event, connectAmplifier(true)">\
                                                 With amplifier</button>\
                                      </div>\
                                      <h3>Step for ' + pin_label + '</h3>\
                                      <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_white_led", i) + '</p>';
     // RGB LED strip
-    } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white') {
+    else if (type == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white')
         content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off"\
+                                        <button class="manual_tablinks_off manual_tablinks"\
                                                 onclick="event, connectAmplifier(false)">\
                                                 Without amplifier</button>\
-                                        <button class="manual_tablinks_on"\
+                                        <button class="manual_tablinks_on manual_tablinks"\
                                                 onclick="event, connectAmplifier(true)">\
                                                 With amplifier</button>\
                                      </div>\
                                      <h3>Step for ' + pin_label + '</h3>\
                                      <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_rgb_led", i) + '</p>';
     // RGBW LED strip
-    } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white') {
+    else if (type == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white')
         content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off"\
+                                        <button class="manual_tablinks_off manual_tablinks"\
                                                 onclick="event, connectAmplifier(false)">\
                                                 Without amplifier</button>\
-                                        <button class="manual_tablinks_on"\
+                                        <button class="manual_tablinks_on manual_tablinks"\
                                                 onclick="event, connectAmplifier(true)">\
                                                 With amplifier</button>\
                                      </div>\
                                      <h3>Step for ' + pin_label + '</h3>\
                                      <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_rgbw_led", i) + '</p>';
-    } 
+    
     if (content) htmlEl("manual_page_" + i).innerHTML = content;
 }
 function createpinpage(i, name) {
@@ -1363,19 +1343,29 @@ pagesContent = {
     'step_thermostat': 'Follow instructions'
 };
 
-htmlEl('jslink_code').onmousedown = collapseAction;
-function collapseAction() {
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
+htmlEl('jslink_code').onclick = collapseAction;
+function collapseAction(event) {
+    this.classList.toggle("collapsible_active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight)
+      content.style.maxHeight = null;
+    else
+      content.style.maxHeight = content.scrollHeight + "px";
+}
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].classList.toggle("collapsible_active");
-        var content = coll[i].nextElementSibling;
-        if (content.style.maxHeight){
-          content.style.maxHeight = null;
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-        } 
-    }
+//Returns true if it is a DOM node
+function isNode(o){
+  return (
+    typeof Node === "object" ? o instanceof Node : 
+    o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
+  );
+}
+
+//Returns true if it is a DOM element    
+function isElement(o) {
+    return (
+        typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
+            o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName === "string"
+    );
 }
 // Issue with ADC0 - don't work page creation for this pin after reload page
