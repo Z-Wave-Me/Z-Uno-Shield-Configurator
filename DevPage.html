@@ -3,10 +3,12 @@
 <head>
   <meta charset="utf-8">
   <title>Z-Uno Shield Configurator</title>
+  <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"> -->
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@3.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
   <link rel="stylesheet" href="https://z-uno.z-wave.me/wa-data/public/site/themes/z-uno/default.css">
-  <!-- <link rel="stylesheet" type="text/css" href="./../Z-Uno-Shield-Configurator/css/element-ui.css"> -->
-  <!-- <link rel="stylesheet" type="text/css" href="./../Z-Uno-Shield-Configurator/css/main.css"> -->
 </head>
 
 <body class="color_scheme_green">
@@ -38,118 +40,70 @@
 <main class="maincontent" role="main">
 <div class="container">
 <div class="page">
-<div id="page">
 <article class="page-content" itemtype="http://schema.org/WebPage">
 
-  <!-- COMMIT FROM THERE -->
-  <div id="page" role="main" itemprop="description">
-    <style>
-        {literal}
-        .text-center {
-            text-align: center;
-        }
-        .text-right {
-            text-align: right
-        }
+  <!--! COMMIT FROM THERE -->
+<style>
+        /* {literal} */
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-justify { text-align: justify; }
+
+
+        .settings { margin-right: 0.1em; margin-left: 0.1em; display: inline-block; vertical-align: top;}
+        .settings_row { display: flex; }
+        .settings_svg { flex: 1; margin-right: 2em; }
+        .svg { width: 100%; height: 100%; }
+        .zoom_svg { text-align: right; position: relative; top: 4em; }
     
-        .text-justify {
-            text-align: justify;
-        }
-    
-        .clear {
-            clear: both;
-            margin-top: 1em;
-        }
-    
-        .settings {
-            margin-right: 0.1em;
-            margin-left: 0.1em;
-            display: inline-block;
-            vertical-align: top;
-        }
-    
-        .settings_row {
-            display: flex;
-        }
-    
-        .settings_svg {
-            flex: 1;
-            margin-right: 2em;
-        }
-    
-        .features {
-            flex: 3;
-            margin-top: 4em;
-        }
-    
-        .svg {
-            width: 100%;
-            height: 100%;
-        }
-    
-        .zoom_svg {
-            text-align: right;
-            position: relative;
-            top: 4em;
-        }
-    
-        .jslink {
-            margin-left: 1em;
-            cursor: pointer;
-            color: blue;
-        text-decoration: underline;
-        text-decoration-style: dotted;
-    }
-        #page > h1 { display: inline; }
-        #code { max-height: 500px; }
-        #pin3_disabled > span, #pin3pwm_disabled > span { color: red; }
+        
+        .clear { clear: both; margin-top: 1em; }
+        .features { flex: 3; margin-top: 4em; }
+        
+        .jslink { margin-left: 1em; cursor: pointer; color: blue; text-decoration: underline; text-decoration-style: dotted; }
+        
+        #page > h1 { display: inline; text-align: center; }
+        #code { background: #aaaaaa88; }
         #resetConfig { margin-left: 1em; cursor: pointer; color: blue; text-decoration: underline; text-decoration-style: dotted; }
-        .pin_default_disabled { display: none; }
-        .settings_row_connection {
-            margin-top: 30px;
-            margin-bottom: 30px;
-            display: grid;
-            grid-template-rows: auto auto;
-            grid-template-columns: 1fr;
-        }
-    
-        .settings_svg_connection { grid-row: 1; }
-        .settings_manual_connection ul { list-style: none; }
-    
-        .settings_manual_connection {
-            width: 70%;
-            margin: 10px auto 10px auto;
-            grid-row: 2;
-            display: block;
-        }
+        
+        #pin3_disabled > span, #pin3pwm_disabled > span { color: red; }
+
+        .settings_row_connection { margin: 30px auto; display: block; }
     
         #configurator_pages_control, #configurator_pages_control > button {
-            color: transparent;
-            background: #666666;
-            -webkit-background-clip: text;
-            -moz-background-clip: text;
-            background-clip: text;
-            text-shadow: 0px 3px 3px rgba(255,255,255,0.5);
-    
-            border: 1px solid #ddd;
             padding: 15px 15px;
             text-align: center;
             font-size: 16px;
             cursor: pointer;
-            float: left;
         }
-    
+        #configurator_pages_control > button {
+            border: 1px solid #ddd;
+        }
+        .configurator_tablinks {
+            color: blue;
+            opacity: 0.7;
+        }
+        .configurator_page_active {
+            background-color: #FEDC7380;
+            color: blue;
+            opacity: 1;
+        }
+
+        .pin_default_disabled,
+        div.relation_hidden,
+        .relation_notes { display: none; }
+        
         .pages { width: 100%; }
         .tabs_control {
+            padding: 15px 15px;
             overflow: hidden;
             border: 1px solid #ccc;
             background-color: #f1f1f1;
         }
-        .tabs_control, .manual_type_select {
+        .manual_type_select {
             /* background-color: #ddd; */
             border: 1px solid #ddd;
-            /* color: white; */
-            padding: 15px 15px;
+            color: white;
             text-align: center;
             text-decoration: none;
             font-size: 16px;
@@ -163,7 +117,7 @@
             border: 1px solid #ccc;
             border-top: none;
         }
-        .manual_tabcontent h3 { padding-top: 1em; }
+        /* .manual_tabcontent h3 { padding-top: 1em; } */
         .manual_tablinks {
             width: fit-content;
             margin-left: -6px;
@@ -215,9 +169,7 @@
             width: 5.5%;
             color: #bbb;
         }
-        .relation_notes {
-            display: none;
-        }
+    
     
         .relation_ds18b20_select,
         .relation_dht_select,
@@ -245,10 +197,6 @@
         .relation>select,
         .relation_hidden>select {
             font-size: 1.1em;
-        }
-    
-        div.relation_hidden {
-            display: none;
         }
     
         #relation_settings {
@@ -298,11 +246,18 @@
         .relation_hr {
             width: 500px;
         }
-        {/literal}
-    </style>
-        <h1 style="display: inline;">Z-Uno Shield Configurator</h1>
-        <span id="copyURL" class="jslink">Copy permanent link to this configuration</span>
-        <span id="resetConfig" style="margin-left: 1em; cursor: pointer; color: blue; text-decoration: underline; text-decoration-style: dotted;">Reset configuration</span>
+        /* {/literal} */
+</style>
+    <div id="app">
+        <v-app>
+            <v-container>  
+    <div id="page" role="main" itemprop="description">
+        <div class="text-center">
+            <h1 style="display: inline;">Z-Uno Shield Configurator</h1>
+            <div class="clear"></div>
+            <span id="copyURL" class="jslink">Copy permanent link to this configuration</span>
+            <span id="resetConfig" class="jslink">Reset configuration</span>
+        </div>
         <div class="clear"></div>
         <div id="configurator_pages" class="pages">
             <div id="configurator_pages_control" class="pages_control">
@@ -312,6 +267,7 @@
             </div>
         </div>
         <div class="clear"></div>
+
         <div class="settings_row">
             <div class="settings_svg">
                 <div class="zoom_svg" title="Zoom image">
@@ -1305,7 +1261,7 @@
                     </div>
                     <label><input type="radio" name="pin4" id="pin4_NC" value="NC">Not connected</label><br>
                 </div>
-    
+
                 <div id="settings_pin3" class="settings">
                     <h3 title="pin #3">ADC0</h3>
                     <div id="pin3_disabled" class="pin_default_disabled">
@@ -1479,7 +1435,9 @@
                 </div>
             </div>
         </div>
-    
+
+        <div class="clear"></div>
+
         <div class="settings_row_relations">
             <div class="settings_relation_selectors" id="settings_relation_selectors">
                 <div class="relations" id="relations">
@@ -1528,7 +1486,7 @@
             <div class="settings_svg_connection">
                 <object id="obj_2" data="/Z-Uno-Shield-Details.svg" type="image/svg+xml" class="svg">Your browser do not support SVG</object>
             </div>
-    
+
             <div id="manual_pages" class="pages">
                 <!-- nav -->
                 <div id="manual_pages_control" class="tabs_control">
@@ -1551,16 +1509,28 @@
                 // Please select features
             </code></pre>
         </div>
-  </div>
-<!-- STOP COMMIT HERE -->
+    </div>
+</v-container>
+</v-app>
+</div>
+<!-- ! STOP COMMIT HERE -->
 </article>
 </div>
 </div>
 </div>
 </main>
-<script src="/Z-Uno-Shield-code-gen.js"></script>
-<script src="/Z-Uno-Shield-ui.js"></script>
-<script src="/Z-Uno-Shield-relations.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script>
+new Vue({
+    el: '#app',
+    vuetify: new Vuetify(),
+})
+</script>
+  <script src="/Z-Uno-Shield-code-gen.js"></script>
+  <script src="/Z-Uno-Shield-ui.js"></script>
+  <script src="/Z-Uno-Shield-relations.js"></script>
 </body>
 <!-- TODO: / -> /files/z-uno/Z-Uno-Shield/Configurator/ -->
 </html>
