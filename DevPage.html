@@ -1,77 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <title>Z-Uno Shield Configurator</title>
-  <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@mdi/font@3.x/css/materialdesignicons.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-
-  <link rel="stylesheet" href="https://z-uno.z-wave.me/wa-data/public/site/themes/z-uno/default.css">
 </head>
 
-<body class="color_scheme_green">
-<header class="globalheader">
-  <!-- EXTENDED HEADER with in-app navigation -->
-  <div class="container extendednav" id="header-container" style="padding-top: 38px;">
-    <h2>
-      <a href="/">
-        <img src="https://z-uno.z-wave.me/files/zuno_logo_fin_200.png" height="100" alt="Z-Uno" id="logo" style="margin-top: -38px;">
-      </a>
-    </h2>
-    <!-- Site app page list -->
-    <ul class="pages">
-      <li><a href="/technical">Z-Uno</a></li>
-      <li class="selected"><a href="/shield">Shield</a></li>
-      <li><a href="/module">Module</a></li>
-      <li><a href="/buy">Where to buy</a></li>
-      <li><a href="/getting-started">Getting Started</a></li>
-      <li><a href="/reference">Reference</a></li>
-      <li><a href="/z-wave">Z-Wave</a></li>
-      <li><a href="/examples">Examples</a></li>
-      <li><a href="/forum">Forum</a></li>
-      <li><a href="/news">News</a></li>
-    </ul>
-    <div class="clear-both"></div>
-  </div>
-</header>
-
-<main class="maincontent" role="main">
-<div class="container">
-<div class="page">
-<article class="page-content" itemtype="http://schema.org/WebPage">
-
-  <!--! COMMIT FROM THERE -->
+<body>
 <style>
+  .container {max-width: 1200px;}
         /* {literal} */
         .text-center { text-align: center; }
         .text-right { text-align: right; }
         .text-justify { text-align: justify; }
-
-
-        .settings { margin-right: 0.1em; margin-left: 0.1em; display: inline-block; vertical-align: top;}
-        .settings_row { display: flex; }
-        .settings_svg { flex: 1; margin-right: 2em; }
-        .svg { width: 100%; height: 100%; }
-        .zoom_svg { text-align: right; position: relative; top: 4em; }
-    
-        
         .clear { clear: both; margin-top: 1em; }
-        .features { flex: 3; margin-top: 4em; }
-        
         .jslink { margin-left: 1em; cursor: pointer; color: blue; text-decoration: underline; text-decoration-style: dotted; }
-        
-        #page > h1 { display: inline; text-align: center; }
-        #code { background: #aaaaaa88; }
-        #resetConfig { margin-left: 1em; cursor: pointer; color: blue; text-decoration: underline; text-decoration-style: dotted; }
-        
+
+
+
+        #app { text-align: start; }
+        /* #settings_row { vertical-align: top; } */
+        #settings_svg { max-width: 30%; height: ;}
         #pin3_disabled > span, #pin3pwm_disabled > span { color: red; }
 
-        .settings_row_connection { margin: 30px auto; display: block; }
+        .svg { width: 100%; height: 100%; }
+        
+        .features { display: inline-block; margin: auto; }
+        .settings { margin: 0.25em; display: inline-block; vertical-align: top;}
+        .settings > h3{ width: fit-content; margin: 1em auto 0.25em auto; text-decoration: underline;}
+        
+        
+
+        #settings_row_connection { margin: 30px auto; }
     
         #configurator_pages_control, #configurator_pages_control > button {
-            padding: 15px 15px;
+            padding: 15px;
             text-align: center;
             font-size: 16px;
             cursor: pointer;
@@ -119,20 +84,17 @@
         }
         /* .manual_tabcontent h3 { padding-top: 1em; } */
         .manual_tablinks {
-            width: fit-content;
+            /* width: fit-content; */
             margin-left: -6px;
             overflow: hidden;
             border: 1px solid #ccc;
             background-color: #f1f1f1;
         }
         .manual_tablinks { font-size: 20px; }
-    
         .manual_tablinks > button:not(:last-child) { border-right: none; }
-    
         .manual_tablinks { background-color: #ccc; }
         .manual_active > button { background-color: #bbb; }
     
-        .settings>label>input { margin: 4px 3px; }
     
     
         .alert_icon {
@@ -243,1203 +205,1229 @@
         .collapsible_active:after {
             content: '  \2212';
         }
-        .relation_hr {
-            width: 500px;
-        }
+        #code { background-color: #aaa4; padding: 1em; }
         /* {/literal} */
 </style>
-    <div id="app">
-        <v-app>
-            <v-container>  
-    <div id="page" role="main" itemprop="description">
-        <div class="text-center">
-            <h1 style="display: inline;">Z-Uno Shield Configurator</h1>
-            <div class="clear"></div>
-            <span id="copyURL" class="jslink">Copy permanent link to this configuration</span>
-            <span id="resetConfig" class="jslink">Reset configuration</span>
-        </div>
-        <div class="clear"></div>
-        <div id="configurator_pages" class="pages">
-            <div id="configurator_pages_control" class="pages_control">
-                <button class="configurator_tablinks tablinks" id="page_0">Select peripherals</button>
-                <button class="configurator_tablinks tablinks" id="page_1">Define relations</button>
-                <button class="configurator_tablinks tablinks" id="page_2">Connect peripherals</button>
-            </div>
-        </div>
-        <div class="clear"></div>
 
-        <div class="settings_row">
-            <div class="settings_svg">
-                <div class="zoom_svg" title="Zoom image">
-                    [+]
-                </div>
-                <object id="obj" data="/Z-Uno-Shield.svg" type="image/svg+xml" class="svg">
-                    Your browser do not support SVG
-                </object>
-            </div>
-            <div class="features">
-                <div id="settings_pin3pwm" class="settings">
-                    <h3>0-10V / PWM0</h3>
-                    <div id="pin3pwm_disabled" style="display: none;">
-                        <span style="color: red">Disabled by ADC0</span>
-                    </div>
-                    <label><input type="radio" name="pin3pwm" id="pin3pwm_PWM" value="PWM">Analog output 0-10 V</label><br>
-                    <label><input type="radio" name="pin3pwm" id="pin3pwm_NC" value="NC">Not connected</label><br>
-                </div>
-                <div id="settings_pin16" class="settings">
-                    <h3>PWM4</h3>
-                    <label><input type="radio" name="pin16" id="pin16_PWM" value="PWM">PWM output <span title="Common collector">[i]</span></label><br>
-                    <div id="pin16_PWM_params" style="display: none;">
-                        <select id="pin16_PWM_param_1">
-                            <option value="single">Dimmer</option>
-                            <option value="red">RGBW Red</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin16" id="pin16_o" value="o">Digital output <span title="Common collector">[i]</span></label><br>
-                    <div id="pin16_o_params" style="display: none;">
-                        <select id="pin16_o_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="valve">Valve</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin16_o_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin16_o_param_3" depend="pin16_o_param_1=heatingThermostat,pin16_o_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin16" id="pin16_NC" value="NC">Not connected</label><br>
-                </div>
-                <div id="settings_pin15" class="settings">
-                    <h3>PWM3</h3>
-                    <label><input type="radio" name="pin15" id="pin15_PWM" value="PWM">PWM output <span title="Common collector">[i]</span></label><br>
-                    <div id="pin15_PWM_params" style="display: none;">
-                        <select id="pin15_PWM_param_1">
-                            <option value="single">Dimmer</option>
-                            <option value="green">RGBW Green</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin15" id="pin15_o" value="o">Digital output <span title="Common collector">[i]</span></label><br>
-                    <div id="pin15_o_params" style="display: none;">
-                        <select id="pin15_o_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="valve">Valve</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin15_o_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin15_o_param_3" depend="pin15_o_param_1=heatingThermostat,pin15_o_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin15" id="pin15_NC" value="NC">Not connected</label><br>
-                </div>
-                <div id="settings_pin14" class="settings">
-                    <h3>PWM2</h3>
-                    <label><input type="radio" name="pin14" id="pin14_PWM" value="PWM">PWM output <span title="Common collector">[i]</span></label><br>
-                    <div id="pin14_PWM_params" style="display: none;">
-                        <select id="pin14_PWM_param_1">
-                            <option value="single">Dimmer</option>
-                            <option value="blue">RGBW Blue</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin14" id="pin14_o" value="o">Digital output <span title="Common collector">[i]</span></label><br>
-                    <div id="pin14_o_params" style="display: none;">
-                        <select id="pin14_o_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="valve">Valve</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin14_o_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin14_o_param_3" depend="pin14_o_param_1=heatingThermostat,pin14_o_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin14" id="pin14_NC" value="NC">Not connected</label><br>
-                </div>
-                <div id="settings_pin13" class="settings">
-                    <h3>PWM1</h3>
-                    <label><input type="radio" name="pin13" id="pin13_PWM" value="PWM">PWM output <span title="Common collector">[i]</span></label><br>
-                    <div id="pin13_PWM_params" style="display: none;">
-                        <select id="pin13_PWM_param_1">
-                            <option value="single">Dimmer</option>
-                            <option value="white">RGBW White</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin13" id="pin13_o" value="o">Digital output <span title="Common collector">[i]</span></label><br>
-                    <div id="pin13_o_params" style="display: none;">
-                        <select id="pin13_o_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="valve">Valve</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin13_o_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin13_o_param_3" depend="pin13_o_param_1=heatingThermostat,pin13_o_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin13" id="pin13_NC" value="NC">Not connected</label><br>
-                </div>
-                <div class="clear"></div>
-                <div id="settings_pin7" class="settings">
-                    <h3>7, RS-A</h3>
-                    <label><input type="radio" name="pin7" id="pin7_UART" value="UART_TX">UART TX <span title="Pins 7 and 8 work together">[i]</span></label><br>
-                    <div id="pin7_UART_params" style="display: none;">
-                        <select id="pin7_UART_param_1">
-                            <option value="9600">9600 kbps</option>
-                            <option value="14400">14400 kbps</option>
-                            <option value="19200">19200 kbps</option>
-                            <option value="38400">38400 kbps</option>
-                            <option value="57600">57600 kbps</option>
-                            <option value="115200">115200 kbps</option>
-                            <option value="230400">230400 kbps</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin7" id="pin7_RS485" value="RS485_A">RS485 A <span title="Pins 2, 7 and 8 work together">[i]</span></label><br>
-                    <div id="pin7_RS485_params" style="display: none;">
-                        <select id="pin7_RS485_param_1">
-                            <option value="9600">9600 kbps</option>
-                            <option value="14400">14400 kbps</option>
-                            <option value="19200">19200 kbps</option>
-                            <option value="38400">38400 kbps</option>
-                            <option value="57600">57600 kbps</option>
-                            <option value="115200">115200 kbps</option>
-                            <option value="230400">230400 kbps</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin7" id="pin7_i_3" value="i_3">Digital input 0/3 V</label><br>
-                    <div id="pin7_i_3_params" style="display: none;">
-                        <select id="pin7_i_3_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin7_i_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin7_i_3_param_3">
-                            <option value="normal">3 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin7" id="pin7_o_3" value="o_3">Digital output 0/3 V</label><br>
-                    <div id="pin7_o_3_params" style="display: none;">
-                        <select id="pin7_o_3_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="valve">Valve</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin7_o_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin7_o_3_param_3" depend="pin7_o_3_param_1=heatingThermostat,pin7_o_3_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin7" id="pin7_NC" value="NC">Not connected</label><br>
-                </div>
-                <div id="settings_pin8" class="settings">
-                    <h3>8, RS-B</h3>
-                    <label><input type="radio" name="pin8" id="pin8_UART" value="UART_RX">UART RX <span title="Pins 7 and 8 work together">[i]</span></label><br>
-                    <label><input type="radio" name="pin8" id="pin8_RS485" value="RS485_B">RS485 B <span title="Pins 2, 7 and 8 work together">[i]</span></label><br>
-                    <label><input type="radio" name="pin8" id="pin8_i_3" value="i_3">Digital input 0/3 V</label><br>
-                    <div id="pin8_i_3_params" style="display: none;">
-                        <select id="pin8_i_3_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin8_i_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin8_i_3_param_3">
-                            <option value="normal">3 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin8" id="pin8_o_3" value="o_3">Digital output 0/3 V</label><br>
-                    <div id="pin8_o_3_params" style="display: none;">
-                        <select id="pin8_o_3_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="valve">Valve</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin8_o_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin8_o_3_param_3" depend="pin8_o_3_param_1=heatingThermostat,pin8_o_3_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin8" id="pin8_NC" value="NC">Not connected</label><br>
-                </div>
-                <div id="settings_pin12" class="settings">
-                    <h3>12</h3>
-                    <label><input type="radio" name="pin12" id="pin12_dht" value="dht">Temperature/humidity</label><br>
-                    <div id="pin12_dht_params" style="display: none;">
-                        Sensor
-                        <select id="pin12_dht_param_1">
-                            <option>DHT11</option>
-                            <option>DHT22</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin12" id="pin12_i_3" value="i_3">Digital input 0/3 V</label><br>
-                    <div id="pin12_i_3_params" style="display: none;">
-                        <select id="pin12_i_3_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin12_i_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin12_i_3_param_3">
-                            <option value="normal">3 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin12" id="pin12_o_3" value="o_3">Digital output 0/3 V</label><br>
-                    <div id="pin12_o_3_params" style="display: none;">
-                        <select id="pin12_o_3_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="valve">Valve</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin12_o_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin12_o_3_param_3" depend="pin12_o_3_param_1=heatingThermostat,pin12_o_3_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin12" id="pin12_NC" value="NC">Not connected</label><br>
-                </div>
-                <div id="settings_pin11" class="settings">
-                    <h3>11, One Wire</h3>
-                    <label><input type="radio" name="pin11" id="pin11_onewire" value="onewire">Temperature</label><br>
-                    <div id="pin11_onewire_params" style="display: none;">
-                        Number of DS18B20 sensors:
-                        <select id="pin11_onewire_param_1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin11" id="pin11_dht" value="dht">Temperature/humidity</label><br>
-                    <div id="pin11_dht_params" style="display: none;">
-                        Sensor
-                        <select id="pin11_dht_param_1">
-                            <option>DHT11</option>
-                            <option>DHT22</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin11" id="pin11_i_3" value="i_3">Digital input 0/3 V</label><br>
-                    <div id="pin11_i_3_params" style="display: none;">
-                        <select id="pin11_i_3_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin11_i_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin11_i_3_param_3">
-                            <option value="normal">3 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin11" id="pin11_o_3" value="o_3">Digital output 0/3 V</label><br>
-                    <div id="pin11_o_3_params" style="display: none;">
-                        <select id="pin11_o_3_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="valve">Valve</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin11_o_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin11_o_3_param_3" depend="pin11_o_3_param_1=heatingThermostat,pin11_o_3_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin11" id="pin11_NC" value="NC">Not connected</label><br>
-                </div>
-                <div class="clear"></div>
-                <div id="settings_pin6" class="settings">
-                    <h3>ADC3</h3>
-                    <label><input type="radio" name="pin6" id="pin6_ADC_i_3" value="ADC_i_3">Analog input 0-3 V</label><br>
-                    <div id="pin6_ADC_i_3_params" style="display: none;">
-                        <select id="pin6_ADC_i_3_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–3V → </span><input id="pin6_ADC_i_3_param_1" size="2">–<input id="pin6_ADC_i_3_param_2" size="2"><span title="Map 0 – 3 Volts to value range">[i]</span>
-                        <input id="pin6_ADC_i_3_param_5" type="hidden" value="3" />
-                    </div>
-                    <label><input type="radio" name="pin6" id="pin6_ADC_i_5" value="ADC_i_5">Analog input 0-5 V</label><br>
-                    <div id="pin6_ADC_i_5_params" style="display: none;">
-                        <select id="pin6_ADC_i_5_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–5V → </span><input id="pin6_ADC_i_5_param_1" size="2">–<input id="pin6_ADC_i_5_param_2" size="2"><span title="Map 0 – 5 Volts to value range">[i]</span>
-                        <input id="pin6_ADC_i_5_param_5" type="hidden" value="5" />
-                    </div>
-                    <label><input type="radio" name="pin6" id="pin6_ADC_i_12" value="ADC_i_12">Analog input 0-12 V</label><br>
-                    <div id="pin6_ADC_i_12_params" style="display: none;">
-                        <select id="pin6_ADC_i_12_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–12V → </span><input id="pin6_ADC_i_12_param_1" size="2">–<input id="pin6_ADC_i_12_param_2" size="2"><span title="Map 0 – 12 Volts to value range">[i]</span>
-                        <input id="pin6_ADC_i_12_param_5" type="hidden" value="12" />
-                    </div>
-                    <label><input type="radio" name="pin6" id="pin6_i_3" value="i_3">Digital input 0/3 V</label><br>
-                    <div id="pin6_i_3_params" style="display: none;">
-                        <select id="pin6_i_3_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin6_i_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin6_i_3_param_3">
-                            <option value="normal">3 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin6" id="pin6_i_5" value="i_5">Digital input 0/5 V</label><br>
-                    <div id="pin6_i_5_params" style="display: none;">
-                        <select id="pin6_i_5_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin6_i_5_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin6_i_5_param_3">
-                            <option value="normal">5 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin6" id="pin6_i_12" value="i_12">Digital input 0/12 V</label><br>
-                    <div id="pin6_i_12_params" style="display: none;">
-                        <select id="pin6_i_12_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin6_i_12_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin6_i_12_param_3">
-                            <option value="normal">12 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin6" id="pin6_o_3" value="o_3">Digital output 0/3 V</label><br>
-                    <div id="pin6_o_3_params" style="display: none;">
-                        <select id="pin6_o_3_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="valve">Valve</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin6_o_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin6_o_3_param_3" depend="pin6_o_3_param_1=heatingThermostat,pin6_o_3_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin6" id="pin6_NC" value="NC">Not connected</label><br>
-                </div>
-                <div id="settings_pin5" class="settings">
-                    <h3>ADC2</h3>
-                    <label><input type="radio" name="pin5" id="pin5_ADC_i_3" value="ADC_i_3">Analog input 0-3 V</label><br>
-                    <div id="pin5_ADC_i_3_params" style="display: none;">
-                        <select id="pin5_ADC_i_3_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–3V → </span><input id="pin5_ADC_i_3_param_1" size="2">–<input id="pin5_ADC_i_3_param_2" size="2"><span title="Map 0 – 3 Volts to value range">[i]</span>
-                        <input id="pin5_ADC_i_3_param_5" type="hidden" value="3" />
-                    </div>
-                    <label><input type="radio" name="pin5" id="pin5_ADC_i_5" value="ADC_i_5">Analog input 0-5 V</label><br>
-                    <div id="pin5_ADC_i_5_params" style="display: none;">
-                        <select id="pin5_ADC_i_5_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–5V → </span><input id="pin5_ADC_i_5_param_1" size="2">–<input id="pin5_ADC_i_5_param_2" size="2"><span title="Map 0 – 5 Volts to value range">[i]</span>
-                        <input id="pin5_ADC_i_5_param_5" type="hidden" value="5" />
-                    </div>
-                    <label><input type="radio" name="pin5" id="pin5_ADC_i_12" value="ADC_i_12">Analog input 0-12 V</label><br>
-                    <div id="pin5_ADC_i_12_params" style="display: none;">
-                        <select id="pin5_ADC_i_12_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–12V → </span><input id="pin5_ADC_i_12_param_1" size="2">–<input id="pin5_ADC_i_12_param_2" size="2"><span title="Map 0 – 12 Volts to value range">[i]</span>
-                        <input id="pin5_ADC_i_12_param_5" type="hidden" value="12" />
-                    </div>
-                    <label><input type="radio" name="pin5" id="pin5_i_3" value="i_3">Digital input 0/3 V</label><br>
-                    <div id="pin5_i_3_params" style="display: none;">
-                        <select id="pin5_i_3_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin5_i_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin5_i_3_param_3">
-                            <option value="normal">3 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin5" id="pin5_i_5" value="i_5">Digital input 0/5 V</label><br>
-                    <div id="pin5_i_5_params" style="display: none;">
-                        <select id="pin5_i_5_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin5_i_5_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin5_i_5_param_3">
-                            <option value="normal">5 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin5" id="pin5_i_12" value="i_12">Digital input 0/12 V</label><br>
-                    <div id="pin5_i_12_params" style="display: none;">
-                        <select id="pin5_i_12_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin5_i_12_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin5_i_12_param_3">
-                            <option value="normal">12 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin5" id="pin5_o_3" value="o_3">Digital output 0/3 V</label><br>
-                    <div id="pin5_o_3_params" style="display: none;">
-                        <select id="pin5_o_3_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="valve">Valve</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin5_o_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin5_o_3_param_3" depend="pin5_o_3_param_1=heatingThermostat,pin5_o_3_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin5" id="pin5_NC" value="NC">Not connected</label><br>
-                </div>
-                <div id="settings_pin4" class="settings">
-                    <h3>ADC1</h3>
-                    <label><input type="radio" name="pin4" id="pin4_ADC_i_3" value="ADC_i_3">Analog input 0-3 V</label><br>
-                    <div id="pin4_ADC_i_3_params" style="display: none;">
-                        <select id="pin4_ADC_i_3_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–3V → </span><input id="pin4_ADC_i_3_param_1" size="2">–<input id="pin4_ADC_i_3_param_2" size="2"><span title="Map 0 – 3 Volts to value range">[i]</span>
-                        <input id="pin4_ADC_i_3_param_5" type="hidden" value="3" />
-                    </div>
-                    <label><input type="radio" name="pin4" id="pin4_ADC_i_5" value="ADC_i_5">Analog input 0-5 V</label><br>
-                    <div id="pin4_ADC_i_5_params" style="display: none;">
-                        <select id="pin4_ADC_i_5_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–5V → </span><input id="pin4_ADC_i_5_param_1" size="2">–<input id="pin4_ADC_i_5_param_2" size="2"><span title="Map 0 – 5 Volts to value range">[i]</span>
-                        <input id="pin4_ADC_i_5_param_5" type="hidden" value="5" />
-                    </div>
-                    <label><input type="radio" name="pin4" id="pin4_ADC_i_12" value="ADC_i_12">Analog input 0-12 V</label><br>
-                    <div id="pin4_ADC_i_12_params" style="display: none;">
-                        <select id="pin4_ADC_i_12_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–12V → </span><input id="pin4_ADC_i_12_param_1" size="2">–<input id="pin4_ADC_i_12_param_2" size="2"><span title="Map 0 – 12 Volts to value range">[i]</span>
-                        <input id="pin4_ADC_i_12_param_5" type="hidden" value="12" />
-                    </div>
-                    <label><input type="radio" name="pin4" id="pin4_i_3" value="i_3">Digital input 0/3 V</label><br>
-                    <div id="pin4_i_3_params" style="display: none;">
-                        <select id="pin4_i_3_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin4_i_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin4_i_3_param_3">
-                            <option value="normal">3 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin4" id="pin4_i_5" value="i_5">Digital input 0/5 V</label><br>
-                    <div id="pin4_i_5_params" style="display: none;">
-                        <select id="pin4_i_5_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin4_i_5_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin4_i_5_param_3">
-                            <option value="normal">5 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin4" id="pin4_i_12" value="i_12">Digital input 0/12 V</label><br>
-                    <div id="pin4_i_12_params" style="display: none;">
-                        <select id="pin4_i_12_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin4_i_12_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin4_i_12_param_3">
-                            <option value="normal">12 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin4" id="pin4_o_3" value="o_3">Digital output 0/3 V</label><br>
-                    <div id="pin4_o_3_params" style="display: none;">
-                        <select id="pin4_o_3_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="valve">Valve</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin4_o_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin4_o_3_param_3" depend="pin4_o_3_param_1=heatingThermostat,pin4_o_3_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin4" id="pin4_NC" value="NC">Not connected</label><br>
-                </div>
+<div id="app">
+<v-app>
+<v-container>
+    <v-container>
+      <!-- * toolbar -->
+      <v-toolbar dark>
+        <!-- * title -->
+        <v-toolbar-title>Z-Uno Shield Configurator</v-toolbar-title>
+        <div class="flex-grow-1"></div>
+        <!-- * items -->
+        <v-toolbar-items>
+          <v-divider vertical dark></v-divider>
+          <v-btn text><router-link to="/sp">Select peripherals</router-link></v-btn>
+          <v-divider vertical dark></v-divider>
+          <v-btn text><router-link to="/dr">Define relations</router-link></v-btn>
+          <v-divider vertical></v-divider>
+          <v-btn text>Connect peripherals</v-btn>
+          <v-divider vertical></v-divider>
+        </v-toolbar-items>
+        <v-tooltip bottom>
+          <!-- TODO: make dropdown list with this options -->
+          <template v-slot:activator="{ on }">
+              <v-btn v-on="on" id="copyURL" icon>
+                <v-icon>mdi-export-variant</v-icon>
+              </v-btn>
+          </template>
+          <span>Copy permanent link to this configuration</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn v-on="on" id="resetConfig" icon>
+              <v-icon>mdi-delete-circle</v-icon>
+            </v-btn>
+          </template>
+          <span>Reset configuration</span>
+        </v-tooltip>
+      </v-toolbar>
 
-                <div id="settings_pin3" class="settings">
-                    <h3 title="pin #3">ADC0</h3>
-                    <div id="pin3_disabled" class="pin_default_disabled">
-                        <span style="color: red">Disabled by PWM0</span>
-                    </div>
-                    <label><input type="radio" name="pin3" id="pin3_ADC_i_3" value="ADC_i_3">Analog input 0-3 V</label><br>
-                    <div id="pin3_ADC_i_3_params" class="pin_default_disabled">
-                        <select id="pin3_ADC_i_3_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–3V → </span><input id="pin3_ADC_i_3_param_1" size="2">–<input id="pin3_ADC_i_3_param_2" size="2"><span title="Map 0 – 3 Volts to value range">[i]</span>
-                        <input id="pin3_ADC_i_3_param_5" type="hidden" value="3" />
-                    </div>
-                    <label><input type="radio" name="pin3" id="pin3_ADC_i_5" value="ADC_i_5">Analog input 0-5 V</label><br>
-                    <div id="pin3_ADC_i_5_params" class="pin_default_disabled">
-                        <select id="pin3_ADC_i_5_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–5V → </span><input id="pin3_ADC_i_5_param_1" size="2">–<input id="pin3_ADC_i_5_param_2" size="2"><span title="Map 0 – 5 Volts to value range">[i]</span>
-                        <input id="pin3_ADC_i_5_param_5" type="hidden" value="5" />
-                    </div>
-                    <label><input type="radio" name="pin3" id="pin3_ADC_i_12" value="ADC_i_12">Analog input 0-12 V</label><br>
-                    <div id="pin3_ADC_i_12_params" class="pin_default_disabled">
-                        <select id="pin3_ADC_i_12_param_4">
-                            <!-- param_3 is internal in preAction -->
-                            <option value="percentage">%</option>
-                            <option value="temperature">Temperature, °C</option>
-                            <option value="luminance">Luminance, lux</option>
-                            <option value="humidity">Humidity, %</option>
-                            <option value="voltage">Voltage, V</option>
-                            <option value="current">Current, A</option>
-                            <option value="distance">Distance, m</option>
-                            <option value="kPa">Pressure, kPa</option>
-                            <option value="ppm">CO2, PPM</option>
-                        </select>
-                        <br>
-                        <span>0–12V → </span><input id="pin3_ADC_i_12_param_1" size="2">–<input id="pin3_ADC_i_12_param_2" size="2"><span title="Map 0 – 12 Volts to value range">[i]</span>
-                        <input id="pin3_ADC_i_12_param_5" type="hidden" value="12" />
-                    </div>
-                    <label><input type="radio" name="pin3" id="pin3_i_3" value="i_3">Digital input 0/3 V</label><br>
-                    <div id="pin3_i_3_params" class="pin_default_disabled">
-                        <select id="pin3_i_3_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin3_i_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin3_i_3_param_3">
-                            <option value="normal">3 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin3" id="pin3_i_5" value="i_5">Digital input 0/5 V</label><br>
-                    <div id="pin3_i_5_params" class="pin_default_disabled">
-                        <select id="pin3_i_5_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin3_i_5_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin3_i_5_param_3">
-                            <option value="normal">5 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin3" id="pin3_i_12" value="i_12">Digital input 0/12 V</label><br>
-                    <div id="pin3_i_12_params" class="pin_default_disabled">
-                        <select id="pin3_i_12_param_1">
-                            <option value="general">General purpose</option>
-                            <option value="door">Door/window</option>
-                            <option value="motion">Motion</option>
-                            <option value="smoke">Smoke</option>
-                            <option value="leakage">Leakage</option>
-                            <option value="co">CO</option>
-                            <option value="co2">CO2</option>
-                            <option value="overheat">Overheat</option>
-                            <option value="freeze">Freeze</option>
-                            <option value="tamper">Tamper</option>
-                            <option value="tilt">Tilt</option>
-                            <option value="glassbr">Glass break</option>
-                        </select>
-                        <br>
-                        <select id="pin3_i_12_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin3_i_12_param_3">
-                            <option value="normal">12 V or ground</option>
-                            <option value="pullup">Free or ground</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin3" id="pin3_o_3" value="o_3">Digital output 0/3 V</label><br>
-                    <div id="pin3_o_3_params" class="pin_default_disabled">
-                        <select id="pin3_o_3_param_1">
-                            <option value="switch">Switch</option>
-                            <option value="doorlock">Door lock</option>
-                            <option value="siren">Siren</option>
-                            <option value="heatingThermostat">Heating thermostat</option>
-                            <option value="coolingThermostat">Cooling thermostat</option>
-                        </select>
-                        <br>
-                        <select id="pin3_o_3_param_2">
-                            <option value="normal">Normal</option>
-                            <option value="inverted">Inverted</option>
-                        </select>
-                        <br>
-                        <select id="pin3_o_3_param_3" depend="pin3_o_3_param_1=heatingThermostat,pin3_o_3_param_1=coolingThermostat">
-                            <option value="external">Z-Wave temperature sensor</option>
-                            <option value="ds18b20_1">DS18B20 #1</option>
-                            <option value="ds18b20_2">DS18B20 #2</option>
-                            <option value="ds18b20_3">DS18B20 #3</option>
-                            <option value="ds18b20_4">DS18B20 #4</option>
-                            <option value="ds18b20_5">DS18B20 #5</option>
-                            <option value="ds18b20_6">DS18B20 #6</option>
-                            <option value="ds18b20_7">DS18B20 #7</option>
-                            <option value="ds18b20_8">DS18B20 #8</option>
-                            <option value="ds18b20_9">DS18B20 #9</option>
-                            <option value="ds18b20_10">DS18B20 #10</option>
-                        </select>
-                    </div>
-                    <label><input type="radio" name="pin3" id="pin3_NC" value="NC">Not connected</label><br>
-                </div>
-            </div>
-        </div>
+      <v-item-group mandatory>
+        <v-container>
+          <v-item>
+            <v-card>
+              <v-card-text>
+                <router-view></router-view>
+              </v-card-text>
+            </v-card>
+          </v-item>
 
-        <div class="clear"></div>
-
-        <div class="settings_row_relations">
-            <div class="settings_relation_selectors" id="settings_relation_selectors">
+          <!-- * settings -->
+          <v-item v-slot:default="{ active, toggle }">
+            <v-card>
+              <v-card-text id="settings_row" class="d-inline-flex settings_row">
+                    <div id="settings_svg" class="settings_svg">
+                      <object id="obj" data="/Z-Uno-Shield.svg" type="image/svg+xml" class="svg">Your browser do not support SVG</object>
+                    </div>
+                    <div class="features">
+                        <div id="settings_pin3pwm" class="settings">
+                            <h3>0-10V / PWM0</h3>
+                            <div id="pin3pwm_disabled" style="display: none;">
+                                <span style="color: red;">Disabled by ADC0</span>
+                            </div>
+                            <label><input type="radio" name="pin3pwm" id="pin3pwm_PWM" value="PWM">Analog output 0-10 V</label><br>
+                            <label><input type="radio" name="pin3pwm" id="pin3pwm_NC" value="NC">Not connected</label><br>
+                        </div>
+                        <div id="settings_pin16" class="settings">
+                            <h3>PWM4</h3>
+                            <label><input type="radio" name="pin16" id="pin16_PWM" value="PWM">PWM output <span title="Common collector">[i]</span></label><br>
+                            <div id="pin16_PWM_params" style="display: none;">
+                                <select id="pin16_PWM_param_1">
+                                    <option value="single">Dimmer</option>
+                                    <option value="red">RGBW Red</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin16" id="pin16_o" value="o">Digital output <span title="Common collector">[i]</span></label><br>
+                            <div id="pin16_o_params" style="display: none;">
+                                <select id="pin16_o_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="valve">Valve</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin16_o_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin16_o_param_3" depend="pin16_o_param_1=heatingThermostat,pin16_o_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin16" id="pin16_NC" value="NC">Not connected</label><br>
+                        </div>
+                        <div id="settings_pin15" class="settings">
+                            <h3>PWM3</h3>
+                            <label><input type="radio" name="pin15" id="pin15_PWM" value="PWM">PWM output <span title="Common collector">[i]</span></label><br>
+                            <div id="pin15_PWM_params" style="display: none;">
+                                <select id="pin15_PWM_param_1">
+                                    <option value="single">Dimmer</option>
+                                    <option value="green">RGBW Green</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin15" id="pin15_o" value="o">Digital output <span title="Common collector">[i]</span></label><br>
+                            <div id="pin15_o_params" style="display: none;">
+                                <select id="pin15_o_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="valve">Valve</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin15_o_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin15_o_param_3" depend="pin15_o_param_1=heatingThermostat,pin15_o_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin15" id="pin15_NC" value="NC">Not connected</label><br>
+                        </div>
+                        <div id="settings_pin14" class="settings">
+                            <h3>PWM2</h3>
+                            <label><input type="radio" name="pin14" id="pin14_PWM" value="PWM">PWM output <span title="Common collector">[i]</span></label><br>
+                            <div id="pin14_PWM_params" style="display: none;">
+                                <select id="pin14_PWM_param_1">
+                                    <option value="single">Dimmer</option>
+                                    <option value="blue">RGBW Blue</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin14" id="pin14_o" value="o">Digital output <span title="Common collector">[i]</span></label><br>
+                            <div id="pin14_o_params" style="display: none;">
+                                <select id="pin14_o_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="valve">Valve</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin14_o_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin14_o_param_3" depend="pin14_o_param_1=heatingThermostat,pin14_o_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin14" id="pin14_NC" value="NC">Not connected</label><br>
+                        </div>
+                        <div id="settings_pin13" class="settings">
+                            <h3>PWM1</h3>
+                            <label><input type="radio" name="pin13" id="pin13_PWM" value="PWM">PWM output <span title="Common collector">[i]</span></label><br>
+                            <div id="pin13_PWM_params" style="display: none;">
+                                <select id="pin13_PWM_param_1">
+                                    <option value="single">Dimmer</option>
+                                    <option value="white">RGBW White</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin13" id="pin13_o" value="o">Digital output <span title="Common collector">[i]</span></label><br>
+                            <div id="pin13_o_params" style="display: none;">
+                                <select id="pin13_o_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="valve">Valve</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin13_o_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin13_o_param_3" depend="pin13_o_param_1=heatingThermostat,pin13_o_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin13" id="pin13_NC" value="NC">Not connected</label><br>
+                        </div>
+                        <div class="clear"></div>
+                        <div id="settings_pin7" class="settings">
+                            <h3>7, RS-A</h3>
+                            <label><input type="radio" name="pin7" id="pin7_UART" value="UART_TX">UART TX <span title="Pins 7 and 8 work together">[i]</span></label><br>
+                            <div id="pin7_UART_params" style="display: none;">
+                                <select id="pin7_UART_param_1">
+                                    <option value="9600">9600 kbps</option>
+                                    <option value="14400">14400 kbps</option>
+                                    <option value="19200">19200 kbps</option>
+                                    <option value="38400">38400 kbps</option>
+                                    <option value="57600">57600 kbps</option>
+                                    <option value="115200">115200 kbps</option>
+                                    <option value="230400">230400 kbps</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin7" id="pin7_RS485" value="RS485_A">RS485 A <span title="Pins 2, 7 and 8 work together">[i]</span></label><br>
+                            <div id="pin7_RS485_params" style="display: none;">
+                                <select id="pin7_RS485_param_1">
+                                    <option value="9600">9600 kbps</option>
+                                    <option value="14400">14400 kbps</option>
+                                    <option value="19200">19200 kbps</option>
+                                    <option value="38400">38400 kbps</option>
+                                    <option value="57600">57600 kbps</option>
+                                    <option value="115200">115200 kbps</option>
+                                    <option value="230400">230400 kbps</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin7" id="pin7_i_3" value="i_3">Digital input 0/3 V</label><br>
+                            <div id="pin7_i_3_params" style="display: none;">
+                                <select id="pin7_i_3_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin7_i_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin7_i_3_param_3">
+                                    <option value="normal">3 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin7" id="pin7_o_3" value="o_3">Digital output 0/3 V</label><br>
+                            <div id="pin7_o_3_params" style="display: none;">
+                                <select id="pin7_o_3_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="valve">Valve</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin7_o_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin7_o_3_param_3" depend="pin7_o_3_param_1=heatingThermostat,pin7_o_3_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin7" id="pin7_NC" value="NC">Not connected</label><br>
+                        </div>
+                        <div id="settings_pin8" class="settings">
+                            <h3>8, RS-B</h3>
+                            <label><input type="radio" name="pin8" id="pin8_UART" value="UART_RX">UART RX <span title="Pins 7 and 8 work together">[i]</span></label><br>
+                            <label><input type="radio" name="pin8" id="pin8_RS485" value="RS485_B">RS485 B <span title="Pins 2, 7 and 8 work together">[i]</span></label><br>
+                            <label><input type="radio" name="pin8" id="pin8_i_3" value="i_3">Digital input 0/3 V</label><br>
+                            <div id="pin8_i_3_params" style="display: none;">
+                                <select id="pin8_i_3_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin8_i_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin8_i_3_param_3">
+                                    <option value="normal">3 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin8" id="pin8_o_3" value="o_3">Digital output 0/3 V</label><br>
+                            <div id="pin8_o_3_params" style="display: none;">
+                                <select id="pin8_o_3_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="valve">Valve</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin8_o_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin8_o_3_param_3" depend="pin8_o_3_param_1=heatingThermostat,pin8_o_3_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin8" id="pin8_NC" value="NC">Not connected</label><br>
+                        </div>
+                        <div id="settings_pin12" class="settings">
+                            <h3>12</h3>
+                            <label><input type="radio" name="pin12" id="pin12_dht" value="dht">Temperature/humidity</label><br>
+                            <div id="pin12_dht_params" style="display: none;">
+                                Sensor
+                                <select id="pin12_dht_param_1">
+                                    <option>DHT11</option>
+                                    <option>DHT22</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin12" id="pin12_i_3" value="i_3">Digital input 0/3 V</label><br>
+                            <div id="pin12_i_3_params" style="display: none;">
+                                <select id="pin12_i_3_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin12_i_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin12_i_3_param_3">
+                                    <option value="normal">3 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin12" id="pin12_o_3" value="o_3">Digital output 0/3 V</label><br>
+                            <div id="pin12_o_3_params" style="display: none;">
+                                <select id="pin12_o_3_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="valve">Valve</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin12_o_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin12_o_3_param_3" depend="pin12_o_3_param_1=heatingThermostat,pin12_o_3_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin12" id="pin12_NC" value="NC">Not connected</label><br>
+                        </div>
+                        <div id="settings_pin11" class="settings">
+                            <h3>11, One Wire</h3>
+                            <label><input type="radio" name="pin11" id="pin11_onewire" value="onewire">Temperature</label><br>
+                            <div id="pin11_onewire_params" style="display: none;">
+                                Number of DS18B20 sensors:
+                                <select id="pin11_onewire_param_1">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin11" id="pin11_dht" value="dht">Temperature/humidity</label><br>
+                            <div id="pin11_dht_params" style="display: none;">
+                                Sensor
+                                <select id="pin11_dht_param_1">
+                                    <option>DHT11</option>
+                                    <option>DHT22</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin11" id="pin11_i_3" value="i_3">Digital input 0/3 V</label><br>
+                            <div id="pin11_i_3_params" style="display: none;">
+                                <select id="pin11_i_3_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin11_i_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin11_i_3_param_3">
+                                    <option value="normal">3 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin11" id="pin11_o_3" value="o_3">Digital output 0/3 V</label><br>
+                            <div id="pin11_o_3_params" style="display: none;">
+                                <select id="pin11_o_3_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="valve">Valve</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin11_o_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin11_o_3_param_3" depend="pin11_o_3_param_1=heatingThermostat,pin11_o_3_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin11" id="pin11_NC" value="NC">Not connected</label><br>
+                        </div>
+                        <div class="clear"></div>
+                        <div id="settings_pin6" class="settings">
+                            <h3>ADC3</h3>
+                            <label><input type="radio" name="pin6" id="pin6_ADC_i_3" value="ADC_i_3">Analog input 0-3 V</label><br>
+                            <div id="pin6_ADC_i_3_params" style="display: none;">
+                                <select id="pin6_ADC_i_3_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–3V → </span><input id="pin6_ADC_i_3_param_1" size="2">–<input id="pin6_ADC_i_3_param_2" size="2"><span title="Map 0 – 3 Volts to value range">[i]</span>
+                                <input id="pin6_ADC_i_3_param_5" type="hidden" value="3" />
+                            </div>
+                            <label><input type="radio" name="pin6" id="pin6_ADC_i_5" value="ADC_i_5">Analog input 0-5 V</label><br>
+                            <div id="pin6_ADC_i_5_params" style="display: none;">
+                                <select id="pin6_ADC_i_5_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–5V → </span><input id="pin6_ADC_i_5_param_1" size="2">–<input id="pin6_ADC_i_5_param_2" size="2"><span title="Map 0 – 5 Volts to value range">[i]</span>
+                                <input id="pin6_ADC_i_5_param_5" type="hidden" value="5" />
+                            </div>
+                            <label><input type="radio" name="pin6" id="pin6_ADC_i_12" value="ADC_i_12">Analog input 0-12 V</label><br>
+                            <div id="pin6_ADC_i_12_params" style="display: none;">
+                                <select id="pin6_ADC_i_12_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–12V → </span><input id="pin6_ADC_i_12_param_1" size="2">–<input id="pin6_ADC_i_12_param_2" size="2"><span title="Map 0 – 12 Volts to value range">[i]</span>
+                                <input id="pin6_ADC_i_12_param_5" type="hidden" value="12" />
+                            </div>
+                            <label><input type="radio" name="pin6" id="pin6_i_3" value="i_3">Digital input 0/3 V</label><br>
+                            <div id="pin6_i_3_params" style="display: none;">
+                                <select id="pin6_i_3_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin6_i_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin6_i_3_param_3">
+                                    <option value="normal">3 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin6" id="pin6_i_5" value="i_5">Digital input 0/5 V</label><br>
+                            <div id="pin6_i_5_params" style="display: none;">
+                                <select id="pin6_i_5_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin6_i_5_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin6_i_5_param_3">
+                                    <option value="normal">5 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin6" id="pin6_i_12" value="i_12">Digital input 0/12 V</label><br>
+                            <div id="pin6_i_12_params" style="display: none;">
+                                <select id="pin6_i_12_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin6_i_12_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin6_i_12_param_3">
+                                    <option value="normal">12 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin6" id="pin6_o_3" value="o_3">Digital output 0/3 V</label><br>
+                            <div id="pin6_o_3_params" style="display: none;">
+                                <select id="pin6_o_3_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="valve">Valve</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin6_o_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin6_o_3_param_3" depend="pin6_o_3_param_1=heatingThermostat,pin6_o_3_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin6" id="pin6_NC" value="NC">Not connected</label><br>
+                        </div>
+                        <div id="settings_pin5" class="settings">
+                            <h3>ADC2</h3>
+                            <label><input type="radio" name="pin5" id="pin5_ADC_i_3" value="ADC_i_3">Analog input 0-3 V</label><br>
+                            <div id="pin5_ADC_i_3_params" style="display: none;">
+                                <select id="pin5_ADC_i_3_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–3V → </span><input id="pin5_ADC_i_3_param_1" size="2">–<input id="pin5_ADC_i_3_param_2" size="2"><span title="Map 0 – 3 Volts to value range">[i]</span>
+                                <input id="pin5_ADC_i_3_param_5" type="hidden" value="3" />
+                            </div>
+                            <label><input type="radio" name="pin5" id="pin5_ADC_i_5" value="ADC_i_5">Analog input 0-5 V</label><br>
+                            <div id="pin5_ADC_i_5_params" style="display: none;">
+                                <select id="pin5_ADC_i_5_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–5V → </span><input id="pin5_ADC_i_5_param_1" size="2">–<input id="pin5_ADC_i_5_param_2" size="2"><span title="Map 0 – 5 Volts to value range">[i]</span>
+                                <input id="pin5_ADC_i_5_param_5" type="hidden" value="5" />
+                            </div>
+                            <label><input type="radio" name="pin5" id="pin5_ADC_i_12" value="ADC_i_12">Analog input 0-12 V</label><br>
+                            <div id="pin5_ADC_i_12_params" style="display: none;">
+                                <select id="pin5_ADC_i_12_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–12V → </span><input id="pin5_ADC_i_12_param_1" size="2">–<input id="pin5_ADC_i_12_param_2" size="2"><span title="Map 0 – 12 Volts to value range">[i]</span>
+                                <input id="pin5_ADC_i_12_param_5" type="hidden" value="12" />
+                            </div>
+                            <label><input type="radio" name="pin5" id="pin5_i_3" value="i_3">Digital input 0/3 V</label><br>
+                            <div id="pin5_i_3_params" style="display: none;">
+                                <select id="pin5_i_3_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin5_i_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin5_i_3_param_3">
+                                    <option value="normal">3 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin5" id="pin5_i_5" value="i_5">Digital input 0/5 V</label><br>
+                            <div id="pin5_i_5_params" style="display: none;">
+                                <select id="pin5_i_5_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin5_i_5_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin5_i_5_param_3">
+                                    <option value="normal">5 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin5" id="pin5_i_12" value="i_12">Digital input 0/12 V</label><br>
+                            <div id="pin5_i_12_params" style="display: none;">
+                                <select id="pin5_i_12_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin5_i_12_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin5_i_12_param_3">
+                                    <option value="normal">12 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin5" id="pin5_o_3" value="o_3">Digital output 0/3 V</label><br>
+                            <div id="pin5_o_3_params" style="display: none;">
+                                <select id="pin5_o_3_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="valve">Valve</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin5_o_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin5_o_3_param_3" depend="pin5_o_3_param_1=heatingThermostat,pin5_o_3_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin5" id="pin5_NC" value="NC">Not connected</label><br>
+                        </div>
+                        <div id="settings_pin4" class="settings">
+                            <h3>ADC1</h3>
+                            <label><input type="radio" name="pin4" id="pin4_ADC_i_3" value="ADC_i_3">Analog input 0-3 V</label><br>
+                            <div id="pin4_ADC_i_3_params" style="display: none;">
+                                <select id="pin4_ADC_i_3_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–3V → </span><input id="pin4_ADC_i_3_param_1" size="2">–<input id="pin4_ADC_i_3_param_2" size="2"><span title="Map 0 – 3 Volts to value range">[i]</span>
+                                <input id="pin4_ADC_i_3_param_5" type="hidden" value="3" />
+                            </div>
+                            <label><input type="radio" name="pin4" id="pin4_ADC_i_5" value="ADC_i_5">Analog input 0-5 V</label><br>
+                            <div id="pin4_ADC_i_5_params" style="display: none;">
+                                <select id="pin4_ADC_i_5_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–5V → </span><input id="pin4_ADC_i_5_param_1" size="2">–<input id="pin4_ADC_i_5_param_2" size="2"><span title="Map 0 – 5 Volts to value range">[i]</span>
+                                <input id="pin4_ADC_i_5_param_5" type="hidden" value="5" />
+                            </div>
+                            <label><input type="radio" name="pin4" id="pin4_ADC_i_12" value="ADC_i_12">Analog input 0-12 V</label><br>
+                            <div id="pin4_ADC_i_12_params" style="display: none;">
+                                <select id="pin4_ADC_i_12_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–12V → </span><input id="pin4_ADC_i_12_param_1" size="2">–<input id="pin4_ADC_i_12_param_2" size="2"><span title="Map 0 – 12 Volts to value range">[i]</span>
+                                <input id="pin4_ADC_i_12_param_5" type="hidden" value="12" />
+                            </div>
+                            <label><input type="radio" name="pin4" id="pin4_i_3" value="i_3">Digital input 0/3 V</label><br>
+                            <div id="pin4_i_3_params" style="display: none;">
+                                <select id="pin4_i_3_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin4_i_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin4_i_3_param_3">
+                                    <option value="normal">3 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin4" id="pin4_i_5" value="i_5">Digital input 0/5 V</label><br>
+                            <div id="pin4_i_5_params" style="display: none;">
+                                <select id="pin4_i_5_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin4_i_5_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin4_i_5_param_3">
+                                    <option value="normal">5 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin4" id="pin4_i_12" value="i_12">Digital input 0/12 V</label><br>
+                            <div id="pin4_i_12_params" style="display: none;">
+                                <select id="pin4_i_12_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin4_i_12_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin4_i_12_param_3">
+                                    <option value="normal">12 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin4" id="pin4_o_3" value="o_3">Digital output 0/3 V</label><br>
+                            <div id="pin4_o_3_params" style="display: none;">
+                                <select id="pin4_o_3_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="valve">Valve</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin4_o_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin4_o_3_param_3" depend="pin4_o_3_param_1=heatingThermostat,pin4_o_3_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin4" id="pin4_NC" value="NC">Not connected</label><br>
+                        </div>
+        
+                        <div id="settings_pin3" class="settings">
+                            <h3 title="pin #3">ADC0</h3>
+                            <div id="pin3_disabled" class="pin_default_disabled">
+                                <span style="color: red">Disabled by PWM0</span>
+                            </div>
+                            <label><input type="radio" name="pin3" id="pin3_ADC_i_3" value="ADC_i_3">Analog input 0-3 V</label><br>
+                            <div id="pin3_ADC_i_3_params" class="pin_default_disabled">
+                                <select id="pin3_ADC_i_3_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–3V → </span><input id="pin3_ADC_i_3_param_1" size="2">–<input id="pin3_ADC_i_3_param_2" size="2"><span title="Map 0 – 3 Volts to value range">[i]</span>
+                                <input id="pin3_ADC_i_3_param_5" type="hidden" value="3" />
+                            </div>
+                            <label><input type="radio" name="pin3" id="pin3_ADC_i_5" value="ADC_i_5">Analog input 0-5 V</label><br>
+                            <div id="pin3_ADC_i_5_params" class="pin_default_disabled">
+                                <select id="pin3_ADC_i_5_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–5V → </span><input id="pin3_ADC_i_5_param_1" size="2">–<input id="pin3_ADC_i_5_param_2" size="2"><span title="Map 0 – 5 Volts to value range">[i]</span>
+                                <input id="pin3_ADC_i_5_param_5" type="hidden" value="5" />
+                            </div>
+                            <label><input type="radio" name="pin3" id="pin3_ADC_i_12" value="ADC_i_12">Analog input 0-12 V</label><br>
+                            <div id="pin3_ADC_i_12_params" class="pin_default_disabled">
+                                <select id="pin3_ADC_i_12_param_4">
+                                    <!-- param_3 is internal in preAction -->
+                                    <option value="percentage">%</option>
+                                    <option value="temperature">Temperature, °C</option>
+                                    <option value="luminance">Luminance, lux</option>
+                                    <option value="humidity">Humidity, %</option>
+                                    <option value="voltage">Voltage, V</option>
+                                    <option value="current">Current, A</option>
+                                    <option value="distance">Distance, m</option>
+                                    <option value="kPa">Pressure, kPa</option>
+                                    <option value="ppm">CO2, PPM</option>
+                                </select>
+                                <br>
+                                <span>0–12V → </span><input id="pin3_ADC_i_12_param_1" size="2">–<input id="pin3_ADC_i_12_param_2" size="2"><span title="Map 0 – 12 Volts to value range">[i]</span>
+                                <input id="pin3_ADC_i_12_param_5" type="hidden" value="12" />
+                            </div>
+                            <label><input type="radio" name="pin3" id="pin3_i_3" value="i_3">Digital input 0/3 V</label><br>
+                            <div id="pin3_i_3_params" class="pin_default_disabled">
+                                <select id="pin3_i_3_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin3_i_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin3_i_3_param_3">
+                                    <option value="normal">3 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin3" id="pin3_i_5" value="i_5">Digital input 0/5 V</label><br>
+                            <div id="pin3_i_5_params" class="pin_default_disabled">
+                                <select id="pin3_i_5_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin3_i_5_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin3_i_5_param_3">
+                                    <option value="normal">5 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin3" id="pin3_i_12" value="i_12">Digital input 0/12 V</label><br>
+                            <div id="pin3_i_12_params" class="pin_default_disabled">
+                                <select id="pin3_i_12_param_1">
+                                    <option value="general">General purpose</option>
+                                    <option value="door">Door/window</option>
+                                    <option value="motion">Motion</option>
+                                    <option value="smoke">Smoke</option>
+                                    <option value="leakage">Leakage</option>
+                                    <option value="co">CO</option>
+                                    <option value="co2">CO2</option>
+                                    <option value="overheat">Overheat</option>
+                                    <option value="freeze">Freeze</option>
+                                    <option value="tamper">Tamper</option>
+                                    <option value="tilt">Tilt</option>
+                                    <option value="glassbr">Glass break</option>
+                                </select>
+                                <br>
+                                <select id="pin3_i_12_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin3_i_12_param_3">
+                                    <option value="normal">12 V or ground</option>
+                                    <option value="pullup">Free or ground</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin3" id="pin3_o_3" value="o_3">Digital output 0/3 V</label><br>
+                            <div id="pin3_o_3_params" class="pin_default_disabled">
+                                <select id="pin3_o_3_param_1">
+                                    <option value="switch">Switch</option>
+                                    <option value="doorlock">Door lock</option>
+                                    <option value="siren">Siren</option>
+                                    <option value="heatingThermostat">Heating thermostat</option>
+                                    <option value="coolingThermostat">Cooling thermostat</option>
+                                </select>
+                                <br>
+                                <select id="pin3_o_3_param_2">
+                                    <option value="normal">Normal</option>
+                                    <option value="inverted">Inverted</option>
+                                </select>
+                                <br>
+                                <select id="pin3_o_3_param_3" depend="pin3_o_3_param_1=heatingThermostat,pin3_o_3_param_1=coolingThermostat">
+                                    <option value="external">Z-Wave temperature sensor</option>
+                                    <option value="ds18b20_1">DS18B20 #1</option>
+                                    <option value="ds18b20_2">DS18B20 #2</option>
+                                    <option value="ds18b20_3">DS18B20 #3</option>
+                                    <option value="ds18b20_4">DS18B20 #4</option>
+                                    <option value="ds18b20_5">DS18B20 #5</option>
+                                    <option value="ds18b20_6">DS18B20 #6</option>
+                                    <option value="ds18b20_7">DS18B20 #7</option>
+                                    <option value="ds18b20_8">DS18B20 #8</option>
+                                    <option value="ds18b20_9">DS18B20 #9</option>
+                                    <option value="ds18b20_10">DS18B20 #10</option>
+                                </select>
+                            </div>
+                            <label><input type="radio" name="pin3" id="pin3_NC" value="NC">Not connected</label><br>
+                        </div>
+                    </div>
+              </v-card-text>
+            </v-card>
+          </v-item>
+          <!-- * relations -->
+          <v-item v-slot:default="{ active, toggle }">
+            <v-card class="settings_row_relations">   
+              <v-card-text class="settings_relation_selectors" id="settings_relation_selectors">
                 <div class="relations" id="relations">
                     <div class="relation_hidden">
                         <div class="relation_main">
@@ -1460,48 +1448,56 @@
                         </div> 
                         <div class="relation_advanced">
                             <div class="relation_advanced_content collapsible_content">
-                                <label>
-                                    <input type="checkbox" class="relation_config_params relation_EEPROM_check">
-                                        Save device value to EEPROM
-                                    </input>
-                                </label>
-                                <!-- <label>
-                                    <input type="checkbox" class="relation_config_params relation_EEPROM_check">
-                                        TODO: description (free or ground/3V ground)
-                                    </input>
-                                </label> -->
-                                <hr class="relation_hr">
+                                <label><input type="checkbox" class="relation_config_params relation_EEPROM_check">Save device value to EEPROM</input></label>
                             </div>
+                            <v-divider></v-divider>
                         </div>
                         <div class="relation_notes"></div>
                     </div>
                 </div>
-            </div>
-            <div id="relation_settings">
-                <button class="fading_button add_relation_button" id="add_relation_button">+</button>
-            </div>
-        </div>
-        
-        <div class="settings_row_connection">
-            <div class="settings_svg_connection">
-                <object id="obj_2" data="/Z-Uno-Shield-Details.svg" type="image/svg+xml" class="svg">Your browser do not support SVG</object>
-            </div>
-
-            <div id="manual_pages" class="pages">
-                <!-- nav -->
-                <div id="manual_pages_control" class="tabs_control">
+              </v-card-text>  
+              <v-card-actions>
+                <div id="relation_settings">
+                  <button class="fading_button add_relation_button" id="add_relation_button">+</button>
+                </div>
+              </v-card-actions>
+            </v-card>
+          </v-item>
+          <!-- * connections -->
+          <v-item v-slot:default="{ active, toggle }">
+            <v-card>
+              <v-card-text id="settings_row_connection" class="settings_row_connection">
+                <div class="settings_svg_connection">
+                    <object id="obj_2" data="/Z-Uno-Shield-Details.svg" type="image/svg+xml" class="svg">Your browser do not support SVG</object>
+                </div>
+    
+                <div id="manual_pages" class="pages">
+                    <!-- nav -->
+                  <div id="manual_pages_control" class="tabs_control">
                     <button class="manual_tablinks" id="manual_control_button_0">Sketch</button>
                     <button class="manual_tablinks" id="manual_control_button_1">Enclosure</button>
+                  </div>
+                    <!-- pages -->
+                  <div id="manual_page_0" class="manual_tabcontent"></div>
+                  <div id="manual_page_1" class="manual_tabcontent"></div>
                 </div>
-                <!-- pages -->
-                <div id="manual_page_0" class="manual_tabcontent">
-                </div>
-                <div id="manual_page_1" class="manual_tabcontent">
-                </div>
-            </div>
+              </v-card-text>
+            </v-card>
+          </v-item>
+        </v-container>
+      </v-item-group>
+    </v-container> 
+
+    <div id="configurator_pages" class="pages">
+        <div id="configurator_pages_control" class="pages_control">
+            <button class="configurator_tablinks tablinks" id="page_0">Select peripherals</button>
+            <button class="configurator_tablinks tablinks" id="page_1">Define relations</button>
+            <button class="configurator_tablinks tablinks" id="page_2">Connect peripherals</button>
         </div>
-        <div class="clear"></div>
-        <h3 style="display: inline">Sketch code</h3>
+    </div>
+
+    <div>
+        <h3 style="display: inline;">Sketch code</h3>
         <span id="copyCode" class="jslink">Copy sketch code</span>
         <a id="jslink_code" class="jslink collapsible">Show code</a>
         <div class="collapsible_content">
@@ -1513,24 +1509,27 @@
 </v-container>
 </v-app>
 </div>
-<!-- ! STOP COMMIT HERE -->
-</article>
-</div>
-</div>
-</div>
-</main>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 <script>
-new Vue({
+var router = new VueRouter({
+  mode: 'history' 
+});
+const sp = { template: '<div>foo</div>' }
+const dr = { template: '<div>bar</div>' }
+const cp = { template: '<div>bar</div>' }
+
+var vue = new Vue({
     el: '#app',
     vuetify: new Vuetify(),
-})
+    router: router
+});
 </script>
-  <script src="/Z-Uno-Shield-code-gen.js"></script>
-  <script src="/Z-Uno-Shield-ui.js"></script>
-  <script src="/Z-Uno-Shield-relations.js"></script>
+<script src="/Z-Uno-Shield-code-gen.js"></script>
+<script src="/Z-Uno-Shield-ui.js"></script>
+<script src="/Z-Uno-Shield-relations.js"></script>
 </body>
 <!-- TODO: / -> /files/z-uno/Z-Uno-Shield/Configurator/ -->
 </html>

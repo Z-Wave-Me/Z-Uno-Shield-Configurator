@@ -629,15 +629,15 @@ function loadConfiguration() {
 // temporary workaround
 var isfirstloaded = false;
 htmlEl('obj').onload = function() {
-    document.getElementsByClassName('zoom_svg')[0].onclick = function() {
-        var flex = parseFloat(this.parentNode.style.flexGrow);
-        if (!flex) flex = 1;
+    // document.getElementsByClassName('zoom_svg')[0].onclick = function() {
+    //     var flex = parseFloat(this.parentNode.style.flexGrow);
+    //     if (!flex) flex = 1;
         
-        if (flex < 1.9) flex += 0.3;
-        else flex = 1;
+    //     if (flex < 1.9) flex += 0.3;
+    //     else flex = 1;
         
-        this.parentNode.style.flexGrow = flex;
-    };
+    //     this.parentNode.style.flexGrow = flex;
+    // };
 
     if (isfirstloaded)
         loadConfiguration();
@@ -655,7 +655,7 @@ function ready() {
 
     tabs[0].click();
     // REMOVE BEFORE COMMIT
-    tabs[2].click();
+    // tabs[2].click();
 }
 
 // Default params
