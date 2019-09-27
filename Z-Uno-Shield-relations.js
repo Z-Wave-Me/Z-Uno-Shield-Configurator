@@ -60,15 +60,6 @@ var relelems = {};
 // follow add relation button
 htmlEl("add_relation_button").onclick = eventHandler;
 
-function findParentRelation(el) {
-	if (htmlEl('relations').contains(el)) {
-		var DOM_rels = htmlCEl('relation');
-		for (i = 0; i < DOM_rels.length; i++)
-			if (DOM_rels[i].contains(el))
-				return DOM_rels[i];
-	}
-}
-
 function eventHandler(ev) {
 	if (ev.isTrusted) {
 		if (evscmp(/relation/, ev))
@@ -77,13 +68,13 @@ function eventHandler(ev) {
 		switch (true) {
 			case evscmp(/collapsible/, ev):
 				findRelationEl(relation);
-				if (evscmp(/advanced_relation_button/, ev))
+				if (evscmp(/relation_advanced_button/, ev))
 					collapseRelationEl(ev, relelems.advanced.content);
 				else
 					collapseAction(ev);
 				break;
 
-			case evscmp(/remove_relation_button/, ev):
+			case evscmp(/relation_remove_button/, ev):
 				removeRelation(relation);
 				updateCode(pins);
 				break;
@@ -332,8 +323,6 @@ function updateRelationDependencies() {
 		mode_sb.style.display = "none";
 		device_input.style.display = "block";
 	}
-
-	relelems.advanced.hr.width = relelems.local.main.scrollWidth;
 }
 
 function addRelation() {
@@ -381,6 +370,14 @@ function evscmp(regex, ev, selector) {
 	else
 		return !!regex.exec(ev.srcElement.className);
 }
+function findParentRelation(el) {
+	if (htmlEl('relations').contains(el)) {
+		var DOM_rels = htmlCEl('relation');
+		for (i = 0; i < DOM_rels.length; i++)
+			if (DOM_rels[i].contains(el))
+				return DOM_rels[i];
+	}
+}
 function findRelationEl(el) {
 	// TODO: set var name according with project 
 	if (typeof (el) == 'number') el = htmlCEl('relation')[el];
@@ -388,7 +385,7 @@ function findRelationEl(el) {
 	relelems.local = {
 		main: el.getElementsByClassName("relation_main")[0],
 		advanced: el.getElementsByClassName("relation_advanced")[0],
-		remove: el.getElementsByClassName("remove_relation_button")[0],
+		remove: el.getElementsByClassName("relation_remove_button")[0],
 		notes: el.getElementsByClassName("relation_notes")[0]
 	};
 	relelems.sensor = {
@@ -416,8 +413,7 @@ function findRelationEl(el) {
 	};
 	relelems.advanced = {
 		content: el.getElementsByClassName("relation_advanced_content")[0],
-		button: el.getElementsByClassName("collapsible")[0],
-		hr: el.getElementsByClassName("relation_hr")[0]
+		button: el.getElementsByClassName("relation_advanced_button")[0],
 	};
 	return el;
 }
@@ -455,16 +451,15 @@ function checkRelationsCorectness(_relation) {
 		else
 			res.alert.push(condition_input);
 		// device input
-		if (device_input.value != "value" &&
-			device_input.value != "" &&
-			device_input.style.display != 'none')
+		if ((device_input.value != "value") &&
+					(device_input.value != "") &&
+						(device_input.style.display != 'none'))
 			res.ready.push(device_input);
 		else
 			res.alert.push(device_input);
 
-		res.alert.forEach(function (el, i) {
-			if (el.style.display == 'none') res.alert.splice(i, 1); 
-		});
+		// remove from error list if hidden
+		res.alert.forEach(function (el, i) { if (el.style.display == 'none') res.alert.splice(i, 1); });
 		
 		if (res.alert.length) {
 			_relation[i].disabled = true;
@@ -475,6 +470,5 @@ function checkRelationsCorectness(_relation) {
 		if (res.ready.length)
 			res.ready.map(function (el) { el.style.borderColor = null; });
 	} 
-	console.log(res);
 	return res;
 }

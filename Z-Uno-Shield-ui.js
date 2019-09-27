@@ -103,7 +103,6 @@ function updateParams() {
     updateSetting(pin, group, mode);
     updateParamsUI(pin, group);
     updateCode();
-    updateRelations();
 }
 
 function updateParamsUI(pin, group) {
@@ -220,7 +219,6 @@ function jumersADC() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    updateRelations();
 }
 
 function jumersPWM() {
@@ -257,7 +255,6 @@ function jumersPWM() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    updateRelations();
 }
 
 function jumersPWM0() {
@@ -296,7 +293,6 @@ function jumersPWM0() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    updateRelations();
 }
 
 function jumersGPIO() {
@@ -343,7 +339,6 @@ function jumersGPIO() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    updateRelations();
 }
 
 function jumersOneWire() {
@@ -402,7 +397,6 @@ function jumersOneWire() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    updateRelations();
 }
 
 function jumersUART() {
@@ -562,7 +556,6 @@ function jumersUART() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    updateRelations();
 }
 // Prototypes
 
@@ -581,6 +574,7 @@ pinModesEls('pin11', function(el) { el.onclick = jumersOneWire; });
 pinModesEls('pin12', function(el) { el.onclick = jumersGPIO; });
 
 document.querySelectorAll('[id*=_param_]').forEach(function(el) { el.onchange = updateParams; });
+
 
 function loadConfiguration() {
     if (window.location.href.split('?')[1]) {
@@ -623,22 +617,11 @@ function loadConfiguration() {
     });
     pins.isReadyToCode = true;
     updateCode();
-    addRelation();
 }
 // Default
 // temporary workaround
 var isfirstloaded = false;
 htmlEl('obj').onload = function() {
-    // document.getElementsByClassName('zoom_svg')[0].onclick = function() {
-    //     var flex = parseFloat(this.parentNode.style.flexGrow);
-    //     if (!flex) flex = 1;
-        
-    //     if (flex < 1.9) flex += 0.3;
-    //     else flex = 1;
-        
-    //     this.parentNode.style.flexGrow = flex;
-    // };
-
     if (isfirstloaded)
         loadConfiguration();
     else 
@@ -649,13 +632,13 @@ htmlEl('obj_2').onload = loadConfiguration;
 
 function ready() {
     // note, if we open page with relations before, we have issue with reseted relations
-    var tabs = htmlCEl('configurator_tablinks');
+    var tabs = htmlCEl('pagelinks');
     for(i = 0; i < tabs.length; i++)
         tabs[i].onclick = openPage;
-
+    
     tabs[0].click();
-    // REMOVE BEFORE COMMIT
-    // tabs[2].click();
+    // ! DEBUG
+    tabs[1].click();
 }
 
 // Default params
@@ -722,61 +705,54 @@ function updateRelations() {
 
 
 function openPage(ev) {
-    var pages = [ htmlCEl('settings_row')[0],
-              htmlCEl('settings_row_relations')[0],
-              htmlCEl('settings_row_connection')[0] ],
-        buttons = htmlCEl('configurator_tablinks'),
-        target = ev.srcElement.id.replace(/\D+/g,'');
-
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove("configurator_active");
-        // обновляем вкладки пошагового руководства
-        if (target == 2) createManualPages();
-        // аккуратно скрываем страницы что бы не сбросить svg
-        softPageSwitch(pages[i], i == target);
-    }
-    buttons[target].classList.add("configurator_active");
+    var target = ev.target.value;
+    // обновляем вкладки пошагового руководства
+    if (target == 3) createManualPages();
+    // аккуратно скрываем страницы что бы не сбросить svg
+    softPageSwitch(target);
 }
-function softPageSwitch(el, display) {
+function softPageSwitch(open) {
     // change sizes need to replace el
     // hide pages for pins to shortcut page
-    if (display) {
-        el.style.overflow = null;
-        el.style.position = null;
-        el.style.opacity = 1;
-        el.style.width = null;
-        el.style.height = null;
-        el.style.top = null;
-    } else {
-        el.style.overflow = 'hidden';
-        el.style.position = 'absolute';
-        el.style.opacity = 0;
-        el.style.width = 0;
-        el.style.height = 0;
-        el.style.top = 0;
+    var els = htmlCEl('page');
+    for (var i = 0; i < htmlCEl('pagelinks').length; i++) {
+        var el = els[i];
+        if (i == open) {
+            el.style.overflow = null;
+            el.style.position = null;
+            el.style.opacity = 1;
+            el.style.width = null;
+            el.style.height = null;
+            el.style.top = null;
+        } else {
+            el.style.overflow = 'hidden';
+            el.style.position = 'absolute';
+            el.style.opacity = 0;
+            el.style.width = 0;
+            el.style.height = 0;
+            el.style.top = 0;
+        }
     }
 }
 
-function openTab(ev, tab) {
+function openTab(ev) {
     // Tabcontrol part
-    var i, tabcontent, tablinks;
-    tab = 'manual_page_' + ev.srcElement.id.replace(/\D+/g, '');
+    var i, target, tabcontent, tablinks;
+    target = 'manual_tab_' + ev.target.value;
 
-    tabcontent = htmlCEl("manual_tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
+    tabcontent = htmlCEl("manual_tab");
+    for (i = 0; i < tabcontent.length; i++)
         tabcontent[i].style.display = "none";
-    }
 
-    tablinks = htmlCEl("manual_tablinks");
-    for (i = 0; i < tablinks.length; i++) {
+    tablinks = htmlCEl("manual_tablink");
+    for (i = 0; i < tablinks.length; i++)
         tablinks[i].classList.remove('manual_active');
-    }
 
-    htmlEl(tab).style.display = "block";
+    htmlEl(target).style.display = "flex";
     ev.srcElement.classList.add('manual_active');
 
     // SVG display part
-    var currentTarget = parseInt(tab.replace(/[^0-9\.]/g, ''), 10);
+    var currentTarget = parseInt(target);
     if (currentTarget > 1) {
         var deviceType = getDeviceType(currentTarget);
 
@@ -1124,7 +1100,7 @@ function svgdGen(pinNum, deviceType, display) {
 function createManualPages() {
     for (var i = 0; i <= 16; i++) {
         if (i < 2) {
-            htmlCEl('manual_tablinks')[i].onclick = openTab;
+            htmlEl('manual_tablink_' + i).onclick = openTab;
             generateContentOfTab(i);
             continue;
         }
@@ -1132,28 +1108,24 @@ function createManualPages() {
         try {   
             if (pins[i]['type'] != 'NC') {
                 var pin_label = getPinLabelByNum(i);
-                // add htmlEl('manual_control_button_' + i)
-                if (!htmlEl('manual_control_button_' + i)) {
+                if (!htmlEl('manual_tablink_' + i)) {
                     var bu = document.createElement('button');
-                    bu.classList.add('manual_tablinks');
-                    bu.id = 'manual_control_button_' + i;
+                    bu.classList.add('manual_tablink');
+                    bu.id = 'manual_tablink_' + i;
                     bu.onclick = openTab;
                     bu.innerText = pin_label;
-                    htmlEl('manual_pages_control').appendChild(bu);
+                    htmlEl('manual_tablinks').appendChild(bu);
                 }
-
-                if (!htmlEl('manual_page_' + i)) {
+                if (!htmlEl('manual_tab_' + i)) {
                     var div = document.createElement('div');
-                    div.classList.add('manual_tabcontent');
-                    div.id = 'manual_page_' + i;
-                    htmlEl('manual_pages').appendChild(div);
+                    div.classList.add('manual_tab');
+                    div.id = 'manual_tab_' + i;
+                    htmlEl('manual_tabs').appendChild(div);
                 }
-                
                 generateContentOfTab(i);
-
-            } else if (pins[i]['type'] == 'NC' && htmlEl('manual_page_' + i)) {
-                htmlEl('manual_control_button_' + i).remove();
-                htmlEl('manual_page_' + i).remove();
+            } else if (pins[i]['type'] == 'NC' && htmlEl('manual_tab_' + i)) {
+                htmlEl('manual_tablink_' + i).remove();
+                htmlEl('manual_tab_' + i).remove();
             }
         } catch(e) {  }
     }
@@ -1235,10 +1207,10 @@ function generateContentOfTab(i) {
     else if ((type == 'SwitchBinary') && (prms(1) == 'doorlock'))
         if (i >= 13 && i <= 16)
             content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off manual_tablinks"\
+                                        <button class="manual_tablinks_off manual_tablink"\
                                                 onclick="event, connectDoorlockButton('+ i +', false)">\
                                                 Without button</button>\
-                                        <button class="manual_tablinks_on manual_tablinks"\
+                                        <button class="manual_tablinks_on manual_tablink"\
                                                 onclick="event, connectDoorlockButton('+ i +', true)">\
                                                 With button</button>\
                                     </div>\
@@ -1250,10 +1222,10 @@ function generateContentOfTab(i) {
     // White LED
     else if (prms(1) == 'single')
         content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off manual_tablinks"\
+                                        <button class="manual_tablinks_off manual_tablink"\
                                                 onclick="event, connectAmplifier(false)">\
                                                 Without amplifier</button>\
-                                        <button class="manual_tablinks_on manual_tablinks"\
+                                        <button class="manual_tablinks_on manual_tablink"\
                                                 onclick="event, connectAmplifier(true)">\
                                                 With amplifier</button>\
                                      </div>\
@@ -1262,10 +1234,10 @@ function generateContentOfTab(i) {
     // RGB LED strip
     else if (type == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white')
         content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off manual_tablinks"\
+                                        <button class="manual_tablinks_off manual_tablink"\
                                                 onclick="event, connectAmplifier(false)">\
                                                 Without amplifier</button>\
-                                        <button class="manual_tablinks_on manual_tablinks"\
+                                        <button class="manual_tablinks_on manual_tablink"\
                                                 onclick="event, connectAmplifier(true)">\
                                                 With amplifier</button>\
                                      </div>\
@@ -1274,17 +1246,17 @@ function generateContentOfTab(i) {
     // RGBW LED strip
     else if (type == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white')
         content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off manual_tablinks"\
+                                        <button class="manual_tablinks_off manual_tablink"\
                                                 onclick="event, connectAmplifier(false)">\
                                                 Without amplifier</button>\
-                                        <button class="manual_tablinks_on manual_tablinks"\
+                                        <button class="manual_tablinks_on manual_tablink"\
                                                 onclick="event, connectAmplifier(true)">\
                                                 With amplifier</button>\
                                      </div>\
                                      <h3>Step for ' + pin_label + '</h3>\
                                      <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_rgbw_led", i) + '</p>';
     
-    if (content) htmlEl("manual_page_" + i).innerHTML = content;
+    if (content) htmlEl("manual_tab_" + i).innerHTML = content;
 }
 function createpinpage(i, name) {
     var h = document.createElement('h3'),
@@ -1292,7 +1264,7 @@ function createpinpage(i, name) {
     h.innerHTML = ' Step for ' + getPinLabelByNum(i);
     p.innerHTML = updatePagesContent(name, i);
     p.classList.add('manual_step_p_' + i);
-    htmlEl("manual_page_" + i).innerHTML = h.outerHTML + p.outerHTML;
+    htmlEl("manual_tab_" + i).innerHTML = h.outerHTML + p.outerHTML;
 }
 function updatePagesContent(page, pin) {
     var res;
@@ -1306,10 +1278,7 @@ function updatePagesContent(page, pin) {
     res = page in pagesContent ? pagesContent[page] : "";
 
     if (notes[note_pinnum])
-        res += "<br><hr style='\
-                                border: 0; height: 0;\
-                                border-top: 1px solid rgba(0, 0, 0, 0.1);\
-                                border-bottom: 1px solid rgba(255, 255, 255, 0.3);'>" +
+        res += "<br><hr class='manual_note_hr'>" +
                "<i>" + notes[note_pinnum] + "</i>";
     return res;
 }
