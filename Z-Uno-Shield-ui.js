@@ -71,9 +71,9 @@ function updateSetting(pin, group, mode) {
 //     copyText(window.location.href);
 // };
 
-htmlEl('copyCode').onclick = function() {
-    copyText(htmlEl('code').textContent);
-};
+// htmlEl('copyCode').onclick = function() {
+//     copyText(htmlEl('code').textContent);
+// };
 
 function setPinSettings(pin, group, type) {
     if (!pins[pin]) pins[pin] = {};

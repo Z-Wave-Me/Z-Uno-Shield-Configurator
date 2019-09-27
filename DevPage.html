@@ -121,7 +121,6 @@
             <template v-slot:activator="{ on }">
               <v-btn
                 id="copyURL"
-                class="cpy2clipboard"
                 v-on="on"
                 @click="copyURL"
                 icon
@@ -1431,21 +1430,23 @@
               <v-icon>{{ show_code ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
             </v-btn>
             <div class="flex-grow-1"></div>
-            <v-btn id="copyCode">Copy sketch code</v-btn>
-          </v-card-actions>
+            <template>
+              <v-btn id="copyCode" @click="copyCode" text>Copy sketch code</v-btn>
+            </template>
+              </v-card-actions>
           <v-expand-transition>
             <div v-show="show_code">
               <v-card-text>
-                <pre><code id="code"> // Please select features </code></pre>
+                <pre><code :code="code" id="code"></code></pre>
               </v-card-text>
             </div>
           </v-expand-transition>
         </v-card>
         
-        <v-snackbar v-model="snackbar" :timeout="3000">
+        <v-snackbar :color="snackbar_color" v-model="snackbar" :timeout="4000" text>
           {{ snackbar_text }}
-          <v-btn @click="snackbar = false" icon>
-            <v-icon>mdi-close-circle</v-icon>
+          <v-btn color="white" text @click="snackbar = false">
+            Close
           </v-btn>
         </v-snackbar>
       </v-container>
@@ -1456,19 +1457,24 @@
 var vue = new Vue({
     el: '#app',
     vuetify: new Vuetify(),
-    data: {
-      show_code: false,
-      snackbar: false,
-      snackbar_text: ''
+    data: function () {
+      return {
+        show_code: false,
+        snackbar: false,
+        snackbar_text: 'Default state',
+        snackbar_color: 'info',
+        code: '// Please select features'
+      }
     },
     methods: {
       resetConfig() { if (confirm('Are you sure to clear the configuration?')) window.location.href = window.location.href.split('?')[0]; },
-      copyURL() { this.$copyText(window.location.href).then(showSuccessSnack, showErrorSnack) }
+      copyURL: function() { this.$copyText(window.location.href).then(function(e){showSuccessSnack(e,'Link was success coppied!')}, function(e){showErrorSnack(e)}); },
+      copyCode: function() { this.$copyText(code.textContent).then(function(e){showSuccessSnack(e,'Code was success coppied!')}, function(e){showErrorSnack(e)}); }
     },
 });
 
-function showSuccessSnack(event, text, log) { vue.snackbar_text = text ? text : 'Success'; vue.snackbar = true; if (log) console.log(this); };
-function showErrorSnack(e, text) { vue.snackbar_text = text ? text : 'Error, see logs for details'; vue.snackbar = true; console.log(this); };
+function showSuccessSnack(event, text, log) { vue.snackbar_text = text ? text : 'Success'; vue.snackbar_color = 'success'; vue.snackbar = true; if (log) console.log(this); };
+function showErrorSnack(e, text) { vue.snackbar_text = text ? text : 'Error, see logs for details'; vue.snackbar_color = 'error'; vue.snackbar = true; console.log(this); };
 </script>
 
 <script src="/Z-Uno-Shield-ui.js"></script>
