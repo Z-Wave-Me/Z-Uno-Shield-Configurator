@@ -63,13 +63,13 @@ function updateSetting(pin, group, mode) {
     updateSettings();
 }
 
-htmlEl('resetConfig').onclick = function() {
-    if (confirm('Are you sure to clear the configuration?')) window.location.href = window.location.href.split('?')[0];
-};
+// htmlEl('resetConfig').onclick = function() {
+//     if (confirm('Are you sure to clear the configuration?')) window.location.href = window.location.href.split('?')[0];
+// };
 
-htmlEl('copyURL').onclick = function() {
-    copyText(window.location.href);
-};
+// htmlEl('copyURL').onclick = function() {
+//     copyText(window.location.href);
+// };
 
 htmlEl('copyCode').onclick = function() {
     copyText(htmlEl('code').textContent);
@@ -627,19 +627,17 @@ htmlEl('obj').onload = function() {
     else 
         isfirstloaded = true;
 };
-
 htmlEl('obj_2').onload = loadConfiguration;
 
 function ready() {
-    // note, if we open page with relations before, we have issue with reseted relations
     var tabs = htmlCEl('pagelinks');
     for(i = 0; i < tabs.length; i++)
         tabs[i].onclick = openPage;
     
     tabs[0].click();
-    // ! DEBUG
     tabs[1].click();
 }
+
 
 // Default params
 
@@ -715,7 +713,7 @@ function softPageSwitch(open) {
     // change sizes need to replace el
     // hide pages for pins to shortcut page
     var els = htmlCEl('page');
-    for (var i = 0; i < htmlCEl('pagelinks').length; i++) {
+    for (var i = 0; i < els.length; i++) {
         var el = els[i];
         if (i == open) {
             el.style.overflow = null;
@@ -1313,7 +1311,6 @@ pagesContent = {
     'step_thermostat': 'Follow instructions'
 };
 
-htmlEl('jslink_code').onclick = collapseAction;
 function collapseAction(event) {
     this.classList.toggle("collapsible_active");
     var content = this.nextElementSibling;

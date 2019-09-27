@@ -58,7 +58,7 @@ var pins_relationtypes = {};
 var relelems = {};
 
 // follow add relation button
-htmlEl("add_relation_button").onclick = eventHandler;
+// htmlEl("add_relation_button").onclick = eventHandler;
 
 function eventHandler(ev) {
 	if (ev.isTrusted) {
@@ -407,9 +407,6 @@ function findRelationEl(el) {
 	};
 	relelems.mode = {
 		select: el.getElementsByClassName("relation_mode_select")[0]
-	};
-	relelems.icon = {
-		alert: el.getElementsByClassName("alert_icon")[0]
 	};
 	relelems.advanced = {
 		content: el.getElementsByClassName("relation_advanced_content")[0],
