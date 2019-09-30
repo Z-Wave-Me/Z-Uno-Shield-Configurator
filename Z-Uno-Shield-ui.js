@@ -635,7 +635,7 @@ function ready() {
         tabs[i].onclick = openPage;
     
     tabs[0].click();
-    tabs[1].click();
+    // tabs[2].click();
 }
 
 
