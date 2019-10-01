@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<v-icon lang="en-US">
+<html lang="en">
   <head>
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"> -->
+    <meta charset="UTF-8">
     <title>Z-Uno Shield Configurator</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link href="/src/MaterialDesign-Webfont-master/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="/src/vuetify.css" rel="stylesheet">
-    <script src="/src/vue.js"></script>
-    <script src="/src/vuetify.js"></script>
-    <script src="/src/vue-clipboard.js"></script>
     <style>
             /* {literal} */
-            #appcontent { max-width: 1264px !important; }
+            #appcontent { max-width: 1191px; }
 
             .text-center { text-align: center; }
             .text-right { text-align: right; }
@@ -1452,7 +1449,22 @@
     </v-app>
   </div>
 
+  <script src="/src/vue.js"></script>
+  <script src="/src/vuetify.js"></script>
+  <script src="/src/vue-clipboard.js"></script>
+
 <script>
+    var preload = ["/Z-Uno-Shield-ui.js","/Z-Uno-Shield-code-gen.js","/Z-Uno-Shield-relations.js"];
+    // link scripts (without use)
+    preload.forEach(function(path) {
+      var link = document.createElement('link');
+      link.href = path;
+      link.rel = 'preload';
+      link.as = 'script';
+      document.head.prepend(link);
+    });
+
+
 var vue = new Vue({
     el: '#app',
     vuetify: new Vuetify(),
@@ -1508,8 +1520,11 @@ var vue = new Vue({
     },
 });
 
-function showSuccessSnack(event, text, log) { vue.snackbar_target = text; vue.snackbar_ev_status = 'successfuly copied'; vue.snackbar_color = 'success'; vue.snackbar = true; if (log) console.log(this); };
-function showErrorSnack(e, text) { vue.snackbar_target = text ? text : ''; vue.snackbar_ev_status = 'Error, see logs for details'; vue.snackbar_color = 'error'; vue.snackbar = true; console.log(this); };
+    preload.forEach(function(path) {
+      var script = document.createElement('script');
+      script.src = path;
+      document.body.append(script);
+    });
 </script>
 
 <script src="/Z-Uno-Shield-ui.js"></script>

@@ -1,7 +1,4 @@
 // Helpers
-document.addEventListener("DOMContentLoaded", ready);
-
-
 function svgEl(id, obj) { 
     return document.getElementById(obj ? obj : 'obj').contentDocument.getElementById(id);
 }
@@ -558,25 +555,23 @@ function jumersUART() {
     updateCode();
 }
 // Prototypes
-
 if (!NodeList.prototype.forEach) NodeList.prototype.forEach = Array.prototype.forEach;
 
-// Attach handlers
-
-for (var n = 3; n <= 6; n++)
-    pinModesEls('pin' + n, function(el) { el.onclick = jumersADC; });
-for (var n = 7; n <= 8; n++)
-    pinModesEls('pin' + n, function(el) { el.onclick = jumersUART;});
-for (var n = 13; n <= 16; n++)
-    pinModesEls('pin' + n, function(el) { el.onclick = jumersPWM; });
-pinModesEls('pin3pwm', function(el) { el.onclick = jumersPWM0; });
-pinModesEls('pin11', function(el) { el.onclick = jumersOneWire; });
-pinModesEls('pin12', function(el) { el.onclick = jumersGPIO; });
-
-document.querySelectorAll('[id*=_param_]').forEach(function(el) { el.onchange = updateParams; });
-
-
 function loadConfiguration() {
+    // Attach handlers
+    for (var n = 3; n <= 6; n++)
+        pinModesEls('pin' + n, function(el) { el.onclick = jumersADC; });
+    for (var n = 7; n <= 8; n++)
+        pinModesEls('pin' + n, function(el) { el.onclick = jumersUART;});
+    for (var n = 13; n <= 16; n++)
+        pinModesEls('pin' + n, function(el) { el.onclick = jumersPWM; });
+    pinModesEls('pin3pwm', function(el) { el.onclick = jumersPWM0; });
+    pinModesEls('pin11', function(el) { el.onclick = jumersOneWire; });
+    pinModesEls('pin12', function(el) { el.onclick = jumersGPIO; });
+    
+    document.querySelectorAll('[id*=_param_]').forEach(function(el) { el.onchange = updateParams; });
+    
+    
     if (window.location.href.split('?')[1]) {
         window.location.href.split('?')[1].split('&').forEach(function(el) {
             var radio = htmlEl(el.replace('=', '_')),
@@ -620,22 +615,20 @@ function loadConfiguration() {
 }
 // Default
 // temporary workaround
-var isfirstloaded = false;
+var isLoaded = { 'obj': false, 'obj_2': false };
 htmlEl('obj').onload = function() {
-    if (isfirstloaded)
-        loadConfiguration();
-    else 
-        isfirstloaded = true;
+    isLoaded.obj_2 ? loadConfiguration() : isLoaded.obj = true;
 };
-htmlEl('obj_2').onload = loadConfiguration;
+htmlEl('obj_2').onload = function() {
+    isLoaded.obj ? loadConfiguration() : isLoaded.obj_2 = true;
+};
 
+// TODO: set this
 function ready() {
-    var tabs = htmlCEl('pagelinks');
-    for(i = 0; i < tabs.length; i++)
-        tabs[i].onclick = openPage;
+    var pagelinks = htmlCEl('pagelinks');
+    for (var link of pagelinks) link.onclick = openPage;
     
-    tabs[0].click();
-    // tabs[2].click();
+    pagelinks[0].click();
 }
 
 
@@ -710,8 +703,9 @@ function openPage(ev) {
     softPageSwitch(target);
 }
 function softPageSwitch(open) {
-    // change sizes need to replace el
-    // hide pages for pins to shortcut page
+    
+    // обновляем вкладки пошагового руководства
+    // аккуратно скрываем страницы что бы не сбросить svg
     var els = htmlCEl('page');
     for (var i = 0; i < els.length; i++) {
         var el = els[i];
