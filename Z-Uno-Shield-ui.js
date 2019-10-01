@@ -617,18 +617,20 @@ function loadConfiguration() {
 // temporary workaround
 var isLoaded = { 'obj': false, 'obj_2': false };
 htmlEl('obj').onload = function() {
-    isLoaded.obj_2 ? loadConfiguration() : isLoaded.obj = true;
+    isLoaded.obj_2 ? ready() : isLoaded.obj = true;
 };
 htmlEl('obj_2').onload = function() {
-    isLoaded.obj ? loadConfiguration() : isLoaded.obj_2 = true;
+    isLoaded.obj ? ready() : isLoaded.obj_2 = true;
 };
 
-// TODO: set this
 function ready() {
-    var pagelinks = htmlCEl('pagelinks');
+  loadConfiguration();
+
+  var pagelinks = htmlCEl('pagelinks');
     for (var link of pagelinks) link.onclick = openPage;
     
     pagelinks[0].click();
+
 }
 
 
