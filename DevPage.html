@@ -3,81 +3,81 @@
   <head>
     <meta charset="UTF-8">
     <title>Z-Uno Shield Configurator</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"> -->
+    <link href="/src/MaterialDesign-Webfont-master/css/materialdesignicons.min.css" rel="stylesheet">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet"> -->
     <link href="/src/vuetify.css" rel="stylesheet">
     <style>
-            /* {literal} */
-            #appcontent { max-width: 1191px; }
+    /* {literal} */
+    #appcontent { max-width: 1191px; }
 
-            .text-center { text-align: center; }
-            .text-right { text-align: right; }
-            .text-justify { text-align: justify; }
-            .clear { clear: both; margin-top: 1em; }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .text-justify { text-align: justify; }
+    .clear { clear: both; margin-top: 1em; }
 
-            .page { max-width: 1191px; width: auto; min-width: 800px; margin: auto; }
+    .page { max-width: 1191px; width: auto; min-width: 800px; margin: auto; }
 
-            .pin_default_disabled,
-            .relation_hidden,
-            .relation_notes,
-            .relation_ds18b20_select,
-            .relation_dht_select,
-            .relation_mode_select,
-            .relation_condition_select,
-            .relation_input,
-            .relation_conditionvalue_input { display: none; }
+    .pin_default_disabled,
+    .relation_hidden,
+    .relation_notes,
+    .relation_ds18b20_select,
+    .relation_dht_select,
+    .relation_mode_select,
+    .relation_condition_select,
+    .relation_input,
+    .relation_conditionvalue_input { display: none; }
 
-            #configurator_pages_control, #configurator_pages_control > button {
-                text-align: center;
-                font-size: 1em;
-            }
-            #configurator_pages_control > button { padding: 1em; cursor: pointer; margin: 0; }
-            .svg { width: 100%; height: 100%; }
-            .features { display: inline-block; margin: auto; }
-            .settings { margin: 0.25em; display: inline-block; vertical-align: top;}
-            .settings > h3 { width: fit-content; margin: 0.5em auto; text-decoration: underline; }
-            #pin3_disabled > span, #pin3pwm_disabled > span { color: red; }
-
-
-            .relation { margin: 0.5em auto; text-align: center; text-align: -webkit-center;}
-            .relation_main {  display:flex; width: 100%; justify-content: center; }
-            .relation_input { text-align-last: center; height: 64px; max-width: 6%; color: #bbb; font-size: 1.5em; cursor: auto; }
-            #relations select { text-align-last: center; height: 64px; cursor: pointer; }
-            #relations p { margin:0 1em; }
-
-            .relation_remove_button { background-color: #f33; margin-left: 1em; }
-            .relation_description_label { font-size: 1.5em; }
-            .relation_advanced { margin: 0.5em 0; }
-            .relation_advanced_label { display: inline-block; }
-            .relation_advanced_button { background-color: #bbb; }
-
-            #code { width: 100%; background-color: #eee; white-space: pre-wrap; }
+    #configurator_pages_control, #configurator_pages_control > button {
+        text-align: center;
+        font-size: 1em;
+    }
+    #configurator_pages_control > button { padding: 1em; cursor: pointer; margin: 0; }
+    .svg { width: 100%; height: 100%; }
+    .features { display: inline-block; margin: auto; }
+    .settings { margin: 0.25em; display: inline-block; vertical-align: top;}
+    .settings > h3 { width: fit-content; margin: 0.5em auto; text-decoration: underline; }
+    #pin3_disabled > span, #pin3pwm_disabled > span { color: red; }
 
 
-            .collapsible_content { max-height: 0; overflow: auto; }
-            .collapsible:after { content: '  \002B'; }
-            .collapsible_active:after { content: '  \2212'; }
+    .relation { margin: 0.5em auto; text-align: center; text-align: -webkit-center;}
+    .relation_main {  display:flex; width: 100%; justify-content: center; }
+    .relation_input { text-align-last: center; height: 64px; max-width: 6%; color: #bbb; font-size: 1.5em; cursor: auto; }
+    #relations select { text-align-last: center; height: 64px; cursor: pointer; }
+    #relations p { margin:0 1em; }
 
-            .fading_button {
-                font-size: 1em;
-                padding: 1em 1.5em;
-                text-align: center;
-                opacity: 0.6;
-                transition: 0.3s;
-                display: inline-block;
-                text-decoration: none;
-                cursor: pointer;
-            }
-            .fading_button:hover { opacity: 1; }
-            /* {/literal} */
-    </style>
-  </head>
+    .relation_remove_button { background-color: #f33; margin-left: 1em; }
+    .relation_description_label { font-size: 1.5em; }
+    .relation_advanced { margin: 0.5em 0; }
+    .relation_advanced_label { display: inline-block; }
+    .relation_advanced_button { background-color: #bbb; }
 
+    #code { background-color: #eee; white-space: pre-wrap; }
+
+
+    .collapsible_content { max-height: 0; overflow: auto; }
+    .collapsible:after { content: '  \002B'; }
+    .collapsible_active:after { content: '  \2212'; }
+
+    .fading_button {
+        font-size: 1em;
+        padding: 1em 1.5em;
+        text-align: center;
+        opacity: 0.6;
+        transition: 0.3s;
+        display: inline-block;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .fading_button:hover { opacity: 1; }
+    /* {/literal} */
+</style>
+</head>
 <body>
-  <div id="app">
+  <div id="application">
     <v-app>
       <v-content>
-        <v-container id="appcontent">
+        <v-container id="appcontent" class="mb-6">
           <!-- * toolbar -->
           <v-toolbar dark>
             <!-- * title -->
@@ -86,12 +86,15 @@
             <div class="flex-grow-1"></div>
             
             <!-- * items -->
-            <!-- TODO: fix event handlers in -ui.js and -rel.js, don't initialize ui before render :/  -->
-            <div id="configurator_pages_control" class="pages_control">
-              <button value="0" class="pagelinks">Select peripherals</button>
-              <button value="1" class="pagelinks">Define relations</button>
-              <button value="2" class="pagelinks">Connect peripherals</button>
-            </div>
+            <!-- TODO: fix event handlers in -ui.js and -rel.js, don't initialize ui before render  -->
+            <v-toolbar-items>
+              <v-btn-toggle v-model="pages" mandatory>
+                <v-btn value="0" text>Select peripherals</v-btn>
+                <v-btn value="1" text>Define relations</v-btn>
+                <v-btn value="2" text>Connect peripherals</v-btn>
+              </v-btn-toggle>
+            </v-toolbar-items>
+
             <v-tooltip bottom>
               <!-- TODO: make dropdown list with this options -->
               <template v-slot:activator="{ on }">
@@ -114,7 +117,8 @@
           <v-card id="settings_row" class="page">
             <v-card-text class="d-flex">
               <div id="settings_svg" class="settings_svg">
-                <object id="obj" class="svg" data="/Z-Uno-Shield.svg" type="image/svg+xml">Your browser do not support SVG</object>
+                <object id="obj" class="svg" data="/Z-Uno-Shield.svg" type="image/svg+xml">Your browser do
+                  not support SVG</object>
               </div> 
               <div class="features">
                 <div id="settings_pin3pwm" class="settings">
@@ -152,8 +156,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin16_o_param_3"
-                      depend="pin16_o_param_1=heatingThermostat,pin16_o_param_1=coolingThermostat">
+                    <select id="pin16_o_param_3" depend="pin16_o_param_1=heatingThermostat,pin16_o_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -196,8 +199,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin15_o_param_3"
-                      depend="pin15_o_param_1=heatingThermostat,pin15_o_param_1=coolingThermostat">
+                    <select id="pin15_o_param_3" depend="pin15_o_param_1=heatingThermostat,pin15_o_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -215,17 +217,20 @@
                 </div>
                 <div id="settings_pin14" class="settings">
                   <h3>PWM2</h3>
-                  <label><input type="radio" name="pin14" id="pin14_PWM" value="PWM">PWM output <span
-                      title="Common collector">[i]</span></label><br>
-                  <div id="pin14_PWM_params" style="display: none;">
+                  <label><input type="radio" name="pin14" id="pin14_PWM" value="PWM">
+                    PWM output
+                    <span title="Common collector">[i]</span>
+                  </label>
+                  <br>
+                  <div id="pin14_PWM_params" class="pin_default_disabled">
                     <select id="pin14_PWM_param_1">
                       <option value="single">Dimmer</option>
                       <option value="blue">RGBW Blue</option>
                     </select>
                   </div>
-                  <label><input type="radio" name="pin14" id="pin14_o" value="o">Digital output <span
-                      title="Common collector">[i]</span></label><br>
-                  <div id="pin14_o_params" style="display: none;">
+                  <label><input type="radio" name="pin14" id="pin14_o" value="o">Digital output
+                    <span title="Common collector">[i]</span></label><br>
+                  <div id="pin14_o_params" class="pin_default_disabled">
                     <select id="pin14_o_param_1">
                       <option value="switch">Switch</option>
                       <option value="doorlock">Door lock</option>
@@ -240,8 +245,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin14_o_param_3"
-                      depend="pin14_o_param_1=heatingThermostat,pin14_o_param_1=coolingThermostat">
+                    <select id="pin14_o_param_3" depend="pin14_o_param_1=heatingThermostat,pin14_o_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -261,7 +265,7 @@
                   <h3>PWM1</h3>
                   <label><input type="radio" name="pin13" id="pin13_PWM" value="PWM">PWM output <span
                       title="Common collector">[i]</span></label><br>
-                  <div id="pin13_PWM_params" style="display: none;">
+                  <div id="pin13_PWM_params" class="pin_default_disabled">
                     <select id="pin13_PWM_param_1">
                       <option value="single">Dimmer</option>
                       <option value="white">RGBW White</option>
@@ -269,7 +273,7 @@
                   </div>
                   <label><input type="radio" name="pin13" id="pin13_o" value="o">Digital output <span
                       title="Common collector">[i]</span></label><br>
-                  <div id="pin13_o_params" style="display: none;">
+                  <div id="pin13_o_params" class="pin_default_disabled">
                     <select id="pin13_o_param_1">
                       <option value="switch">Switch</option>
                       <option value="doorlock">Door lock</option>
@@ -284,8 +288,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin13_o_param_3"
-                      depend="pin13_o_param_1=heatingThermostat,pin13_o_param_1=coolingThermostat">
+                    <select id="pin13_o_param_3" depend="pin13_o_param_1=heatingThermostat,pin13_o_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -306,7 +309,7 @@
                   <h3>7, RS-A</h3>
                   <label><input type="radio" name="pin7" id="pin7_UART" value="UART_TX">UART TX <span
                       title="Pins 7 and 8 work together">[i]</span></label><br>
-                  <div id="pin7_UART_params" style="display: none;">
+                  <div id="pin7_UART_params" class="pin_default_disabled">
                     <select id="pin7_UART_param_1">
                       <option value="9600">9600 kbps</option>
                       <option value="14400">14400 kbps</option>
@@ -331,7 +334,7 @@
                     </select>
                   </div>
                   <label><input type="radio" name="pin7" id="pin7_i_3" value="i_3">Digital input 0/3 V</label><br>
-                  <div id="pin7_i_3_params" style="display: none;">
+                  <div id="pin7_i_3_params" class="pin_default_disabled">
                     <select id="pin7_i_3_param_1">
                       <option value="general">General purpose</option>
                       <option value="door">Door/window</option>
@@ -358,7 +361,7 @@
                     </select>
                   </div>
                   <label><input type="radio" name="pin7" id="pin7_o_3" value="o_3">Digital output 0/3 V</label><br>
-                  <div id="pin7_o_3_params" style="display: none;">
+                  <div id="pin7_o_3_params" class="pin_default_disabled">
                     <select id="pin7_o_3_param_1">
                       <option value="switch">Switch</option>
                       <option value="doorlock">Door lock</option>
@@ -373,8 +376,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin7_o_3_param_3"
-                      depend="pin7_o_3_param_1=heatingThermostat,pin7_o_3_param_1=coolingThermostat">
+                    <select id="pin7_o_3_param_3" depend="pin7_o_3_param_1=heatingThermostat,pin7_o_3_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -397,7 +399,7 @@
                   <label><input type="radio" name="pin8" id="pin8_RS485" value="RS485_B">RS485 B <span
                       title="Pins 2, 7 and 8 work together">[i]</span></label><br>
                   <label><input type="radio" name="pin8" id="pin8_i_3" value="i_3">Digital input 0/3 V</label><br>
-                  <div id="pin8_i_3_params" style="display: none;">
+                  <div id="pin8_i_3_params" class="pin_default_disabled">
                     <select id="pin8_i_3_param_1">
                       <option value="general">General purpose</option>
                       <option value="door">Door/window</option>
@@ -424,7 +426,7 @@
                     </select>
                   </div>
                   <label><input type="radio" name="pin8" id="pin8_o_3" value="o_3">Digital output 0/3 V</label><br>
-                  <div id="pin8_o_3_params" style="display: none;">
+                  <div id="pin8_o_3_params" class="pin_default_disabled">
                     <select id="pin8_o_3_param_1">
                       <option value="switch">Switch</option>
                       <option value="doorlock">Door lock</option>
@@ -439,8 +441,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin8_o_3_param_3"
-                      depend="pin8_o_3_param_1=heatingThermostat,pin8_o_3_param_1=coolingThermostat">
+                    <select id="pin8_o_3_param_3" depend="pin8_o_3_param_1=heatingThermostat,pin8_o_3_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -459,7 +460,7 @@
                 <div id="settings_pin12" class="settings">
                   <h3>12</h3>
                   <label><input type="radio" name="pin12" id="pin12_dht" value="dht">Temperature/humidity</label><br>
-                  <div id="pin12_dht_params" style="display: none;">
+                  <div id="pin12_dht_params" class="pin_default_disabled">
                     Sensor
                     <select id="pin12_dht_param_1">
                       <option>DHT11</option>
@@ -467,7 +468,7 @@
                     </select>
                   </div>
                   <label><input type="radio" name="pin12" id="pin12_i_3" value="i_3">Digital input 0/3 V</label><br>
-                  <div id="pin12_i_3_params" style="display: none;">
+                  <div id="pin12_i_3_params" class="pin_default_disabled">
                     <select id="pin12_i_3_param_1">
                       <option value="general">General purpose</option>
                       <option value="door">Door/window</option>
@@ -494,7 +495,7 @@
                     </select>
                   </div>
                   <label><input type="radio" name="pin12" id="pin12_o_3" value="o_3">Digital output 0/3 V</label><br>
-                  <div id="pin12_o_3_params" style="display: none;">
+                  <div id="pin12_o_3_params" class="pin_default_disabled">
                     <select id="pin12_o_3_param_1">
                       <option value="switch">Switch</option>
                       <option value="doorlock">Door lock</option>
@@ -509,8 +510,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin12_o_3_param_3"
-                      depend="pin12_o_3_param_1=heatingThermostat,pin12_o_3_param_1=coolingThermostat">
+                    <select id="pin12_o_3_param_3" depend="pin12_o_3_param_1=heatingThermostat,pin12_o_3_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -595,8 +595,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin11_o_3_param_3"
-                      depend="pin11_o_3_param_1=heatingThermostat,pin11_o_3_param_1=coolingThermostat">
+                    <select id="pin11_o_3_param_3" depend="pin11_o_3_param_1=heatingThermostat,pin11_o_3_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -772,8 +771,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin6_o_3_param_3"
-                      depend="pin6_o_3_param_1=heatingThermostat,pin6_o_3_param_1=coolingThermostat">
+                    <select id="pin6_o_3_param_3" depend="pin6_o_3_param_1=heatingThermostat,pin6_o_3_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -948,8 +946,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin5_o_3_param_3"
-                      depend="pin5_o_3_param_1=heatingThermostat,pin5_o_3_param_1=coolingThermostat">
+                    <select id="pin5_o_3_param_3" depend="pin5_o_3_param_1=heatingThermostat,pin5_o_3_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -1124,8 +1121,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin4_o_3_param_3"
-                      depend="pin4_o_3_param_1=heatingThermostat,pin4_o_3_param_1=coolingThermostat">
+                    <select id="pin4_o_3_param_3" depend="pin4_o_3_param_1=heatingThermostat,pin4_o_3_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -1184,7 +1180,8 @@
                     </select>
                     <br>
                     <span>0–5V → </span><input id="pin3_ADC_i_5_param_1" size="2">–<input id="pin3_ADC_i_5_param_2"
-                      size="2"><span title="Map 0 – 5 Volts to value range">[i]</span>
+                      size="2">
+                    <span title="Map 0 – 5 Volts to value range">[i]</span>
                     <input id="pin3_ADC_i_5_param_5" type="hidden" value="5" />
                   </div>
                   <label><input type="radio" name="pin3" id="pin3_ADC_i_12" value="ADC_i_12">Analog input 0-12
@@ -1303,8 +1300,7 @@
                       <option value="inverted">Inverted</option>
                     </select>
                     <br>
-                    <select id="pin3_o_3_param_3"
-                      depend="pin3_o_3_param_1=heatingThermostat,pin3_o_3_param_1=coolingThermostat">
+                    <select id="pin3_o_3_param_3" depend="pin3_o_3_param_1=heatingThermostat,pin3_o_3_param_1=coolingThermostat">
                       <option value="external">Z-Wave temperature sensor</option>
                       <option value="ds18b20_1">DS18B20 #1</option>
                       <option value="ds18b20_2">DS18B20 #2</option>
@@ -1353,7 +1349,6 @@
                     <div class="relation_advanced_content collapsible_content">
                       <p class="relation_advanced_label">Save device value to EEPROM</p>
                       <input type="checkbox" class="relation_config_params relation_EEPROM_check">
-                      <v-divider></v-divider>
                     </div>
                   </div>
                   <div class="relation_notes"></div>
@@ -1367,17 +1362,17 @@
 
           <v-card-actions id="relation_settings">
             <div class="flex-grow-1"></div>  
-            <v-btn onClick="addRelation()"icon>
+              <v-btn onClick="addRelation()" icon>
               <v-icon>mdi-plus</v-icon>
             </v-btn>
-            <!-- <button class="fading_button" id="add_relation_button">+</button> -->
             </v-card-actions>
           </v-card>
 
           <v-card id="settings_row_connection" class="page">
             <v-card-text>
               <div class="settings_svg_connection">
-                <object id="obj_2" class="svg" data="/Z-Uno-Shield-Details.svg" type="image/svg+xml">Your browser do not support SVG</object>
+                <object id="obj_2" class="svg" data="/Z-Uno-Shield-Details.svg" type="image/svg+xml">Your browser do not
+                  support SVG</object>
               </div>
               <v-tabs v-model="manual_tablinks.current" center-active>
                 <v-tab v-for="(title, pin) in manual_tablinks.title" :key="pin" :href="'#manual-' + pin">
@@ -1402,12 +1397,12 @@
           <v-card class="overflow-hidden">
             <v-app-bar dark scroll-target="#code">
               <v-toolbar-title>Sketch code</v-toolbar-title>
-        
+          
               <div class="flex-grow-1"></div>
-        
+          
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn v-on="on" @click="changeCodeEditMode" icon>
+                  <v-btn v-on="on" @click="codeDisabled = !codeDisabled" icon>
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
                 </template>
@@ -1431,18 +1426,17 @@
                 <span v-else>Show code</span>
               </v-tooltip>
             </v-app-bar>
-
+          
             <v-expand-transition>
-              <v-sheet id="code" v-show="show_code" class="pa-4 overflow-y-auto" max-height="600">
-                <pre><code></code></pre>
-              </v-sheet>
+              <div id="code" v-show="show_code" class="pa-4 overflow-y-auto" max-height="600">
+                <v-textarea name="codeinput" filled auto-grow solo value="// Select features" :disabled="codeDisabled">
+                </v-textarea>
+              </div>
             </v-expand-transition>
           </v-card>
-          
-          
-          <v-snackbar v-model="snackbar" :color="snackbar_color" :timeout="4000" text>
-            <p><strong>{{ snackbar_target }}</strong> {{ snackbar_ev_status }}</p>
-            <v-btn @click="snackbar = false" color="white" text>Close</v-btn>
+          <v-snackbar v-model="snackbar.display" :color="snackbar.color" :timeout="4000" text>
+            <p><strong>{{ snackbar.target }}</strong> {{ snackbar.ev_status }}</p>
+            <v-btn @click="snackbar.display = false" color="white" text>Close</v-btn>
           </v-snackbar>
         </v-container>
       </v-content>
@@ -1454,71 +1448,78 @@
   <script src="/src/vue-clipboard.js"></script>
 
 <script>
-    var preload = ["/Z-Uno-Shield-ui.js","/Z-Uno-Shield-code-gen.js","/Z-Uno-Shield-relations.js"];
-    // link scripts (without use)
-    preload.forEach(function(path) {
-      var link = document.createElement('link');
-      link.href = path;
-      link.rel = 'preload';
-      link.as = 'script';
-      document.head.prepend(link);
-    });
+  var preload = ["/Z-Uno-Shield-ui.js","/Z-Uno-Shield-code-gen.js","/Z-Uno-Shield-relations.js"];
+  preload.forEach(function(path) {
+    var link = document.createElement('link');
+    link.href = path;
+    link.rel = 'preload';
+    link.as = 'script';
+    document.head.prepend(link);
+  });
 
 
-var vue = new Vue({
-    el: '#app',
+  var vue = new Vue({
+    el: '#application',
     vuetify: new Vuetify(),
-    data: {
-      pages: 0,
-      manual_tablinks: {
-        current: 0,
-        pin_map: [ 0,1, 3,4,5,6,7,8, 11,12,13,14,15,16], // need for loop iterations
-        title: {
-          0:  'Sketch',
-          1:  'Enclosure',
-          3:  'ADC0 / 0-10V / PWM0',
-          4:  'ADC1',
-          5:  'ADC2',
-          6:  'ADC3',
-          7:  '7, RS-A',
-          8:  '8, RS-B',
-          11: '11, OneWire',
-          12: '12',
-          13: 'PWM1',
-          14: 'PWM2',
-          15: 'PWM3',
-          16: 'PWM4'
-        },
-        content: {
-          0:  'Copy the sketch below and use Arduino IDE to burn it in your Z-Uno',
-          1:  'Insert Z-Uno in the Shield. Put the Shield in the DIN rail (pic. 1) or in the waterproof case (pic. 2)',
-          3:  'ADC0 / 0-10V / PWM0',
-          4:  'ADC1',
-          5:  'ADC2',
-          6:  'ADC3',
-          7:  '7, RS-A',
-          8:  '8, RS-B',
-          11: '11, OneWire',
-          12: '12',
-          13: 'PWM1',
-          14: 'PWM2',
-          15: 'PWM3',
-          16: 'PWM4'
-        }
-      },
-      show_code: false,
-      snackbar: false,
-      snackbar_target: '',
-      snackbar_ev_status: 'Something went wrong',
-      snackbar_color: 'info'
-    },
     methods: {
       resetConfig() { if (confirm('Are you sure to clear the configuration?')) window.location.href = window.location.href.split('?')[0]; },
-      copyURL: function() { this.$copyText(window.location.href).then(function(e){showSuccessSnack(e,'Link')}, function(e){showErrorSnack(e)}); },
-      copyCode: function() { this.$copyText(code.textContent).then(function(e){showSuccessSnack(e,'Code')}, function(e){showErrorSnack(e)}); },
-      changeCodeEditMode: function() { /* TODO: */ }
+      copyURL: function () { this.$copyText(window.location.href).then(function (e) { showSuccessSnack(e, 'Link') }, function (e) { showErrorSnack(e) }); },
+      copyCode: function () { this.$copyText(code.textContent).then(function (e) { showSuccessSnack(e, 'Code') }, function (e) { showErrorSnack(e) }); },
+      changeCodeEditMode: function () {  /* TODO: */ }
     },
-});
+    data () {
+      return {
+        pages: null,
+        manual_tablinks: {
+          current: 0,
+          pin_map: [0,1, 3,4,5,6,7,8, 11,12,13,14,15,16], // need for loop iterations
+          title: {
+            0: 'Sketch',
+            1: 'Enclosure',
+            3: 'ADC0 / 0-10V / PWM0',
+            4: 'ADC1',
+            5: 'ADC2',
+            6: 'ADC3',
+            7: '7, RS-A',
+            8: '8, RS-B',
+            11: '11, OneWire',
+            12: '12',
+            13: 'PWM1',
+            14: 'PWM2',
+            15: 'PWM3',
+            16: 'PWM4'
+          },
+          content: {
+            0: 'Copy the sketch below and use Arduino IDE to burn it in your Z-Uno',
+            1: 'Insert Z-Uno in the Shield. Put the Shield in the DIN rail (pic. 1) or in the waterproof case (pic. 2)',
+            3: 'ADC0 / 0-10V / PWM0',
+            4: 'ADC1',
+            5: 'ADC2',
+            6: 'ADC3',
+            7: '7, RS-A',
+            8: '8, RS-B',
+            11: '11, OneWire',
+            12: '12',
+            13: 'PWM1',
+            14: 'PWM2',
+            15: 'PWM3',
+            16: 'PWM4'
+          }
+        },
+        show_code: false,
+        snackbar: {
+          display: false,
+          target: '',
+          ev_status: 'Something went wrong',
+          color: 'error',
+        },
+        codeDisabled: false
+      }
+    },
+  });
+    function showSuccessSnack(event, text, log) { vue.snackbar.target = text; vue.snackbar.ev_status = 'successfuly copied'; vue.snackbar.color = 'success'; vue.snackbar.display = true; if (log) console.log(this); };
+    function showErrorSnack(e, text) { vue.snackbar.target = text ? text : ''; vue.snackbar.ev_status = 'Error, see logs for details'; vue.snackbar.color = 'error'; vue.snackbar.display = true; console.log(this); };
+
 
     preload.forEach(function(path) {
       var script = document.createElement('script');
@@ -1526,10 +1527,6 @@ var vue = new Vue({
       document.body.append(script);
     });
 </script>
-
-<script src="/Z-Uno-Shield-ui.js"></script>
-<script src="/Z-Uno-Shield-code-gen.js"></script>
-<script src="/Z-Uno-Shield-relations.js"></script>
 </body>
-<!-- TODO: / -> /files/z-uno/Z-Uno-Shield/Configurator/ -->
+<!-- TODO: / - /files/z-uno/Z-Uno-Shield/Configurator/ -->
 </html>

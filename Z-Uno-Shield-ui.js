@@ -20,16 +20,6 @@ function pinModesEls(prefix, func) {
     document.querySelectorAll('[id^=' + prefix + '_]').forEach(function(el) { if (!el.id.match("param")) func(el); });
 }
 
-function copyText(text) {
-    var dummy = document.createElement('textarea');
-
-    document.body.appendChild(dummy);
-    dummy.value = text;
-    dummy.select();
-    document.execCommand('copy');
-    document.body.removeChild(dummy);
-}
-
 // Saving settings
 
 var params = {};
@@ -59,18 +49,6 @@ function updateSetting(pin, group, mode) {
     
     updateSettings();
 }
-
-// htmlEl('resetConfig').onclick = function() {
-//     if (confirm('Are you sure to clear the configuration?')) window.location.href = window.location.href.split('?')[0];
-// };
-
-// htmlEl('copyURL').onclick = function() {
-//     copyText(window.location.href);
-// };
-
-// htmlEl('copyCode').onclick = function() {
-//     copyText(htmlEl('code').textContent);
-// };
 
 function setPinSettings(pin, group, type) {
     if (!pins[pin]) pins[pin] = {};
@@ -626,10 +604,10 @@ htmlEl('obj_2').onload = function() {
 function ready() {
   loadConfiguration();
 
-  var pagelinks = htmlCEl('pagelinks');
-    for (var link of pagelinks) link.onclick = openPage;
+  // var pagelinks = htmlCEl('pagelinks');
+  //   for (var link of pagelinks) link.onclick = openPage;
     
-    pagelinks[0].click();
+  //   pagelinks[0].click();
 
 }
 
