@@ -1063,8 +1063,7 @@ function svgdGen(pinNum, deviceType, display) {
         svgEl("layer8", "obj_2").style.display = "none";
 
     // power supply
-    anyDevice ? svgEl('layer11', 'obj_2').style.display = "block"
-        : svgEl('layer11', 'obj_2').style.display = "none";
+    svgEl('layer11', 'obj_2').style.display = anyDevice ? "block" : "none";
 }
 
 // Issue with tabs for pin 3
