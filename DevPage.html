@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>Z-Uno Shield Configurator</title>
     <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"> -->
@@ -16,7 +17,7 @@
     .text-justify { text-align: justify; }
     .clear { clear: both; margin-top: 1em; }
 
-    .page { max-width: 1191px; width: auto; min-width: 800px; margin: auto; }
+  .page { width: 1191px; margin: auto; }
 
     .pin_default_disabled,
     .relation_hidden,
@@ -115,12 +116,12 @@
           </v-toolbar>
 
           <v-card id="settings_row" class="page">
-            <v-card-text class="d-flex">
-              <div id="settings_svg" class="settings_svg">
+            <v-card-text class="d-flex flex-wrap">
+              <div class="svg-container col-lg-3">
                 <object id="obj" class="svg" data="/Z-Uno-Shield.svg" type="image/svg+xml">Your browser do
                   not support SVG</object>
               </div> 
-              <div class="features">
+              <div class="features col-auto">
                 <div id="settings_pin3pwm" class="settings">
                   <h3>0-10V / PWM0</h3>
                   <div id="pin3pwm_disabled">
@@ -1370,9 +1371,10 @@
 
           <v-card id="settings_row_connection" class="page">
             <v-card-text>
-              <div class="settings_svg_connection">
-                <object id="obj_2" class="svg" data="/Z-Uno-Shield-Details.svg" type="image/svg+xml">Your browser do not
-                  support SVG</object>
+              <div class="svg_container">
+                <object id="obj_2" class="svg" data="/Z-Uno-Shield-Details.svg" type="image/svg+xml">
+                  Your browser do not support SVG
+                </object>
               </div>
               <v-tabs v-model="manual_tablinks.current" center-active>
                 <v-tab v-for="(title, pin) in manual_tablinks.title" :key="pin" :href="'#manual-' + pin">
