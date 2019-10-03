@@ -1,84 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
+  <meta charset="UTF-8">
+  <title>Z-Uno Shield Configurator</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@2.1.0/dist/vuetify.css">
+  
+  <style type="text/css">
+  /* {literal} */
+  #appcontent { max-width: 1191px; }
+  .clear { clear: both; margin-top: 1em; }
+
+  #configurator_pages_control, #configurator_pages_control button { text-align: center; font-size: 1em; }
+  #configurator_pages_control button { padding: 1em; cursor: pointer; margin: 0; }
+  .pin_default_disabled,
+  .relation_hidden,
+  .relation_notes,
+  .relation_ds18b20_select,
+  .relation_dht_select,
+  .relation_mode_select,
+  .relation_condition_select,
+  .relation_input,
+  .relation_conditionvalue_input { display: none; }
+
+  .svg { width: 100%; height: 100%; }
+  .features { display: inline-block; margin: auto; }
+  .settings { margin: 0.25em; display: inline-block; vertical-align: top;}
+  .settings h3 { width: 100%; margin: 0.5em auto; text-decoration: underline; }
+  #pin3_disabled span, #pin3pwm_disabled span { color: red; }
+
+
+  .relation { margin: 0.5em auto; text-align: center; text-align: -webkit-center;}
+  .relation_main {  display:flex; width: 100%; justify-content: center; }
+  .relation_input { text-align-last: center; height: 64px; max-width: 6%; color: #bbb; font-size: 1.5em; cursor: auto;}
+  #relations select { text-align-last: center; height: 64px; cursor: pointer; }
+  #relations p { margin:0 1em; }
+
+  .relation_remove_button { background-color: #f33; margin-left: 1em; }
+  .relation_description_label { font-size: 1.5em; }
+  .relation_advanced { margin: 0.5em 0; }
+  .relation_advanced_label { display: inline-block; }
+  .relation_advanced_button { background-color: #bbb; }
+
+  #code { background-color: #eee; white-space: pre-wrap; }
+
+
+  .collapsible_content { max-height: 0; overflow: auto; }
+  .collapsible:after { content: '  \002B'; }
+  .collapsible_active:after { content: '  \2212'; }
+
+  .fading_button {
+      font-size: 1em;
+      padding: 1em 1.5em;
+      text-align: center;
+      opacity: 0.6;
+      transition: 0.3s;
+      text-decoration: none;
+      cursor: pointer;
+  }
+  .fading_button:hover { opacity: 1; }
+  /* {/literal} */
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <title>Z-Uno Shield Configurator</title>
-    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet"> -->
-    <link href="/src/MaterialDesign-Webfont-master/css/materialdesignicons.min.css" rel="stylesheet">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet"> -->
-    <link href="/src/vuetify.css" rel="stylesheet">
-    <style>
-    /* {literal} */
-    #appcontent { max-width: 1191px; }
-
-    .text-center { text-align: center; }
-    .text-right { text-align: right; }
-    .text-justify { text-align: justify; }
-    .clear { clear: both; margin-top: 1em; }
-
-  .page { width: 1191px; margin: auto; }
-
-    .pin_default_disabled,
-    .relation_hidden,
-    .relation_notes,
-    .relation_ds18b20_select,
-    .relation_dht_select,
-    .relation_mode_select,
-    .relation_condition_select,
-    .relation_input,
-    .relation_conditionvalue_input { display: none; }
-
-    #configurator_pages_control, #configurator_pages_control > button {
-        text-align: center;
-        font-size: 1em;
-    }
-    #configurator_pages_control > button { padding: 1em; cursor: pointer; margin: 0; }
-    .svg { width: 100%; height: 100%; }
-    .features { display: inline-block; margin: auto; }
-    .settings { margin: 0.25em; display: inline-block; vertical-align: top;}
-    .settings > h3 { width: fit-content; margin: 0.5em auto; text-decoration: underline; }
-    #pin3_disabled > span, #pin3pwm_disabled > span { color: red; }
-
-
-    .relation { margin: 0.5em auto; text-align: center; text-align: -webkit-center;}
-    .relation_main {  display:flex; width: 100%; justify-content: center; }
-    .relation_input { text-align-last: center; height: 64px; max-width: 6%; color: #bbb; font-size: 1.5em; cursor: auto; }
-    #relations select { text-align-last: center; height: 64px; cursor: pointer; }
-    #relations p { margin:0 1em; }
-
-    .relation_remove_button { background-color: #f33; margin-left: 1em; }
-    .relation_description_label { font-size: 1.5em; }
-    .relation_advanced { margin: 0.5em 0; }
-    .relation_advanced_label { display: inline-block; }
-    .relation_advanced_button { background-color: #bbb; }
-
-    #code { background-color: #eee; white-space: pre-wrap; }
-
-
-    .collapsible_content { max-height: 0; overflow: auto; }
-    .collapsible:after { content: '  \002B'; }
-    .collapsible_active:after { content: '  \2212'; }
-
-    .fading_button {
-        font-size: 1em;
-        padding: 1em 1.5em;
-        text-align: center;
-        opacity: 0.6;
-        transition: 0.3s;
-        display: inline-block;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    .fading_button:hover { opacity: 1; }
-    /* {/literal} */
-</style>
 </head>
 <body>
   <div id="application">
     <v-app>
       <v-content>
-        <v-container id="appcontent" class="mb-6">
+        <v-container id="appcontent" class="mb-10">
           <!-- * toolbar -->
           <v-toolbar dark>
             <!-- * title -->
@@ -87,17 +77,13 @@
             <div class="flex-grow-1"></div>
             
             <!-- * items -->
-            <!-- TODO: fix event handlers in -ui.js and -rel.js, don't initialize ui before render  -->
-            <v-toolbar-items>
-              <v-btn-toggle v-model="pages" mandatory>
-                <v-btn value="0" text>Select peripherals</v-btn>
-                <v-btn value="1" text>Define relations</v-btn>
-                <v-btn value="2" text>Connect peripherals</v-btn>
-              </v-btn-toggle>
+            <v-toolbar-items v-model="pages">
+              <v-btn value="0" text>Select peripherals</v-btn>
+              <v-btn value="1" text>Define relations</v-btn>
+              <v-btn value="2" text>Connect peripherals</v-btn>
             </v-toolbar-items>
 
             <v-tooltip bottom>
-              <!-- TODO: make dropdown list with this options -->
               <template v-slot:activator="{ on }">
                 <v-btn id="copyURL" v-on="on" @click="copyURL" icon>
                   <v-icon>mdi-export-variant</v-icon>
@@ -1323,49 +1309,47 @@
           
           <v-card id="settings_row_relations" class="page">
             <v-card-text>
-            <div id="settings_relation_selectors">
-              <div id="relations">
-                <div class="relation_hidden">
-                  <div class="relation_main d-inline-flex">
-                    <p class="relation_description_label">if</p>
-                    <select class="relation_sensor_select relation_select">
-                      <option value="default_state">Select sensor</option>
-                    </select>
-                    <select class="relation_ds18b20_select relation_select"></select>
-                    <select class="relation_dht_select relation_select"></select>
-                    <select class="relation_condition_select relation_select"></select>
-                    <!-- <v-text-field class="relation_conditionvalue_input relation_input" value="value" label="value" single-line outlined></v-text-field> -->
-                    <input type="text" class="relation_conditionvalue_input relation_input" value="value">
-                    <p class="relation_description_label">then</p>
-                    <select class="relation_device_select relation_select">
-                      <option value="default_state">Select device</option>
-                    </select>
-                    <select class="relation_mode_select relation_select"></select>
-                    <input type="text" class="relation_swmul_input relation_input" value="value">
-                    <button class="relation_advanced_button fading_button collapsible"
-                      title="Show advanced options"></button>
-                    <button class="fading_button relation_remove_button">-</button>
-                  </div>
-                  <div class="relation_advanced">
-                    <div class="relation_advanced_content collapsible_content">
-                      <p class="relation_advanced_label">Save device value to EEPROM</p>
-                      <input type="checkbox" class="relation_config_params relation_EEPROM_check">
+              <div id="settings_relation_selectors">
+                <div id="relations">
+                  <div class="relation_hidden">
+                    <div class="relation_main d-inline-flex">
+                      <p class="relation_description_label">if</p>
+                      <select class="relation_sensor_select relation_select">
+                        <option value="default_state">Select sensor</option>
+                      </select>
+                      <select class="relation_ds18b20_select relation_select"></select>
+                      <select class="relation_dht_select relation_select"></select>
+                      <select class="relation_condition_select relation_select"></select>
+                      <!-- <v-text-field class="relation_conditionvalue_input relation_input" value="value" label="value" single-line outlined></v-text-field> -->
+                      <input type="text" class="relation_conditionvalue_input relation_input" value="value">
+                      <p class="relation_description_label">then</p>
+                      <select class="relation_device_select relation_select">
+                        <option value="default_state">Select device</option>
+                      </select>
+                      <select class="relation_mode_select relation_select"></select>
+                      <input type="text" class="relation_swmul_input relation_input" value="value">
+                      <button class="relation_advanced_button fading_button collapsible" title="Show advanced options"></button>
+                      <button class="fading_button relation_remove_button">-</button>
                     </div>
+                    <div class="relation_advanced">
+                      <div class="relation_advanced_content collapsible_content">
+                        <p class="relation_advanced_label">Save device value to EEPROM</p>
+                        <input type="checkbox" class="relation_config_params relation_EEPROM_check">
+                      </div>
+                    </div>
+                    <div class="relation_notes"></div>
+                    <v-divider></v-divider>
                   </div>
-                  <div class="relation_notes"></div>
-                  <v-divider></v-divider>
                 </div>
               </div>
-            </div>
-          </v-card-text>
+            </v-card-text>
           
-          <v-divider></v-divider>
-
-          <v-card-actions id="relation_settings">
-            <div class="flex-grow-1"></div>  
-              <v-btn onClick="addRelation()" icon>
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
+          
+            <v-card-actions id="relation_settings">
+              <div class="flex-grow-1"></div>
+              <v-btn onclick="addRelation()" icon>
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
             </v-card-actions>
           </v-card>
 
@@ -1446,7 +1430,7 @@
   </div>
 
   <script src="/src/vue.js"></script>
-  <script src="/src/vuetify.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.1.0/dist/vuetify.js"></script>
   <script src="/src/vue-clipboard.js"></script>
 
 <script>
@@ -1456,7 +1440,7 @@
     link.href = path;
     link.rel = 'preload';
     link.as = 'script';
-    document.head.prepend(link);
+    document.head.append(link);
   });
 
 
@@ -1530,5 +1514,4 @@
     });
 </script>
 </body>
-<!-- TODO: / - /files/z-uno/Z-Uno-Shield/Configurator/ -->
 </html>
