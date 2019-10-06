@@ -658,7 +658,7 @@ function updateRelations() {
 function openPage(ev) {
     var target = ev.target.value;
     // обновляем вкладки пошагового руководства
-    if (target == 3) createManualPages();
+    // if (target == 2) createManualPages();
     // аккуратно скрываем страницы что бы не сбросить svg
     softPageSwitch(target);
 }

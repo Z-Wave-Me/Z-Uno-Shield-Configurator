@@ -10,10 +10,6 @@
   <style type="text/css">
   /* {literal} */
   #appcontent { max-width: 1191px; }
-  .clear { clear: both; margin-top: 1em; }
-
-  #configurator_pages_control, #configurator_pages_control button { text-align: center; font-size: 1em; }
-  #configurator_pages_control button { padding: 1em; cursor: pointer; margin: 0; }
 
   .pin_default_disabled,
   .relation_hidden,
@@ -1137,7 +1133,7 @@
                 <div id="settings_pin3" class="settings">
                   <h3 title="pin #3">ADC0</h3>
                   <div id="pin3_disabled" class="pin_default_disabled">
-                    <span style="color: red">Disabled by PWM0</span>
+                    <span>Disabled by PWM0</span>
                   </div>
                   <label><input type="radio" name="pin3" id="pin3_ADC_i_3" value="ADC_i_3">Analog input 0-3
                     V</label><br>
@@ -1369,13 +1365,13 @@
                   Your browser do not support SVG
                 </object>
               </div>
-              <v-tabs v-model="manual_tablinks.current" center-active>
+              <v-tabs v-model="manual_tablinks.current" center-active slider-color="yellow" show-arrows fixed-tabs dark>
                 <v-tab v-for="(title, pin) in manual_tablinks.title" :key="pin" :href="'#manual-' + pin">
                   {{ title }}
                 </v-tab>
 
-                <v-tabs-slider></v-tabs-slider>
-
+                <v-tabs-slider color="amber" height="4px"></v-tabs-slider>
+                
                 <v-tabs-items v-model="manual_tablinks.current">
                   <v-tab-item v-for="(value, pin) in manual_tablinks.content" :key="pin" :value="'manual-' + pin">
                     <v-card>
@@ -1397,7 +1393,7 @@
           
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn v-on="on" @click="codeDisabled = !codeDisabled" icon>
+                  <v-btn v-on="on" @click="codeDisabled = !codeDisabled" :disabled="codeEditModeDisabled" icon>
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
                 </template>
@@ -1424,7 +1420,7 @@
           
             <v-expand-transition>
               <div id="code" v-show="show_code" class="pa-4 overflow-y-auto" max-height="600">
-                <v-textarea name="codeinput" filled auto-grow solo value="// Select features" :disabled="codeDisabled">
+                <v-textarea name="codeinput" filled auto-grow solo :disabled="codeDisabled">
                 </v-textarea>
               </div>
             </v-expand-transition>
