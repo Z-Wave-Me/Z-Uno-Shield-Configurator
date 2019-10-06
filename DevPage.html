@@ -64,6 +64,13 @@
   /* {/literal} */
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="/Z-Uno-Shield-ui.js"></script>
+  <script src="/Z-Uno-Shield-code-gen.js"></script>
+  <script src="/Z-Uno-Shield-relations.js"></script>
+  <script src="/src/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.1.0/dist/vuetify.js"></script>
+  <script src="/src/vue-clipboard.js"></script>
 </head>
 <body>
   <div id="application">
@@ -105,7 +112,7 @@
           <v-card id="settings_row" class="page">
             <v-card-text class="d-flex flex-wrap">
               <div class="svg-container col-md-4">
-                <object id="obj" class="svg" data="Z-Uno-Shield.svg" type="image/svg+xml">Your browser do
+                <object id="obj" class="svg" data="Z-Uno-Shield.svg" onload="initial.load()" type="image/svg+xml">Your browser do
                   not support SVG</object>
               </div>
               <div id="features" class="col-auto">
@@ -1357,7 +1364,7 @@
           <v-card id="settings_row_connection" class="page">
             <v-card-text>
               <div class="svg_container">
-                <object id="obj_2" class="svg" data="Z-Uno-Shield-Details.svg" type="image/svg+xml">
+                <object id="obj_2" class="svg" onload="initial.load()" data="Z-Uno-Shield-Details.svg" type="image/svg+xml">
                   Your browser do not support SVG
                 </object>
               </div>
@@ -1430,34 +1437,40 @@
     </v-app>
   </div>
 
-  <script src="/src/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.1.0/dist/vuetify.js"></script>
-  <script src="/src/vue-clipboard.js"></script>
 
-<script>
-  var preload = ["/Z-Uno-Shield-ui.js","/Z-Uno-Shield-code-gen.js","/Z-Uno-Shield-relations.js"];
-  preload.forEach(function(path) {
-    var link = document.createElement('link');
-    link.href = path;
-    link.rel = 'preload';
-    link.as = 'script';
-    document.head.append(link);
-  });
+<script id="mainjs">
+  // TODO: Вынести содержание в отдельный Main.js
 
+  var initial = { 
+    // vue.mount заменяет объекты собой, тем самым генерируя события onload 
+    // игнорируем первую загрузку объектов, после второй работаем
+    queue: ['configure','ret','vue','ret'],
+    load() {
+      if (!this.queue) return;
+      switch (this.queue.pop()) {
+        case 'ret': return;
+        case 'vue': newVueInstance(); return;
+        case 'configure': loadConfiguration(); return;
+      }
+    }
+  };
 
-  var vue = new Vue({
-    el: '#application',
-    vuetify: new Vuetify(),
-    methods: {
-      resetConfig() { if (confirm('Are you sure to clear the configuration?')) window.location.href = window.location.href.split('?')[0]; },
-      copyURL: function () { this.$copyText(window.location.href).then(function (e) { showSuccessSnack(e, 'Link') }, function (e) { showErrorSnack(e) }); },
-      copyCode: function () { this.$copyText(code.textContent).then(function (e) { showSuccessSnack(e, 'Code') }, function (e) { showErrorSnack(e) }); },
-      changeCodeEditMode: function () {  /* TODO: */ }
-    },
-    data () {
-      return {
-        pages: null,
-        manual_tablinks: {
+  // don't use function before initial 
+  var vue; 
+  function newVueInstance() {
+    vue = new Vue({
+      el: '#application',
+      vuetify: new Vuetify(),
+      methods: {
+        resetConfig: function() { if (confirm('Are you sure to clear the configuration?')) window.location.href = window.location.href.split('?')[0]; },
+        copyURL: function () { this.$copyText(window.location.href).then(function (e) { showSuccessSnack(e, 'Link') }, function (e) { showErrorSnack(e) }); },
+        copyCode: function () { this.$copyText(code.textContent).then(function (e) { showSuccessSnack(e, 'Code') }, function (e) { showErrorSnack(e) }); },
+        changeCodeEditMode: function () {  /* TODO: */ }
+      },
+      data() {
+        return {
+          pages: null,
+          manual_tablinks: {
           current: 0,
           pin_map: [0,1, 3,4,5,6,7,8, 11,12,13,14,15,16], // need for loop iterations
           title: {
@@ -1500,19 +1513,18 @@
           ev_status: 'Something went wrong',
           color: 'error',
         },
-        codeDisabled: false
-      }
-    },
-  });
-    function showSuccessSnack(event, text, log) { vue.snackbar.target = text; vue.snackbar.ev_status = 'successfuly copied'; vue.snackbar.color = 'success'; vue.snackbar.display = true; if (log) console.log(this); };
-    function showErrorSnack(e, text) { vue.snackbar.target = text ? text : ''; vue.snackbar.ev_status = 'Error, see logs for details'; vue.snackbar.color = 'error'; vue.snackbar.display = true; console.log(this); };
-
-
-    preload.forEach(function(path) {
-      var script = document.createElement('script');
-      script.src = path;
-      document.body.append(script);
+          codeDisabled: false
+        }
+      },
+      /*mounted: function() {
+        this.$nextTick(function () {
+          loadConfiguration()
+        })
+      },*/
     });
+  }
+  function showSuccessSnack(event, text, log) { vue.snackbar.target = text; vue.snackbar.ev_status = 'successfuly copied'; vue.snackbar.color = 'success'; vue.snackbar.display = true; if (log) console.log(this); };
+  function showErrorSnack(e, text) { vue.snackbar.target = text ? text : ''; vue.snackbar.ev_status = 'Error, see logs for details'; vue.snackbar.color = 'error'; vue.snackbar.display = true; console.log(this); };
 </script>
 </body>
 </html>

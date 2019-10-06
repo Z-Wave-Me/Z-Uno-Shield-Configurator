@@ -591,26 +591,6 @@ function loadConfiguration() {
     pins.isReadyToCode = true;
     updateCode();
 }
-// Default
-// temporary workaround
-var isLoaded = { 'obj': false, 'obj_2': false };
-htmlEl('obj').onload = function() {
-    isLoaded.obj_2 ? ready() : isLoaded.obj = true;
-};
-htmlEl('obj_2').onload = function() {
-    isLoaded.obj ? ready() : isLoaded.obj_2 = true;
-};
-
-function ready() {
-  loadConfiguration();
-
-  // var pagelinks = htmlCEl('pagelinks');
-  //   for (var link of pagelinks) link.onclick = openPage;
-    
-  //   pagelinks[0].click();
-
-}
-
 
 // Default params
 
