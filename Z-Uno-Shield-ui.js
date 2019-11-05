@@ -537,6 +537,7 @@ if (!NodeList.prototype.forEach) NodeList.prototype.forEach = Array.prototype.fo
 
 function loadConfiguration() {
     // Attach handlers
+    document.querySelectorAll('[id*=_param_]').forEach(function(el) { el.onchange = updateParams; });
     for (var n = 3; n <= 6; n++)
         pinModesEls('pin' + n, function(el) { el.onclick = jumersADC; });
     for (var n = 7; n <= 8; n++)
@@ -547,8 +548,7 @@ function loadConfiguration() {
     pinModesEls('pin11', function(el) { el.onclick = jumersOneWire; });
     pinModesEls('pin12', function(el) { el.onclick = jumersGPIO; });
     
-    document.querySelectorAll('[id*=_param_]').forEach(function(el) { el.onchange = updateParams; });
-    
+    htmlEl('button__addRelation').onclick = addRelation;
     
     if (window.location.href.split('?')[1]) {
         window.location.href.split('?')[1].split('&').forEach(function(el) {
