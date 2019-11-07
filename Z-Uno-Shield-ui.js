@@ -535,6 +535,7 @@ function jumersUART() {
 // Prototypes
 if (!NodeList.prototype.forEach) NodeList.prototype.forEach = Array.prototype.forEach;
 
+// TODO: [13]
 function loadConfiguration() {
     // Attach handlers
     document.querySelectorAll('[id*=_param_]').forEach(function(el) { el.onchange = updateParams; });
@@ -547,8 +548,6 @@ function loadConfiguration() {
     pinModesEls('pin3pwm', function(el) { el.onclick = jumersPWM0; });
     pinModesEls('pin11', function(el) { el.onclick = jumersOneWire; });
     pinModesEls('pin12', function(el) { el.onclick = jumersGPIO; });
-    
-    htmlEl('button__addRelation').onclick = addRelation;
     
     if (window.location.href.split('?')[1]) {
         window.location.href.split('?')[1].split('&').forEach(function(el) {
@@ -584,6 +583,9 @@ function loadConfiguration() {
         htmlEl('pin11_NC').click();
         htmlEl('pin12_NC').click();
     }
+
+    addRelation();
+
     Object.defineProperty(pins, "isReadyToCode", {
         enumerable: false,
         writable: true
@@ -655,15 +657,15 @@ function updateRelations() {
 }
 
 
-function openPage(ev) {
-    var target = ev.target.value;
-    // обновляем вкладки пошагового руководства
-    // if (target == 2) createManualPages();
-    // аккуратно скрываем страницы что бы не сбросить svg
-    softPageSwitch(target);
-}
+// function openPage(ev) {
+//     var target = ev ? ev.target.value : event.srcElement;
+//     debugger
+//     // обновляем вкладки пошагового руководства
+//     // if (target == 2) createManualPages();
+//     // аккуратно скрываем страницы что бы не сбросить svg
+//     softPageSwitch(target);
+// }
 function softPageSwitch(open) {
-    
     // обновляем вкладки пошагового руководства
     // аккуратно скрываем страницы что бы не сбросить svg
     var els = htmlCEl('page');
@@ -1290,4 +1292,14 @@ function isElement(o) {
             o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName === "string"
     );
 }
+
+  /**
+   * Quick object check - this is primarily used to tell
+   * Objects from primitive values when we know the value
+   * is a JSON-compliant type.
+   */
+  function isObject (obj) {
+    return obj !== null && typeof obj === 'object'
+  }
+  
 // Issue with ADC0 - don't work page creation for this pin after reload page

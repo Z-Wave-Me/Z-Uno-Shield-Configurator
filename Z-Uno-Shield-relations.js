@@ -1,41 +1,10 @@
-// 	TODO:		//
-//__________//
-//
-// 	! 	1. Сохранять значения установленных связей (например в урл)
-//			2. Добавить UART / RS
-//	!		3. Обрабатывать 3pwm
-////		  4. Разобраться с zunoSendReport() (нужен ли после изменения состояния в связке)
-//	?		5. Обновление списков c устройствами для связей при изменении пинов
-////			6. Сделать баннер на вторую вкладку, исчезающий при создании первой связи. Содержание и необходимость в процессе.
-//	*		7. Пользовательские конфиг-параметры
-//			*	7.1  Запись состояния датчика в EEPROM
-//			*	7.2  ZUNO_SETUP_S2ACCESS
-//
-//			* Совместимость с фибаро (Уточнить у Poltos)
-// 							
-//				7.3  Fast PWM
-//				//7.4  External Interrupts
-//				7.5  Если используются кейсы, где устройство на батарейках и необходимо управлять устройствами по уровню заряда, то:
-//					7.5.1 Сделать устройство спящим. Например: засыпать начнет после определенного заряда батареи (если это возможно). 
-//					//7.5.2 Добавить связь "заряд->действие над устройством"
-//				7.6  
-//				7.7  Сортировка сетапа
-// 	!		8. 	Установить правильные пути для ассерта (svg,js,css...)
-//	! 	9. 	Оптимизация по каналам 
-//  !		10.	Убедиться в отсутствии утечек памяти
-//	!						https://ru.vuejs.org/v2/cookbook/avoiding-memory-leaks.html
-//	*		11. Сочетание клавиш на копирование кода из любой части приложения + временный банер с подсказкой
-//
-//
-//
-
 var conditions = {
 	'>': ">",
 	'<': "<",
 	'>=': ">=",
 	'<=': "<=",
-	'0xFF': "Turn on",
-	'0x00': "Turn off"
+	'0xFF': "turned on",
+	'0x00': "turned off"
 };
 var pin_types = {
 	SensorBinary: ["SensorBinary"],
@@ -63,40 +32,37 @@ var relelems = {};
 // follow add relation button
 // htmlEl("add_relation_button").onclick = eventHandler;
 
-function eventHandler(ev) {
-	if (ev.isTrusted) {
-		if (evscmp(/relation/, ev))
-			relation = findParentRelation(ev.srcElement);
+function eventHandler() {
+	if (event.isTrusted) {
+		if (evscmp(/relation/, event))
+			relation = findParentRelation(event.srcElement);
 		// определяем вызывающий элемент по классу
 		switch (true) {
-			case evscmp(/collapsible/, ev):
+			case evscmp(/collapsible/, event):
 				findRelationEl(relation);
-				if (evscmp(/relation_advanced_button/, ev))
-					collapseRelationEl(ev, relelems.advanced.content);
+				if (evscmp(/relation_advanced_button/, event))
+					collapseRelationEl(event, relelems.advanced.content);
 				else
-					collapseAction(ev);
+					collapseAction(event);
 				break;
 
-			case evscmp(/relation_remove_button/, ev):
-				removeRelation(relation);
+			case evscmp(/relation_remove_button/, event):
+				// removeRelation(relation);
 				updateCode(pins);
 				break;
-			case evscmp(/add_relation_button/, ev, 'id'):
-				addRelation();
-				break;
 
-			case evscmp(/relation_.*_input/, ev) && (ev.type == 'blur' || ev.type == 'focus'):
+			case evscmp(/relation_.*_input/, event) && (event.type == 'blur' || event.type == 'focus'):
 				findRelationEl(relation);
-				if (ev.srcElement.value == 'value') {
-					ev.srcElement.value = "";
-					ev.srcElement.style.color = "#000";
-				} else if (ev.srcElement.value == '') {
-					ev.srcElement.value = 'value';
-					ev.srcElement.style.color = "#bbb";
+				if (event.srcElement.value == 'value') {
+					event.srcElement.value = "";
+					event.srcElement.style.color = "#000";
+				} else if (event.srcElement.value == '') {
+					event.srcElement.value = 'value';
+					event.srcElement.style.color = "#bbb";
 				}
 				
 				// 0-100
-				if (evscmp(/relation_swmul_input/, ev) && ev.srcElement.value != 'value' && ev.srcElement.value != '') {
+				if (evscmp(/relation_swmul_input/, event) && event.srcElement.value != 'value' && event.srcElement.value != '') {
 					var val = relelems.device.input.value;
 					if (val != 'value' || val != '') {
 						// remove non digit chars
@@ -106,13 +72,13 @@ function eventHandler(ev) {
 					}
 				}
 
-				findRelationEl(findParentRelation(ev.srcElement));
+				findRelationEl(findParentRelation(event.srcElement));
 				updateRelationDependencies();
 				updateCode(pins);
 				break;
 
-			case (evscmp(/relation_.*_select/, ev) || evscmp(/relation_.*_input/, ev)) && (ev.type == "change"):
-				findRelationEl(findParentRelation(ev.srcElement));
+			case (evscmp(/relation_.*_select/, event) || evscmp(/relation_.*_input/, event)) && (event.type == "change"):
+				findRelationEl(findParentRelation(event.srcElement));
 				updateRelationDependencies();
 				updateCode(pins);
 				break;
@@ -212,6 +178,7 @@ function fillRelationSelectBoxes(relation) {
 
 	// sensors
 	for (var pin in pins_relationtypes.sensor) {
+		if (sensor_sb.options)
 		var opt = document.createElement('option');
 		opt.innerHTML = pins_relationtypes.sensor[pin] + ' [' + pin + ']';
 		opt.value = pins_relationtypes.sensor[pin];
@@ -336,21 +303,21 @@ function addRelation() {
 	loadRelationContent(relation);
 	// subcribe
 	var condition_input = relelems.condition.input,
-		device_input = relelems.device.input,
-		collapse_button = relelems.advanced.button,
-		remove_button = relelems.local.remove;
+		device_input = relelems.device.input
+		// collapse_button = relelems.advanced.button,
+		// remove_button = relelems.local.remove;
 		// TODO: organize
 	// var els = [relelems.sensor.select, relelems.ds18b20.select]
 
-	remove_button.onclick = eventHandler;
-	collapse_button.onclick = eventHandler;
+	// remove_button.onclick = eventHandler;
+	// collapse_button.onclick = eventHandler;
 	device_input.onfocus = eventHandler;
 	device_input.onblur = eventHandler;
 	device_input.onchange = eventHandler;
 	condition_input.onfocus = eventHandler;
 	condition_input.onblur = eventHandler;
 	condition_input.onchange = eventHandler;
-	var relation_select = relation.getElementsByClassName('relation_select');
+	var relation_select = relation.getElementsByTagName('select');
 	for (var i = 0; i < relation_select.length; i++) {
 		relation_select[i].onchange = eventHandler;
 		relation_select[i].onclick = eventHandler;
@@ -358,9 +325,9 @@ function addRelation() {
 	relation.classList.replace('relation_hidden', 'relation');
 }
 
-function removeRelation(relation) {
-	relation.remove();
-}
+// function removeRelation(relation) {
+// 	relation.remove();
+// }
 
 // _____ // HELPERS \\ _____ \\
 function removeOptions(selectbox) {
@@ -381,14 +348,18 @@ function findParentRelation(el) {
 				return DOM_rels[i];
 	}
 }
+function removeParentRelation(el) {
+	findParentRelation(el).remove();
+}
+
 function findRelationEl(el) {
 	// TODO: set var name according with project 
 	if (typeof (el) == 'number') el = htmlCEl('relation')[el];
 
 	relelems.local = {
 		main: el.getElementsByClassName("relation_main")[0],
-		advanced: el.getElementsByClassName("relation_advanced")[0],
-		remove: el.getElementsByClassName("relation_remove_button")[0],
+		// advanced: el.getElementsByClassName("relation_advanced")[0],
+		// remove: el.getElementsByClassName("relation_remove_button")[0],
 		notes: el.getElementsByClassName("relation_notes")[0]
 	};
 	relelems.sensor = {
@@ -411,10 +382,10 @@ function findRelationEl(el) {
 	relelems.mode = {
 		select: el.getElementsByClassName("relation_mode_select")[0]
 	};
-	relelems.advanced = {
-		content: el.getElementsByClassName("relation_advanced_content")[0],
-		button: el.getElementsByClassName("relation_advanced_button")[0],
-	};
+	// relelems.advanced = {
+	// 	content: el.getElementsByClassName("relation_advanced_content")[0],
+	// 	button: el.getElementsByClassName("relation_advanced_button")[0],
+	// };
 	return el;
 }
 
