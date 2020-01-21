@@ -94,16 +94,19 @@
           </v-toolbar>
 
           <v-card id="settings_row" class="page">
-            <v-card-text class="d-flex flex-wrap">
-              <div class="svg-container col-md-4">
-                <object id="obj" class="svg" data="Z-Uno-Shield.svg" onload="initconf()" type="image/svg+xml">Your browser do
-                  not support SVG</object>
-              </div>
-              <!--^ features -->
-              <div id="features" class="col-auto">
-                <div id="settings_pin3pwm" class="settings">
-                  <h3>0-10V / PWM0</h3>
-                  <div id="pin3pwm_disabled">
+            <v-row justify="center">
+              <v-col cols="4">
+                <div class="svg-container">
+                  <object id="obj" class="svg" data="Z-Uno-Shield.svg" onload="initconf()" type="image/svg+xml">Your browser do
+                    not support SVG</object>
+                </div>
+              </v-col>
+              <v-col cols="auto"> 
+                <!--^ features -->
+                <div id="features">
+                  <div id="settings_pin3pwm" class="settings">
+                    <h3>0-10V / PWM0</h3>
+                    <div id="pin3pwm_disabled">
                     <span>Disabled by ADC0</span>
                   </div>
                   <label><input type="radio" name="pin3pwm" id="pin3pwm_PWM" value="PWM">Analog output 0-10V</label><br>
@@ -1297,7 +1300,8 @@
                   <label><input type="radio" name="pin3" id="pin3_NC" value="NC">Not connected</label><br>
                 </div>
               </div>
-            </v-card-text>
+              </v-col>
+            </v-row>
           </v-card>
 
           <v-card id="settings_row_relations" class="page">
