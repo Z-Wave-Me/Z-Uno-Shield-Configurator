@@ -513,7 +513,7 @@ function generateCode(pins) {
     if (_relation) Object.keys(_relation).map(function(i){ used_pins.push(_relation[i].device_sb.pin); });
 
     var includes = templates.map(function(ch) { return ch.includes; }).filter(function(value, index, self) { return self.indexOf(value) === index && !!value; }).join('\n');
-    var vars = templates.map(function(ch) { return ch.vars; } ).filter(function(value) { return !!value; }).join('\n\n');
+    var vars = templates.map(function(ch) { return ch.vars; } ).filter(function(value) { return !!value; }).join('\n');
     var channels = templates.map(function(ch) { return ch.channel; } ).filter(function(value) { return !!value; }).join(',\n');
     var reports = templates.map(function(ch) { return ch.report; } ).filter(function(value) { return !!value; }).join(',\n');
     var setup = templates.map(function(ch) { return ch.setup; } ).filter(function(value) { return !!value; }).join('\n');
@@ -534,15 +534,14 @@ function generateCode(pins) {
     // if (!loop.match(/\S/gm)) loop = '';
     // if (!rloop.match(/\S/gm)) rloop = '';
     // if channel are empty setup_channels will be hidden
-    if (channels.match(/\S/gm)) channels = "// Z-Wave channels\n ZUNO_SETUP_CHANNELS(\n" + channels + "\n);\n\n";
+    // if (channels.match(/\S/gm)) channels = "// Z-Wave channels\n" + " ZUNO_SETUP_CHANNELS(\n" + channels + "\n);\n\n";
 
     return {
         "code":
-            "" + includes + (includes ? "\n\n" : "") + "" +
-            "// Global variables\n\n" +
-            vars + "\n\n" +
-            channels +
-            "" + (reports ? ("ZUNO_REPORTS_HANDLER(reportHandler);\n\n") : "") + "" +
+            (includes ? (includes + "\n\n") : "") +
+            (vars ? ("// Global variables\n" + vars + "\n\n" ) : "") +
+            (channels ? ("// Z-Wave channels\n" + "ZUNO_SETUP_CHANNELS(\n" + channels + "\n);\n\n"): "") +
+            (reports ? ("ZUNO_REPORTS_HANDLER(reportHandler);\n\n") : "") +
             "void setup() {\n" +
               setup + "\n" +
             "}\n\n" +
@@ -550,10 +549,9 @@ function generateCode(pins) {
               loop + rloop +
             "  delay(20);\n" +
             "}\n\n" +
-            "// Getters and setters\n\n" +
-            xetter + "" +
-            "" + (reports ? ("\n\nvoid reportHandler(void) {\n" + reports + "\n}") : "") +
-            "" + (funcs ? ("\n\n// Functions\n" + funcs) : ""),
+            (xetter ? ("// Getters and setters\n" + xetter + "\n\n") : "") +
+            (reports ? ("void reportHandler(void) {\n" + reports + "\n}" + "\n\n") : "") +
+            (funcs ? ("\n\n// Functions\n" + funcs + "\n\n") : ""),
         "notes": notes ? notes : "No notes",
         "keys": keys ? keys : "No keys"
     };
@@ -641,7 +639,7 @@ function relations2code(_relation) {
         switch(true) {
             // DS18B20            
             case __relation.sensor_sb.value === 'DS18B20':
-                __relation.sensor_sb.vars = ['temperature[' + __relation.ds18b20 + ']'];
+                __relation.sensor_sb.vars = ['temperature[' + (__relation.ds18b20 - 1) + ']'];
                 __relation.sensor_sb.value = 'SensorMultilevel';
                 break;
             // DHT            
