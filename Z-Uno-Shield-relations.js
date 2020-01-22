@@ -390,56 +390,22 @@ function findRelationEl(el) {
 }
 
 function checkRelationsCorectness(_relation) {
-	var length = Object.keys(_relation).length;
-	var res = {
-		ready: [],
-		alert: []
-	};
-
-	for (var i = 0; i < length; i++) {
-		findRelationEl(i);
-		var sensor_sb = relelems.sensor.select,
-			device_sb = relelems.device.select,
-			condition_input = relelems.condition.input,
-			device_input = relelems.device.input;
-
-		// sensor select
-		if (sensor_sb.value === "default_state")
-			res.alert.push(sensor_sb);
-		else
-			res.ready.push(sensor_sb);
-		// device select
-		if (device_sb.value === "default_state")
-			res.alert.push(device_sb);
-		else
-			res.ready.push(device_sb);
-
-		// sensor input
-		if ((condition_input.value != "value") &&
-					(condition_input.value != "") &&
-						(condition_input.style.display != 'none'))
-			res.ready.push(condition_input);
-		else
-			res.alert.push(condition_input);
-		// device input
-		if ((device_input.value != "value") &&
-					(device_input.value != "") &&
-						(device_input.style.display != 'none'))
-			res.ready.push(device_input);
-		else
-			res.alert.push(device_input);
-
-		// remove from error list if hidden
-		res.alert.forEach(function (el, i) { if (el.style.display == 'none') res.alert.splice(i, 1); });
+	/**
+	 * (((A === x1 || A === x2) && B !== x3) || A === x4) 
+	 * &&
+	 * (((C === x5) && D !== x3) || C === x6)
+	 */
+	var res = Object.values(_relation).map( function(r) {
+		if ((((r.sensor_sb.value === "DS18B20" || 
+						r.sensor_sb.value === "DHT") && 
+							r.condition_input !== "value") ||
+								r.sensor_sb.value === "SensorBinary") &&
+								(((r.device_sb.value === "SwitchMultilevel") &&
+										r.swmul_input !== "value") || 
+											r.device_sb.value === "SwitchBinary")) 
+												return r.disabled = false;
 		
-		if (res.alert.length) {
-			_relation[i].disabled = true;
-			res.alert.map(function (el) { el.style.borderColor = 'red'; });
-		} else
-			_relation[i].disabled = false;
-
-		if (res.ready.length)
-			res.ready.map(function (el) { el.style.borderColor = null; });
-	} 
+		return r.disabled = true;
+	});
 	return res;
 }
