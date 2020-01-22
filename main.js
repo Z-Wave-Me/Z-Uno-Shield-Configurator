@@ -1,56 +1,20 @@
 /**
- * Feedback:
+ * Belov Alexander
+ *   @baadev
  *   baa@z-wave.me
  * 
- * TODO (should be completed before release)  
- *!    	- Сохранять значения установленных связей (например в урл)
- *!		  - Обрабатывать 3pwm
- *! 		- Обновление списков c устройствами для связей при изменении пинов
- *! 	  -	Оптимизация по каналам (использовать метод объявления из последних релизов компилятора) 
- *!     - Установить правильные пути для ассерта (svg,js,css...)
- *!		  -	Убедиться в отсутствии утечек памяти
- *					https://ru.vuejs.org/v2/cookbook/avoiding-memory-leaks.html
- * 
- * 
- * TODO (default) 
- ** 		- Пользовательские конфиг-параметры
- **     	-- Запись состояния датчика в EEPROM
- **     	-- ZUNO_SETUP_S2ACCESS
- ** 		- Сочетание клавиш на копирование кода из любой части приложения + временный банер с подсказкой
- **    	- Переключение страниц через v-transition
- * 
- *?     Совместимость с фибаро (Уточнить у Poltos)
- * 
- *			- Fast PWM
- *			- Добавить UART / RS
- *			- Если используются кейсы, где устройство на батарейках и необходимо управлять устройствами по уровню заряда, то:
- *					-- Сделать устройство спящим. Например: засыпать начнет после определенного заряда батареи (если это возможно). 
- *			- Представить в виде отдельных функций
- *        -- Обработчики 
- * 				-- Инициализацию через el.click() для дебага и валидации, по умолчанию состояние должно загружаться через vue 
- *      - Подсказки назначения для джамперов, при наведении
- *
- * 		  //Разобраться с zunoSendReport() (нужен ли после изменения состояния в связке)
- *      //Сделать баннер на вторую вкладку, исчезающий при создании первой связи. Содержание и необходимость в процессе.
- *      //External Interrupts
- *			//Добавить связь "заряд->действие над устройством"
  */
 
-/** 
- * Инициализируем через команды:
- ** ret (return, currently we don't handle first loaded svg; after $mount Vue DOM-obj in #app will be rerendered)
- ** vue (new Vue, create new Vue on 2nd loaded svg)
- ** config (loadConfiguration())
- */
-var initialQueue = ['configure', 'ret', 'vue', 'ret'];
+function cat(msg) { console.log(msg) };
+
+// sometime 2 svg-objects are loaded asynchronously
+// so we need to ignore first of them
+var initialQueue = ['configure','return', 'vue','return'];
 function initconf() {
   // vue.mount заменяет объекты, тем самым дважды генерируя события onload 
-  // игнорируем первую загрузку объектов, после второй работаем
-    if (!initialQueue) return;
     switch (initialQueue.pop()) {
-      case 'ret': return;
-      case 'vue': vue = initDefaultVueInstance(); return;
       case 'configure': loadConfiguration(); return;
+      case 'vue': vue = initDefaultVueInstance(); return;
     }
 };
 
@@ -100,13 +64,14 @@ function initDefaultVueInstance() {
             16: 'PWM4'
           }
         },
-        snackbar: {
-          display: false,
-          color: 'info',
-        },
         code: {
           display: false,          
           editable: false,
+          text: '// Please select features'
+        },
+        snackbar: {
+          display: false,
+          color: 'info',
         },
         fab: null
       }

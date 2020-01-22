@@ -14,14 +14,13 @@ var pin_types = {
 	interface_types: ["UART", "RS485"]
 };
 var modes = {
-	'0xFF': "Turn on",
-	'0x00': "Turn off"
+	'0xFF': "turn on",
+	'0x00': "turn off"
 };
 var dht_states = {
 	temperature: "Temperature",
 	humidity: "Humidity"
 };
-var boolean_answer = ["Yes", "No"];
 // TODO: arr to {src:val} 
 var default_state = ["Select sensor", "Select device"];
 // list with all selected pins and their types
@@ -48,7 +47,6 @@ function eventHandler() {
 
 			case evscmp(/relation_remove_button/, event):
 				// removeRelation(relation);
-				updateCode(pins);
 				break;
 
 			case evscmp(/relation_.*_input/, event) && (event.type == 'blur' || event.type == 'focus'):
@@ -74,13 +72,11 @@ function eventHandler() {
 
 				findRelationEl(findParentRelation(event.srcElement));
 				updateRelationDependencies();
-				updateCode(pins);
 				break;
 
-			case (evscmp(/relation_.*_select/, event) || evscmp(/relation_.*_input/, event)) && (event.type == "change"):
+			case evscmp(/relation_.*_select/, event) && event.type == "change":
 				findRelationEl(findParentRelation(event.srcElement));
 				updateRelationDependencies();
-				updateCode(pins);
 				break;
 		}
 		updateCode(pins);
@@ -147,34 +143,6 @@ function fillRelationSelectBoxes(relation) {
 		condition_sb = relelems.condition.select,
 		device_sb = relelems.device.select,
 		mode_sb = relelems.mode.select;
-
-
-	if (sensor_sb.childNodes.length !== 0) {
-		removeOptions(ds18b20_sb);
-	}
-
-	// default
-	// default_state.forEach(function (state) {
-	// 	var opt = document.createElement('option');
-	// 	opt.innerHTML = state;
-	// 	opt.value = 'default_state';
-	// 	switch (state) {
-	// 		case 'Select sensor':
-	// 			for (i = 0; i < sensor_sb.options.length; i++)
-	// 				if (sensor_sb.options[i] == opt)
-	// 					continue;
-	// 				else
-	// 					sensor_sb.appendChild(opt);
-	// 			break;
-	// 		case 'Select device':
-	// 			for (i = 0; i < device_sb.options.length; i++)
-	// 				if (device_sb.options[i] == opt)
-	// 					continue;
-	// 				else
-	// 					device_sb.appendChild(opt);
-	// 			break;
-	// 	}
-	// });
 
 	// sensors
 	for (var pin in pins_relationtypes.sensor) {

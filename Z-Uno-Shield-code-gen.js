@@ -603,14 +603,12 @@ function templatesToRelations(templates) {
                 'condition_input': relelems.condition.input.value,
                 'swmul_input': relelems.device.input.value,
                 'el': relation[i],
-                'disabled': false,
+                'disabled': true,
                 'length': i
             };
         }
 
-
-        var check_res = checkRelationsCorectness(_relation);
-        if (check_res.ready.length)
+        if (checkRelationsCorectness(_relation))
             return _relation;
     }
     return;

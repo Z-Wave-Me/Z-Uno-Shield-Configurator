@@ -592,6 +592,7 @@ function loadConfiguration() {
     });
     pins.isReadyToCode = true;
     updateCode();
+    // htmlEl('code').textContent = 'sda';
 }
 
 // Default params
@@ -640,7 +641,8 @@ var old_pins = {};
 function updateCode() {
     if (pins.isReadyToCode) {
         var ret = generateCode(pins);
-        htmlEl('code').innerHTML = ret.code;
+        Vue.set(this.vue.code, 'text', ret.code);
+        // htmlEl('code').innerHTML = ret.code;
     }
 }
 function updateRelations() {
