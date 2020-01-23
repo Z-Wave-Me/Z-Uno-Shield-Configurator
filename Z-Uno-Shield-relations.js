@@ -358,22 +358,25 @@ function findRelationEl(el) {
 }
 
 function checkRelationsCorectness(_relation) {
-	/**
-	 * (((A === x1 || A === x2) && B !== x3) || A === x4) 
-	 * &&
-	 * (((C === x5) && D !== x3) || C === x6)
-	 */
+
+/** ((((A === x1) || (A === x2)) && (B !== x3)) || (A === x4)) 
+	* &&
+	* ((((C === x5) || (C === x7)) && (D !== x3)) || (C === x6))
+	*
+*/
 	var res = Object.values(_relation).map( function(r) {
-		if ((((r.sensor_sb.value === "DS18B20" || 
-						r.sensor_sb.value === "DHT") && 
-							r.condition_input !== "value") ||
-								r.sensor_sb.value === "SensorBinary") &&
-								(((r.device_sb.value === "SwitchMultilevel") &&
-										r.swmul_input !== "value") || 
-											r.device_sb.value === "SwitchBinary")) 
-												return r.disabled = false;
+		if (((((r.sensor_sb.value === "DS18B20") || 
+						(r.sensor_sb.value === "DHT")) && 
+							(r.condition_input !== "value")) ||
+								(r.sensor_sb.value === "SensorBinary")) &&
+								((((r.device_sb.value === "SwitchMultilevel") ||
+										(r.device_sb.value === "SwitchMultilevelPWM0")) &&
+											(r.swmul_input !== "value")) || 
+												(r.device_sb.value === "SwitchBinary"))) 
+													return r.disabled = false;
 		
 		return r.disabled = true;
 	});
+	cat(res)
 	return res;
 }

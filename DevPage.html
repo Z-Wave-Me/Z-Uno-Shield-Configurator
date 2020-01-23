@@ -12,7 +12,7 @@
   /* {literal} */
   
   /* 22.01.20 - commented */
-  /* #appcontent { max-width: 1191px; } */
+  #appcontent { max-width: 1191px; }
 
   .pin_default_disabled,
   .relation_hidden,
@@ -101,7 +101,7 @@
                 </div>
               </v-col>
               <!--^ features -->
-              <v-col cols="auto"> 
+              <v-col cols="auto"  class="d-flex align-center"> 
                 <div id="features">
                   <div id="settings_pin3pwm" class="settings">
                     <h3>0-10V / PWM0</h3>
@@ -1384,7 +1384,7 @@
           
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn v-on="on" @click="code.editable = !code.editable" :disabled="true" icon>
+                  <v-btn v-on="on" @click="code.editable = !code.editable" :disabled="true">
                     <v-icon>mdi-pencil</v-icon>
                   </v-btn>
                 </template>
@@ -1392,7 +1392,7 @@
               </v-tooltip>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn v-on="on" @click="copyCode" icon>
+                  <v-btn v-on="on" @click="copyCode">
                     <v-icon>mdi-export-variant</v-icon>
                   </v-btn>
                 </template>
@@ -1400,7 +1400,7 @@
               </v-tooltip>
               <v-tooltip right>
                 <template v-slot:activator="{ on }">
-                  <v-btn v-on="on" @click="code.display = !code.display" icon>
+                  <v-btn v-on="on" @click="code.display = !code.display">
                     <v-icon>{{ code.display ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
                   </v-btn>
                 </template>
