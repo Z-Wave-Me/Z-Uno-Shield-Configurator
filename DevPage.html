@@ -5,7 +5,7 @@
   <title>Z-Uno Shield Configurator</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="/src/vuetify-v2.2.4.min.css">
+  <link rel="stylesheet" href="/src/vuetify-v2.2.6.min.css">
   
   <style type="text/css">
   /*  CMS(?) handler ignore all in {literal}. This means that the following code will be interpreted as is. */
@@ -68,7 +68,7 @@
 
   <!-- Vue always should be first. Here is  -->
   <script src="/src/vue.js"></script>
-  <script src="/src/vuetify-v2.2.4.js"></script>
+  <script src="/src/vuetify-v2.2.6.min.js"></script>
   <script src="/src/vue-clipboard.js"></script>
   
   <script src="/main.js"></script>
@@ -89,6 +89,25 @@
                 <v-tab>Connect peripherals</v-tab>
               </v-tabs>
             </template>
+            <v-spacer></v-spacer>
+            <!--^ __copyurl  -->
+            <v-tooltip left>
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" @click="copyURL">
+                  <v-icon>mdi-export-variant</v-icon>
+                </v-btn>
+              </template>
+              <span>Copy permalink to this configuration</span>
+            </v-tooltip>
+            <!--^ __reset  -->
+            <v-tooltip left>
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" @click="resetConfig">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </template>
+              <span>Reset configuration</span>
+            </v-tooltip>
           </v-toolbar>
 
           <v-card id="settings_row" class="page">
@@ -1346,8 +1365,6 @@
             </v-card-actions>
           </v-card>
 
-          
-
           <v-card id="settings_row_connection" class="page">
             <v-card-text>
               <div class="svg_container">
@@ -1421,37 +1438,6 @@
             {{ snackbar.msg }}
             <v-btn @click="snackbar.display = false" color="white" text>close</v-btn>
           </v-snackbar>
-
-          <!--^ FAB  -->
-          <v-speed-dial v-model="fab" origin bottom right fixed>
-            <template v-slot:activator>
-              <v-btn v-model="fab" color="#ffdd73" fab>
-                <v-icon v-if="fab">mdi-minus</v-icon>
-                <v-icon v-else>mdi-plus</v-icon>
-              </v-btn>
-            </template>
-
-            <!--^ __copyurl  -->
-            <v-tooltip left>
-              <template v-slot:activator="{ on }">
-                <v-btn fab v-on="on" @click="copyURL" color="blue" icon>
-                  <v-icon>mdi-export-variant</v-icon>
-                </v-btn>
-              </template>
-              <span>Copy permalink to this configuration</span>
-            </v-tooltip>
-
-            <!--^ __reset  -->
-            <v-tooltip left>
-              <template v-slot:activator="{ on }">
-                <v-btn fab v-on="on" @click="resetConfig" color="red" icon>
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </template>
-              <span>Reset configuration</span>
-            </v-tooltip>
-          </v-speed-dial>
-
         </v-container>
       </v-content>
     </v-app>

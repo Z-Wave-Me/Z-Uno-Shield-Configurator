@@ -1749,7 +1749,7 @@ var __assign = undefined && undefined.__assign || function () {
     }
   },
   render: function render(h) {
-    return h(_transitions__WEBPACK_IMPORTED_MODULE_4__["VExpandTransition"], [h('div', {
+    return h(_transitions__WEBPACK_IMPORTED_MODULE_4__["VExpandTransition"], [h('div', this.setBackgroundColor(this.color, {
       staticClass: 'v-banner',
       attrs: this.attrs$,
       class: this.classes,
@@ -1758,7 +1758,7 @@ var __assign = undefined && undefined.__assign || function () {
         name: 'show',
         value: this.isActive
       }]
-    }, [this.genWrapper()])]);
+    }), [this.genWrapper()])]);
   }
 }));
 
@@ -8292,15 +8292,10 @@ var __assign = undefined && undefined.__assign || function () {
     // Requires a manual definition
     // to overwrite removal in v-autocomplete
     onEnterDown: function onEnterDown(e) {
-      var _this = this;
+      e.preventDefault(); // If has menu index, let v-select-list handle
 
-      e.preventDefault();
-      this.$nextTick(function () {
-        // If has menu index, let v-select-list handle
-        if (_this.getMenuIndex() > -1) return;
-
-        _this.updateSelf();
-      });
+      if (this.getMenuIndex() > -1) return;
+      this.$nextTick(this.updateSelf);
     },
     onFilteredItemsChanged: function onFilteredItemsChanged(val, oldVal) {
       if (!this.autoSelectFirst) return;
@@ -13613,11 +13608,6 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_10__["default"])(_
         name: 'show',
         value: this.isActive
       }],
-      on: {
-        click: function click(e) {
-          e.stopPropagation();
-        }
-      },
       style: {}
     };
 
@@ -14359,9 +14349,7 @@ var __spread = undefined && undefined.__spread || function () {
       default: 'file'
     },
     value: {
-      default: function _default() {
-        return [];
-      },
+      default: undefined,
       validator: function validator(val) {
         return _typeof(val) === 'object' || Array.isArray(val);
       }
@@ -14382,7 +14370,9 @@ var __spread = undefined && undefined.__spread || function () {
       return this.$vuetify.lang.t(this.counterSizeString, fileCount, Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["humanReadableFileSize"])(bytes, this.base === 1024));
     },
     internalArrayValue: function internalArrayValue() {
-      return Array.isArray(this.internalValue) ? this.internalValue : Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["wrapInArray"])(this.internalValue);
+      return Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["wrapInArray"])(this.internalValue).filter(function (file) {
+        return file instanceof File;
+      });
     },
     internalValue: {
       get: function get() {
@@ -14441,7 +14431,7 @@ var __spread = undefined && undefined.__spread || function () {
   },
   methods: {
     clearableCallback: function clearableCallback() {
-      this.internalValue = this.isMultiple ? [] : null;
+      this.internalValue = this.isMultiple ? [] : undefined;
       this.$refs.input.value = '';
     },
     genChips: function genChips() {
@@ -14515,13 +14505,19 @@ var __spread = undefined && undefined.__spread || function () {
         class: {
           'v-file-input__text--placeholder': this.placeholder && !this.isDirty,
           'v-file-input__text--chips': this.hasChips && !this.$scopedSlots.selection
-        },
-        on: {
-          click: function click() {
-            return _this.$refs.input.click();
-          }
         }
       }, children);
+    },
+    genTextFieldSlot: function genTextFieldSlot() {
+      var _this = this;
+
+      var node = _VTextField__WEBPACK_IMPORTED_MODULE_1__["default"].options.methods.genTextFieldSlot.call(this);
+      node.data.on = __assign({}, node.data.on || {}, {
+        click: function click() {
+          return _this.$refs.input.click();
+        }
+      });
+      return node;
     },
     onInput: function onInput(e) {
       var files = __spread(e.target.files || []);
@@ -15784,7 +15780,8 @@ var VIcon = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_7__["default"])(_mixins
         },
         attrs: __assign({
           'aria-hidden': !hasClickListener,
-          role: hasClickListener ? 'button' : null
+          role: hasClickListener ? 'button' : null,
+          tabindex: hasClickListener ? 0 : undefined
         }, this.attrs$),
         on: this.listeners$
       };
@@ -17469,7 +17466,7 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_11__["default"])(_
       }, this.showLazyContent([this.$createElement('div', this.$slots.default)]));
     },
     genPrependIcon: function genPrependIcon() {
-      var icon = this.prependIcon ? this.prependIcon : this.subGroup ? '$subgroup' : false;
+      var icon = this.subGroup && this.prependIcon == null ? '$subgroup' : this.prependIcon;
       if (!icon && !this.$slots.prependIcon) return null;
       return this.$createElement(_VListItemIcon__WEBPACK_IMPORTED_MODULE_3__["default"], {
         staticClass: 'v-list-group__header__prepend-icon'
@@ -18329,7 +18326,6 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_11__["default"])(_
         ref: 'content',
         on: {
           click: function click(e) {
-            e.stopPropagation();
             var target = e.target;
             if (target.getAttribute('disabled')) return;
             if (_this.closeOnContentClick) _this.isActive = false;
@@ -18673,7 +18669,7 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_12__["default"])(O
     miniVariant: Boolean,
     miniVariantWidth: {
       type: [Number, String],
-      default: 80
+      default: 56
     },
     mobileBreakPoint: {
       type: [Number, String],
@@ -18730,6 +18726,7 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_12__["default"])(O
         'v-navigation-drawer--is-mobile': this.isMobile,
         'v-navigation-drawer--is-mouseover': this.isMouseover,
         'v-navigation-drawer--mini-variant': this.isMiniVariant,
+        'v-navigation-drawer--custom-mini-variant': Number(this.miniVariantWidth) !== 56,
         'v-navigation-drawer--open': this.isActive,
         'v-navigation-drawer--open-on-hover': this.expandOnHover,
         'v-navigation-drawer--right': this.right,
@@ -20618,7 +20615,7 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_5__["default"])(_m
       label.data.attrs.id = this.computedId; // WAI considers this an orphaned label
 
       delete label.data.attrs.for;
-      label.tag = 'div';
+      label.tag = 'legend';
       return label;
     },
     onClick: _VItemGroup_VItemGroup__WEBPACK_IMPORTED_MODULE_3__["BaseItemGroup"].options.methods.onClick
@@ -21965,6 +21962,7 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_11__["default"])(_
       var menu = this.$refs.menu; // If enter, space, open menu
 
       if ([_util_helpers__WEBPACK_IMPORTED_MODULE_9__["keyCodes"].enter, _util_helpers__WEBPACK_IMPORTED_MODULE_9__["keyCodes"].space].includes(keyCode)) this.activateMenu();
+      this.$emit('keydown', e);
       if (!menu) return; // If menu is active, allow default
       // listIndex change from menu
 
@@ -23707,6 +23705,7 @@ var __assign = undefined && undefined.__assign || function () {
       }, _a[direction] = value + "%", _a;
     },
     onThumbMouseDown: function onThumbMouseDown(e) {
+      e.preventDefault();
       this.oldValue = this.internalValue;
       this.keyPressed = 2;
       this.isActive = true;
@@ -23971,7 +23970,10 @@ __webpack_require__.r(__webpack_exports__);
       class: this.classes,
       on: this.$listeners
     }, [h('div', this.setBackgroundColor(this.color, {
-      staticClass: 'v-snack__wrapper'
+      staticClass: 'v-snack__wrapper',
+      attrs: {
+        role: 'alert'
+      }
     }), [h('div', {
       staticClass: 'v-snack__content'
     }, this.$slots.default)])])]);
@@ -24220,7 +24222,7 @@ var __assign = undefined && undefined.__assign || function () {
         var _this = this;
 
         this.$nextTick(function () {
-          if (!_this.autoDraw || _this.type === 'bar') return;
+          if (!_this.autoDraw || _this.type === 'bar' || !_this.$refs.path) return;
           var path = _this.$refs.path;
           var length = path.getTotalLength();
 
@@ -31738,7 +31740,7 @@ function () {
 
   Vuetify.install = _install__WEBPACK_IMPORTED_MODULE_0__["install"];
   Vuetify.installed = false;
-  Vuetify.version = "2.2.4";
+  Vuetify.version = "2.2.6";
   return Vuetify;
 }();
 
@@ -34195,6 +34197,7 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_2__["default"])(_d
           var activator = _this.getActivator(e);
 
           if (activator) activator.focus();
+          e.stopPropagation();
           _this.isActive = !_this.isActive;
         };
       }
@@ -35000,7 +35003,7 @@ function validateAttachTarget(val) {
         return;
       }
 
-      target.insertBefore(this.$refs.content, target.firstChild);
+      target.appendChild(this.$refs.content);
       this.hasDetached = true;
     }
   }
@@ -36630,7 +36633,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.isActive) return undefined;
       if (this.color) return this.color;
       if (this.isDark && !this.appIsDark) return 'white';
-      return 'accent';
+      return 'primary';
     },
     isMultiple: function isMultiple() {
       return this.multiple === true || this.multiple === null && Array.isArray(this.internalValue);
@@ -37596,7 +37599,9 @@ function (_super) {
   }
 
   Application.prototype.register = function (uid, location, size) {
-    this.application[location][uid] = size;
+    var _a;
+
+    this.application[location] = (_a = {}, _a[uid] = size, _a);
     this.update(location);
   };
 
