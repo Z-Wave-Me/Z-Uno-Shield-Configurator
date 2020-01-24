@@ -31,10 +31,9 @@
   #pin3_disabled span, #pin3pwm_disabled span { color: red; }
 
 
-  .relation { display: table; margin: 0.5em auto; text-align: center; text-align: -webkit-center;}
-  .relation_main {  display:flex; width: 100%; justify-content: center; }
-  .relation_input { text-align-last: center; max-width: 6%; color: #bbb; font-size: 1em; cursor: auto;}
-  #relations select { text-align-last: center; cursor: pointer; }
+  .relation { max-width: 200px; text-align: center; text-align: -webkit-center;}
+  .relation_input { text-align-last: center; color: #bbb; font-size: 1em; cursor: auto;}
+  #relations select { min-width: 192px; text-align-last: center; cursor: pointer; }
   /* #relations p { margin:0 1em; } */
 
   .relation_remove_button { background-color: #f33; margin-left: 1em; }
@@ -47,16 +46,7 @@
 
 
   .collapsible_content { display: none; }
-
-  .fading_button {
-      font-size: 1em;
-      padding: 1em 1.5em;
-      text-align: center;
-      opacity: 0.6;
-      transition: 0.3s;
-      text-decoration: none;
-      cursor: pointer;
-  }
+  .fading_button { font-size: 1em; padding: 1em 1.5em; text-align: center; opacity: 0.6; transition: 0.3s; text-decoration: none; cursor: pointer; }
   .fading_button:hover { opacity: 1; }
   /* {/literal} */
   </style>
@@ -78,7 +68,6 @@
     <v-app>
       <v-content>
         <v-container id="appcontent" class="mb-10">
-          
           <!--*_____MENU TOP_____*-->
           <v-toolbar dark>
             <v-toolbar-title>Z-Uno Shield Configurator</v-toolbar-title>
@@ -1323,40 +1312,31 @@
           </v-card>
 
           <v-card id="settings_row_relations" class="page">
-                <div id="relations">
-                  <div class="relation_hidden pt-3">
-                    <div class="relation_main d-flex">
-                      <p class="font-weight-black mr-2 my-auto">if</p>
-                      <select class="relation_sensor_select">
-                        <option value="default_state">sensor..</option>
-                      </select>
-                      <select class="relation_ds18b20_select"></select>
-                      <select class="relation_dht_select"></select>
-                      <select class="relation_condition_select"></select>
-                      <input type="text" class="relation_conditionvalue_input relation_input" value="value">
+            <div id="relations" class="d-flex flex-wrap justify-center pa-4">
+              <v-card class="relation_hidden flex-column align-self-center ma-4">
+                <v-card-actions class="d-flex justify-end">
+                  <v-btn class="red lighten-1" onclick="removeParentRelation(event.target)" absolute small>
+                    <v-icon>mdi-minus</v-icon>
+                  </v-btn>
+                </v-card-actions>
+                
+                <p class="font-italic font-weight-light ma-2 mb-0">if</p>
+                <select class="relation_sensor_select">
+                  <option value="default_state">sensor</option>
+                </select>
+                <select class="relation_ds18b20_select"></select>
+                <select class="relation_dht_select"></select>
+                <select class="relation_condition_select"></select>
+                <input type="text" class="relation_conditionvalue_input relation_input" value="value">
 
-                      <p class="font-weight-black mx-2 my-auto">then</p>
-                      <select class="relation_device_select">
-                        <option value="default_state">device..</option>
-                      </select>
-                      <select class="relation_mode_select"></select>
-                      <input type="text" class="relation_swmul_input relation_input" value="value">
-                      
-                      <v-btn onclick="removeParentRelation(event.target)" class="red lighten-1" text>
-                        <v-icon>mdi-minus</v-icon>
-                      </v-btn>
-                    </div>
-                    <div class="relation_advanced" style="display: none;">
-                      <div class="relation_advanced_content">
-                        <p class="relation_advanced_label">Save device value to EEPROM</p>
-                        <input type="checkbox" class="relation_config_params relation_EEPROM_check">
-                      </div>
-                    </div>
-                    <div class="relation_notes"></div>
-                    <v-divider></v-divider>
-                  </div>
-                </div>
-          
+                <p class="font-italic font-weight-light mx-2 mb-0 my-auto">then</p>
+                <select class="relation_device_select">
+                  <option value="default_state">device</option>
+                </select>
+                <select class="relation_mode_select"></select>
+                <input type="text" class="relation_swmul_input relation_input" value="value">
+              </v-card>
+            </div>
             <v-card-actions id="relation_settings">
               <div class="flex-grow-1"></div>
               <v-btn id="button__addRelation" @click="this.addRelation()" text>

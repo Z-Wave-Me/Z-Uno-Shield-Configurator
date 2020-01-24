@@ -324,12 +324,6 @@ function findRelationEl(el) {
 	// TODO: set var name according with project 
 	if (typeof (el) == 'number') el = htmlCEl('relation')[el];
 
-	relelems.local = {
-		main: el.getElementsByClassName("relation_main")[0],
-		// advanced: el.getElementsByClassName("relation_advanced")[0],
-		// remove: el.getElementsByClassName("relation_remove_button")[0],
-		notes: el.getElementsByClassName("relation_notes")[0]
-	};
 	relelems.sensor = {
 		select: el.getElementsByClassName("relation_sensor_select")[0]
 	};
@@ -350,10 +344,6 @@ function findRelationEl(el) {
 	relelems.mode = {
 		select: el.getElementsByClassName("relation_mode_select")[0]
 	};
-	// relelems.advanced = {
-	// 	content: el.getElementsByClassName("relation_advanced_content")[0],
-	// 	button: el.getElementsByClassName("relation_advanced_button")[0],
-	// };
 	return el;
 }
 

@@ -81,7 +81,7 @@ function initDefaultVueInstance() {
       copyURL: function () { this.$copyText(window.location.href).then(()=>{ showSnack(true, 'Success! Link copied') }, ()=>{ showSnack(false) }); },
       copyCode: function () { this.$copyText(code.textContent).then(()=>{ showSnack(true, 'Success! Code copied') }, ()=>{ showSnack(false) }); },
       changeCodeEditMode: function () { this.codeEditModeDisabled = !this.codeEditModeDisabled },
-      openPage: function () { softPageSwitch(this.pages.active) }
+      openPage: function (page) { softPageSwitch(page ? page : this.pages.active) }
     },
     mounted: function () {
       this.$nextTick(function () {
