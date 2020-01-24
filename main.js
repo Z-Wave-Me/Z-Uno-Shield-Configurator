@@ -33,19 +33,7 @@ function initDefaultVueInstance() {
           current: null,
           title: {
             0: 'Sketch',
-            1: 'Enclosure',
-            3: 'ADC0 / 0-10V / PWM0',
-            4: 'ADC1',
-            5: 'ADC2',
-            6: 'ADC3',
-            7: '7, RS-A',
-            8: '8, RS-B',
-            11: '11, OneWire',
-            12: '12',
-            13: 'PWM1',
-            14: 'PWM2',
-            15: 'PWM3',
-            16: 'PWM4'
+            1: 'Enclosure'
           },
           content: {
             0: 'Copy the sketch below and use Arduino IDE to burn it in your Z-Uno',
@@ -84,7 +72,7 @@ function initDefaultVueInstance() {
       copyURL: function () { this.$copyText(window.location.href).then(()=>{ showSnack(true, 'Success! Link copied') }, ()=>{ showSnack(false) }); },
       copyCode: function () { this.$copyText(code.textContent).then(()=>{ showSnack(true, 'Success! Code copied') }, ()=>{ showSnack(false) }); },
       changeCodeEditMode: function () { this.codeEditModeDisabled = !this.codeEditModeDisabled },
-      openPage: function (page) { softPageSwitch(page ? page : this.pages.active) }
+      openPage: function (page) { if (this.pages.active === 2) updateTabs(); softPageSwitch(page ? page : this.pages.active); }
     },
     mounted: function () {
       this.$nextTick(function () {

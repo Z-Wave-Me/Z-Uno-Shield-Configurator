@@ -658,15 +658,6 @@ function updateRelations() {
     }
 }
 
-
-// function openPage(ev) {
-//     var target = ev ? ev.target.value : event.srcElement;
-//     debugger
-//     // обновляем вкладки пошагового руководства
-//     // if (target == 2) createManualPages();
-//     // аккуратно скрываем страницы что бы не сбросить svg
-//     softPageSwitch(target);
-// }
 function softPageSwitch(open) {
     // обновляем вкладки пошагового руководства
     // аккуратно скрываем страницы что бы не сбросить svg
@@ -691,48 +682,21 @@ function softPageSwitch(open) {
     }
 }
 
-function openTab(ev) {
-    // Tabcontrol part
-    var i, target, tabcontent, tablinks;
-    target = 'manual_tab_' + ev.target.value;
-
-    tabcontent = htmlCEl("manual_tab");
-    for (i = 0; i < tabcontent.length; i++)
-        tabcontent[i].style.display = "none";
-
-    tablinks = htmlCEl("manual_tablink");
-    for (i = 0; i < tablinks.length; i++)
-        tablinks[i].classList.remove('manual_active');
-
-    htmlEl(target).style.display = "flex";
-    ev.srcElement.classList.add('manual_active');
-
-    // SVG display part
-    var currentTarget = parseInt(target);
-    if (currentTarget > 1) {
-        var deviceType = getDeviceType(currentTarget);
-
-        svgdGen(-1, null, false);
-        svgdGen(currentTarget, deviceType, true);
-    } else {
-        svgdGen(-1, null, false);
-    }
+function manualTabHandle() {
+    // cat(this.vue.manual_tablinks.current)
+    var pin = event.target.getAttribute("pin")
+    if (pin < 3) return;
+    
+    svgdGen(-1, null, false);
+    svgdGen(pin, getDeviceType(pin), true);
 }
 
 function connectDoorlockButton(id, isConnect) {
-    if (isConnect) {
-        svgEl('leg_' + id + 'b_doorlock', 'obj_2').style.display = 'block';
-    } else if (!isConnect) {
-        svgEl('leg_' + id + 'b_doorlock', 'obj_2').style.display = 'none';
-    }
+    svgEl('leg_' + id + 'b_doorlock', 'obj_2').style.display = isConnect ? 'block':'none';
 }
 
 function connectAmplifier(isConnect) {
-    if (isConnect) {
-        svgEl('layer5', 'obj_2').style.display = "block";
-    } else if (!isConnect) {
-        svgEl('layer5', 'obj_2').style.display = "none";  
-    }
+    svgEl('layer5', 'obj_2').style.display = isConnect ? "block":"none";
 }
 
 function getDeviceType(i) {
@@ -1050,233 +1014,33 @@ function svgdGen(pinNum, deviceType, display) {
     svgEl('layer11', 'obj_2').style.display = anyDevice ? "block" : "none";
 }
 
-// Issue with tabs for pin 3
-// Issue with tabs for pin 3
-function createManualPages() {
-    for (var i = 0; i <= 16; i++) {
-        if (i < 2) {
-            htmlEl('manual_tablink_' + i).onclick = openTab;
-            generateContentOfTab(i);
-            continue;
-        }
-        if (i == 9) i = 11;
-        try {   
-            if (pins[i]['type'] != 'NC') {
-                var pin_label = getPinLabelByNum(i);
-                if (!htmlEl('manual_tablink_' + i)) {
-                    var bu = document.createElement('button');
-                    bu.classList.add('manual_tablink');
-                    bu.id = 'manual_tablink_' + i;
-                    bu.onclick = openTab;
-                    bu.innerText = pin_label;
-                    htmlEl('manual_tablinks').appendChild(bu);
-                }
-                if (!htmlEl('manual_tab_' + i)) {
-                    var div = document.createElement('div');
-                    div.classList.add('manual_tab');
-                    div.id = 'manual_tab_' + i;
-                    htmlEl('manual_tabs').appendChild(div);
-                }
-                generateContentOfTab(i);
-            } else if (pins[i]['type'] == 'NC' && htmlEl('manual_tab_' + i)) {
-                htmlEl('manual_tablink_' + i).remove();
-                htmlEl('manual_tab_' + i).remove();
-            }
-        } catch(e) {  }
+
+var tabtitles = {
+    0: 'Sketch',
+    1: 'Enclosure',
+    3: 'ADC0 / 0-10V / PWM0',
+    4: 'ADC1',
+    5: 'ADC2',
+    6: 'ADC3',
+    7: '7, RS-A',
+    8: '8, RS-B',
+    11: '11, OneWire',
+    12: '12',
+    13: 'PWM1',
+    14: 'PWM2',
+    15: 'PWM3',
+    16: 'PWM4'
+}
+function updateTabs() {
+    for (var i = 3; i <= 16; i++) {
+        if (i === 9) i = 11;
+        try {
+            if (pins[i]['type'] !== 'NC')
+                Vue.set(this.vue.manual_tablinks.title, i, tabtitles[i]);
+            else
+                Vue.delete(this.vue.manual_tablinks.title, i);
+        } catch (e) {cat(e)}
     }
-}
-
-function getPinLabelByNum(i) {
-    switch(i) {
-        case 3:
-            return "ADC0 / 0-10V / PWM0"
-        case 4:
-            return "ADC1"
-        case 5:
-            return "ADC2"
-        case 6:
-            return "ADC3"
-        case 7:
-            return "7, RS-A"
-        case 8:
-            return "8, RS-B"
-        case 11:
-            return "11, One Wire"
-        case 12:
-            return "12"
-        case 13:
-            return "PWM1"
-        case 14:
-            return "PWM2"
-        case 15:
-            return "PWM3"
-        case 16:
-            return "PWM4"
-        default:
-            return i
-    }
-}
-
-function generateContentOfTab(i) {
-    if (i < 2) return;
-
-    var pin_label = getPinLabelByNum(i),
-        type = pins[i]['type'],
-        prms = function (parameter) { return pins[i]['params'][parameter]; },
-        content;
-
-    // Pressure
-    if (prms(4) == 'kPa')
-        createpinpage(i, 'step_pressure');
-    // Buttons
-    else if ((type == 'SensorBinary') && (prms(1) == 'general')) 
-        createpinpage(i, 'step_buttons');
-    // RS485
-    else if (type == 'RS485') 
-        createpinpage(i, 'step_RS485');
-    // UART
-    else if (type == 'UART') 
-        createpinpage(i, 'step_UART');
-    // Valve
-    else if (prms(1) == 'valve') 
-        createpinpage(i, 'step_valve');
-    // Siren
-    else if (prms(1) == 'siren') 
-        createpinpage(i, 'step_siren');
-    // THERMOSTAT
-    else if (prms(1) == "heatingThermostat" || prms(1) == "coolingThermostat") 
-        createpinpage(i, 'step_thermostat');
-    // DS18B20
-    else if (type == 'DS18B20')
-        createpinpage(i, 'step_DS18B20');
-    // DHT
-    else if (type == 'DHT')
-        createpinpage(i, 'step_DHT');
-    // Contactor
-    else if ((type == 'SwitchBinary') && (prms(1) == 'switch'))
-        createpinpage(i, 'step_contactor');
-    // Reed Sensor
-    else if ((type == 'SensorBinary') && (prms(1) == 'door'))       
-        createpinpage(i, 'step_reed');
-    // doorlock
-    else if ((type == 'SwitchBinary') && (prms(1) == 'doorlock'))
-        if (i >= 13 && i <= 16)
-            content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off manual_tablink"\
-                                                onclick="event, connectDoorlockButton('+ i +', false)">\
-                                                Without button</button>\
-                                        <button class="manual_tablinks_on manual_tablink"\
-                                                onclick="event, connectDoorlockButton('+ i +', true)">\
-                                                With button</button>\
-                                    </div>\
-                                    <h3>Step for ' + pin_label + '</h3>\
-                                    <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_doorlock_button", i) + '</p>';
-        else
-            createpinpage(i, 'step_doorlock');
-            
-    // White LED
-    else if (prms(1) == 'single')
-        content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off manual_tablink"\
-                                                onclick="event, connectAmplifier(false)">\
-                                                Without amplifier</button>\
-                                        <button class="manual_tablinks_on manual_tablink"\
-                                                onclick="event, connectAmplifier(true)">\
-                                                With amplifier</button>\
-                                     </div>\
-                                     <h3>Step for ' + pin_label + '</h3>\
-                                     <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_white_led", i) + '</p>';
-    // RGB LED strip
-    else if (type == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white')
-        content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off manual_tablink"\
-                                                onclick="event, connectAmplifier(false)">\
-                                                Without amplifier</button>\
-                                        <button class="manual_tablinks_on manual_tablink"\
-                                                onclick="event, connectAmplifier(true)">\
-                                                With amplifier</button>\
-                                     </div>\
-                                     <h3>Step for ' + pin_label + '</h3>\
-                                     <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_rgb_led", i) + '</p>';
-    // RGBW LED strip
-    else if (type == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white')
-        content = '<div class="manual_type_select">\
-                                        <button class="manual_tablinks_off manual_tablink"\
-                                                onclick="event, connectAmplifier(false)">\
-                                                Without amplifier</button>\
-                                        <button class="manual_tablinks_on manual_tablink"\
-                                                onclick="event, connectAmplifier(true)">\
-                                                With amplifier</button>\
-                                     </div>\
-                                     <h3>Step for ' + pin_label + '</h3>\
-                                     <p class="manual_step_p_'+ i +'">' + updatePagesContent("step_rgbw_led", i) + '</p>';
-    
-    if (content) htmlEl("manual_tab_" + i).innerHTML = content;
-}
-function createpinpage(i, name) {
-    var h = document.createElement('h3'),
-        p = document.createElement('p');
-    h.innerHTML = ' Step for ' + getPinLabelByNum(i);
-    p.innerHTML = updatePagesContent(name, i);
-    p.classList.add('manual_step_p_' + i);
-    htmlEl("manual_tab_" + i).innerHTML = h.outerHTML + p.outerHTML;
-}
-function updatePagesContent(page, pin) {
-    var res;
-
-    if (pin < 2)
-        return pagesContent[page]; 
-
-    var notes = ("\n" + generateCode(pins).notes + "\n").replace(/\n-([^\n]*)\n/g, '$&').split('\n').filter(function(v){return v.length > 0})
-    var note_pinnum = generateCode(pins).keys.split(',').indexOf(pin+"")
-
-    res = page in pagesContent ? pagesContent[page] : "";
-
-    if (notes[note_pinnum])
-        res += "<br><hr class='manual_note_hr'>" +
-               "<i>" + notes[note_pinnum] + "</i>";
-    return res;
-}
-
-pagesContent = {
-    'step_0': 'Copy the sketch below and use Arduino IDE to burn it in your Z-Uno',
-    'step_1': 'Insert Z-Uno in the Shield. Put the Shield in the DIN rail (pic. 1) or in the waterproof case (pic. 2)\
-                <table border="0"><tbody>\
-                    <tr>\
-                        <td>\
-                            <img src="/wa-data/public/photos/66/15/1566/1566.970.jpg" style="width: 100%;" alt="Z-Uno Shield in Sealed Case">\
-                        </td>\
-                        <td>\
-                            <img src="/wa-data/public/photos/65/15/1565/1565.970.jpg" style="width: 100%;" alt="Z-Uno Shield in DIN-rail case">\
-                        </td>\
-                    </tr>\
-                </tbody></table>',
-    'step_white_led': 'Include ground of single color strip.',
-    'step_rgb_led': 'Connect: <br>\tRed -> PWM4(pin16); <br>Green -> PWM3(pin15); <br>Blue -> PWM2(pin14).',
-    'step_rgbw_led': 'Connect: <br>\tRed -> PWM4(pin16); <br>Green -> PWM3(pin15); <br>Blue -> PWM2(pin14); <br>White -> PWM1(pin13).',
-    'step_buttons': 'Connect one side of button pins to GND and another to chosen pin.',
-    'step_DS18B20': 'Connect middle leg of DS18B20 to pin #11 and add power supply 3V',
-    'step_contactor': 'Connect logical pin of contactor to digital ouput',
-    'step_pressure': 'Connect pressure sensor',
-    'step_doorlock': 'Connect doorlocks.<br>\tConnection examples you can see on PWM pins.<br>\t',
-    'step_doorlock_button': 'Connect doorlocks.<br>\tConnection examples you can see on PWM pins.<br>\tIf you use button, don\'t forget select accordly radio-button above.',
-    'step_RS485': 'Connect RS485',
-    'step_UART': 'Connect UART',
-    'step_DHT': 'Connect DHT',
-    'step_siren': 'Connect siren',
-    'step_valve': 'Connect valve',
-    'step_thermostat': 'Follow instructions'
-};
-
-function collapseAction(event) {
-    this.classList.toggle("collapsible_active");
-    var content = this.nextElementSibling;
-    if (content.style.maxHeight)
-      content.style.maxHeight = null;
-    else
-      content.style.maxHeight = content.scrollHeight + "px";
- 
-    content.scrollIntoView({block: "center", behavior: "smooth"});
 }
 
 //Returns true if it is a DOM node

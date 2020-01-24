@@ -28,23 +28,12 @@ var pins_relationtypes = {};
 // elements wich forming relation - select, input etc
 var relelems = {};
 
-// follow add relation button
-// htmlEl("add_relation_button").onclick = eventHandler;
-
 function eventHandler() {
 	if (event.isTrusted) {
 		if (evscmp(/relation/, event))
 			relation = findParentRelation(event.srcElement);
 		// определяем вызывающий элемент по классу
 		switch (true) {
-			case evscmp(/collapsible/, event):
-				findRelationEl(relation);
-				if (evscmp(/relation_advanced_button/, event))
-					collapseRelationEl(event, relelems.advanced.content);
-				else
-					collapseAction(event);
-				break;
-
 			case evscmp(/relation_remove_button/, event):
 				// removeRelation(relation);
 				break;
@@ -80,15 +69,6 @@ function eventHandler() {
 				break;
 		}
 		updateCode(pins);
-	}
-}
-
-function collapseRelationEl(event, content) {
-	event.srcElement.classList.toggle("collapsible_active");
-	if (content.style.maxHeight) {
-		content.style.maxHeight = null;
-	} else {
-		content.style.maxHeight = content.scrollHeight + "px";
 	}
 }
 
@@ -371,7 +351,6 @@ function checkRelationsCorectness(_relation) {
 	Object.values(_relation).map( function(r) {
 		if (r.disabled) { r.el.classList.add("error__bordered") }
 		else { r.el.classList.remove("error__bordered") }
-		cat(r)  
 	});
 
 	return res;

@@ -73,7 +73,7 @@
           <v-toolbar dark>
             <v-toolbar-title>Z-Uno Shield Configurator</v-toolbar-title>
             <template v-slot:extension>
-              <v-tabs show-arrows background-color="transparent" v-model="pages.active" @change="openPage" mandatory>
+              <v-tabs v-model="pages.active" @change="openPage" background-color="transparent" slider-color="yellow" show-arrows mandatory>
                 <v-tab>Select peripherals</v-tab>
                 <v-tab>Define relations</v-tab>
                 <v-tab>Connect peripherals</v-tab>
@@ -1318,7 +1318,7 @@
             </v-alert> 
 
             <div id="relations" class="d-flex flex-wrap justify-center pa-4">
-              <v-card class="relation_hidden flex-column align-self-center ma-4 lighten-3">
+              <v-card class="relation_hidden flex-column align-self-center ma-4 pa-2 lighten-3">
                 <div class="d-flex justify-end">
                   <v-btn onclick="removeParentRelation(event.target)" height="2em" width="2em" small fab text>
                     <v-icon>mdi-close</v-icon>
@@ -1356,12 +1356,10 @@
                   Your browser do not support SVG
                 </object>
               </div>
-              <v-tabs v-model="manual_tablinks.current" center-active centred slider-color="yellow" show-arrows fixed-tabs dark>
-                <v-tab v-for="(title, pin) in manual_tablinks.title" :key="pin" :href="'#manual-' + pin" light link>
+              <v-tabs v-model="manual_tablinks.current" @change="this.manualTabHandle()" centred slider-color="yellow" show-arrows fixed-tabs dark>
+                <v-tab v-for="(title, pin) in manual_tablinks.title" :key="pin" :pin="pin" :href="'#manual-' + pin" light link>
                   {{ title }}
                 </v-tab>
-
-                <v-tabs-slider color="amber"></v-tabs-slider>
                 
                 <v-tabs-items v-model="manual_tablinks.current">
                   <v-tab-item v-for="(value, pin) in manual_tablinks.content" :key="pin" :value="'manual-' + pin">
