@@ -44,6 +44,7 @@
 
   #code { padding-left: 4em; background-color: #eee; white-space: break-spaces; }
 
+  .error__bordered {box-shadow: 0 0 6px #f00a; }
 
   .collapsible_content { display: none; }
   .fading_button { font-size: 1em; padding: 1em 1.5em; text-align: center; opacity: 0.6; transition: 0.3s; text-decoration: none; cursor: pointer; }
@@ -1312,13 +1313,17 @@
           </v-card>
 
           <v-card id="settings_row_relations" class="page">
+            <v-alert v-model="relation.alert" type="warning" transition="scale-transition" dense outlined colored-border dismissible>
+              To use relation, you should fill out each condition
+            </v-alert> 
+
             <div id="relations" class="d-flex flex-wrap justify-center pa-4">
-              <v-card class="relation_hidden flex-column align-self-center ma-4">
-                <v-card-actions class="d-flex justify-end">
-                  <v-btn class="red lighten-1" onclick="removeParentRelation(event.target)" absolute small>
-                    <v-icon>mdi-minus</v-icon>
+              <v-card class="relation_hidden flex-column align-self-center ma-4 lighten-3">
+                <div class="d-flex justify-end">
+                  <v-btn onclick="removeParentRelation(event.target)" height="2em" width="2em" small fab text>
+                    <v-icon>mdi-close</v-icon>
                   </v-btn>
-                </v-card-actions>
+                </div>
                 
                 <p class="font-italic font-weight-light ma-2 mb-0">if</p>
                 <select class="relation_sensor_select">
@@ -1328,7 +1333,6 @@
                 <select class="relation_dht_select"></select>
                 <select class="relation_condition_select"></select>
                 <input type="text" class="relation_conditionvalue_input relation_input" value="value">
-
                 <p class="font-italic font-weight-light mx-2 mb-0 my-auto">then</p>
                 <select class="relation_device_select">
                   <option value="default_state">device</option>

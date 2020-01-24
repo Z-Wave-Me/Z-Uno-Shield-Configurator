@@ -367,6 +367,12 @@ function checkRelationsCorectness(_relation) {
 		
 		return r.disabled = true;
 	});
-	cat(res)
+	
+	Object.values(_relation).map( function(r) {
+		if (r.disabled) { r.el.classList.add("error__bordered") }
+		else { r.el.classList.remove("error__bordered") }
+		cat(r)  
+	});
+
 	return res;
 }

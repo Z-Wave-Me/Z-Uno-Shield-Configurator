@@ -64,6 +64,9 @@ function initDefaultVueInstance() {
             16: 'PWM4'
           }
         },
+        relation: {
+          alert: true,
+        },
         code: {
           display: false,          
           editable: false,
