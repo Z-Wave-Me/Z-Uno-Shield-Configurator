@@ -63,6 +63,8 @@ function setPinSettings(pin, group, type) {
         if (parseInt(index) != index) return; // unstrict == to allow "number"
         pins[pin].params[paramObjs[index].id.replace(/^(.*)_param_/,"")] = paramObjs[index].value;
     });
+    
+    Object.assign(this.vue.pins, { selected: Object.keys(pins).map(function(i) { if(pins[i].type !== "NC") return i}).filter( (e) => e !== undefined) });
 }
 
 function updateParams() {
@@ -584,8 +586,6 @@ function loadConfiguration() {
         htmlEl('pin12_NC').click();
     }
 
-    addRelation();
-
     Object.defineProperty(pins, "isReadyToCode", {
         enumerable: false,
         writable: true
@@ -643,18 +643,6 @@ function updateCode() {
         var ret = generateCode(pins);
         Vue.set(this.vue.code, 'text', ret.code);
         // htmlEl('code').innerHTML = ret.code;
-    }
-}
-function updateRelations() {
-    // prevent early call before pins obj are fully collected
-    if (pins.isReadyToCode == true) {
-        // compare to prevent bug with relation reseting 
-        if (JSON.stringify(old_pins) !== JSON.stringify(pins)) {
-            old_pins = pins;
-            var rels = htmlCEl('relation');
-            for (var i = 0; i < rels.length; i++)
-                loadRelationContent(rels[i]);
-        }
     }
 }
 

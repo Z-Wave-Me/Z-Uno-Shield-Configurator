@@ -13550,8 +13550,7 @@ html [type=button],
   /* Correct the inability to style clickable types in iOS */
 }
 
-button,
-select {
+button{
   text-transform: none;
   /* Firefox 40+, Internet Explorer 11- */
 }
@@ -13559,7 +13558,6 @@ select {
 /* Remove the default button styling in all browsers */
 button,
 input,
-select,
 textarea {
   background-color: transparent;
   border-style: none;
@@ -13567,23 +13565,6 @@ textarea {
 }
 
 /* Style select like a standard input */
-select {
-  -moz-appearance: none;
-  /* Firefox 36+ */
-  -webkit-appearance: none;
-  /* Chrome 41+ */
-}
-
-select::-ms-expand {
-  display: none;
-  /* Internet Explorer 11+ */
-}
-
-select::-ms-value {
-  color: currentColor;
-  /* Internet Explorer 11+ */
-}
-
 legend {
   border: 0;
   /* Correct `color` not being inherited in IE 8/9/10/11 */

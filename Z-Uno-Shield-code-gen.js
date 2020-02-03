@@ -584,7 +584,6 @@ function templatesToRelations(templates) {
             var sensor_pin = extractPinFromOption(relelems.sensor.select),
                 device_pin = extractPinFromOption(relelems.device.select);
 
-
             _relation[i] = {
                 'sensor_sb': {
                     'value': relelems.sensor.select.value,
@@ -605,7 +604,7 @@ function templatesToRelations(templates) {
                 'el': relation[i],
                 'disabled': true,
                 'length': i
-            };
+            }
         }
 
         if (checkRelationsCorectness(_relation))
@@ -681,7 +680,7 @@ var r_params = [];
 var relationCodeTemplates = {
     "SensorBinary_SwitchBinary": {
         // s - sensor, m - mode, 
-        "rloop":"  if (SSS ? PPP1PPP : PPP2PPP) {\n" +
+        "rloop":"  if (SSS == PPP1PPP) {\n" +
                 "    DDD = PPP3PPP;\n" +
                 "    digitalWrite(DXDXDX, DDD);\n" +
                 "  }",
@@ -706,7 +705,7 @@ var relationCodeTemplates = {
         }
     },
     "SensorBinary_SwitchMultilevel": {
-        "rloop":"  if (SSS ? PPP1PPP : PPP2PPP) {\n" +
+        "rloop":"  if (SSS == PPP1PPP) {\n" +
                 "    DDD = PPP3PPP;\n" +
                 "    analogWrite(DXDXDX, (word)DDD * 255 / 99);\n" +
                 "  }",

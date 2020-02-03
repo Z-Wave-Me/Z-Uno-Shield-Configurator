@@ -21,8 +21,6 @@ var dht_states = {
 	temperature: "Temperature",
 	humidity: "Humidity"
 };
-// TODO: arr to {src:val} 
-var default_state = ["Select sensor", "Select device"];
 // list with all selected pins and their types
 var pins_relationtypes = {};
 // elements wich forming relation - select, input etc
@@ -32,13 +30,9 @@ function eventHandler() {
 	if (event.isTrusted) {
 		if (evscmp(/relation/, event))
 			relation = findParentRelation(event.srcElement);
-		// определяем вызывающий элемент по классу
-		switch (true) {
-			case evscmp(/relation_remove_button/, event):
-				// removeRelation(relation);
-				break;
 
-			case evscmp(/relation_.*_input/, event) && (event.type == 'blur' || event.type == 'focus'):
+		switch (true) {
+			case evscmp(/relation_.*_input/, event) && ((event.type == 'blur') || (event.type == 'focus')):
 				findRelationEl(relation);
 				if (event.srcElement.value == 'value') {
 					event.srcElement.value = "";
@@ -52,9 +46,7 @@ function eventHandler() {
 				if (evscmp(/relation_swmul_input/, event) && event.srcElement.value != 'value' && event.srcElement.value != '') {
 					var val = relelems.device.input.value;
 					if (val != 'value' || val != '') {
-						// remove non digit chars
-						if (val.match(/\D/))
-							val = val.match(/[^\D]+/);
+						if (val.match(/\D/)) val = val.match(/[^\D]+/);
 						if (val > 99) relelems.device.input.value = 255;
 					}
 				}
@@ -63,11 +55,12 @@ function eventHandler() {
 				updateRelationDependencies();
 				break;
 
-			case evscmp(/relation_.*_select/, event) && event.type == "change":
+			case evscmp(/relation_.*_select/, event) && (event.type == "change"):
 				findRelationEl(findParentRelation(event.srcElement));
 				updateRelationDependencies();
 				break;
 		}
+
 		updateCode(pins);
 	}
 }
@@ -104,9 +97,6 @@ function pinsType2relationsType() {
 								pins_relationtypes.device[i] = pin_type;
 								break;
 							case "interface_types":
-								break;
-							default:
-								console.log('Unknown pin type: ' + pin_type);
 								break;
 						}
 			}
@@ -187,17 +177,12 @@ function updateRelationDependencies() {
 	
 	els.forEach(function(el, i) { if (i > 1) el.style.display = 'none'; });
 	// *default
-	if (sensor_sb.value.indexOf('default_state') > -1) {
-		condition_sb.style.display = 'none';
-		condition_input.style.display = 'none';
-		ds18b20_sb.style.display = 'none';
+	if (!sensor_sb.value) {
+		condition_sb.style.display = condition_input.style.display = ds18b20_sb.style.display = 'none';
 	// *binary
 	} else if (sensor_sb.value.indexOf('SensorBinary') > -1) {
 		for (var i = 0; i < condition_sb.options.length; i++)
-			if (i > 3)
-				condition_sb.options[i].style.display = 'block';
-			else
-				condition_sb.options[i].style.display = 'none';
+				condition_sb.options[i].style.display = i > 3 ? 'block':'none';
 
 		dht_sb.style.display = 'none';
 		ds18b20_sb.style.display = 'none';
@@ -208,21 +193,10 @@ function updateRelationDependencies() {
 	// *multilevel
 	} else {
 		for (var i = 0; i < condition_sb.options.length; i++)
-			if (i < 4)
-				condition_sb.options[i].style.display = 'block';
-			else
-				condition_sb.options[i].style.display = 'none';
+			condition_sb.options[i].style.display = i < 4 ? 'block':'none';
 
-		// elements
-		if (sensor_sb.selectedOptions[0].value == "DS18B20")
-			ds18b20_sb.style.display = 'block';
-		else
-			ds18b20_sb.style.display = 'none';
-
-		if (sensor_sb.selectedOptions[0].value == "DHT")
-			dht_sb.style.display = 'block';
-		else
-			dht_sb.style.display = 'none';
+		ds18b20_sb.style.display = sensor_sb.selectedOptions[0].value == "DS18B20" ? 'block':'none';
+		dht_sb.style.display = sensor_sb.selectedOptions[0].value == "DHT" ? 'block':'none';
 
 		condition_sb.style.display = 'block';
 		condition_input.style.display = 'block';
@@ -231,7 +205,7 @@ function updateRelationDependencies() {
 	}
 
 	// device -> mode 
-	if (device_sb.value.indexOf('default_state') > -1) {
+	if (!device_sb.value) {
 		mode_sb.style.display = "none";
 		device_input.style.display = "none";
 	} else if (device_sb.value.indexOf('SwitchBinary') > -1) {
@@ -251,37 +225,35 @@ function addRelation() {
 	loadRelationContent(relation);
 	// subcribe
 	var condition_input = relelems.condition.input,
-		device_input = relelems.device.input
-		// collapse_button = relelems.advanced.button,
-		// remove_button = relelems.local.remove;
-		// TODO: organize
-	// var els = [relelems.sensor.select, relelems.ds18b20.select]
+			device_input = relelems.device.input;
 
-	// remove_button.onclick = eventHandler;
-	// collapse_button.onclick = eventHandler;
 	device_input.onfocus = eventHandler;
 	device_input.onblur = eventHandler;
 	device_input.onchange = eventHandler;
 	condition_input.onfocus = eventHandler;
 	condition_input.onblur = eventHandler;
 	condition_input.onchange = eventHandler;
+
 	var relation_select = relation.getElementsByTagName('select');
 	for (var i = 0; i < relation_select.length; i++) {
 		relation_select[i].onchange = eventHandler;
 		relation_select[i].onclick = eventHandler;
 	}
 	relation.classList.replace('relation_hidden', 'relation');
+
+	Vue.set(this.vue.relation, 'count', htmlCEl('relation').length);
+}	
+
+function renewRelations() {
+	var DOM_rels = htmlCEl('relation');
+	for (i = DOM_rels.length; i > 0; i--)
+		DOM_rels[0].remove();
+
+	addRelation();
 }
 
-// function removeRelation(relation) {
-// 	relation.remove();
-// }
 
 // _____ // HELPERS \\ _____ \\
-function removeOptions(selectbox) {
-	for (var i = 0; i < selectbox.options.length; i++)
-		selectbox.options[i].remove();
-}
 function evscmp(regex, ev, selector) {
 	if (selector == 'id')
 		return !!regex.exec(ev.srcElement.id);
@@ -298,6 +270,7 @@ function findParentRelation(el) {
 }
 function removeParentRelation(el) {
 	findParentRelation(el).remove();
+	Vue.set(this.vue.relation, 'count', htmlCEl('relation').length);
 }
 
 function findRelationEl(el) {
@@ -347,11 +320,16 @@ function checkRelationsCorectness(_relation) {
 		
 		return r.disabled = true;
 	});
-	
-	Object.values(_relation).map( function(r) {
-		if (r.disabled) { r.el.classList.add("error__bordered") }
-		else { r.el.classList.remove("error__bordered") }
-	});
 
+	// shadow-box around relation and notification
+	Vue.set(this.vue.relation,'alert',false)
+	Object.values(_relation).map( function(r) {
+		if (r.disabled && (r.sensor_sb.value || r.device_sb.value)) {
+			r.el.classList.add("error__bordered");
+			Vue.set(this.vue.relation,'alert',true);
+		} else 
+			r.el.classList.remove("error__bordered");
+	});
+	
 	return res;
 }

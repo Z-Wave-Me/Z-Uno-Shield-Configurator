@@ -53,12 +53,16 @@ function initDefaultVueInstance() {
           }
         },
         relation: {
-          alert: true,
+          alert: false,
+          count: null,
         },
         code: {
-          display: false,          
-          editable: false,
-          text: '// Please select features'
+          display: false,      
+          toolbar_color: 'success',
+          text: null
+        },
+        pins: {
+          selected: []
         },
         snackbar: {
           display: false,
@@ -72,13 +76,14 @@ function initDefaultVueInstance() {
       copyURL: function () { this.$copyText(window.location.href).then(()=>{ showSnack(true, 'Success! Link copied') }, ()=>{ showSnack(false) }); },
       copyCode: function () { this.$copyText(code.textContent).then(()=>{ showSnack(true, 'Success! Code copied') }, ()=>{ showSnack(false) }); },
       changeCodeEditMode: function () { this.codeEditModeDisabled = !this.codeEditModeDisabled },
-      openPage: function (page) { if (this.pages.active === 2) updateTabs(); softPageSwitch(page ? page : this.pages.active); }
+      openPage: function (page) { if ((this.pages.active === 1) && !this.relation.count) addRelation();  if (this.pages.active === 2) updateTabs(); softPageSwitch(page ? page : this.pages.active); },
+      clearRelations: function () {}
     },
     mounted: function () {
       this.$nextTick(function () {
         this.openPage();
       })
-    },
+    }
   });
 }
 
