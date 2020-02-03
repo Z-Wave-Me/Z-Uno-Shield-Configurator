@@ -68,7 +68,7 @@ function initDefaultVueInstance() {
           display: false,
           color: 'info',
         },
-        fab: null
+        radio: '1'
       }
     },
     methods: {
@@ -77,7 +77,14 @@ function initDefaultVueInstance() {
       copyCode: function () { this.$copyText(code.textContent).then(()=>{ showSnack(true, 'Success! Code copied') }, ()=>{ showSnack(false) }); },
       changeCodeEditMode: function () { this.codeEditModeDisabled = !this.codeEditModeDisabled },
       openPage: function (page) { if ((this.pages.active === 1) && !this.relation.count) addRelation();  if (this.pages.active === 2) updateTabs(); softPageSwitch(page ? page : this.pages.active); },
-      clearRelations: function () {}
+      downloadSketch: function () {
+        var a = window.document.createElement('a');
+        a.href = window.URL.createObjectURL(new Blob([('// ' + window.location.href + '\n' + this.code.text)]));
+        a.download = 'ShieldConfigurator.ino';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
     },
     mounted: function () {
       this.$nextTick(function () {
