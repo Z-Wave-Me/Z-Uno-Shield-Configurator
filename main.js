@@ -68,7 +68,6 @@ function initDefaultVueInstance() {
           display: false,
           color: 'info',
         },
-        radio: '1'
       }
     },
     methods: {

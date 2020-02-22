@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <title>Z-Uno Shield Configurator</title>
+  
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="/src/vuetify-v2.2.8.css">
-  <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+  <link rel="stylesheet" href="/src/vuetify-v2.2.14.css">
 
   <style type="text/css">
     /*  CMS(?) handler ignore all in {literal}. This means that the following code will be interpreted as is. */
     /* {literal} */
     #appcontent { max-width: 1264px; }
 
-    .page
 
     .hidden,
     .pin_default_disabled,
@@ -39,11 +39,12 @@
     #relations select {width: 100%;text-align-last: center;cursor: pointer;}
     .relation_remove_btn {border-bottom: none;border-radius: 5px 5px 0 0;}
 
-    #code {padding-left: 4em;background-color: #eee;white-space: break-spaces;}
+    #code { padding-left: 4em;background-color: #eee;white-space: break-spaces; }
 
     .error__bordered { box-shadow: 3px 3px 4px rgba(255, 0, 0, 0.4); }
     /* {/literal} */
   </style>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <script src="/Z-Uno-Shield-ui.js"></script>
@@ -52,15 +53,17 @@
 
   <!-- Vue always should be first. Here is  -->
   <script src="/src/vue.js"></script>
-  <script src="/src/vuetify-v2.2.8.js"></script>
+  <script src="/src/vuetify-v2.2.14.js"></script>
   <script src="/src/vue-clipboard.js"></script>
-  <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
 
   <script src="/main.js"></script>
 </head>
 
 <body>
   <div id="application">
+    <noscript>
+      <strong>We're sorry but configurator doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
     <v-app>
       <v-content>
         <v-container id="appcontent" class="mb-10">
@@ -1412,8 +1415,9 @@
 
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn v-on="on" @click="downloadSketch" outlined>
-                    <v-icon>mdi-download</v-icon>
+                  <v-btn class="ma-2 white--text" :disabled="!!pins.selected.length" @click="downloadSketch" color="blue-grey">
+                    Download
+                    <v-icon right dark>mdi-download</v-icon>
                   </v-btn>
                 </template>
                 <span>Download sketch for burning z-uno</span>
@@ -1454,5 +1458,4 @@
     </v-app>
   </div>
 </body>
-
 </html>

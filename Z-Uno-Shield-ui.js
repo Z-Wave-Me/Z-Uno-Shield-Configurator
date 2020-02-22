@@ -64,7 +64,10 @@ function setPinSettings(pin, group, type) {
         pins[pin].params[paramObjs[index].id.replace(/^(.*)_param_/,"")] = paramObjs[index].value;
     });
     
-    Object.assign(this.vue.pins, { selected: Object.keys(pins).map(function(i) { if(pins[i].type !== "NC") return i}).filter( (e) => e !== undefined) });
+    // add selected pins in reactive array 
+    Object.assign(this.vue.pins, { selected: Object.keys(pins).map(function(i) { 
+        if(pins[i].type !== "NC") return i;
+    }).filter( (e) => e !== undefined) });
 }
 
 function updateParams() {
