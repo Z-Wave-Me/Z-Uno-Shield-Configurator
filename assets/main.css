@@ -1,0 +1,28 @@
+#appcontent { max-width: 1264px; }
+
+.hidden,
+.pin_default_disabled,
+.relation_hidden,
+.relation_ds18b20_select,
+.relation_dht_select,
+.relation_mode_select,
+.relation_condition_select,
+.relation_conditionvalue_input,
+.relation_swmul_input { display: none; }
+
+.svg { width: 100%; height: 100%; }
+
+.settings { width:max-content; padding: 0.75em; padding-top: 0; margin: 0.5em; }
+.settings h3 { width: 100%; margin: 0.5em auto; text-decoration: underline; text-align: center; }
+.settings select { -moz-appearance: button; border: 1px solid #ccc;font-size: 16px; text-align-last: center; margin-left: 1em; width: -webkit-fill-available; width: -moz-available;}
+
+#pin3_disabled span, #pin3pwm_disabled span { color: red; }
+
+.relation {text-align: center;text-align: -webkit-center;}
+#relations input {width: 100%;margin: 8px 0;text-align-last: center;color: #bbb;font-size: 1.2em;cursor: auto;}
+#relations select {width: 100%;text-align-last: center;cursor: pointer;}
+.relation_remove_btn {border-bottom: none;border-radius: 5px 5px 0 0;}
+
+#code { padding-left: 4em;background-color: #eee;white-space: break-spaces; }
+
+.error__bordered { box-shadow: 3px 3px 4px rgba(255, 0, 0, 0.4); }

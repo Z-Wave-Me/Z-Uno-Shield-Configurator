@@ -1,33 +1,25 @@
-// Helpers
 function svgEl(id, obj) { 
     return document.getElementById(obj ? obj : 'obj').contentDocument.getElementById(id);
 }
-
 function htmlEl(id) {
     return document.getElementById(id);
 }
 function htmlCEl(cn) {
     return document.getElementsByClassName(cn);
 }
-
 function htmlElsEna(name, ena) {
-    document.getElementsByName(name).forEach(function(el) {
-        el.disabled = !ena;
-    });
+    document.getElementsByName(name).forEach( el => { el.disabled = !ena; });
 }
-
 function pinModesEls(prefix, func) {
-    document.querySelectorAll('[id^=' + prefix + '_]').forEach(function(el) { if (!el.id.match("param")) func(el); });
+    document.querySelectorAll('[id^=' + prefix + '_]').forEach(el => { if (!el.id.match("param")) func(el); });
 }
 
 // Saving settings
-
-var params = {};
 function updateSettings() {
     window.history.replaceState(null, null, 
         window.location.href.split('?')[0] + 
         '?' + 
-        Object.keys(params).map(function(key) { return key + '=' + params[key]; }).join('&')
+        Object.keys(params).map(key => key + '=' + params[key]).join('&')
     );
 }
 
@@ -53,9 +45,8 @@ function updateSetting(pin, group, mode) {
 function setPinSettings(pin, group, type) {
     if (!pins[pin]) pins[pin] = {};
     
-    if (type !== undefined && type !== null) {
+    if (type !== undefined && type !== null)
         pins[pin].type = type;
-    }
     
     paramObjs = document.querySelectorAll('[id^=' + group + '_param_]');
     pins[pin].params = {};
@@ -65,9 +56,10 @@ function setPinSettings(pin, group, type) {
     });
     
     // add selected pins in reactive array 
-    Object.assign(this.vue.pins, { selected: Object.keys(pins).map(function(i) { 
-        if(pins[i].type !== "NC") return i;
-    }).filter( (e) => e !== undefined) });
+    Object.assign(this.vue.pins, { 
+        selected: 
+          Object.keys(pins).map(i => { if (pins[i].type !== "NC") return i; }).filter( e => e !== undefined) 
+    });
 }
 
 function updateParams() {
@@ -101,9 +93,7 @@ function updateParamsUI(pin, group) {
             if (el.getAttribute('depend')) {
                 var hide = 1;
                 el.getAttribute('depend').split(',').forEach(function(dep) {
-                    if (htmlEl(dep.split('=')[0]).value === dep.split('=')[1]) {
-                        hide = 0;
-                    }
+                    if (htmlEl(dep.split('=')[0]).value === dep.split('=')[1]) hide = 0;
                 });
                 el.style.display = hide ? 'none' : 'inline';
             }
@@ -537,149 +527,12 @@ function jumersUART() {
     updateSetting(pin, group, mode);
     updateCode();
 }
-// Prototypes
-if (!NodeList.prototype.forEach) NodeList.prototype.forEach = Array.prototype.forEach;
 
-// TODO: [13]
-function loadConfiguration() {
-    // Attach handlers
-    document.querySelectorAll('[id*=_param_]').forEach(function(el) { el.onchange = updateParams; });
-    for (var n = 3; n <= 6; n++)
-        pinModesEls('pin' + n, function(el) { el.onclick = jumersADC; });
-    for (var n = 7; n <= 8; n++)
-        pinModesEls('pin' + n, function(el) { el.onclick = jumersUART;});
-    for (var n = 13; n <= 16; n++)
-        pinModesEls('pin' + n, function(el) { el.onclick = jumersPWM; });
-    pinModesEls('pin3pwm', function(el) { el.onclick = jumersPWM0; });
-    pinModesEls('pin11', function(el) { el.onclick = jumersOneWire; });
-    pinModesEls('pin12', function(el) { el.onclick = jumersGPIO; });
-    
-    if (window.location.href.split('?')[1]) {
-        window.location.href.split('?')[1].split('&').forEach(function(el) {
-            var radio = htmlEl(el.replace('=', '_')),
-                param = htmlEl(el.split('=')[0]),
-                paramVal = el.split('=')[1];
-            
-            if (radio && radio.type === "radio") {
-                // enable element to click on it and disable back if needed
-                var dis = radio.disabled;
-                radio.disabled = false;
-                radio.click();
-                radio.disabled = dis;
-            } else if (param && (param.type === "select-one" || param.type === "text")) {
-                param.value = paramVal;
-                param.onchange();
-            }
-        });
-    } else {
-        // All NC
-        for (n = 3; n <= 6; n++)
-            htmlEl('pin' + n + '_NC').click();
 
-        for (n = 13; n <= 16; n++)
-            htmlEl('pin' + n + '_NC').click();
-        
-        
-        htmlEl('pin3pwm_NC').click();
-        
-        htmlEl('pin7_NC').click();
-        htmlEl('pin8_NC').click();
-        
-        htmlEl('pin11_NC').click();
-        htmlEl('pin12_NC').click();
-    }
-
-    Object.defineProperty(pins, "isReadyToCode", {
-        enumerable: false,
-        writable: true
-    });
-    pins.isReadyToCode = true;
-    updateCode();
-    // htmlEl('code').textContent = 'sda';
-}
-
-// Default params
-
-defaultParams = {
-    'pin11_onewire_param_1': '1',
-
-    'pin11_dht_param_1': 'DHT11',
-    'pin12_dht_param_1': 'DHT11',
-
-    'pin3_ADC_i_3_param_1': '0',
-    'pin3_ADC_i_3_param_2': '100',
-    'pin3_ADC_i_5_param_1': '0',
-    'pin3_ADC_i_5_param_2': '100',
-    'pin3_ADC_i_12_param_1': '0',
-    'pin3_ADC_i_12_param_2': '100',
-
-    'pin4_ADC_i_3_param_1': '0',
-    'pin4_ADC_i_3_param_2': '100',
-    'pin4_ADC_i_5_param_1': '0',
-    'pin4_ADC_i_5_param_2': '100',
-    'pin4_ADC_i_12_param_1': '0',
-    'pin4_ADC_i_12_param_2': '100',
-
-    'pin5_ADC_i_3_param_1': '0',
-    'pin5_ADC_i_3_param_2': '100',
-    'pin5_ADC_i_5_param_1': '0',
-    'pin5_ADC_i_5_param_2': '100',
-    'pin5_ADC_i_12_param_1': '0',
-    'pin5_ADC_i_12_param_2': '100',
-
-    'pin6_ADC_i_3_param_1': '0',
-    'pin6_ADC_i_3_param_2': '100',
-    'pin6_ADC_i_5_param_1': '0',
-    'pin6_ADC_i_5_param_2': '100',
-    'pin6_ADC_i_12_param_1': '0',
-    'pin6_ADC_i_12_param_2': '100',
-    
-    'nc': ''
-};
-
-// Code generation
-var pins = {};
-var old_pins = {};
 
 function updateCode() {
-    if (pins.isReadyToCode) {
-        var ret = generateCode(pins);
-        Vue.set(this.vue.code, 'text', ret.code);
-        // htmlEl('code').innerHTML = ret.code;
-    }
-}
-
-function softPageSwitch(open) {
-    // обновляем вкладки пошагового руководства
-    // аккуратно скрываем страницы что бы не сбросить svg
-    var els = htmlCEl('page');
-    for (var i = 0; i < els.length; i++) {
-        var el = els[i];
-        if (i == open) {
-            el.style.overflow = null;
-            el.style.position = null;
-            el.style.opacity = 1;
-            el.style.width = null;
-            el.style.height = null;
-            el.style.top = null;
-        } else {
-            el.style.overflow = 'hidden';
-            el.style.position = 'absolute';
-            el.style.opacity = 0;
-            el.style.width = 0;
-            el.style.height = 0;
-            el.style.top = 0;
-        }
-    }
-}
-
-function manualTabHandle() {
-    // cat(this.vue.manual_tablinks.current)
-    var pin = event.target.getAttribute("pin")
-    if (pin < 3) return;
-    
-    svgdGen(-1, null, false);
-    svgdGen(pin, getDeviceType(pin), true);
+    if (pins.isReadyToCode)
+        Vue.set(this.vue.code, 'text', generateCode(pins).code);
 }
 
 function connectDoorlockButton(id, isConnect) {
@@ -712,8 +565,6 @@ function getDeviceType(i) {
 }
 
 function svgdGen(pinNum, deviceType, display) {
-    var anyDevice = false;
-
     // this arrays contains current selected legs for device. This will be helpful when we want hide layer of device
     var buttonLegs = [], 
         pressureLegs = [],
@@ -725,55 +576,42 @@ function svgdGen(pinNum, deviceType, display) {
         RGBWLED = [],
         doorLock = [];
     
-    if ((pinNum >= 3 && pinNum <=8) || (pinNum >= 11 && pinNum <= 16)) {
-        var mode = pins[pinNum]['type'],
-            pin  = 'pin' + pinNum;
+    if (pinNum in pins) {
+        var pin  = 'pin' + pinNum;
         var vmode = params[pin].split('_')[1];
-
+        
         // Dimmer 0-10V
-        if (pinNum == 3 && deviceType == "dimmer") {
-            if ((pins[3]['type'] == 'SwitchMultilevelPWM0') && display) {
-                svgEl('layer6', 'obj_2').style.display = "block";
-            }
-        } else {
-            svgEl('layer6', 'obj_2').style.display = "none";
-        }
+        if (['3'].includes(pinNum) &&
+              (deviceType == "dimmer") &&
+                (pins[3]['type'] == 'SwitchMultilevelPWM0') && display)
+                  svgEl('layer6', 'obj_2').style.display = "block";
 
         // RS485
-        if ((pinNum == 7 || pinNum == 8) && deviceType == "RS485") {
-            if ((pins[pinNum]['type'] == 'RS485') && display)
-                svgEl('layer18', 'obj_2').style.display = "block";
-        } else {
-            svgEl('layer18', 'obj_2').style.display = "none";
-        }
+        if (['7','8'].includes(pinNum) &&
+              (deviceType == "RS485") &&
+                (pins[pinNum]['type'] == "RS485") && display)
+                  svgEl('layer18', 'obj_2').style.display = "block";
 
         // UART
-        if ((pinNum == 7 || pinNum == 8) && deviceType == "UART") {
-            if ((pins[pinNum]['type'] == 'UART') && display)
-                svgEl('layer15', 'obj_2').style.display = "block";
-        } else {
-            svgEl('layer15', 'obj_2').style.display = "none";
-        }
+        if (['7','8'].includes(pinNum) && 
+              (deviceType == "UART") && 
+                (pins[pinNum]['type'] == 'UART') && display)
+                  svgEl('layer15', 'obj_2').style.display = "block";
         
-
         // DS18B20
-        if (pinNum == 11 && deviceType == "DS18B20") {
-            if ((pins[pinNum]['type'] == 'DS18B20') && display)
+        if (['11'].includes(pinNum) && 
+              (deviceType == "DS18B20") &&
+                (pins[pinNum]['type'] == 'DS18B20') && display)
                 svgEl('layer13', 'obj_2').style.display = "block";
-        } else {
-            svgEl('layer13', 'obj_2').style.display = "none";
-        }
+
 
         // DHT
-        if (pinNum == 11 || pinNum == 12 && (deviceType == "DHT11" || deviceType == "DHT22")) {
-            if ((pins[pinNum]['type'] == 'DHT') && display) {
+        // TODO: svg object for 11 leg doesn't exist
+        if (['11', '12'].includes(pinNum) && 
+            ["DHT11", "DHT22"].includes(deviceType) &&
+              (pins[pinNum]['type'] == 'DHT') && display) 
                 svgEl('layer14', 'obj_2').style.display = "block";
-                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 1;
-            } else if (pins[pinNum]['type'] != 'DHT') 
-                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 0;
-        } else {
-            svgEl('layer14', 'obj_2').style.display = "none";
-        }       
+
 
         // Pressure
         if (pinNum >= 3 && pinNum <= 6 && deviceType == "pressure") {
@@ -851,12 +689,12 @@ function svgdGen(pinNum, deviceType, display) {
                 contactorLegs.push(pinNum);
             }
 
-            for (i = 3; i <= 16; i++) {
-                if (i == 9) i = 11; // these pins can't be used
-                if (i == pinNum) continue;
-                if (i in contactorLegs) contactorLegs = -1;
-             
-                svgEl('leg_pin' + i + '_contactor', 'obj_2').style.display = 'none';
+            
+            for (var i in pins) {
+                if (i != pinNum) {
+                    contactorLegs.splice(contactorLegs.indexOf(i), '');
+                    svgEl('leg_pin' + i + '_contactor', 'obj_2').style.display = 'none';
+                }
             }
         }
 
@@ -956,107 +794,78 @@ function svgdGen(pinNum, deviceType, display) {
     // hide all layers if we get pinNum with -1 value
     } else if (pinNum == -1) { 
         for (var i = 1; i <= 20; i++) {
-            if (i == 10) i = 11; // z-uno + powersupply
-            if (i == 15) i = 17; // unexist
+            if (i == 16) i = 17; // unexist
             if (i == 19) i = 20; // jumpers
             svgEl('layer' + i, 'obj_2').style.display = 'none';
         }
     }
 
-    for (var i = 3; i <= 16; i++) {
-        if (i > 8 && i < 11) i = 11; 
-
-        // this try need to prevent early calling pins 
-        try { if (pins[i]['type'] != 'NC') anyDevice = true; } catch(e) { Error(e) }
-
-    }
-
     // hide if no one leg doesn't connected
-    if (buttonLegs.length == 0 || (deviceType == "general" && !display)) {
+    if (!buttonLegs.length || ((deviceType == "general") && !display))
         svgEl('layer7', 'obj_2').style.display = "none";
-    }
-    if (contactorLegs.length == 0 || (deviceType == "switch" && !display)) {
+
+    if (!contactorLegs.length || ((deviceType == "switch") && !display))
         svgEl('layer12', 'obj_2').style.display = "none";
-    }
-    if (reedSensor.length == 0 || (deviceType == "door" && !display)) {
+
+    if (!reedSensor.length || ((deviceType == "door") && !display))
         svgEl('layer9', 'obj_2').style.display = "none";
-    }
-    if (pressureLegs.length == 0 || (deviceType == "Pressure" && !display)) {
+
+    if (!pressureLegs.length || ((deviceType == "Pressure") && !display))
         svgEl('layer1', 'obj_2').style.display = "none";
-    }
-    if (doorLock.length == 0 || (deviceType == "doorlock" && !display)) {
+
+    if (!doorLock.length || ((deviceType == "doorlock") && !display))
         svgEl('layer20', 'obj_2').style.display = "none";
-    }
-    if (motionLegs.length == 0 || (deviceType == "motion" && !display)) {
+
+    if (!motionLegs.length || ((deviceType == "motion") && !display))
         svgEl('layer17', 'obj_2').style.display = "none";
-    }
 
 
-    if (!LED.length || (deviceType == "single" && !display)) 
+
+    if (!LED.length || ((deviceType == "single") && !display)) 
         svgEl('layer3', 'obj_2').style.display = "none";
 
-    if (!RGBLED.length || (deviceType == "RGBLED" && !display))
+    if (!RGBLED.length || ((deviceType == "RGBLED") && !display))
         svgEl("layer4", "obj_2").style.display = "none";
 
-    if (!RGBWLED.length || (deviceType == "RGBWLED" && !display))
+    if (!RGBWLED.length || ((deviceType == "RGBWLED") && !display))
         svgEl("layer8", "obj_2").style.display = "none";
 
+    // shield
+    svgEl('layer10', 'obj_2').style.display = vue.pins.selected ? "block" : "none";
     // power supply
-    svgEl('layer11', 'obj_2').style.display = anyDevice ? "block" : "none";
+    svgEl('layer11', 'obj_2').style.display = vue.pins.selected ? "block" : "none";
 }
 
+function softPageSwitch(open) {
+    show = { 
+        overflow: null, 
+        position: null,
+        opacity: 1,
+        height: "auto"
+    }
+    hide = {
+        overflow: "hidden", 
+        position: "absolute",
+        opacity: 0,
+        height: 0
+    }
 
-var tabtitles = {
-    0: 'Sketch',
-    1: 'Enclosure',
-    3: 'ADC0 / 0-10V / PWM0',
-    4: 'ADC1',
-    5: 'ADC2',
-    6: 'ADC3',
-    7: '7, RS-A',
-    8: '8, RS-B',
-    11: '11, OneWire',
-    12: '12',
-    13: 'PWM1',
-    14: 'PWM2',
-    15: 'PWM3',
-    16: 'PWM4'
+    var els = htmlCEl('page');
+    for (var i = 0; i < els.length; i++)
+        Object.assign(els[i].style, i == open ? show : hide);
+}
+
+function manualTabHandle() {
+    var pin = event.target.getAttribute("pin")
+    if (pin < 3) return;
+    
+    svgdGen(-1, null, false);
+    svgdGen(pin, getDeviceType(pin), true);
 }
 function updateTabs() {
-    for (var i = 3; i <= 16; i++) {
-        if (i === 9) i = 11;
-        try {
-            if (pins[i]['type'] !== 'NC')
-                Vue.set(this.vue.manual_tablinks.title, i, tabtitles[i]);
-            else
-                Vue.delete(this.vue.manual_tablinks.title, i);
-        } catch (e) {cat(e)}
-    }
+    for (var i in pins) 
+      if (pins[i]['type'] !== 'NC')
+        Vue.set(this.vue.manual_tablinks.title, i, tabtitles[i]);
+      else
+        Vue.delete(this.vue.manual_tablinks.title, i);
 }
-
-//Returns true if it is a DOM node
-function isNode(o){
-  return (
-    typeof Node === "object" ? o instanceof Node : 
-    o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
-  );
-}
-
-//Returns true if it is a DOM element    
-function isElement(o) {
-    return (
-        typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
-            o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName === "string"
-    );
-}
-
-  /**
-   * Quick object check - this is primarily used to tell
-   * Objects from primitive values when we know the value
-   * is a JSON-compliant type.
-   */
-  function isObject (obj) {
-    return obj !== null && typeof obj === 'object'
-  }
-  
-// Issue with ADC0 - don't work page creation for this pin after reload page
