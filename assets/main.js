@@ -4,7 +4,7 @@
  *   baa@z-wave.me
  * 
  */
-
+let lastAdded;
 var pins = {};
 var old_pins = {};
 var params = {};

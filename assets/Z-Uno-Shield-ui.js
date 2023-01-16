@@ -1,5 +1,8 @@
-function svgEl(id, obj) { 
-    return document.getElementById(obj ? obj : 'obj').contentDocument.getElementById(id);
+function svgEl(id, obj) {
+    if (obj) {
+        return document.getElementById(obj ? obj : 'obj').contentDocument.getElementById(id);
+    }
+    return {style: {opacity: 0}}
 }
 function htmlEl(id) {
     return document.getElementById(id);
@@ -21,6 +24,7 @@ function updateSettings() {
         '?' + 
         Object.keys(params).map(key => key + '=' + params[key]).join('&')
     );
+    updateTabs();
 }
 
 function updateSetting(pin, group, mode) {
@@ -33,22 +37,26 @@ function updateSetting(pin, group, mode) {
             delete params[key];
     });
     // save pin mode parameters
-    paramObjs = document.querySelectorAll('[id^=' + pin + '_' + mode + '_param_]');
-    Object.keys(paramObjs).map(function(index) {
-        if (parseInt(index) != index) return; // unstrict == to allow "number"
-        params[paramObjs[index].id] = paramObjs[index].value;
-    });
-    
+    const paramObjs = document.querySelectorAll('[id^=' + pin + '_' + mode + '_param_]');
+    paramObjs.forEach(item => {
+        params[item.id] = item.value;
+    })
     updateSettings();
+
 }
 
 function setPinSettings(pin, group, type) {
+    if (type && type !== 'NC') {
+        lastAdded = pin
+    } else {
+        lastAdded = undefined;
+    }
     if (!pins[pin]) pins[pin] = {};
     
     if (type !== undefined && type !== null)
         pins[pin].type = type;
     
-    paramObjs = document.querySelectorAll('[id^=' + group + '_param_]');
+    const paramObjs = document.querySelectorAll('[id^=' + group + '_param_]');
     pins[pin].params = {};
     Object.keys(paramObjs).map(function(index) {
         if (parseInt(index) != index) return; // unstrict == to allow "number"
@@ -566,7 +574,7 @@ function getDeviceType(i) {
 
 function svgdGen(pinNum, deviceType, display) {
     // this arrays contains current selected legs for device. This will be helpful when we want hide layer of device
-    var buttonLegs = [], 
+    var buttonLegs = [],
         pressureLegs = [],
         contactorLegs = [],
         motionLegs = [],
@@ -831,9 +839,9 @@ function svgdGen(pinNum, deviceType, display) {
         svgEl("layer8", "obj_2").style.display = "none";
 
     // shield
-    svgEl('layer10', 'obj_2').style.display = vue.pins.selected ? "block" : "none";
+    svgEl('layer10', 'obj_2').style.display = vue?.pins.selected ? "block" : "none";
     // power supply
-    svgEl('layer11', 'obj_2').style.display = vue.pins.selected ? "block" : "none";
+    svgEl('layer11', 'obj_2').style.display = vue?.pins.selected ? "block" : "none";
 }
 
 function softPageSwitch(open) {
@@ -855,17 +863,21 @@ function softPageSwitch(open) {
         Object.assign(els[i].style, i == open ? show : hide);
 }
 
-function manualTabHandle() {
-    var pin = event.target.getAttribute("pin")
-    if (pin < 3) return;
-    
+function manualTabHandle(event) {
+    const pin = event?.replace('manual-', '') ?? '0';
     svgdGen(-1, null, false);
+    if (pin < 3) return;
     svgdGen(pin, getDeviceType(pin), true);
 }
 function updateTabs() {
-    for (var i in pins) 
-      if (pins[i]['type'] !== 'NC')
-        Vue.set(this.vue.manual_tablinks.title, i, tabtitles[i]);
+    for (var i in pins)
+      if (pins[i]['type'] !== 'NC') {
+          Vue.set(this.vue.manual_tablinks.title, i, tabtitles[i]);
+      }
       else
         Vue.delete(this.vue.manual_tablinks.title, i);
+    if (lastAdded) {
+        this.vue.manual_tablinks.current = 'manual-' + lastAdded;
+        manualTabHandle(this.vue.manual_tablinks.current);
+    }
 }
