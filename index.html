@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Z-Uno Shield Configurator</title>
-
+  <script src="src/highlight.min.js"></script>
+  <link rel="stylesheet" href="/src/default.min.css">
+  <link rel="stylesheet"
+        href="/src/arduino-light.min.css">
+  <script src="/src/arduino.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="/src/vuetify-v2.2.14.min.css">
@@ -2667,7 +2671,10 @@
 
             <v-expand-transition>
               <div id="code" v-show="code.display">
-                <p class="py-8 overflow-y-auto">{{ code.text }}</p>
+                <pre v-highlightjs="code.text">
+                  <code class="arduino">
+                  </code>
+                </pre>
               </div>
             </v-expand-transition>
           </v-card>
