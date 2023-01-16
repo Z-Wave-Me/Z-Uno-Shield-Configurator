@@ -5,25 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Z-Uno Shield Configurator</title>
-  <script src="/src/highlight.min.js"></script>
-  <link rel="stylesheet" href="/src/default.min.css">
+  <script src="src/highlight.min.js"></script>
+  <link rel="stylesheet" href="src/default.min.css">
   <link rel="stylesheet"
-        href="/src/arduino-light.min.css">
-  <script src="/src/arduino.min.js"></script>
+        href="src/arduino-light.min.css">
+  <script src="src/arduino.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="/src/vuetify-v2.2.14.min.css">
-  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="stylesheet" href="src/vuetify-v2.2.14.min.css">
+  <link rel="stylesheet" href="assets/main.css">
 
-  <script src="/assets/Z-Uno-Shield-ui.js"></script>
-  <script src="/assets/Z-Uno-Shield-code-gen.js"></script>
-  <script src="/assets/Z-Uno-Shield-relations.js"></script>
-  
-  <script src="/src/vue.min.js"></script>
-  <script src="/src/vuetify-v2.2.14.min.js"></script>
-  <script src="/src/vue-clipboard.min.js"></script>
+  <script src="assets/Z-Uno-Shield-ui.js"></script>
+  <script src="assets/Z-Uno-Shield-code-gen.js"></script>
+  <script src="assets/Z-Uno-Shield-relations.js"></script>
 
-  <script src="/assets/main.js"></script>
+  <script src="src/vue.min.js"></script>
+  <script src="src/vuetify-v2.2.14.min.js"></script>
+  <script src="src/vue-clipboard.min.js"></script>
+
+  <script src="assets/main.js"></script>
 </head>
 
 <body>
@@ -66,13 +66,13 @@
               </v-tabs>
             </template>
           </v-toolbar>
-          
+
 
           <!--^ Page with settings  -->
           <v-card id="settings_row" class="page">
             <v-card-actions>
               <v-card-title>
-                Select preferred peripherals 
+                Select preferred peripherals
               </v-card-title>
             </v-card-actions>
 
@@ -270,7 +270,7 @@
             </v-row>
               <v-col class="d-flex flex-wrap my-auto">
               <div class="svg-container">
-                <object id="obj_2" class="svg" data="/assets/Z-Uno-Shield-Details.svg" onload="initconf()" type="image/svg+xml">
+                <object id="obj_2" class="svg" data="assets/Z-Uno-Shield-Details.svg" onload="initconf()" type="image/svg+xml">
                   Your browser do not support SVG
                 </object>
               </div>
@@ -1317,12 +1317,12 @@
               <!--^ SVG -->
 <!--              <v-col class="ma-auto" cols="auto" md="4">-->
 <!--                <div class="svg-container">-->
-<!--                  <object id="obj" class="svg" data="/assets/Z-Uno-Shield.svg" onload="initconf()" type="image/svg+xml">-->
+<!--                  <object id="obj" class="svg" data="assets/Z-Uno-Shield.svg" onload="initconf()" type="image/svg+xml">-->
 <!--                    Your browser do not support SVG-->
 <!--                  </object>-->
 <!--                </div>-->
 <!--              </v-col>-->
-              
+
               <!--^ settings -->
               <v-col class="d-flex flex-wrap justify-center my-auto">
                 <!--! PWM -->
@@ -2538,7 +2538,7 @@
           <v-card id="settings_row_relations" class="page">
             <v-card-actions>
               <v-card-title>
-                Define preferred relations with selected peripherals (optional) 
+                Define preferred relations with selected peripherals (optional)
               </v-card-title>
 
               <v-spacer></v-spacer>
@@ -2604,15 +2604,15 @@
           <v-card id="settings_row_connection" class="page">
             <v-card-actions>
               <v-card-title>
-                Use this tab to know how to assemble your device 
+                Use this tab to know how to assemble your device
               </v-card-title>
             </v-card-actions>
-  
+
             <v-divider></v-divider>
 
             <v-card-text>
               <div class="svg_container">
-                <object id="obj_3" class="svg" onload="initconf()" data="/assets/Z-Uno-Shield-Details.svg" type="image/svg+xml">
+                <object id="obj_3" class="svg" onload="initconf()" data="assets/Z-Uno-Shield-Details.svg" type="image/svg+xml">
                   Your browser do not support SVG
                 </object>
               </div>
