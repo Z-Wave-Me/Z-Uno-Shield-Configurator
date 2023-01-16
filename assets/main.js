@@ -201,7 +201,7 @@ function initDefaultVueInstance() {
             if (binding.value) {
               target.textContent = binding.value
             }
-            hljs.highlightBlock(target)
+            hljs.highlightElement(target)
           })
         }, componentUpdated: function (el, binding) {
           // after an update, re-fill the content and then highlight
@@ -209,7 +209,7 @@ function initDefaultVueInstance() {
           targets.forEach((target) => {
             if (binding.value) {
               target.textContent = binding.value
-              hljs.highlightBlock(target)
+              hljs.highlightElement(target)
             }
           })
         }
