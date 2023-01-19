@@ -2,15 +2,11 @@ var codeTemplates = {
     "SwitchBinary": {
         "note":     "PPP5PPP",
         "vars":     "byte pinXXXSwitchBinaryState = 0;",
-        "channel":  "  PPP1PPP(pinXXXSwitchBinaryGetter, pinXXXSwitchBinarySetter)",
+        "channel":  "  PPP1PPP(pinXXXSwitchBinaryState, NULL)",
         "setup":    "  pinMode(XXX, OUTPUT);",
-        "loop":     "  digitalWrite(XXX, pinXXXSwitchBinaryState ? PPP3PPP : PPP4PPP);",
-        "xetter":   "void pinXXXSwitchBinarySetter(byte value) {\n" +
-                    "  pinXXXSwitchBinaryState = value;\n" +
-                    "}\n\n" +
-                    "byte pinXXXSwitchBinaryGetter() {\n" +
-                    "  return pinXXXSwitchBinaryState;\n" +
-                    "}",
+        "loop":     "  // GPIOSwitchBinary@pinXXX process code\n"+
+                    "  digitalWrite(XXX, pinXXXSwitchBinaryState ? PPP3PPP : PPP4PPP);",
+        "xetter":   "",
         "preAction": function(params, pin) {
             switch(params[1]) { 
               case "switch":
@@ -39,42 +35,21 @@ var codeTemplates = {
     "Thermostat": {
         "note":     "- PPP10PPP",
         "vars":     "byte pinXXXThermostatModeState = 0;\n" +
-                    "signed int pinXXXThermostatTemperatureState = 0;\n" +
-                    "signed int pinXXXThermostatTemperatureCurrent = 0;",
+                    "int pinXXXThermostatTemperatureState = 0;\n" +
+                    "int pinXXXThermostatTemperatureCurrent = 0;",
         "channel":  "  ZUNO_THERMOSTAT(THERMOSTAT_FLAGS_OFF | THERMOSTAT_FLAGS_PPP5PPP, THERMOSTAT_UNITS_CELSIUS, THERMOSTAT_RANGE_POS, 4, pinXXXThermostatModeGetter, pinXXXThermostatModeSetter, pinXXXThermostatTemperatureGetter, pinXXXThermostatTemperatureSetter)",
-        "report": "  if (REPORT_TYPE() == CC_SENSOR_MULTILEVEL && REPORT_SENSOR_TYPE() == ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE) {\n" +
-                    "    signed int temp;\n" +
-                    "    \n" +
-                    "    switch (REPORT_SENSOR_VALUE_SIZE()) {\n" +
-                    "      case 1:\n" +
-                    "        temp = REPORT_VALUE_1B();\n" +
-                    "        break;\n" +
-                    "      case 2:\n" +
-                    "        temp = REPORT_VALUE_2B();\n" +
-                    "        break;\n" +
-                    "      case 4:\n" +
-                    "        temp = REPORT_VALUE_4B();\n" +
-                    "        break;\n" +
-                    "    }\n" +
-                    "    \n" +
-                    "    // convert to 0.1 units and to C\n" +
-                    "    if (REPORT_SENSOR_VALUE_PRECISION() == 0) {\n" +
-                    "      temp *= 10;\n" +
-                    "    }\n" +
-                    "    if (REPORT_SENSOR_SCALE() != SENSOR_MULTILEVEL_SCALE_CELSIUS) {\n" +
+        "report":   "  // External temperature sensor for thermostat @pinXXX processing\n"+
+                    "  if ( REPORT_SENSOR_MULTILEVEL_TYPE(report) == ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE) {\n" +
+                    "    int temp = int(REPORT_SENSOR_MULTILEVEL_VALUE(report) * 10);\n" +
+                    "    if (REPORT_SENSOR_MULTILEVEL_SCALE(report) != SENSOR_MULTILEVEL_SCALE_CELSIUS) {\n" +
+                    "      // Conversion from degrees Fahrenheit to degrees Celsius\n"+
                     "      temp = (temp - 32) * 5 / 9;\n" +
                     "    }\n" +
-                    "    if (REPORT_SENSOR_VALUE_PRECISION() == 2) {\n" +
-                    "      temp /= 10;\n" +
-                    "    }\n" +
-                    "    if (REPORT_SENSOR_VALUE_PRECISION() > 2) {\n" +
-                    "      return; // ignore bigger precision\n" +
-                    "    }\n" +
-                    "    \n" +
                     "    pinXXXThermostatTemperatureCurrent = temp;\n" +
                     "  }",
         "setup":    "  pinMode(XXX, OUTPUT);",
-        "loop":     "  if (pinXXXThermostatModeState) {PPP7PPP\n" +
+        "loop":     "  // Thermostat@pinXXX process code\n"+
+                    "  if (pinXXXThermostatModeState) {PPP7PPP\n" +
                     "    if (pinXXXThermostatTemperatureState < pinXXXThermostatTemperatureCurrent - PPP6PPP) {\n" +
                     "      digitalWrite(XXX, PPP8PPP);\n" +
                     "    }\n" +
@@ -113,7 +88,7 @@ var codeTemplates = {
                 }
             } else {
                 var ds18b20Num = parseInt(params[3].split("ds18b20_")[1]);
-                params[7] = "\n    pinXXXThermostatTemperatureCurrent = temperature[" + (ds18b20Num - 1) + "];"
+                params[7] = "\n    pinXXXThermostatTemperatureCurrent = temperature[" + (ds18b20Num - 1) + "]/10;"
                 params[10] = "You need to set up DS18B20 channel with at least " + ds18b20Num + " sensor" + (ds18b20Num > 1 ? "s" : "") + ".";
                 params.suppressReport = true;
             }
@@ -124,33 +99,34 @@ var codeTemplates = {
     "SwitchMultilevelPWM0": {
         "note":     "",
         "vars":     "byte pinXXXSwitchMultilevelState = 0, _pinXXXSwitchMultilevelState = 1;",
-        "channel":  "  ZUNO_SWITCH_MULTILEVEL(pinXXXSwitchMultilevelGetter, pinXXXSwitchMultilevelSetter)",
-        "setup":    "  pinMode(XXX, OUTPUT);\n  zunoFastPWMInit(0);",
-        "loop":     "  if (pinXXXSwitchMultilevelState != _pinXXXSwitchMultilevelState) {\n" +
+        "channel":  "  ZUNO_SWITCH_MULTILEVEL(pinXXXSwitchMultilevelState, NULL)",
+        "setup":    "",
+        "loop":     "  // 0-10V SwitchMultilevel@pinXXX process code\n"+
+                    "  if (pinXXXSwitchMultilevelState != _pinXXXSwitchMultilevelState) {\n" +
                     "    _pinXXXSwitchMultilevelState = pinXXXSwitchMultilevelState;\n" +
-                    "    zunoFastPWMSet(255 - pinXXXSwitchMultilevelState, pinXXXSwitchMultilevelState);\n" +
-                    "    zunoFastPWMEnable(0);\n" +
-                    "    zunoFastPWMEnable(1);\n" +
+                    "    shield.write0_10V(PPP2PPP, pinXXXSwitchMultilevelState);\n" +
                     "  }",
-        "xetter":   "void pinXXXSwitchMultilevelSetter(byte value) {\n" +
-                    "  pinXXXSwitchMultilevelState = value;\n" +
-                    "}\n\n" +
-                    "byte pinXXXSwitchMultilevelGetter() {\n" +
-                    "  return pinXXXSwitchMultilevelState;\n" +
-                    "}"
+        "preAction": function(params, pin, pins){
+                        params[2] = 0; //  (!) Fix it to right channel, pin is virtual number pin 
+                        params.enable0_10V = true;
+                        return params;
+                    },
+        "xetter":   ""
     },
     "SwitchMultilevel": {
         "note":     "- Make sure that output current do not exceed 5 A per channel or 15 A per all PWM1-4 pins",
         "vars":     "byte pinXXXSwitchMultilevelState = 0;",
-        "channel":  "  ZUNO_SWITCH_MULTILEVEL(pinXXXSwitchMultilevelGetter, pinXXXSwitchMultilevelSetter)",
-        "setup":    "  pinMode(XXX, OUTPUT);",
-        "loop":     "  analogWrite(XXX, (word)pinXXXSwitchMultilevelState * 255 / 99);",
-        "xetter":   "void pinXXXSwitchMultilevelSetter(byte value) {\n" +
-                    "  pinXXXSwitchMultilevelState = value;\n" +
-                    "}\n\n" +
-                    "byte pinXXXSwitchMultilevelGetter() {\n" +
-                    "  return pinXXXSwitchMultilevelState;\n" +
-                    "}",
+        "channel":  "  ZUNO_SWITCH_MULTILEVEL(pinXXXSwitchMultilevelState, NULL)",
+        "setup":    "",
+        "loop":     "  // PWM SwitchMultilevel@pinXXX process code\n"+
+                    "  shield.writePWMPercentage(PPP3PPP, pinXXXSwitchMultilevelState);",
+        "xetter":   "",
+        "pwm_map": "PPP2PPP",
+        "preAction": function(params, pin, pins){
+            params[3] = (pin - 13);
+            params[2] = ""+1 << (params[3]);
+            return params;
+        },
         "retemplate": function(params) {
             if (params[1] !== "single") return "SwitchColor";
             return;
@@ -161,7 +137,8 @@ var codeTemplates = {
         "vars":     "byte pinXXXSwitchMultilevelState = 0;",
         "channel":  "  ZUNO_SWITCH_COLOR(PPP2PPP, pinsSwitchColorGetter, pinsSwitchColorSetter)",
         "setup":    "  pinMode(XXX, OUTPUT);",
-        "loop":     "  analogWrite(XXX, pinXXXSwitchMultilevelState);",
+        "loop":     "  // PWM SwitchColor@pinXXXprocess code\n"+
+                    "  analogWriteResolution(8); analogWrite(XXX, pinXXXSwitchMultilevelState);",
         "xetter":   "void pinsSwitchColorSetter(byte color, byte value) {\n" +
                     "PPP3PPP\n" +
                     "}\n\n" +
@@ -208,16 +185,15 @@ var codeTemplates = {
     "SensorBinary": {
         "note":     "PPP5PPP",
         "vars":     "byte pinXXXSensorBinaryState;",
-        "channel":  "  ZUNO_SENSOR_BINARY(PPP1PPP, pinXXXSensorBinaryGetter)",
+        "channel":  "  ZUNO_SENSOR_BINARY(PPP1PPP, pinXXXSensorBinaryState)",
         "setup":    "  pinMode(XXX, PPP4PPP);\n  pinXXXSensorBinaryState = PPP2PPP!digitalRead(XXX);",
-        "loop":     "  byte _pinXXXSensorBinaryState = PPP2PPPdigitalRead(XXX);\n" +
+        "loop":     "  // GPIO SensorBinary@pinXXX process code\n"+
+                    "  byte _pinXXXSensorBinaryState = PPP2PPPdigitalRead(XXX);\n" +
                     "  if (pinXXXSensorBinaryState != _pinXXXSensorBinaryState) {\n" +
                     "    pinXXXSensorBinaryState = _pinXXXSensorBinaryState;\n" +
                     "    zunoSendReport(NNN);\n" +
                     "  }",
-        "xetter":   "byte pinXXXSensorBinaryGetter() {\n" +
-                    "  return pinXXXSensorBinaryState;\n" +
-                    "}",
+        "xetter":   "",
         "preAction": function(params) {
             params[1] = {
                 "general": "ZUNO_SENSOR_BINARY_TYPE_GENERAL_PURPOSE",
@@ -243,15 +219,18 @@ var codeTemplates = {
     },
     "SensorMultilevel": {
         "note":     "- Reports are sent every 30 seconds",
-        "vars":     "PPP5PPP pinXXXSensorMultilevelState;",
-        "channel":  "  ZUNO_SENSOR_MULTILEVEL(PPP4PPP, pinXXXSensorMultilevelGetter)",
-        "setup":    "  pinMode(XXX, INPUT);",
-        "loop":     "  pinXXXSensorMultilevelState = (PPP5PPP) (PPP1PPP * analogRead(XXX) / PPP2PPP) + PPP3PPP; // Math in integer numbers\n" +
-                    "  zunoSendReport(NNN); // report every 30 seconds",
-        "xetter":   "PPP5PPP pinXXXSensorMultilevelGetter() {\n" +
-                    "  return pinXXXSensorMultilevelState;\n" +
-                    "}",
-        "preAction": function(params) {
+        "vars":     "PPP5PPP pinXXXSensorMultilevelState=0, _pinXXXSensorMultilevelState=1; ",
+        "channel":  "  ZUNO_SENSOR_MULTILEVEL(PPP4PPP, pinXXXSensorMultilevelState)",
+        "setup":    "  shield.initADCChannel(PPP6PPP, PPP7PPP);",
+        "loop":     "  // ADC SensorMultilevel@pinXXX process code\n"+
+                    "  pinXXXSensorMultilevelState = (PPP5PPP) round(PPP1PPP * shield.readADCVoltage(PPP6PPP) + PPP3PPP);\n" +
+                    "  if(pinXXXSensorMultilevelState != _pinXXXSensorMultilevelState){\n"+
+                    "    _pinXXXSensorMultilevelState = pinXXXSensorMultilevelState;\n"+
+                    "    zunoSendReport(NNN); // report if value has changed\n"+
+                    "  }",
+                    
+        "xetter":   "",
+        "preAction": function(params, pin) {
             var precision = {
                 "percentage": 0,
                 "temperature": 1,
@@ -283,9 +262,9 @@ var codeTemplates = {
             }[params[4]];
             
             var voltage_offset = {
-                "3": 1023,
-                "5": 831,
-                "12": 862,
+                "3": 3.0,
+                "5": 5.0,
+                "12": 12.0,
             }[params[5]];
 
             var size_str = {
@@ -295,10 +274,16 @@ var codeTemplates = {
             }[size];
             
             var m = params[1] * Math.pow(10, precision), M = params[2] * Math.pow(10, precision);
-            var frac = floatToRatio((M - m) / voltage_offset, 64);
-            params[1] = frac[0];
-            params[2] = frac[1];
-            params[3] = Math.round(m);
+            //var frac = floatToRatio((M - m) / voltage_offset, 64);
+            params[1] = ((M-m)/voltage_offset).toFixed(5);
+            params[2] = 0;
+            params[3] = (m).toFixed(5);
+            params[6] = pin +"-A0";
+            params[7] =  {
+                "3": "SHIELD_ADC_JUMPER_IO3V",
+                "5": "SHIELD_ADC_JUMPER_I5V",
+                "12": "SHIELD_ADC_JUMPER_I12V",
+            }[params[5]];
             
             params[4] = {
                 "percentage": "ZUNO_SENSOR_MULTILEVEL_TYPE_GENERAL_PURPOSE_VALUE, SENSOR_MULTILEVEL_SCALE_PERCENTAGE_VALUE, " + size_str + ", " + precision_str,
@@ -326,22 +311,25 @@ var codeTemplates = {
         "includes": "#include \"ZUNO_DHT.h\"",
         "vars":     "DHT pinXXXDHT(XXX, PPP1PPP);\n" +
                     "\n" +
-                    "signed int pinXXXDHTTemperatureState;\n" +
-                    "byte pinXXXDHTHumidityState;",
-        "channel":  "  ZUNO_SENSOR_MULTILEVEL(ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE, SENSOR_MULTILEVEL_SCALE_CELSIUS, SENSOR_MULTILEVEL_SIZE_TWO_BYTES, SENSOR_MULTILEVEL_PRECISION_ONE_DECIMAL, pinXXXDHTTemperatureGetter),\n" +
-                    "  ZUNO_SENSOR_MULTILEVEL(ZUNO_SENSOR_MULTILEVEL_TYPE_RELATIVE_HUMIDITY, SENSOR_MULTILEVEL_SCALE_PERCENTAGE_VALUE, SENSOR_MULTILEVEL_SIZE_ONE_BYTE, SENSOR_MULTILEVEL_PRECISION_ZERO_DECIMALS, pinXXXDHTHumidityGetter)",
+                    "int pinXXXDHTTemperatureState;\n" +
+                    "word pinXXXDHTHumidityState;",
+        "channel":  "  ZUNO_SENSOR_MULTILEVEL(ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE, SENSOR_MULTILEVEL_SCALE_CELSIUS, SENSOR_MULTILEVEL_SIZE_TWO_BYTES, SENSOR_MULTILEVEL_PRECISION_ONE_DECIMAL, pinXXXDHTTemperatureState),\n" +
+                    "  ZUNO_SENSOR_MULTILEVEL(ZUNO_SENSOR_MULTILEVEL_TYPE_RELATIVE_HUMIDITY, SENSOR_MULTILEVEL_SCALE_PERCENTAGE_VALUE, SENSOR_MULTILEVEL_SIZE_TWO_BYTES, SENSOR_MULTILEVEL_PRECISION_ONE_DECIMAL, pinXXXDHTHumidityState)",
         "setup":    "  pinXXXDHT.begin();",
-        "loop":     "  pinXXXDHTTemperatureState = pinXXXDHT.readTemperatureC10();\n" +
-                    "  pinXXXDHTHumidityState = pinXXXDHT.readHumidity();\n" +
-                    "  zunoSendReport(NNN); // report every 30 seconds\n" +
-                    "  zunoSendReport(NNN + 1);",
-        "xetter":   "word pinXXXDHTTemperatureGetter() {\n" +
-                    "  return pinXXXDHTTemperatureState;\n" +
-                    "}\n" +
-                    "\n" +
-                    "byte pinXXXDHTHumidityGetter() {\n" +
-                    "  return pinXXXDHTHumidityState;\n" +
-                    "}",
+        "loop":     "  // DHT sensor (@pinXXX) read procedure\n"+
+                    "  int _pinXXXDHTTemperatureState = pinXXXDHT.readTemperatureC10();\n" +
+                    "  word _pinXXXDHTHumidityState = pinXXXDHT.readHumidityH10();\n" +
+                    "  if(abs(_pinXXXDHTTemperatureState-pinXXXDHTTemperatureState) > 2) {\n"+
+                    "    // the temperature has changed by at least 0.2*C\n"+
+                    "    pinXXXDHTTemperatureState = _pinXXXDHTTemperatureState;\n"+
+                    "    zunoSendReport(NNN);\n"+
+                    "  }\n" +
+                    "  if(abs(_pinXXXDHTHumidityState-pinXXXDHTHumidityState) > 10) {\n"+
+                    "    // the humidity has changed by at least 1%\n"+
+                    "    pinXXXDHTHumidityState = _pinXXXDHTHumidityState;\n"+
+                    "    zunoSendReport(NNN +1);\n"+
+                    "  }\n",
+        "xetter":   "",
         "preAction": function(params) {
             params.channels = 2;
             return params;
@@ -353,24 +341,29 @@ var codeTemplates = {
         "vars":     "OneWire ow(XXX);\n" +
                     "DS18B20Sensor ds18b20(&ow);\n" +
                     "\n" +
-                    "byte addresses[8 * PPP1PPP + 8]; // last one for search\n" +
+                    "byte addresses[8 * (PPP1PPP + 1)]; // last one for search\n" +
                     "byte number_of_sensors; // Number of sensors found (if less than PPP1PPP connected)\n" +
-                    "signed int temperature[PPP1PPP];",
+                    "int temperature[PPP1PPP];",
         "channel":  "PPP2PPP",
-        "setup":    "  number_of_sensors = ds18b20.findAllSensors(addresses);",
-        "loop":     "PPP3PPP",
-        "xetter":   "PPP4PPP",
+        "setup":    "  number_of_sensors = ds18b20.findAllSensors(addresses, PPP1PPP);",
+        "loop":     "  // DS18B20 sensors (@pinXXX) poll\n"+
+                    "  for(int ds_sen_i=0;ds_sen_i<number_of_sensors;ds_sen_i++){\n"+
+                    "    int current_temp = ds18b20.getTempC100(&addresses[ds_sen_i << 3]);\n"+
+                    "    if(abs(current_temp - temperature[ds_sen_i]) >= 10){ \n"+
+                    "      // the temperature has changed by at least 0.1*C\n"+
+                    "      temperature[ds_sen_i] = current_temp;\n"+
+                    "      zunoSendReport(NNN+ds_sen_i);\n"+
+                    "    }\n"+
+                    "  }",
+        "xetter":   "",
         "preAction": function(params) {
             params.channels = parseInt(params[1]);
-            var chDefs = [], codeDefs = [], getterDefs = [];
+            var chDefs = [];
             for (var n = 0; n < params.channels; n++) {
-                chDefs.push("  ZUNO_SENSOR_MULTILEVEL(ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE, SENSOR_MULTILEVEL_SCALE_CELSIUS, SENSOR_MULTILEVEL_SIZE_TWO_BYTES, SENSOR_MULTILEVEL_PRECISION_ONE_DECIMAL, pinXXXSensorDS18B20Getter_" + (n + 1) + ")");
-                codeDefs.push("  if (number_of_sensors >= " + (n + 1) + ") {\n    temperature[" + n + "] = ds18b20.getTempC100(&addresses[8 * " + n + "])/10;\n    zunoSendReport(NNN + " + n + ");\n  }");
-                getterDefs.push("word pinXXXSensorDS18B20Getter_" + (n + 1) + "() {\n  return temperature[" + n + "];\n}");
+                chDefs.push("  ZUNO_SENSOR_MULTILEVEL(ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE, SENSOR_MULTILEVEL_SCALE_CELSIUS, SENSOR_MULTILEVEL_SIZE_TWO_BYTES, SENSOR_MULTILEVEL_PRECISION_TWO_DECIMALS, temperature)");
             }
             params[2] = chDefs.join(",\n");
-            params[3] = codeDefs.join("\n");
-            params[4] = getterDefs.join("\n\n");
+            params[3] = "  for(int ds_sen_i=0;ds_sen_i<number_of_sensors;ds_sen_i){\n    int current_temp = ds18b20.getTempC100(&addresses[ds_sen_i << 3]);\n    if(current_temp != temperature[ds_sen_i]){\n      temperature[ds_sen_i]=current_temp;\n      zunoSendReport(NNN+ds_sen_i);\n    }\n  }"
             return params;
         }
     },
@@ -451,7 +444,7 @@ function pinsToTemplates(pins) {
             if (templName) templ = codeTemplates[templName];
         }
         if (templ.preAction) params = templ.preAction(params, key, pins); // apply pre action on params
-        
+        console.log(params);
         templates.push({
             "note": !params.suppressNote && detemplate(templ.note, key, channelNum, assocNum, params),
             "includes": !params.suppressIncludes && detemplate(templ.includes, key, channelNum, assocNum, params),
@@ -462,6 +455,8 @@ function pinsToTemplates(pins) {
             "loop": !params.suppressLoop && detemplate(templ.loop, key, channelNum, assocNum, params),
             "xetter": !params.suppressXetter && detemplate(templ.xetter, key, channelNum, assocNum, params),
             "funcs": !params.suppressFuncs && detemplate(templ.funcs, key, channelNum, assocNum, params),
+            "pwm_map": (templ.pwm_map != undefined) ? detemplate(templ.pwm_map, key, channelNum, assocNum, params) : "", 
+            "enable0_10V": params.enable0_10V ? params.enable0_10V : false,
             "key": key,
         });
         
@@ -523,8 +518,12 @@ function generateCode(pins) {
     var funcs = templates.map(function(ch) { return ch.funcs; } ).filter(function(value) { return !!value; }).join('\n\n');
     var notes = templates.map(function(ch) { return ch.note; } ).filter(function(value) { return !!value; }).join('\n\n');
     var keys = templates.map(function(ch) { if (ch.note) return ch.key; } ).filter(function(value) { return !!value; }).join(',');
- 
-    var rloop = _relation ? ('\n' + relations2code(_relation).map(function(ch) { return ch.rloop }).join('\n\n') +  "\n\n") : '';
+    var pwm_map = templates.map(function(ch) { return ch.pwm_map; } ).filter(function(value) { return !!value; }).join('|');
+    var enable0_10V = templates.reduce(function(prev, ch) { 
+        if (typeof prev != "boolean") {// variable is a boolean 
+            prev = (prev.enable0_10V == true)
+        }  return (prev) || (ch.enable0_10V == true) ; } )
+    var rloop = _relation ? ("  // Logical relations code\n" + relations2code(_relation).map(function(ch) { return ch.rloop }).join('\n\n') +  "\n\n") : '';
     
     if (!includes && !vars && !channels && !setup && !loop && !xetter && !notes && !funcs)
         return {
@@ -538,19 +537,23 @@ function generateCode(pins) {
 
     return {
         "code":
+            '\n#include "ZUNO_SHIELD.h" // Shield library'+ "\n\n" +
             (includes ? (includes + "\n\n") : "") +
             (vars ? ("// Global variables\n" + vars + "\n\n" ) : "") +
             (channels ? ("// Z-Wave channels\n" + "ZUNO_SETUP_CHANNELS(\n" + channels + "\n);\n\n"): "") +
-            (reports ? ("ZUNO_REPORTS_HANDLER(reportHandler);\n\n") : "") +
+            (reports ? ("// External SensorMultilevel reports handler \nZUNO_REPORTS_HANDLER(SensorMultilevel, reportSMLHandler);\n\n") : "") +
+            'ZUNOShield shield; // Shield object'+ "\n\n" +
             "void setup() {\n" +
+            (enable0_10V ? "  shield.init0_10V();\n" : "") +
+            (pwm_map ? "  shield.initPWM("+pwm_map+");\n" :"")+
               setup + "\n" +
             "}\n\n" +
             "void loop() {\n" +
-              loop + rloop +
-            "  delay(20);\n" +
+              loop + 
+              rloop +
             "}\n\n" +
             (xetter ? ("// Getters and setters\n" + xetter + "\n\n") : "") +
-            (reports ? ("void reportHandler(void) {\n" + reports + "\n}" + "\n\n") : "") +
+            (reports ? ("void reportSMLHandler(ReportAuxData_t * report) {\n" + reports + "\n}" + "\n\n") : "") +
             (funcs ? ("\n\n// Functions\n" + funcs + "\n\n") : ""),
         "notes": notes ? notes : "No notes",
         "keys": keys ? keys : "No keys"
@@ -631,7 +634,10 @@ function relations2code(_relation) {
         var __relation = _relation[index];
 
         // uncompleted relation
-        if (__relation.disabled) return;
+        if (__relation.disabled) {
+            console.log("*** (!)Relation incomplete type: " + __relation.sensor_sb.value + " device type: " + __relation.device_sb.value);
+            return;
+        }
         // rebuild relation with specific types 
         switch(true) {
             // DS18B20            
@@ -656,12 +662,12 @@ function relations2code(_relation) {
 
         var r_templ = relationCodeTemplates[__relation.sensor_sb.value + '_' + __relation.device_sb.value];
         if (!r_templ) {
-            console.log("Can not find relation code template for this.\nS: " + __relation.sensor_sb.value + "\nD: " + __relation.device_sb.value);
+            console.log("*** Can not find relation code template for this.\nS: " + __relation.sensor_sb.value + "\nD: " + __relation.device_sb.value);
             return;
         }
        
         r_params = r_templ.preAction(__relation);
-        
+        console.log("*** Relation sensor type: " + __relation.sensor_sb.value + " device type: " + __relation.device_sb.value);
 
         r_templates.push({
             "rloop": reldetemplate(r_templ.rloop, __relation, r_params)
