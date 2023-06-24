@@ -1,0 +1,34 @@
+
+<form [formGroup]="form" class="child-pin">
+  <mat-form-field appearance="fill" class="select">
+    <mat-select
+      formControlName="list"
+      class="select__display"
+      panelClass="select__item"
+    >
+      <mat-option *ngFor="let item of optionsList.options" [value]="item">{{item.title}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill" *ngIf="form.get('list')?.value?.withType" class="select">
+    <mat-select
+      formControlName="type"
+      class="select__display"
+      panelClass="select__item"
+    >
+      <mat-option value="normal" i18n>Normal</mat-option>
+      <mat-option value="inverted" i18n>Inverted</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill" *ngIf="form.get('list')?.value?.additionally as list" class="select">
+    <mat-select
+      formControlName="additionally"
+      class="select__display"
+      panelClass="select__item"
+    >
+      <mat-option *ngFor="let item of list" [value]="item.value">{{item.title}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div *ngIf="optionsList.key.endsWith('V')" class="inputs">
+    {{ optionsList.key}} <mat-icon>arrow_right_alt</mat-icon> <input value="0" class="short">-<input value="99" class="short">
+  </div>
+</form>

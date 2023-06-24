@@ -1,12 +1,16 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx"],
+  "plugins": ["@nrwl/nx"],
+  "env": {
+    "jest": true
+  },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": ["prettier"],
       "rules": {
-        "@nx/enforce-module-boundaries": [
+        "@nrwl/nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
@@ -18,24 +22,50 @@
               }
             ]
           }
-        ]
+        ],
+        "no-console": "warn",
+        "quotes": ["warn", "single"],
+        "padding-line-between-statements": [
+          "error",
+          { "blankLine": "always", "prev": "*", "next": "return" },
+          { "blankLine": "any",    "prev": ["const", "let", "var"], "next": ["const", "let", "var"] },
+          { "blankLine": "always", "prev": ["if", "for", "while", "do"], "next": "*" },
+          { "blankLine": "always", "prev": "*", "next": ["if", "for", "while", "do"] },
+          { "blankLine": "always", "prev": "*", "next": "return" }
+        ],
+        "curly": ["error", "all"]
       }
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nx/typescript"],
-      "rules": {}
+      "extends": ["plugin:@nrwl/nx/typescript"],
+      "rules": {
+        "@typescript-eslint/explicit-member-accessibility": ["error", {
+          "accessibility": "explicit",
+          "overrides": {
+            "accessors": "explicit",
+            "constructors": "no-public",
+            "methods": "explicit",
+            "properties": "explicit",
+            "parameterProperties": "explicit"
+          }
+        }],
+        "@typescript-eslint/explicit-function-return-type": ["error", {
+          "allowExpressions": true
+        }]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+        "operator-linebreak": ["error", "before"],
+        "comma-dangle": ["error", "always-multiline"]
+      }
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nx/javascript"],
-      "rules": {}
-    },
-    {
-      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
-      "env": {
-        "jest": true
-      },
+      "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     }
   ]

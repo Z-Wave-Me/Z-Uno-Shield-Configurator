@@ -1,0 +1,21 @@
+<configurator-header></configurator-header>
+<nav mat-tab-nav-bar backgroundColor="primary" [tabPanel]="tabPanel">
+  <div class="container"
+       [style.display]="'flex'"
+       [style.padding]="0"
+  >
+      <span mat-tab-link *ngFor="let link of links"
+            [style.flex-grow]="'unset'"
+            [routerLink]="link.path"
+            (click)="activeLink = link.path"
+            [active]="activeLink == link.path"> {{link.title}} </span>
+  </div>
+</nav>
+<mat-tab-nav-panel #tabPanel>
+  <div class="container">
+    <router-outlet></router-outlet>
+
+  </div>
+</mat-tab-nav-panel>
+
+<configurator-footer></configurator-footer>

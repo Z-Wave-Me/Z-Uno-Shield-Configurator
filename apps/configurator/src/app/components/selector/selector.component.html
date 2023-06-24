@@ -1,0 +1,17 @@
+<div class="row">
+  <configurator-pin-configurator
+    configuratorSelectable
+    *ngFor="let pin of pinList"
+    [options]="pin"
+    (click)="select(pin.id)"></configurator-pin-configurator>
+</div>
+<div>
+  <configurator-svg-shield></configurator-svg-shield>
+</div>
+<div class="row">
+  <configurator-pin-configurator
+    configuratorSelectable
+    *ngFor="let pin of pinList"
+    [options]="pin"
+    (click)="select(pin.id)"></configurator-pin-configurator>
+</div>

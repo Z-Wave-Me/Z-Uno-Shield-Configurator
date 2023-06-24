@@ -1,0 +1,37 @@
+<div class="container">
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title i18n>
+          Sketch code
+        </mat-panel-title>
+        <mat-panel-description>
+          <span></span>
+          <button
+            mat-icon-button
+            (click)="prevent($event)"
+            [configuratorSaveAsFile]="code"
+            i18n-matTooltip
+            matTooltip="Download configuration file"
+            i18n
+          >
+            <mat-icon>save</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="prevent($event)"
+            [cdkCopyToClipboard]="code"
+            i18n-matTooltip
+            matTooltip="Click to copy to clipboard"
+          >
+            <mat-icon>copy_all</mat-icon>
+          </button>
+        </mat-panel-description>
+
+      </mat-expansion-panel-header>
+      <pre style="white-space: pre-wrap;"><code [highlight]="code"></code></pre>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
