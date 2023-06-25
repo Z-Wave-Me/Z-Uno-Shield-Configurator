@@ -20,14 +20,17 @@
         <div class="button__title">
           {{ item.title }}
         </div>
-        <mat-icon>chevron_right</mat-icon>
+        <div class="arrow">
+          <mat-icon class="live-arrow">chevron_right</mat-icon>
+          <mat-icon class="live-arrow hide-arrow">chevron_right</mat-icon>
+        </div>
       </div>
     </button>
   </div>
   <div *ngIf="selected" class="options">
     <configurator-child-pin-configurator
       [optionsList]="selected"
-      (changePin)="test($event)"
+      (changePin)="changePin($event)"
     ></configurator-child-pin-configurator>
   </div>
 </div>

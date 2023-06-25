@@ -1,10 +1,21 @@
-import {ChangeDetectionStrategy, Component, HostBinding, Input} from '@angular/core';
-import {ChildPinConfigurator, PinConfigurator} from "../../shared/pin-configurator.interface";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
+import {ChildPinConfigurator, PinConfiguratorInput} from "../../shared/pin-configurator.interface";
+import { DeviceConfig, PinConfig, PinStateService } from '../../services/store/pin-state.service';
 
 interface Pin {
+  id: string;
   title: string;
   pin: {
-    withGround?: number; key: string; title: string; options: PinConfigurator[];
+    withGround?: number; key: string; title: string; options: PinConfiguratorInput[];
   }[]
 }
 
@@ -12,43 +23,64 @@ interface Pin {
   selector: 'configurator-pin-configurator',
   templateUrl: './pin-configurator.component.html',
   styleUrls: ['./pin-configurator.component.scss'],
-  host: {'class': 'mat-elevation-z8'},
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PinConfiguratorComponent {
-  private _options!: Pin
-  @Input() set options(options: Pin) {
-    console.log(options);
-    console.log(options);
+  private _options!: Pin;
+
+  @HostBinding('class.mat-elevation-z8')
+  private shadow = true;
+
+  @Input()
+  public set options(options: Pin) {
     const pin = options.pin.map((p) => {
       if (p.withGround) {
-        const replacedOptions = p.options.map(el => {
+        const replacedOptions = p.options.map((el) => {
           return {
-            ...el, additionally: [{
-              title: `${p.withGround} ` + $localize`V or ground`, value: p.withGround + 'V or ground'
-            }, {
-              title: $localize`Free or ground`, value: 'Free or ground'
-            }]
-          }
+            ...el,
+            additionally: [
+              {
+                title: `${p.withGround} ` + $localize`V or ground`,
+                value: p.withGround + 'V or ground',
+              },
+              {
+                title: $localize`Free or ground`,
+                value: 'Free or ground',
+              },
+            ],
+          };
         });
-        return {...p, options: replacedOptions};
+
+        return { ...p, options: replacedOptions };
       }
+
       return p;
     });
 
-    this._options = {...options, pin}
-
+    this._options = { ...options, pin };
   }
 
-  get options() {
+  public get options(): Pin {
     return this._options;
   }
 
-  selected?: {
-    withGround?: number; key: string; title: string; options: PinConfigurator[];
+  public selected?: {
+    withGround?: number;
+    key: string;
+    title: string;
+    options: PinConfiguratorInput[];
   };
 
-  test(event: ChildPinConfigurator) {
-    console.log(event);
+  constructor(
+    private readonly pinStateService: PinStateService,
+  ) {
+  }
+  public changePin(config: DeviceConfig): void {
+    this.pinStateService.patch({
+      id: this.options.id,
+      title: this.options.title,
+      device: config,
+      lockIds: [],
+    });
   }
 }

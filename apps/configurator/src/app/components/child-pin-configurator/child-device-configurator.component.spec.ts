@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChildPinConfiguratorComponent } from './child-pin-configurator.component';
+import { ChildDeviceConfiguratorComponent } from './child-device-configurator.component';
 
 describe('ChildPinConfiguratorComponent', () => {
-  let component: ChildPinConfiguratorComponent;
-  let fixture: ComponentFixture<ChildPinConfiguratorComponent>;
+  let component: ChildDeviceConfiguratorComponent;
+  let fixture: ComponentFixture<ChildDeviceConfiguratorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChildPinConfiguratorComponent ]
+      declarations: [ ChildDeviceConfiguratorComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ChildPinConfiguratorComponent);
+    fixture = TestBed.createComponent(ChildDeviceConfiguratorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,6 +1,5 @@
-import {ChildPinConfiguratorComponent} from "../components/child-pin-configurator/child-pin-configurator.component";
 
-export interface PinConfigurator {
+export interface PinConfiguratorInput {
   title: string;
   value: string | number;
   withType?: boolean;

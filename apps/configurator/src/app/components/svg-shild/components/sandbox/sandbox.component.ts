@@ -4,14 +4,15 @@ import {PinSelectedService} from "../../../../services/pin-selected/pin-selected
 @Component({
   selector: '[sandbox]',
   templateUrl: './sandbox.component.svg',
-  styleUrls: ['./sandbox.component.scss']
+  styleUrls: ['./sandbox.component.scss'],
 })
 export class SandboxComponent {
 
   constructor(private readonly pinSelectedService: PinSelectedService) {
   }
+
   doSomething() {
     console.log('do it');
-    this.pinSelectedService.select('PWM3');
+    // this.pinSelectedService.select({ id: 'PWM3' });
   }
 }

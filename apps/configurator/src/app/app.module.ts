@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutComponent } from './components/layout/layout.component';
-import { ChildPinConfiguratorComponent } from './components/child-pin-configurator/child-pin-configurator.component';
+import { ChildDeviceConfiguratorComponent } from './components/child-pin-configurator/child-device-configurator.component';
 import { TestComponent } from './components/test/test.component';
 import { SelectorComponent } from './components/selector/selector.component';
 import { PinConfiguratorComponent } from './components/pin-configurator/pin-configurator.component';
@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions } from '@angular/material/tooltip';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { MatButtonModule } from '@angular/material/button';
 
 const customTooltipDefaults: MatTooltipDefaultOptions = {
   showDelay: 1000, hideDelay: 1000, touchendHideDelay: 1000,
@@ -31,7 +32,7 @@ const customTooltipDefaults: MatTooltipDefaultOptions = {
     AppComponent,
 
     LayoutComponent,
-    ChildPinConfiguratorComponent,
+    ChildDeviceConfiguratorComponent,
     PinConfiguratorComponent,
     SelectorComponent,
     TestComponent,
@@ -54,6 +55,7 @@ const customTooltipDefaults: MatTooltipDefaultOptions = {
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MatButtonModule,
   ],
   providers: [
     {
@@ -61,12 +63,15 @@ const customTooltipDefaults: MatTooltipDefaultOptions = {
       useValue: customTooltipDefaults,
     },
     {
-      provide: HIGHLIGHT_OPTIONS, useValue: {
-        coreLibraryLoader: () => import('highlight.js/lib/core'), languages: {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
+        languages: {
           arduino: () => import('highlight.js/lib/languages/arduino'),
         },
       },
-    }],
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
