@@ -2,7 +2,7 @@
   <div class="title__main">
     <mat-icon
       *ngIf="selected"
-      (click)="selected = undefined"
+      (click)="remove()"
       [style.cursor]="'pointer'"
     >chevron_left</mat-icon>
     <span class="title">
@@ -30,6 +30,7 @@
   <div *ngIf="selected" class="options">
     <configurator-child-pin-configurator
       [optionsList]="selected"
+      [init]="init"
       (changePin)="changePin($event)"
     ></configurator-child-pin-configurator>
   </div>

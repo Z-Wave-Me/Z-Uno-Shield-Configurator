@@ -16,6 +16,10 @@ export const appRoutes: Route[] = [
         path: 'test',
         component: TestComponent,
       },
+      {
+        path: '**',
+        redirectTo: '',
+      },
     ],
   },
 ];

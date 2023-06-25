@@ -5,9 +5,12 @@
       [style.font-size.%]="120"
       i18n>Z-Uno Shield Configurator</span>
     <span class="spacer"></span>
-    <button mat-icon-button
+    <button
+      mat-icon-button
       i18n-matTooltip
-      matTooltip="Copy link to clipboard">
+      [cdkCopyToClipboard]="url"
+      matTooltip="Copy link to clipboard"
+    >
       <mat-icon>link</mat-icon>
     </button>
     <button
@@ -19,5 +22,4 @@
       <mat-icon>refresh</mat-icon>
     </button>
   </mat-toolbar-row>
-
 </mat-toolbar>

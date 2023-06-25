@@ -6,9 +6,10 @@
   >
       <span mat-tab-link *ngFor="let link of links"
             [style.flex-grow]="'unset'"
+            queryParamsHandling="merge"
             [routerLink]="link.path"
             (click)="activeLink = link.path"
-            [active]="activeLink == link.path"> {{link.title}} </span>
+            [active]="activeLink === link.path"> {{link.title}} </span>
   </div>
 </nav>
 <mat-tab-nav-panel #tabPanel>

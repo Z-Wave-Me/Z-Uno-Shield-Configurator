@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, take } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export enum ConnectionMode {
   Normal = 'normal',
@@ -18,8 +19,8 @@ export type DeviceConfig = {
 
 export type PinConfig = {
   id: string;
-  title: string;
   device?: DeviceConfig;
+  key?: string;
   lockIds?: string[];
 }
 
@@ -30,7 +31,19 @@ export type PinConfig = {
 })
 export class PinStateService {
   private readonly _state$ = new BehaviorSubject<PinConfig[]>([]);
-  constructor() { }
+  constructor(
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute,
+  ) {
+    this.activatedRoute.queryParams.pipe(
+      take(1),
+      filter(data => data['config']),
+      map(data => data['config']),
+    ).subscribe((config) => {
+      const data = JSON.parse(atob(decodeURIComponent(config)));
+      this._state$.next(data);
+    })
+  }
 
   public patch(pin: PinConfig): void {
     const value = this._state$.value;
@@ -41,18 +54,28 @@ export class PinStateService {
     }
 
     this._state$.next(updated);
-    console.warn(this._state$.value);
+    this.updateRoute();
   }
 
   public reset(): void{
     this._state$.next([]);
+    this.router.navigate([]);
   }
 
-  public get state(): PinConfig[] {
+  public get snapshot(): PinConfig[] {
     return this._state$.value;
   }
 
   public get state$(): Observable<PinConfig[]> {
     return this._state$.asObservable();
+  }
+
+  private updateRoute(): void {
+    const config = this.snapshot;
+    const configBase64 = btoa(JSON.stringify(config));
+    this.router.navigate([], {
+      queryParams: { config: configBase64 },
+      queryParamsHandling: 'merge',
+    });
   }
 }

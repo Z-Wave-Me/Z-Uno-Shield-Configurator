@@ -7,12 +7,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 export class PinSelectedService {
   private readonly store$ = new ReplaySubject<PinContainer>(1);
 
-  constructor() {
-
-  }
-
   public select(item: PinContainer): void {
-    console.log(item);
     this.store$.next(item);
   }
 
