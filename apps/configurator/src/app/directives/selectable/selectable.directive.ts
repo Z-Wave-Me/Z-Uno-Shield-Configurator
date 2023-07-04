@@ -24,7 +24,6 @@ export class SelectableDirective implements OnDestroy {
     ).subscribe(
       (pin) => this.currentPin = pin,
     )
-    console.log('=====>', this.options);
   }
 
 

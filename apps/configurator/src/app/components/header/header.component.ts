@@ -5,7 +5,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { NotificationService } from '../../services/notification/notification.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { PinStateService } from '../../services/store/pin-state.service';
+import { PinsStateService } from '../../services/store/pins-state.service';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @Component({
@@ -26,11 +26,11 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 export class HeaderComponent {
   constructor(
     private readonly notificationService: NotificationService,
-    private readonly pinStateService: PinStateService,
+    private readonly pinsStateService: PinsStateService,
   ) {}
 
   public reset(): void {
-    this.pinStateService.reset();
+    this.pinsStateService.reset();
     this.notificationService.show($localize`refreshed`);
   }
 

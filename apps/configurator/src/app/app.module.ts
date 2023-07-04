@@ -19,13 +19,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MAT_TOOLTIP_DEFAULT_OPTIONS, MatTooltipDefaultOptions } from '@angular/material/tooltip';
+import {
+  MAT_TOOLTIP_DEFAULT_OPTIONS,
+  MatTooltipDefaultOptions,
+} from '@angular/material/tooltip';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { MatButtonModule } from '@angular/material/button';
+import { RelationsComponent } from './components/relations/relations.component';
 
 const customTooltipDefaults: MatTooltipDefaultOptions = {
-  showDelay: 1000, hideDelay: 1000, touchendHideDelay: 1000,
-}
+  showDelay: 1000,
+  hideDelay: 1000,
+  touchendHideDelay: 1000,
+};
 
 @NgModule({
   declarations: [
@@ -36,6 +42,7 @@ const customTooltipDefaults: MatTooltipDefaultOptions = {
     PinConfiguratorComponent,
     SelectorComponent,
     TestComponent,
+    RelationsComponent,
   ],
   imports: [
     BrowserModule,

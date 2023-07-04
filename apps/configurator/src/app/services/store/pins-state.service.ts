@@ -8,18 +8,18 @@ export enum ConnectionMode {
 }
 
 export type DeviceConfig = {
-  title?: string;
-  id?: string | number;
-  additionally?: string | number | null | undefined;
-  type?: ConnectionMode | null,
+  title: string;
+  id: string | number;
+  additionally: string | number | null | undefined;
+  type: ConnectionMode | null,
   withGround?: number;
-  lowerBound?: number;
-  upperBound?: number;
+  lowerBound: number | null;
+  upperBound: number | null;
 }
 
 export type PinConfig = {
   id: string;
-  device?: DeviceConfig;
+  device?: Partial<DeviceConfig>;
   key?: string;
   lockIds?: string[];
 }
@@ -29,7 +29,7 @@ export type PinConfig = {
 @Injectable({
   providedIn: 'root',
 })
-export class PinStateService {
+export class PinsStateService {
   private readonly _state$ = new BehaviorSubject<PinConfig[]>([]);
   constructor(
     private readonly router: Router,
@@ -54,6 +54,9 @@ export class PinStateService {
     }
 
     this._state$.next(updated);
+    console.group('Store');
+    console.log(this.snapshot);
+    console.groupEnd();
     this.updateRoute();
   }
 

@@ -8,7 +8,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { PinConfiguratorInput } from '../../shared/pin-configurator.interface';
-import { DeviceConfig, PinStateService } from '../../services/store/pin-state.service';
+import { DeviceConfig, PinsStateService } from '../../services/store/pins-state.service';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
@@ -33,7 +33,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
   @HostBinding('class.mat-elevation-z8')
   private shadow = true;
 
-  public init?: DeviceConfig;
+  public init?: Partial<DeviceConfig>;
 
   @Input()
   public set options(options: Pin) {
@@ -77,7 +77,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private readonly pinStateService: PinStateService,
+    private readonly pinsStateService: PinsStateService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly changeDetectorRef: ChangeDetectorRef,
     ) {}
@@ -96,8 +96,8 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
-  public changePin(config: DeviceConfig): void {
-    this.pinStateService.patch({
+  public changePin(config: Partial<DeviceConfig>): void {
+    this.pinsStateService.patch({
       id: this.options.id,
       key: this.selected?.key,
       device: config,
@@ -107,14 +107,14 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
 
   public remove(): void {
     this.selected = undefined;
-    this.pinStateService.patch({
+    this.pinsStateService.patch({
       id: this.options.id,
       lockIds: [],
     });
   }
 
   private setDevice(): void {
-    const stored = this.pinStateService.snapshot.find(
+    const stored = this.pinsStateService.snapshot.find(
       ({ id }) => id === this.options.id,
     );
     this.selected = this.options.pin.find(({ key }) => stored?.key === key);

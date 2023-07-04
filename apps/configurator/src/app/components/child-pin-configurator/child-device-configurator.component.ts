@@ -10,14 +10,14 @@ import {
 import { PinConfiguratorInput } from '../../shared/pin-configurator.interface';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { ConnectionMode, DeviceConfig, PinStateService } from '../../services/store/pin-state.service';
+import { ConnectionMode, DeviceConfig, PinsStateService } from '../../services/store/pins-state.service';
 
 interface DeviceForm {
   list: FormControl<PinConfiguratorInput | null>;
   additionally: FormControl<string | number | null>;
   type: FormControl<ConnectionMode | null>;
-  lowerBound: FormControl<number>;
-  upperBound: FormControl<number>;
+  lowerBound: FormControl<number | null>;
+  upperBound: FormControl<number | null>;
 }
 
 @Component({
@@ -36,25 +36,26 @@ export class ChildDeviceConfiguratorComponent implements OnInit, OnDestroy {
     key: string;
     title: string;
     options: PinConfiguratorInput[];
+    map?: number;
   };
 
   @Input()
-  public init?: DeviceConfig;
+  public init?: Partial<DeviceConfig>;
 
   @Output()
-  public changePin = new EventEmitter<DeviceConfig>();
+  public changePin = new EventEmitter<Partial<DeviceConfig>>();
 
   public deviceForm: FormGroup<DeviceForm>;
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    public readonly pinStateService: PinStateService) {
+    ) {
     this.deviceForm = this.formBuilder.nonNullable.group<DeviceForm>({
       list: new FormControl<PinConfiguratorInput | null>(null),
       type: new FormControl<ConnectionMode | null>(null),
       additionally: new FormControl<string | null>(null),
-      lowerBound: new FormControl<number>(0, { nonNullable: true }),
-      upperBound: new FormControl<number>(99, { nonNullable: true }),
+      lowerBound: new FormControl<number | null>(null),
+      upperBound: new FormControl<number | null>(null),
     });
   }
 
@@ -95,8 +96,11 @@ export class ChildDeviceConfiguratorComponent implements OnInit, OnDestroy {
           });
         }
 
-        this.deviceForm.controls.lowerBound.patchValue(this.init?.lowerBound ?? 0);
-        this.deviceForm.controls.upperBound.patchValue(this.init?.upperBound ?? 99);
+        if (this.optionsList.map) {
+          this.deviceForm.controls.lowerBound.patchValue(this.init?.lowerBound ?? 0, { emitEvent: false });
+          this.deviceForm.controls.upperBound.patchValue(this.init?.upperBound ?? 99, { emitEvent: false });
+        }
+
       });
 
     const initList = this.optionsList.options.find(({ value}) => value === this.init?.id)

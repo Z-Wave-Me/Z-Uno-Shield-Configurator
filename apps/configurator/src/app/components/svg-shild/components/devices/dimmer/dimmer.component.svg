@@ -1,0 +1,197 @@
+<svg:g id="g58297" style="display:inline">
+  <svg:g id="layer3" style="display:inline" transform="translate(0 1360.63)">
+    <svg:g id="Board-0" style="display:inline" transform="rotate(-90 958.439 -1069.367) scale(11.49974)">
+      <svg:path id="Strip_1_-3" d="M-60.254 12.49H81.478v28.348H-60.254z" style="fill:#f4f4f4;stroke:#000;stroke-width:.25"/>
+    </svg:g>
+    <svg:g id="R3-9" transform="rotate(-90 981.438 -1046.368) scale(11.49974)">
+      <svg:path id="polygon15" d="m47.771 22.358-.344-.564-.005 9.978-6.775-.057.285.465h6.838z" style="opacity:.24"/>
+      <svg:path id="rect17" d="M41.099 20.295h5.818v11.948h-5.818z"/>
+      <svg:path id="path19" d="M41.099 31.743h5.818v.498h-.496V20.295h.496v.497h-5.818v-.497h.492v11.948h-.492zm-.5.499V19.798h6.812v12.941h-6.812z"/>
+      <svg:path id="rect21" d="M41.075 32.169h5.868v1.654h-5.868z" style="fill:gray"/>
+      <svg:path id="path23" d="M41.075 33.326h5.868v.498h-.496v-1.656h.496v.498h-5.868v-.498h.497v1.656h-.497zm-.498.498v-2.15h6.863V34.322h-6.863z" style="fill:gray"/>
+      <svg:path id="rect25" d="M41.062 19.642h5.871v1.65h-5.871z" style="fill:gray"/>
+      <svg:path id="path27" d="M41.062 20.804h5.871v.494h-.5v-1.651h.498v.497h-5.87v-.497h.497v1.65h-.497zm-.497.493V19.149h6.855V21.794h-6.855z" style="fill:gray"/>
+      <svg:g id="g33">
+        <svg:path id="rect29" d="M41.099 20.295h5.818v11.948h-5.818z" style="fill:#00f;fill-opacity:0"/>
+        <svg:path id="rect31" stroke-miterlimit="10" d="M41.099 20.295h5.818v11.948h-5.818z" style="fill:none;stroke:#000;stroke-width:.8;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-opacity:0"/>
+      </svg:g>
+      <svg:g id="g39">
+        <svg:path id="rect35" d="M41.062 19.642h5.871v1.65h-5.871z" style="fill:#00f;fill-opacity:0"/>
+        <svg:path id="rect37" stroke-miterlimit="10" d="M41.062 19.642h5.871v1.65h-5.871z" style="fill:none;stroke:#000;stroke-width:.8;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-opacity:0"/>
+      </svg:g>
+      <svg:path id="polyline41" d="M48.933 29.805v5.684h-9.937v-5.516" style="fill:none;stroke:#3a3a3a;stroke-width:.5"/>
+      <svg:path id="polyline43" d="M38.996 23.114V17.43h9.937v5.517" style="fill:none;stroke:#3a3a3a;stroke-width:.5"/>
+    </svg:g>
+    <svg:g id="R2-8" transform="rotate(-90 981.438 -1046.368) scale(11.49974)">
+      <svg:path id="polygon46" d="m34.068 31.586-6.774-.06.283.464h6.839l.002-9.819-.345-.566z" style="opacity:.24"/>
+      <svg:path id="rect48" d="M27.76 20.128h5.824v11.948H27.76z"/>
+      <svg:path id="path50" d="M27.76 31.577h5.824v.498h-.496V20.128h.496v.497H27.76v-.497h.498v11.948h-.498Zm-.494.499V19.631h6.812v12.941H27.268Z"/>
+      <svg:path id="rect52" d="M27.74 32.003h5.868v1.654H27.74z" style="fill:gray"/>
+      <svg:path id="path54" d="M27.74 33.159h5.868v.498h-.496v-1.655h.496v.498H27.74v-.498h.497v1.655h-.497Zm-.498.499v-2.15h6.863V34.156h-6.863Z" style="fill:gray"/>
+      <svg:path id="rect56" d="M27.727 19.476h5.871v1.65h-5.871z" style="fill:gray"/>
+      <svg:path id="path58" d="M27.727 20.634h5.871v.497h-.5V19.48h.498v.497h-5.87v-.497h.497v1.65h-.497Zm-.497.496v-2.15h6.855V21.625H27.23Z" style="fill:gray"/>
+      <svg:g id="g64">
+        <svg:path id="rect60" d="M27.76 20.128h5.824v11.948H27.76z" style="fill:#00f;fill-opacity:0"/>
+        <svg:path id="rect62" stroke-miterlimit="10" d="M27.76 20.128h5.824v11.948H27.76z" style="fill:none;stroke:#000;stroke-width:.8;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-opacity:0"/>
+      </svg:g>
+      <svg:g id="g70">
+        <svg:path id="rect66" d="M27.727 19.476h5.871v1.65h-5.871z" style="fill:#00f;fill-opacity:0"/>
+        <svg:path id="rect68" stroke-miterlimit="10" d="M27.727 19.476h5.871v1.65h-5.871z" style="fill:none;stroke:#000;stroke-width:.8;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-opacity:0"/>
+      </svg:g>
+      <svg:path id="polyline72" d="M25.683 23.055v-5.691h9.938v5.52" style="fill:none;stroke:#3a3a3a;stroke-width:.5"/>
+      <svg:path id="polyline74" d="M35.621 29.739v5.691h-9.938v-5.523" style="fill:none;stroke:#3a3a3a;stroke-width:.5"/>
+    </svg:g>
+    <svg:g id="R1_2_-6" transform="rotate(-90 969.938 -1057.867) scale(11.49974)">
+      <svg:path id="polygon77" d="m-8.272 31.805.002-9.822-.345-.564-.005 9.978-6.774-.057.285.465z" style="opacity:.24"/>
+      <svg:path id="rect79" d="M-14.901 19.962h5.818v11.947h-5.818z"/>
+      <svg:path id="path81" d="M-14.901 31.411h5.818v.498h-.496V19.962h.496v.497h-5.818v-.497h.492v11.947h-.492zm-.5.499V19.465h6.812v12.94h-6.812z"/>
+      <svg:path id="rect83" d="M-14.925 31.837h5.868v1.654h-5.868z" style="fill:gray"/>
+      <svg:path id="path85" d="M-14.925 32.992h5.868v.498h-.496v-1.654h.496v.498h-5.868v-.498h.497v1.654h-.497zm-.498.5v-2.15h6.863V33.99h-6.863z" style="fill:gray"/>
+      <svg:path id="rect87" d="M-14.939 19.309h5.871v1.65h-5.871z" style="fill:gray"/>
+      <svg:path id="path89" d="M-14.939 20.471h5.871v.494h-.5V19.31h.498v.497h-5.87v-.497h.497v1.65h-.497zm-.496.493v-2.153h6.855V21.456h-6.855z" style="fill:gray"/>
+      <svg:g id="g95">
+        <svg:path id="rect91" d="M-14.901 19.962h5.818v11.947h-5.818z" style="fill:#00f;fill-opacity:0"/>
+        <svg:path id="rect93" stroke-miterlimit="10" d="M-14.901 19.962h5.818v11.947h-5.818z" style="fill:none;stroke:#000;stroke-width:.8;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-opacity:0"/>
+      </svg:g>
+      <svg:g id="g101">
+        <svg:path id="rect97" d="M-14.939 19.309h5.871v1.65h-5.871z" style="fill:#00f;fill-opacity:0"/>
+        <svg:path id="rect99" stroke-miterlimit="10" d="M-14.939 19.309h5.871v1.65h-5.871z" style="fill:none;stroke:#000;stroke-width:.8;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:10;stroke-opacity:0"/>
+      </svg:g>
+      <svg:path id="polyline103" d="M-7.004 29.614v5.691h-9.938v-5.523" style="fill:none;stroke:#3a3a3a;stroke-width:.5"/>
+      <svg:path id="polyline105" d="M-16.942 22.93v-5.691h9.938v5.52" style="fill:none;stroke:#3a3a3a;stroke-width:.5"/>
+    </svg:g>
+    <svg:g id="Pins_2_-5" transform="rotate(-90 969.938 -1057.867) scale(11.49974)">
+      <svg:path id="connector5pin_2_-7" d="M63.682 17.149h3.6v2.596h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector4pin_2_-6" d="M58.534 17.191h3.6v2.513h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector3pin_4_-2" d="M53.534 17.192h3.6v2.512h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector2pin_4_-7" d="M63.769 33.317h3.6v2.72h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector1pin_4_-0" d="M58.685 33.305h3.6v2.678h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector0pin_4_-3" d="M53.534 33.305h3.6v2.678h-3.6z" style="fill:#8c8c8c"/>
+    </svg:g>
+    <svg:path id="polygon115" d="m67.896 20.063-.575-.668-.004 14.178h-13.92l.578.667h13.919z" style="opacity:.24" transform="rotate(-90 969.938 -1057.867) scale(11.49974)"/>
+    <svg:path id="rect117" d="M702.762 2250.533h158.639v162.905H702.762z" style="fill:#f9f767;fill-opacity:1;stroke-width:11.4997" transform="rotate(-90)"/>
+    <svg:g id="Pins_1_-9" transform="rotate(-90 981.438 -1046.368) scale(11.49974)">
+      <svg:path id="connector5pin_1_-9" d="M15.807 17.149h3.6v2.596h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector4pin_1_-9" d="M10.659 17.191h3.6v2.513h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector3pin_2_-1" d="M5.659 17.192h3.6v2.512h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector2pin_2_-7" d="M15.894 33.317h3.6v2.72h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector1pin_3_-2" d="M10.81 33.305h3.6v2.678h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector0pin_2_-3" d="M5.659 33.305h3.6v2.678h-3.6z" style="fill:#8c8c8c"/>
+    </svg:g>
+    <svg:path id="polygon151" d="m19.446 19.395-.004 14.178H5.522l.578.667h13.919l.002-14.177z" style="opacity:.24" transform="rotate(-90 981.438 -1046.368) scale(11.49974)"/>
+    <svg:path id="rect153" d="M129.213 2250.533h158.639v162.905H129.213z" style="fill:#f9f767;fill-opacity:1;stroke-width:11.4997" transform="rotate(-90)"/>
+    <svg:g id="Pins-6" transform="rotate(-90 958.439 -1069.367) scale(11.49974)">
+      <svg:path id="rect180" d="M-32.693 17.149h3.6v2.596h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="rect182" d="M-37.841 17.191h3.6v2.513h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector3pin_1_-5" d="M-42.841 17.192h3.6v2.512h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector2pin_1_-5" d="M-32.606 33.317h3.6v2.72h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector1pin_1_-8" d="M-37.69 33.305h3.6v2.678h-3.6z" style="fill:#8c8c8c"/>
+      <svg:path id="connector0pin_1_-1" d="M-42.841 33.305h3.6v2.678h-3.6z" style="fill:#8c8c8c"/>
+    </svg:g>
+    <svg:path id="polygon189" d="m-28.481 34.24.002-14.177-.575-.668-.004 14.178h-13.92l.578.667z" style="opacity:.24" transform="rotate(-90 958.439 -1069.367) scale(11.49974)"/>
+    <svg:path id="rect191" d="M-382.525 2250.533h158.639v162.905h-158.639z" style="fill:#f9f767;fill-opacity:1;stroke-width:11.4997" transform="rotate(-90)"/>
+    <svg:g id="Tag_8-4" transform="rotate(-90 935.44 -1046.368) scale(11.49974)">
+      <svg:path id="rect218" d="M77.109 34.952h4.369v4.676h-4.369z" style="fill:#e4a768"/>
+      <svg:path id="path220" d="m77.141 39.628-.521-.061-.494-.174-.438-.275-.371-.371-.277-.438-.174-.496-.059-.521.059-.52.174-.496.277-.439.371-.371.438-.275.494-.172.521-.063m4.337 4.672H77.14m4.338-4.676v4.676m-4.337-4.676h4.338" style="fill:#e5ab6b;stroke:#6b6b6a;stroke-width:.25"/>
+    </svg:g>
+    <svg:g id="Tag_5_1_-7" transform="rotate(-90 981.438 -1092.367) scale(11.49974)">
+      <svg:path id="rect233" d="M77.109 13.952h4.369v4.676h-4.369z" style="fill:#e4a768"/>
+      <svg:path id="path235" d="m77.141 18.627-.521-.061-.494-.173-.438-.275-.371-.371-.277-.438-.174-.495-.059-.521.059-.521.174-.495.277-.44.371-.371.438-.274.494-.174.521-.062m4.337 4.671H77.14m4.338-4.675v4.676m-4.337-4.676h4.338" style="fill:#e5ab6b;stroke:#6b6b6a;stroke-width:.25"/>
+    </svg:g>
+    <svg:g id="Tag_4-1" transform="rotate(-90 935.44 -1046.368) scale(11.49974)">
+      <svg:path id="rect238" d="M-60.254 34.952h4.369v4.676h-4.369z" style="fill:#e4a768"/>
+      <svg:path id="path240" d="m-55.916 34.952.521.062.494.174.438.274.37.371.278.44.174.495.062.521-.062.521-.174.495-.278.438-.37.371-.438.275-.494.173-.521.061m0 .005h-4.338m0 0v-4.676m0 0h4.338" style="fill:#e5ab6b;stroke:#6b6b6a;stroke-width:.25"/>
+    </svg:g>
+    <svg:g id="Tag_1-3" transform="rotate(-90 981.438 -1092.367) scale(11.49974)">
+      <svg:path id="rect253" d="M-60.254 13.952h4.369v4.676h-4.369z" style="fill:#e4a768"/>
+      <svg:path id="path255" d="m-55.916 13.952.521.062.494.174.438.274.37.371.278.44.174.495.062.521-.062.521-.174.495-.278.438-.37.371-.438.275-.494.173-.521.061m0 .005h-4.338m0 0v-4.676m0 0h4.338" style="fill:#e5ab6b;stroke:#6b6b6a;stroke-width:.25"/>
+    </svg:g>
+    <svg:g id="g263" transform="rotate(-90 969.938 -1057.867) scale(11.49974)">
+      <svg:path id="path259" d="M-12.891 25.519c-.041 0-.076-.021-.107-.063a.28.28 0 0 1-.045-.146c0-.071.035-.146.107-.209l1.231-1.137v-.098h-1.139c-.136 0-.212-.07-.212-.207 0-.139.057-.208.174-.208h2.313V24.9a.736.736 0 0 1-.146.436.448.448 0 0 1-.354.186h-.146a.416.416 0 0 1-.354-.188c-.099-.121-.14-.271-.14-.469v-.393l-1.063.969c-.042.052-.083.078-.119.078m1.691-.416h.124c.143 0 .201-.086.201-.256v-.979h-.502v.979c-.003.169.059.256.177.256" style="fill:#8c8c8c"/>
+      <svg:path id="path261" d="M-12.857 28.346c-.113 0-.172-.069-.172-.202V26.54c0-.188.054-.28.157-.28.104 0 .154.099.154.28v.551h1.854v-.551c0-.188.055-.28.156-.28.104 0 .156.099.156.28v.972h-2.168v.414h.604c.139 0 .214.071.214.209 0 .144-.072.215-.214.215l-.741-.004" style="fill:#8c8c8c"/>
+    </svg:g>
+    <svg:g id="g271" transform="rotate(-90 981.438 -1092.367) scale(11.49974)">
+      <svg:path id="path265" d="M-50.268 19.765c0 .109-.063.172-.193.172h-1.604c-.188 0-.279-.057-.279-.161 0-.104.094-.153.279-.153h.548v-1.852h-.548c-.188 0-.279-.058-.279-.161 0-.104.094-.156.279-.156h.967v2.166h.415v-.602c0-.141.071-.213.213-.213.138 0 .206.066.206.213l-.004.747" style="fill:#8c8c8c"/>
+      <svg:path id="path267" d="M-47.401 19.742c0 .104-.103.159-.284.159h-1.803v-1.075c0-.097.033-.169.115-.228a.481.481 0 0 1 .309-.1h1.23v-.768h-1.379c-.188 0-.283-.054-.283-.16 0-.103.102-.156.283-.156h1.379c.119 0 .224.032.305.1a.284.284 0 0 1 .117.23v.751c0 .1-.041.172-.117.229a.49.49 0 0 1-.305.092h-1.23v.763h1.377c.192.004.286.059.286.163" style="fill:#8c8c8c"/>
+      <svg:path id="path269" d="M-44.274 18.133c0 .061-.019.108-.037.161l-.799 1.565c-.033.068-.104.104-.199.104-.095 0-.162-.028-.199-.104l-.809-1.565c-.014-.019-.021-.021-.021-.031-.018-.021-.021-.071-.021-.129v-.435c0-.145.066-.217.215-.217.137 0 .209.069.209.217v.457l.625 1.219.623-1.219v-.463c0-.139.066-.211.211-.211.137 0 .209.063.209.211v.438" style="fill:#8c8c8c"/>
+    </svg:g>
+    <svg:path id="rect285" d="M-70.135 2454.906H583.43v44.09H-70.135z" style="fill:none;stroke-width:11.4997" transform="rotate(-90)"/>
+    <svg:g id="g293" transform="rotate(-90 1277.453 -1207.32) scale(11.49974)">
+      <svg:g id="g291">
+        <svg:g id="g289">
+          <svg:text id="text287" font-size="4" style="font-size:4px;font-family:&quot;Droid Sans&quot;;fill:#8e8e8e">LED Strip SMD 5050</svg:text>
+        </svg:g>
+      </svg:g>
+    </svg:g>
+    <svg:g id="g305" transform="rotate(-90 981.438 -1092.367) scale(11.49974)">
+      <svg:path id="rect295" d="M-51.261 14.389h3.628v3.604h-3.628z" style="fill:none"/>
+      <svg:g id="g303" transform="translate(-51.26 16.985)">
+        <svg:g id="g301">
+          <svg:g id="g299">
+            <svg:text id="text297" font-size="4" style="font-size:4px;font-family:&quot;Droid Sans&quot;;fill:#8e8e8e">+</svg:text>
+          </svg:g>
+        </svg:g>
+      </svg:g>
+    </svg:g>
+    <svg:g id="g313" transform="rotate(-90 981.438 -1092.367) scale(11.49974)">
+      <svg:path id="path307" d="M68.488 15.729c0 .109-.063.172-.193.172h-1.603c-.188 0-.278-.056-.278-.162 0-.103.094-.152.278-.152h.55v-1.854h-.55c-.188 0-.278-.057-.278-.16 0-.103.094-.156.278-.156h.968v2.166h.416v-.602c0-.141.065-.213.213-.213.137 0 .205.066.205.213l-.006.748" style="fill:#8c8c8c"/>
+      <svg:path id="path309" d="M71.353 15.701c0 .104-.099.162-.28.162h-1.808v-1.076c0-.096.039-.17.121-.228a.462.462 0 0 1 .303-.1h1.235v-.768h-1.379c-.188 0-.282-.056-.282-.162 0-.104.101-.153.282-.153h1.379c.119 0 .22.032.3.1a.276.276 0 0 1 .123.23v.751a.264.264 0 0 1-.123.229.475.475 0 0 1-.3.092h-1.235v.763h1.382c.189.004.282.056.282.16" style="fill:#8c8c8c"/>
+      <svg:path id="path311" d="M74.48 14.095c0 .06-.013.105-.032.16l-.804 1.565c-.028.065-.103.104-.194.104-.1 0-.162-.028-.199-.104l-.813-1.565c-.008-.019-.019-.021-.019-.033-.018-.021-.024-.069-.024-.126v-.438c0-.146.071-.215.22-.215.137 0 .209.065.209.215v.457l.625 1.221.623-1.221v-.461c0-.142.067-.211.211-.211.137 0 .209.063.209.211v.438" style="fill:#8c8c8c"/>
+    </svg:g>
+    <svg:g id="g337" transform="rotate(-90 981.438 -1092.367) scale(11.49974)">
+      <svg:path id="rect327" d="M69.974 16.606h3.627v3.604h-3.627z" style="fill:none"/>
+      <svg:g id="g335" transform="translate(69.974 19.204)">
+        <svg:g id="g333">
+          <svg:g id="g331">
+            <svg:text id="text329" font-size="4" style="font-size:4px;font-family:&quot;Droid Sans&quot;;fill:#8e8e8e">+</svg:text>
+          </svg:g>
+        </svg:g>
+      </svg:g>
+    </svg:g>
+    <svg:g id="g343" transform="rotate(-90 981.438 -1046.368) scale(11.49974)">
+      <svg:path id="path339" d="M29.657 28.951c-.103 0-.159-.092-.159-.272v-1.807h1.079c.096 0 .168.031.229.117a.484.484 0 0 1 .093.303v1.24h.766V27.15c0-.186.062-.277.158-.277.104 0 .158.098.158.277v1.382a.419.419 0 0 1-.102.299.283.283 0 0 1-.229.123h-.754a.272.272 0 0 1-.23-.123.5.5 0 0 1-.09-.299v-1.24h-.764v1.382c.003.185-.046.277-.155.277" style="fill:#8c8c8c"/>
+      <svg:path id="path341" d="M29.7 26.133c-.041 0-.076-.021-.107-.063a.28.28 0 0 1-.045-.146c0-.068.035-.143.107-.209l1.237-1.133v-.102H29.75c-.136 0-.212-.068-.212-.207 0-.137.063-.208.174-.208h2.313v1.45c0 .17-.053.313-.146.436a.45.45 0 0 1-.354.182h-.146a.419.419 0 0 1-.354-.186c-.093-.121-.134-.275-.134-.471v-.395l-1.065.973c-.05.051-.091.079-.126.079m1.691-.416h.124c.137 0 .195-.086.195-.256v-.979h-.5v.979c.001.168.059.256.181.256" style="fill:#8c8c8c"/>
+    </svg:g>
+    <svg:g id="g349" transform="rotate(-90 981.438 -1046.368) scale(11.49974)">
+      <svg:path id="path345" d="M43.033 25.966c-.041 0-.076-.021-.107-.063a.28.28 0 0 1-.045-.146c0-.068.035-.143.107-.209l1.237-1.133v-.1H43.08c-.136 0-.212-.068-.212-.207 0-.137.063-.208.174-.208h2.313v1.45c0 .17-.059.313-.146.436a.452.452 0 0 1-.354.184h-.145a.416.416 0 0 1-.354-.188c-.093-.121-.134-.275-.134-.471v-.395l-1.065.973c-.048.049-.089.077-.124.077m1.691-.416h.124c.137 0 .195-.086.195-.256v-.979h-.502v.979c.003.168.061.256.183.256" style="fill:#8c8c8c"/>
+      <svg:path id="path347" d="M43.144 28.711c-.09 0-.166-.043-.229-.123a.49.49 0 0 1-.088-.297v-1.367c0-.184.053-.273.16-.273.104 0 .156.097.156.273v1.367h.568c.125 0 .189-.069.189-.225v-.729c0-.188.052-.272.154-.272.104 0 .159.09.159.272v.734c0 .139.063.208.192.208h.574v-1.358c0-.184.053-.272.16-.272.104 0 .153.097.153.272v1.369a.486.486 0 0 1-.085.289c-.05.082-.107.121-.181.121h-.691c-.104 0-.193-.055-.271-.156-.1.106-.2.166-.325.166h-.599" style="fill:#8c8c8c"/>
+    </svg:g>
+    <svg:circle id="connector5pin-8" cx="-535.909" cy="2410.804" r="18.63" style="fill:none;stroke:#ff9400;stroke-width:16.5596" transform="rotate(-90)"/>
+    <svg:circle id="connector4pin-4" cx="-535.909" cy="2261.227" r="18.63" style="fill:none;stroke:#ff9400;stroke-width:16.5596" transform="rotate(-90)"/>
+    <svg:circle id="connector1pin-8" cx="1000.64" cy="2411.288" r="18.63" style="fill:none;stroke:#ff9400;stroke-width:16.5596" transform="rotate(-90)"/>
+    <svg:circle id="connector0pin-0" cx="1000.64" cy="2261.71" r="18.63" style="fill:none;stroke:#ff9400;stroke-width:16.5596" transform="rotate(-90)"/>
+    <svg:text xml:space="preserve" id="text4989" x="-479.054" y="2428.974" style="font-style:normal;font-weight:400;font-size:57.4987px;line-height:125%;font-family:sans-serif;letter-spacing:0;word-spacing:0;fill:#8c8c8c;fill-opacity:1;stroke:none;stroke-width:11.4997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" transform="rotate(-90)"><svg:tspan id="tspan4987" x="-479.054" y="2428.974" style="stroke-width:11.4997px">-</svg:tspan></svg:text>
+    <svg:text xml:space="preserve" id="text5798" x="918.164" y="2430.412" style="font-style:normal;font-weight:400;font-size:57.4987px;line-height:125%;font-family:sans-serif;letter-spacing:0;word-spacing:0;fill:#8c8c8c;fill-opacity:1;stroke:none;stroke-width:11.4997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" transform="rotate(-90)"><svg:tspan id="tspan5796" x="918.164" y="2430.412" style="stroke-width:11.4997px">-</svg:tspan></svg:text>
+  </svg:g>
+  <svg:g id="g30105" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+    <svg:path id="rect30096" d="M937.323-1360.63h1330.394v15.118H937.323z" style="fill:red;stroke-width:1.00157"/>
+    <svg:path id="rect30098" d="M2252.598-1360.63h15.118v283.465h-15.118z" style="fill:red;stroke-width:1.00157"/>
+    <svg:path id="rect30100" d="M937.323-1360.63h15.118v283.465h-15.118z" style="fill:red;stroke-width:1.00157"/>
+  </svg:g>
+  <ng-container [ngSwitch]="pin?.id">
+    <svg:g *ngSwitchCase="'PWM1'" id="g30203" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect30197" d="M1568.504-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect30199" d="M2403.78-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect30201" d="M1568.504-1303.937h850.394v15.118h-850.394z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="path3685" cx="1576.063" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
+    </svg:g>
+    <svg:g *ngSwitchCase="'PWM2'" id="g30195" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect30189" d="M1481.575-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect30191" d="M2403.78-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect30193" d="M1481.575-1303.937h937.323v15.118h-937.323z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="path3683" cx="1489.134" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
+    </svg:g>
+    <svg:g *ngSwitchCase="'PWM3'" id="g30187" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect30181" d="M1390.866-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect30183" d="M2403.78-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect30185" d="M1390.866-1303.937h1024.252v15.118H1390.866z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="path3681" cx="1398.425" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
+    </svg:g>
+    <svg:g *ngSwitchCase="'PWM4'" id="g30179" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect30170" d="M1296.378-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect30172" d="M2403.78-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect30174" d="M1296.378-1303.937h1122.52v15.118h-1122.52z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="path3679" cx="1303.937" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
+    </svg:g>
+  </ng-container>
+</svg:g>
