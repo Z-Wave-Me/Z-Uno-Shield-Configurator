@@ -3,7 +3,7 @@
     configuratorSelectable
     *ngFor="let pin of topPinList"
     [options]="pin"
-    (click)="select(pin)" />
+    (click)="select(pin.id)" />
 </div>
 <div>
   <configurator-svg-shield></configurator-svg-shield>
@@ -13,5 +13,5 @@
     configuratorSelectable
     *ngFor="let pin of bottomPinList"
     [options]="pin"
-    (click)="select(pin)" />
+    (click)="select(pin.id)" />
 </div>

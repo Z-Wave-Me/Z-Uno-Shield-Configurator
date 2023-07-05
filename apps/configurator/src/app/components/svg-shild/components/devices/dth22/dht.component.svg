@@ -1,4 +1,12 @@
 <svg:defs id="defs6">
+  <svg:filter id="blue-filter">
+    <svg:feColorMatrix type="saturate" values="0" result="greyscale" />
+    <svg:feColorMatrix type="matrix"
+                   values="0 0 0 0 0
+                             0 0 0 0 0
+                             1 1 1 0 0
+                             0 0 0 1 0" in="greyscale" />
+  </svg:filter>
   <svg:linearGradient id="id0" x1="4.612" x2="4.612" y1="4.93" y2="4.238" gradientUnits="userSpaceOnUse">
     <stop id="stop2464" offset="0" style="stop-color:#a8a89e"/>
     <stop id="stop2466" offset="1" style="stop-color:white"/>
@@ -32,15 +40,13 @@
   <clipPath id="clipPath7903" clipPathUnits="userSpaceOnUse">
     <svg:path id="path7901" d="M0 566.93h566.93V0H0Z"/>
   </clipPath>
-  <style id="style2462" type="text/css">
-    .str1{stroke:#8c8c8c;stroke-width:.762}.fil3{fill:none}.fil1{fill:#1e1e1e}.fil6{fill:#323232}.fil2{fill:#c3c3c3}.fil4{fill:#cbcbcb}.fil5{fill:#f0f0f0}.fil7{fill:url(#id0)}
-  </style>
 </svg:defs>
 <svg:g id="layer14" style="display:inline" transform="translate(0 1360.63)">
   <svg:g id="g69943" style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision" transform="matrix(32.92695 0 0 32.92695 2128.07 -603.822)">
     <svg:g id="breadboard">
       <svg:g id="Capa_x0020_1">
-        <svg:g id="_144824656">
+        <svg:g id="_144824656"
+               [attr.filter]="pin?.device?.id?.toString()?.endsWith('11') ? 'url(#blue-filter)' : null">
           <svg:g id="g69640">
             <svg:rect id="_144825976" width="10.948" height="16.616" x=".885" y=".613" rx="2.859" ry="2.859" style="fill:#e6e6e6"/>
             <svg:ellipse id="_144821416" cx="6.434" cy="2.852" class="fil1" rx="1.036" ry="1.071" style="fill:#1e1e1e;stroke:#1e1e1e;stroke-width:.0762"/>

@@ -1,41 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" id="svg2" width="1000mm" height="650mm" style="opacity:1" version="1.1"
      viewBox="0 0 3779.528 2456.693">
-  <defs>
-    <style>.cls-1 {
-        fill: #ffe271;
-    }
-
-    .cls-2 {
-        fill: #fff;
-    }
-
-    .cls-3 {
-        fill: #614259;
-    }
-
-    .cls-4 {
-        fill: #1d1d1b;
-    }
-
-    .cls-5 {
-        fill: #b0b4b2;
-    }
-
-    .cls-6 {
-        fill: #3c443c;
-    }
-
-    .cls-7 {
-        fill: #4e4456;
-    }
-
-    .cls-8 {
-        fill: none;
-        stroke: #fff;
-        stroke-miterlimit: 10;
-        stroke-width: 2px;
-    }</style>
-  </defs>
   <g shield></g>
 
   <ng-container *ngIf="selectedPin$ | async as pin">
@@ -50,11 +14,12 @@
       <g *ngSwitchCase="'door-window'" door-window [pin]="pin"></g>
       <g *ngSwitchCase="'motion'" motion-sensor [pin]="pin"></g>
       <g *ngSwitchCase="'switch'" switch [pin]="pin"></g>
-      <g *ngSwitchCase="'dht22'" dht22 [pin]="pin"></g>
+
       <g *ngSwitchCase="'0-10v'" dimmer0-10v [pin]="pin"></g>
     </ng-container>
     <ng-container [ngSwitch]="true">
       <g *ngSwitchCase="pin.device?.id?.toString()?.includes('sensor')" ds18b20 [pin]="pin"></g>
+      <g *ngSwitchCase="pin.device?.id?.toString()?.startsWith('dht')" dht [pin]="pin"></g>
     </ng-container>
   </ng-container>
 </svg>

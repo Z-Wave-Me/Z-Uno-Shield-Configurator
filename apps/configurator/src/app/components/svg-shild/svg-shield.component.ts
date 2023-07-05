@@ -17,11 +17,11 @@ export class SvgShieldComponent {
     private readonly pinsStateService: PinsStateService,
   ) {
     this.selectedPin$ = this.pinSelectedService.selectObserver.pipe(
-      switchMap(({ id }) =>
+      switchMap((pinId) =>
         this.pinsStateService.state$.pipe(
           map((items) => {
             console.log(items);
-            const data = items.find((item) => item.id === id);
+            const data = items.find((item) => item.id === pinId);
 
             return data;
           }),

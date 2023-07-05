@@ -5,13 +5,13 @@ import { Observable, ReplaySubject } from 'rxjs';
   providedIn: 'root',
 })
 export class PinSelectedService {
-  private readonly store$ = new ReplaySubject<PinContainer>(1);
+  private readonly store$ = new ReplaySubject<string>(1);
 
-  public select(item: PinContainer): void {
+  public select(item: string): void {
     this.store$.next(item);
   }
 
-  public get selectObserver(): Observable<PinContainer> {
+  public get selectObserver(): Observable<string> {
     return this.store$.asObservable();
   }
 }

@@ -15,7 +15,7 @@ export class HighlightPinDirective implements OnDestroy {
 
   constructor(private readonly pinSelectedService: PinSelectedService) {
     this.subscription = this.pinSelectedService.selectObserver.subscribe(
-      ({ id }) => (this.active = this.configuratorHighlightPin === id),
+      (pinId) => (this.active = this.configuratorHighlightPin === pinId),
     );
   }
 
@@ -25,8 +25,7 @@ export class HighlightPinDirective implements OnDestroy {
 
   @HostListener('mouseenter')
   public onMouseOver(): void {
-    // здесь выполняется ваша функция при наведении на элемент
-    this.pinSelectedService.select({ id: this.configuratorHighlightPin });
+    this.pinSelectedService.select(this.configuratorHighlightPin);
     console.log('Mouse over', this.configuratorHighlightPin);
   }
 

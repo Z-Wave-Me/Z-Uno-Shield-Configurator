@@ -8,14 +8,14 @@ import { PinContainer, PinSelectedService } from '../../services/pin-selected/pi
 })
 export class SelectableDirective implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
-  private currentPin?: PinContainer;
+  private currentPin?: string;
 
   @Input()
   public options: any;
 
   @HostBinding('class.pin-selected')
   public get selected(): boolean {
-    return this.currentPin?.id === this.options?.id;
+    return this.currentPin === this.options?.id;
   }
 
   constructor(private readonly pinSelectedService: PinSelectedService) {

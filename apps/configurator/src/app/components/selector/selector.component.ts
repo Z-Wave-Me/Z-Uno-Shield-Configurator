@@ -466,7 +466,7 @@ export class SelectorComponent {
           options: [
             {
               title: $localize`DHT11`,
-              value: 'DHT11',
+              value: 'dht11',
             },
             {
               title: $localize`DHT22`,
@@ -544,7 +544,7 @@ export class SelectorComponent {
           options: [
             {
               title: $localize`DHT11`,
-              value: 'DHT11',
+              value: 'dht11',
             },
             {
               title: $localize`DHT22`,
@@ -590,7 +590,7 @@ export class SelectorComponent {
 
   constructor(private readonly pinSelectedService: PinSelectedService) {}
 
-  public select(container: PinContainer): void {
-    this.pinSelectedService.select(container);
+  public select(pinId: string): void {
+    this.pinSelectedService.select(pinId);
   }
 }
