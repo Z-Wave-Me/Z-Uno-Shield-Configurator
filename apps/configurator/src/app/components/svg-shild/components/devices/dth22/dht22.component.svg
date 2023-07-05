@@ -1,0 +1,233 @@
+<svg:defs id="defs6">
+  <svg:linearGradient id="id0" x1="4.612" x2="4.612" y1="4.93" y2="4.238" gradientUnits="userSpaceOnUse">
+    <stop id="stop2464" offset="0" style="stop-color:#a8a89e"/>
+    <stop id="stop2466" offset="1" style="stop-color:white"/>
+  </svg:linearGradient>
+  <svg:linearGradient xlink:href="#id0" id="linearGradient69945" x1="4.612" x2="4.612" y1="4.93" y2="4.238" gradientUnits="userSpaceOnUse"/>
+  <svg:linearGradient xlink:href="#id0" id="linearGradient69947" x1="4.612" x2="4.612" y1="4.93" y2="4.238" gradientUnits="userSpaceOnUse"/>
+  <svg:linearGradient xlink:href="#id0" id="linearGradient69949" x1="4.612" x2="4.612" y1="4.93" y2="4.238" gradientUnits="userSpaceOnUse"/>
+  <svg:linearGradient id="linearGradient7929" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(510.3428 0 0 -510.3428 24.47 287.914)" gradientUnits="userSpaceOnUse" spreadMethod="pad">
+    <stop id="stop7921" offset="0" style="stop-opacity:1;stop-color:#d4d7d3"/>
+    <stop id="stop7923" offset=".156" style="stop-opacity:1;stop-color:#f4f4f4"/>
+    <stop id="stop7925" offset=".776" style="stop-opacity:1;stop-color:#f4f4f4"/>
+    <stop id="stop7927" offset="1" style="stop-opacity:1;stop-color:#f4f4f4"/>
+  </svg:linearGradient>
+  <svg:linearGradient id="linearGradient7949" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 398.70551 398.70551 0 279.64 88.56)" gradientUnits="userSpaceOnUse" spreadMethod="pad">
+    <stop id="stop7945" offset="0" style="stop-opacity:1;stop-color:#a8aaaa"/>
+    <stop id="stop7947" offset="1" style="stop-opacity:1;stop-color:#bec1be"/>
+  </svg:linearGradient>
+  <svg:linearGradient id="linearGradient7973" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 447.6106 447.6106 0 277.647 94.409)" gradientUnits="userSpaceOnUse" spreadMethod="pad">
+    <stop id="stop7965" offset="0" style="stop-opacity:1;stop-color:#f4f4f4"/>
+    <stop id="stop7967" offset=".224" style="stop-opacity:1;stop-color:#f4f4f4"/>
+    <stop id="stop7969" offset=".844" style="stop-opacity:1;stop-color:#f4f4f4"/>
+    <stop id="stop7971" offset="1" style="stop-opacity:1;stop-color:#d4d7d3"/>
+  </svg:linearGradient>
+  <svg:linearGradient id="linearGradient7999" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(390.99612 0 0 -390.99612 82.149 116.567)" gradientUnits="userSpaceOnUse" spreadMethod="pad">
+    <stop id="stop7989" offset="0" style="stop-opacity:1;stop-color:#d4d7d3"/>
+    <stop id="stop7991" offset=".266" style="stop-opacity:1;stop-color:#eaebe9"/>
+    <stop id="stop7993" offset=".567" style="stop-opacity:1;stop-color:#eaebe9"/>
+    <stop id="stop7995" offset=".662" style="stop-opacity:1;stop-color:#eaebe9"/>
+    <stop id="stop7997" offset="1" style="stop-opacity:1;stop-color:#d4d7d3"/>
+  </svg:linearGradient>
+  <clipPath id="clipPath7903" clipPathUnits="userSpaceOnUse">
+    <svg:path id="path7901" d="M0 566.93h566.93V0H0Z"/>
+  </clipPath>
+  <style id="style2462" type="text/css">
+    .str1{stroke:#8c8c8c;stroke-width:.762}.fil3{fill:none}.fil1{fill:#1e1e1e}.fil6{fill:#323232}.fil2{fill:#c3c3c3}.fil4{fill:#cbcbcb}.fil5{fill:#f0f0f0}.fil7{fill:url(#id0)}
+  </style>
+</svg:defs>
+<svg:g id="layer14" style="display:inline" transform="translate(0 1360.63)">
+  <svg:g id="g69943" style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision" transform="matrix(32.92695 0 0 32.92695 2128.07 -603.822)">
+    <svg:g id="breadboard">
+      <svg:g id="Capa_x0020_1">
+        <svg:g id="_144824656">
+          <svg:g id="g69640">
+            <svg:rect id="_144825976" width="10.948" height="16.616" x=".885" y=".613" rx="2.859" ry="2.859" style="fill:#e6e6e6"/>
+            <svg:ellipse id="_144821416" cx="6.434" cy="2.852" class="fil1" rx="1.036" ry="1.071" style="fill:#1e1e1e;stroke:#1e1e1e;stroke-width:.0762"/>
+          </svg:g>
+          <svg:g id="g69649">
+            <svg:path id="_144822136" d="M.991 6.526h11.21v10.98H.991z" class="fil2" style="fill:#c3c3c3"/>
+            <svg:rect id="_144818704" width=".929" height="3.878" x=".989" y="4.37" class="fil2" rx=".068" ry=".068" style="fill:#c3c3c3"/>
+            <svg:rect id="_144826744" width=".918" height="3.878" x="11.289" y="4.37" class="fil2" rx=".068" ry=".068" style="fill:#c3c3c3"/>
+            <svg:rect id="_144823288" width=".929" height="3.652" x=".989" y="15.424" class="fil2" rx=".228" ry=".228" style="fill:#c3c3c3"/>
+            <svg:rect id="_144827656" width="1.625" height="2.024" x="10.577" y="17.052" class="fil2" rx=".228" ry=".228" style="fill:#c3c3c3"/>
+            <svg:path id="_144829120" d="M1.714 5.306h9.768v12.9H1.714z" class="fil2" style="fill:#c3c3c3"/>
+            <svg:path id="_144820960" d="M1.371 4.349h10.335v14.728H1.371z" class="fil2" style="fill:#c3c3c3"/>
+          </svg:g>
+          <svg:g id="g69655">
+            <svg:path id="_144824728" d="m7.587 18.934.002 3.254" class="fil3 str1" style="fill:none;stroke:#8c8c8c;stroke-width:.762"/>
+            <svg:path id="_144822016" d="m10.127 18.932.002 3.254" class="fil3 str1" style="fill:none;stroke:#8c8c8c;stroke-width:.762"/>
+            <svg:path id="_144829456" d="m2.507 18.932.002 3.254" class="fil3 str1" style="fill:none;stroke:#8c8c8c;stroke-width:.762"/>
+            <svg:path id="_144819832" d="m5.047 18.932.002 3.254" class="fil3 str1" style="fill:none;stroke:#8c8c8c;stroke-width:.762"/>
+          </svg:g>
+          <svg:g id="g69671">
+            <svg:g id="g69662">
+              <svg:path id="_144826048" d="M9.341 6.873h2.533v.94H9.341z" class="fil4" style="fill:#cbcbcb"/>
+              <svg:path id="_144823816" d="M9.341 8.773h2.533v.94H9.341z" class="fil4" style="fill:#cbcbcb"/>
+              <svg:path id="_144826288" d="M9.343 10.673h2.531v.94H9.343z" class="fil4" style="fill:#cbcbcb"/>
+              <svg:path id="_144823936" d="M9.341 12.573h2.533v.94H9.341z" class="fil4" style="fill:#cbcbcb"/>
+              <svg:path id="_144820816" d="M9.341 14.473h2.533v.94H9.341z" class="fil4" style="fill:#cbcbcb"/>
+            </svg:g>
+            <svg:g id="g69669">
+              <svg:path id="_144817768" d="M.865 6.873h.704v.94H.865z" class="fil4" style="fill:#cbcbcb"/>
+              <svg:path id="_144819880" d="M.865 8.773h.704v.94H.865z" class="fil4" style="fill:#cbcbcb"/>
+              <svg:path id="_144822112" d="M.865 10.673h.704v.94H.865z" class="fil4" style="fill:#cbcbcb"/>
+              <svg:path id="_144820576" d="M.865 12.573h.704v.94H.865z" class="fil4" style="fill:#cbcbcb"/>
+              <svg:path id="_144821872" d="M.865 14.473h.704v.94H.865z" class="fil4" style="fill:#cbcbcb"/>
+            </svg:g>
+          </svg:g>
+          <svg:g id="g69708">
+            <svg:g id="g69678">
+              <svg:path id="_144818008" d="M4.143 6.873h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144821656" d="M5.943 6.873h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144829816" d="M7.643 6.873h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144831328" d="M9.343 6.873h1.583c.207 0 .376.084.376.186v.567c0 .103-.17.187-.376.187H9.343Z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144827224" d="M1.569 6.873h1.713v.94H1.569z" class="fil1" style="fill:#1e1e1e"/>
+            </svg:g>
+            <svg:g id="g69685">
+              <svg:path id="_144824824" d="M4.143 8.773h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144817504" d="M5.943 8.773h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144825928" d="M7.643 8.773h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144829048" d="M9.343 8.773h1.583c.207 0 .376.084.376.186v.567c0 .103-.17.187-.376.187H9.343Z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144825112" d="M1.569 8.773h1.713v.94H1.569z" class="fil1" style="fill:#1e1e1e"/>
+            </svg:g>
+            <svg:g id="g69692">
+              <svg:path id="_144821512" d="M4.143 10.673h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144822784" d="M5.943 10.673h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144822664" d="M7.643 10.673h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144820672" d="M9.343 10.673h1.583c.207 0 .376.084.376.186v.567c0 .103-.17.187-.376.187H9.343Z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144824752" d="M1.569 10.673h1.713v.94H1.569z" class="fil1" style="fill:#1e1e1e"/>
+            </svg:g>
+            <svg:g id="g69699">
+              <svg:path id="_144828472" d="M4.143 12.573h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144821968" d="M5.943 12.573h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144828256" d="M7.643 12.573h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144828376" d="M9.343 12.573h1.583c.207 0 .376.084.376.186v.567c0 .103-.17.187-.376.187H9.343Z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144823504" d="M1.569 12.573h1.713v.94H1.569z" class="fil1" style="fill:#1e1e1e"/>
+            </svg:g>
+            <svg:g id="g69706">
+              <svg:path id="_144825784" d="M4.143 14.473h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144826936" d="M5.943 14.473h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144826912" d="M7.643 14.473h.94v.94h-.94z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144827152" d="M9.343 14.473h1.583c.207 0 .376.084.376.186v.567c0 .103-.17.187-.376.187H9.343Z" class="fil1" style="fill:#1e1e1e"/>
+              <svg:path id="_144827080" d="M1.569 14.473h1.713v.94H1.569z" class="fil1" style="fill:#1e1e1e"/>
+            </svg:g>
+          </svg:g>
+          <svg:g id="g69772">
+            <svg:g id="g69755">
+              <svg:g id="g69726">
+                <svg:g id="g69712">
+                  <svg:path id="_144817024" d="M3.283 4.238h.86v13.983h-.86z" class="fil5" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144817168" width=".855" height=".749" x="3.287" y="3.956" class="fil5" rx=".059" ry=".059" style="fill:#f0f0f0"/>
+                </svg:g>
+                <svg:g id="g69716">
+                  <svg:path id="_144817240" d="M5.083 4.238h.86v13.983h-.86z" class="fil5" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144816328" width=".855" height=".749" x="5.087" y="3.956" class="fil5" rx=".059" ry=".059" style="fill:#f0f0f0"/>
+                </svg:g>
+                <svg:g id="g69720">
+                  <svg:path id="_144815368" d="M6.883 4.238h.86v13.983h-.86z" class="fil5" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144818248" width=".855" height=".749" x="6.887" y="3.956" class="fil5" rx=".059" ry=".059" style="fill:#f0f0f0"/>
+                </svg:g>
+                <svg:g id="g69724">
+                  <svg:path id="_144817960" d="M8.583 4.238h.86v13.983h-.86z" class="fil5" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144818128" width=".855" height=".749" x="8.587" y="3.956" class="fil5" rx=".059" ry=".059" style="fill:#f0f0f0"/>
+                </svg:g>
+              </svg:g>
+              <svg:g id="g69753">
+                <svg:g id="g69731">
+                  <svg:path id="_144817864" d="M.993 5.614h10.835v1.255H.993z" class="fil5" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144817720" width="1.205" height="1.255" x=".666" y="5.617" class="fil5" rx=".09" ry=".09" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144817408" width="1.256" height="1.255" x="10.766" y="5.617" class="fil5" rx=".09" ry=".09" style="fill:#f0f0f0"/>
+                </svg:g>
+                <svg:g id="g69736">
+                  <svg:path id="_144817744" d="M.993 7.828h10.835v.941H.993z" class="fil5" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144828448" width="1.205" height=".941" x=".666" y="7.83" class="fil5" rx=".09" ry=".09" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144815320" width="1.256" height=".941" x="10.766" y="7.83" class="fil5" rx=".09" ry=".09" style="fill:#f0f0f0"/>
+                </svg:g>
+                <svg:g id="g69741">
+                  <svg:path id="_144826264" d="M.993 9.714h10.835v.955H.993z" class="fil5" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144825736" width="1.205" height=".955" x=".666" y="9.716" class="fil5" rx=".09" ry=".09" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144821320" width="1.256" height=".955" x="10.766" y="9.716" class="fil5" rx=".09" ry=".09" style="fill:#f0f0f0"/>
+                </svg:g>
+                <svg:g id="g69746">
+                  <svg:path id="_144828688" d="M.993 11.614h10.835v.955H.993z" class="fil5" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144819808" width="1.205" height=".955" x=".666" y="11.616" class="fil5" rx=".09" ry=".09" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144820288" width="1.256" height=".955" x="10.766" y="11.616" class="fil5" rx=".09" ry=".09" style="fill:#f0f0f0"/>
+                </svg:g>
+                <svg:g id="g69751">
+                  <svg:path id="_144820888" d="M.993 13.514h10.835v.955H.993z" class="fil5" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144819568" width="1.205" height=".955" x=".666" y="13.516" class="fil5" rx=".09" ry=".09" style="fill:#f0f0f0"/>
+                  <svg:rect id="_144818536" width="1.256" height=".955" x="10.766" y="13.516" class="fil5" rx=".09" ry=".09" style="fill:#f0f0f0"/>
+                </svg:g>
+              </svg:g>
+            </svg:g>
+            <svg:g id="g69770">
+              <svg:g id="g69764">
+                <svg:path id="_144827800" d="M.791 15.924h11.21v2.583H.791z" class="fil5" style="fill:#f0f0f0"/>
+                <svg:rect id="_144826000" width=".929" height=".912" x=".789" y="15.417" class="fil5" rx=".068" ry=".068" style="fill:#f0f0f0"/>
+                <svg:rect id="_144827488" width=".918" height=".912" x="11.089" y="15.417" class="fil5" rx=".068" ry=".068" style="fill:#f0f0f0"/>
+                <svg:rect id="_144825808" width=".929" height=".859" x=".789" y="18.017" class="fil5" rx=".228" ry=".228" style="fill:#f0f0f0"/>
+                <svg:rect id="_144825208" width=".913" height=".859" x="11.089" y="18.017" class="fil5" rx=".228" ry=".228" style="fill:#f0f0f0"/>
+                <svg:path id="_144821752" d="M1.514 15.637h9.768v3.034H1.514z" class="fil5" style="fill:#f0f0f0"/>
+                <svg:path id="_144821560" d="M1.171 15.412h10.335v3.464H1.171z" class="fil5" style="fill:#f0f0f0"/>
+              </svg:g>
+              <svg:g id="g69768">
+                <svg:rect id="_144822040" width="3.186" height="2.234" x=".671" y="3.954" class="fil5" rx=".447" ry=".447" style="fill:#f0f0f0"/>
+                <svg:rect id="_144822280" width="3.151" height="2.234" x="8.866" y="3.954" class="fil5" rx=".447" ry=".447" style="fill:#f0f0f0"/>
+              </svg:g>
+            </svg:g>
+          </svg:g>
+          <svg:g id="g69790">
+            <svg:g id="g69783">
+              <svg:g id="g69777">
+                <svg:path id="_144827680" d="M4.143 4.923h.937v.692h-.937z" class="fil6" style="fill:#323232"/>
+                <svg:path id="_144824176" d="M5.944 4.923h.937v.692h-.937z" class="fil6" style="fill:#323232"/>
+                <svg:path id="_144822616" d="M7.746 4.923h.795v.692h-.795z" class="fil6" style="fill:#323232"/>
+              </svg:g>
+              <svg:g id="g69781">
+                <svg:path id="_144828880" d="M4.143 5.227h.94" class="fil3" style="fill:none;stroke:#78786e;stroke-width:.25"/>
+                <svg:path id="_144823480" d="M5.943 5.184c.295-.002.456.142.475.428" class="fil3" style="fill:none;stroke:#78786e;stroke-width:.0762"/>
+              </svg:g>
+            </svg:g>
+            <svg:g id="g69788">
+              <svg:path id="_144817384" d="M4.143 4.238h.937v.692h-.937z" class="fil7" style="fill:url(#linearGradient69945)"/>
+              <svg:path id="_144825040" d="M5.944 4.238h.937v.692h-.937z" class="fil7" style="fill:url(#linearGradient69947)"/>
+              <svg:path id="_144817648" d="M7.746 4.238h.795v.692h-.795z" class="fil7" style="fill:url(#linearGradient69949)"/>
+            </svg:g>
+          </svg:g>
+        </svg:g>
+      </svg:g>
+      <svg:path id="connector8" d="M1.785 20.73h1.411v1.411H1.785z" style="fill:none"/>
+      <svg:path id="connector9" d="M4.375 20.73h1.411v1.411H4.375z" style="fill:none"/>
+      <svg:path id="connector10" d="M6.832 20.797h1.411v1.411H6.832z" style="fill:none"/>
+      <svg:path id="connector11" d="M9.422 20.73h1.411v1.411H9.422z" style="fill:none"/>
+    </svg:g>
+  </svg:g>
+  <ng-container [ngSwitch]="pin?.id">
+    <svg:g *ngSwitchCase="11" id="g41475" style="display:inline;opacity:1">
+      <svg:path id="rect41469" d="M1209.449 721.89h1092.284v15.118H1209.449z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke:none;stroke-width:1.00158;stroke-dasharray:none;stroke-opacity:1"/>
+      <svg:path id="rect41471" d="M1209.449 593.386h15.118v143.622h-15.118z" style="fill:#50c878;fill-opacity:1;stroke:none;stroke-width:1.00157;stroke-dasharray:none;stroke-opacity:1"/>
+      <svg:circle id="circle41473" cx="1217.008" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
+    </svg:g>
+    <svg:g *ngSwitchCase="12" id="g41467" style="display:inline;opacity:1">
+      <svg:path id="rect41461" d="M1118.74 721.89h1182.992v15.118H1118.74z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke:none;stroke-width:1.00158;stroke-dasharray:none;stroke-opacity:1"/>
+      <svg:path id="rect41463" d="M1118.74 593.386h15.118v143.622h-15.118z" style="fill:#50c878;fill-opacity:1;stroke:none;stroke-width:1.00157;stroke-dasharray:none;stroke-opacity:1"/>
+      <svg:circle id="circle41465" cx="1126.299" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
+    </svg:g>
+  </ng-container>
+  <svg:path id="rect41537" d="M2286.614 151.181h15.118v585.827h-15.118z" style="fill:#50c878;stroke-width:1.00157"/>
+  <svg:g id="g41555" style="display:inline;opacity:1">
+    <svg:path id="rect41539" d="M2093.858-1360.63h15.118V222.992h-15.118z" style="fill:#f60;fill-opacity:1;stroke-width:1.00157"/>
+    <svg:path id="rect41541" d="M2093.858 206.304h124.724v16.688h-124.724z" style="fill:#f60;fill-opacity:1;stroke-width:1.00157"/>
+    <svg:path id="rect41543" d="M2203.465 152.069h15.118v70.923h-15.118z" style="fill:#f60;fill-opacity:1;stroke-width:1.00157"/>
+    <svg:path id="rect41545" d="M1028.032-1360.63h15.118v283.465h-15.118z" style="display:inline;opacity:1;fill:#f60;fill-opacity:1;stroke-width:1.00157"/>
+    <svg:path id="rect41553" d="M1028.032-1360.63h1080.945v15.118H1028.032z" style="display:inline;opacity:1;fill:#f60;fill-opacity:1;stroke-width:1.00157"/>
+  </svg:g>
+  <svg:g id="g41573" style="display:inline;opacity:1" transform="translate(0 340.158)">
+    <svg:path id="rect41557" d="M1209.449-1644.095h1368.189v15.118H1209.449z" style="fill:#000;fill-opacity:1;stroke-width:1.00157"/>
+    <svg:path id="rect41559" d="M2562.52-1644.095h15.118v1526.929h-15.118z" style="fill:#000;fill-opacity:1;stroke-width:1.00157"/>
+    <svg:path id="rect41561" d="M2452.914-133.791h124.724v16.626h-124.724z" style="fill:#000;fill-opacity:1;stroke-width:1.00157"/>
+    <svg:path id="rect41563" d="M1209.449-1644.095h15.118v226.772h-15.118z" style="fill:#000;fill-opacity:1;stroke-width:1.00157"/>
+    <svg:path id="rect41565" d="M2452.914-187.826h15.118v70.66h-15.118z" style="fill:#000;fill-opacity:1;stroke-width:1.00157"/>
+  </svg:g>
+</svg:g>

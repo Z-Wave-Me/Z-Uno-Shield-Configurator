@@ -1,0 +1,101 @@
+<svg:defs id="defs6">
+  <svg:linearGradient id="id0" x1="4.612" x2="4.612" y1="4.93" y2="4.238" gradientUnits="userSpaceOnUse">
+    <stop id="stop2464" offset="0" style="stop-color:#a8a89e"/>
+    <stop id="stop2466" offset="1" style="stop-color:white"/>
+  </svg:linearGradient>
+  <svg:linearGradient xlink:href="#id0" id="linearGradient69945" x1="4.612" x2="4.612" y1="4.93" y2="4.238" gradientUnits="userSpaceOnUse"/>
+  <svg:linearGradient xlink:href="#id0" id="linearGradient69947" x1="4.612" x2="4.612" y1="4.93" y2="4.238" gradientUnits="userSpaceOnUse"/>
+  <svg:linearGradient xlink:href="#id0" id="linearGradient69949" x1="4.612" x2="4.612" y1="4.93" y2="4.238" gradientUnits="userSpaceOnUse"/>
+  <svg:linearGradient id="linearGradient7929" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(510.3428 0 0 -510.3428 24.47 287.914)" gradientUnits="userSpaceOnUse" spreadMethod="pad">
+    <stop id="stop7921" offset="0" style="stop-opacity:1;stop-color:#d4d7d3"/>
+    <stop id="stop7923" offset=".156" style="stop-opacity:1;stop-color:#f4f4f4"/>
+    <stop id="stop7925" offset=".776" style="stop-opacity:1;stop-color:#f4f4f4"/>
+    <stop id="stop7927" offset="1" style="stop-opacity:1;stop-color:#f4f4f4"/>
+  </svg:linearGradient>
+  <svg:linearGradient id="linearGradient7949" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 398.70551 398.70551 0 279.64 88.56)" gradientUnits="userSpaceOnUse" spreadMethod="pad">
+    <stop id="stop7945" offset="0" style="stop-opacity:1;stop-color:#a8aaaa"/>
+    <stop id="stop7947" offset="1" style="stop-opacity:1;stop-color:#bec1be"/>
+  </svg:linearGradient>
+  <svg:linearGradient id="linearGradient7973" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(0 447.6106 447.6106 0 277.647 94.409)" gradientUnits="userSpaceOnUse" spreadMethod="pad">
+    <stop id="stop7965" offset="0" style="stop-opacity:1;stop-color:#f4f4f4"/>
+    <stop id="stop7967" offset=".224" style="stop-opacity:1;stop-color:#f4f4f4"/>
+    <stop id="stop7969" offset=".844" style="stop-opacity:1;stop-color:#f4f4f4"/>
+    <stop id="stop7971" offset="1" style="stop-opacity:1;stop-color:#d4d7d3"/>
+  </svg:linearGradient>
+  <svg:linearGradient id="linearGradient7999" x1="0" x2="1" y1="0" y2="0" gradientTransform="matrix(390.99612 0 0 -390.99612 82.149 116.567)" gradientUnits="userSpaceOnUse" spreadMethod="pad">
+    <stop id="stop7989" offset="0" style="stop-opacity:1;stop-color:#d4d7d3"/>
+    <stop id="stop7991" offset=".266" style="stop-opacity:1;stop-color:#eaebe9"/>
+    <stop id="stop7993" offset=".567" style="stop-opacity:1;stop-color:#eaebe9"/>
+    <stop id="stop7995" offset=".662" style="stop-opacity:1;stop-color:#eaebe9"/>
+    <stop id="stop7997" offset="1" style="stop-opacity:1;stop-color:#d4d7d3"/>
+  </svg:linearGradient>
+  <clipPath id="clipPath7903" clipPathUnits="userSpaceOnUse">
+    <svg:path id="path7901" d="M0 566.93h566.93V0H0Z"/>
+  </clipPath>
+  <style id="style2462" type="text/css">
+    .str1{stroke:#8c8c8c;stroke-width:.762}.fil3{fill:none}.fil1{fill:#1e1e1e}.fil6{fill:#323232}.fil2{fill:#c3c3c3}.fil4{fill:#cbcbcb}.fil5{fill:#f0f0f0}.fil7{fill:url(#id0)}
+  </style>
+</svg:defs>
+<svg:g id="layer13" style="display:inline" transform="translate(0 1360.63)">
+  <svg:g id="g69019" style="display:inline" transform="matrix(15.4896 0 0 15.4896 2150.002 -516.457)">
+    <svg:path id="connector1pin-9" d="M0 22.728h2.16v1H0z" style="fill:none"/>
+    <svg:path id="connector2pin-3" d="M7.181 22.728h2.157v1H7.181z" style="fill:none"/>
+    <svg:path id="connector3pin-9" d="M14.367 22.728h2.16v1h-2.16z" style="fill:none"/>
+    <svg:path id="connector1leg" d="M1.08 24.728v7.177" style="fill:none;stroke:#8c8c8c;stroke-width:2.16;stroke-linecap:round"/>
+    <svg:path id="connector2leg" d="M8.26 24.728v7.177" style="fill:none;stroke:#8c8c8c;stroke-width:2.16;stroke-linecap:round"/>
+    <svg:path id="connector3leg" d="M15.447 24.728v7.177" style="fill:none;stroke:#8c8c8c;stroke-width:2.16;stroke-linecap:round"/>
+    <svg:path id="rect9506" d="M7.177 15.376h2.154v9.352H7.177z" style="fill:#8c8c8c"/>
+    <svg:path id="path9510" d="M3.287 15.376v3.314c0 .424-.782 1.06-1.198 1.428-1.022.89-2.088 1.816-2.088 2.99v1.619h2.154v-1.211c0-.518.904-1.391 1.35-1.77.997-.871 1.945-1.69 1.945-2.75v-3.62z" style="fill:#8c8c8c"/>
+    <svg:path id="path9514" d="M13.22 15.376v3.314c0 .424.779 1.06 1.197 1.428 1.027.89 2.089 1.816 2.089 2.99v1.619h-2.151v-1.211c0-.518-.904-1.391-1.353-1.77-.998-.871-1.942-1.69-1.942-2.75v-3.62z" style="fill:#8c8c8c"/>
+    <svg:path id="rect9553" d="M2.621 7.758h11.27v10.069H2.621z" style="fill:#1a1a1a;stroke-width:.921288"/>
+    <svg:path id="path9555" d="M13.888 5.305V17.83c.633-.715 1.005-1.555 1.005-2.453V5.305z" style="fill:#141414"/>
+    <svg:path id="path9557" d="M2.621 5.305H1.616v10.069c0 .898.373 1.738 1.005 2.453V7.758z" style="fill:#242424"/>
+    <svg:path id="path9559" d="M1.615 5.305c0 .899.373 1.74 1.005 2.453h11.276c.632-.713 1.005-1.554 1.005-2.453z" style="fill:#1f1f1f"/>
+    <svg:path id="path9561" d="M8.255.646c-3.668 0-6.64 2.086-6.64 4.66h13.278c0-2.574-2.97-4.66-6.638-4.66z" style="fill:#141414"/>
+    <svg:text xml:space="preserve" id="text838" x="3.085" y="10.613" style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:2.66667px;line-height:125%;font-family:Helvetica;-inkscape-font-specification:Helvetica;letter-spacing:0;word-spacing:0;fill:#000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><svg:tspan id="tspan836" x="3.085" y="10.613" style="fill:#b3b3b3">DALLAS</svg:tspan><svg:tspan id="tspan840" x="3.085" y="13.947" style="fill:#b3b3b3">18B20</svg:tspan></svg:text>
+  </svg:g>
+  <svg:g id="g5787" style="display:inline" transform="matrix(15.4896 0 0 15.4896 2750.002 -516.457)">
+    <svg:path id="rect5753" d="M0 22.728h2.16v1H0z" style="fill:none"/>
+    <svg:path id="rect5755" d="M7.181 22.728h2.157v1H7.181z" style="fill:none"/>
+    <svg:path id="rect5757" d="M14.367 22.728h2.16v1h-2.16z" style="fill:none"/>
+    <svg:path id="line5759" d="M1.08 24.728v7.177" style="fill:none;stroke:#8c8c8c;stroke-width:2.16;stroke-linecap:round"/>
+    <svg:path id="line5761" d="M8.26 24.728v7.177" style="fill:none;stroke:#8c8c8c;stroke-width:2.16;stroke-linecap:round"/>
+    <svg:path id="line5763" d="M15.447 24.728v7.177" style="fill:none;stroke:#8c8c8c;stroke-width:2.16;stroke-linecap:round"/>
+    <svg:path id="rect5765" d="M7.177 15.376h2.154v9.352H7.177z" style="fill:#8c8c8c"/>
+    <svg:path id="path5767" d="M3.287 15.376v3.314c0 .424-.782 1.06-1.198 1.428-1.022.89-2.088 1.816-2.088 2.99v1.619h2.154v-1.211c0-.518.904-1.391 1.35-1.77.997-.871 1.945-1.69 1.945-2.75v-3.62z" style="fill:#8c8c8c"/>
+    <svg:path id="path5769" d="M13.22 15.376v3.314c0 .424.779 1.06 1.197 1.428 1.027.89 2.089 1.816 2.089 2.99v1.619h-2.151v-1.211c0-.518-.904-1.391-1.353-1.77-.998-.871-1.942-1.69-1.942-2.75v-3.62z" style="fill:#8c8c8c"/>
+    <svg:path id="rect5771" d="M2.621 7.758h11.27v10.069H2.621z" style="fill:#1a1a1a;stroke-width:.921288"/>
+    <svg:path id="path5773" d="M13.888 5.305V17.83c.633-.715 1.005-1.555 1.005-2.453V5.305z" style="fill:#141414"/>
+    <svg:path id="path5775" d="M2.621 5.305H1.616v10.069c0 .898.373 1.738 1.005 2.453V7.758z" style="fill:#242424"/>
+    <svg:path id="path5777" d="M1.615 5.305c0 .899.373 1.74 1.005 2.453h11.276c.632-.713 1.005-1.554 1.005-2.453z" style="fill:#1f1f1f"/>
+    <svg:path id="path5779" d="M8.255.646c-3.668 0-6.64 2.086-6.64 4.66h13.278c0-2.574-2.97-4.66-6.638-4.66z" style="fill:#141414"/>
+    <svg:text xml:space="preserve" id="text5785" x="3.085" y="10.613" style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:2.66667px;line-height:125%;font-family:Helvetica;-inkscape-font-specification:Helvetica;letter-spacing:0;word-spacing:0;fill:#000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><svg:tspan id="tspan5781" x="3.085" y="10.613" style="fill:#b3b3b3">DALLAS</svg:tspan><svg:tspan id="tspan5783" x="3.085" y="13.947" style="fill:#b3b3b3">18B20</svg:tspan></svg:text>
+  </svg:g>
+  <svg:g id="g940155" style="display:inline;opacity:1">
+    <svg:path id="rect940147" d="M2048.504-1303.937h15.118V79.37h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    <svg:path id="rect940149" d="M2048.504 64.252h124.724V79.37h-124.724z" style="fill:#000;stroke-width:1.00157"/>
+    <svg:path id="rect940151" d="M2158.11 15.118h15.118V79.37h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    <svg:path id="rect940153" d="M1209.449-1303.937h15.118v226.772h-15.118z" style="display:inline;opacity:1;fill:#000;stroke-width:1.00157"/>
+    <svg:path id="rect10650" d="M2649.449-1303.937h15.118V79.37h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    <svg:path id="rect10652" d="M2649.449 64.252h124.724V79.37h-124.724z" style="fill:#000;stroke-width:1.00157"/>
+    <svg:path id="rect10654" d="M2759.055 15.118h15.118V79.37h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    <svg:path id="rect940145" d="M1209.449-1303.937h1455.118v15.118H1209.449z" style="display:inline;opacity:1;fill:#000;stroke-width:1.00157"/>
+  </svg:g>
+  <svg:g id="g940173" style="display:inline;opacity:1" transform="translate(0 340.158)">
+    <svg:path id="rect940163" d="M1028.032-1700.787h2078.74v15.118h-2078.74z" style="fill:#f60;stroke-width:1.00157"/>
+    <svg:path id="rect940165" d="M2490.709-1700.787h15.118v1440h-15.118z" style="fill:#f60;stroke-width:1.00157"/>
+    <svg:path id="rect940167" d="M2381.102-275.906h124.724v15.118h-124.724z" style="fill:#f60;stroke-width:1.00157"/>
+    <svg:path id="rect940169" d="M1028.032-1700.787h15.118v283.465h-15.118z" style="fill:#f60;stroke-width:1.00157"/>
+    <svg:path id="rect940171" d="M2381.102-325.039h15.118v64.252h-15.118z" style="fill:#f60;stroke-width:1.00157"/>
+    <svg:path id="rect10644" d="M3091.654-1700.787h15.118v1440h-15.118z" style="fill:#f60;stroke-width:1.00157"/>
+    <svg:path id="rect10646" d="M2982.047-275.906h124.724v15.118h-124.724z" style="fill:#f60;stroke-width:1.00157"/>
+    <svg:path id="rect10648" d="M2982.047-325.039h15.118v64.252h-15.118z" style="fill:#f60;stroke-width:1.00157"/>
+  </svg:g>
+  <svg:g id="g936278" style="display:inline;opacity:1">
+    <svg:path id="rect936272" d="M1209.449 721.89h1678.11v15.118h-1678.11z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke:none;stroke-width:1.00158;stroke-dasharray:none;stroke-opacity:1"/>
+    <svg:path id="rect936274" d="M1209.449 593.386h15.118v143.622h-15.118z" style="fill:#50c878;fill-opacity:1;stroke:none;stroke-width:1.00157;stroke-dasharray:none;stroke-opacity:1"/>
+    <svg:circle id="circle936276" cx="1217.008" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
+    <svg:path id="rect936491" d="M2271.496 15.118h15.118v721.89h-15.118z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>
+    <svg:path id="rect936493" d="M2872.441 15.118h15.118v721.89h-15.118z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>
+  </svg:g>
+</svg:g>

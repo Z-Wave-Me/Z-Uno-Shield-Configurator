@@ -36,15 +36,25 @@
         stroke-width: 2px;
     }</style>
   </defs>
+  <g shield></g>
+
   <ng-container *ngIf="selectedPin$ | async as pin">
     <text style="font-size: 70px" x="80%" y="10%" text-anchor="middle" dominant-baseline="middle">
-      {{ pin.device?.id | json }}
+      {{ pin.id | json }}
     </text>
-
+    <text style="font-size: 70px" x="80%" y="15%" text-anchor="middle" dominant-baseline="middle">
+      {{ pin?.device?.id | json }}
+    </text>
     <ng-container [ngSwitch]="pin.device?.id">
       <g *ngSwitchCase="'dimmer'" dimmer [pin]="pin"></g>
       <g *ngSwitchCase="'door-window'" door-window [pin]="pin"></g>
+      <g *ngSwitchCase="'motion'" motion-sensor [pin]="pin"></g>
+      <g *ngSwitchCase="'switch'" switch [pin]="pin"></g>
+      <g *ngSwitchCase="'dht22'" dht22 [pin]="pin"></g>
+      <g *ngSwitchCase="'0-10v'" dimmer0-10v [pin]="pin"></g>
+    </ng-container>
+    <ng-container [ngSwitch]="true">
+      <g *ngSwitchCase="pin.device?.id?.toString()?.includes('sensor')" ds18b20 [pin]="pin"></g>
     </ng-container>
   </ng-container>
-  <g shield></g>
 </svg>

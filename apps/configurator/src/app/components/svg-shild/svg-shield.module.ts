@@ -7,6 +7,11 @@ import { DimmerComponent } from './components/devices/dimmer/dimmer.component';
 import { HostDirective } from './directives/host.directive';
 import { HighlightPinDirective } from './directives/highlight-pin.directive';
 import { DoorWindowComponent } from './components/devices/door-window/door-window.component';
+import { MotionSensorComponent } from './components/devices/motion-senser/motion-sensor.component';
+import { SwitchComponent } from './components/devices/switch/switch.component';
+import { Dht22Component } from './components/devices/dth22/dht22.component';
+import { Ds18b20Component } from './components/devices/ds18b20/ds18b20.component';
+import { Dimmer010vComponent } from './components/devices/dimmer0-10v/dimmer010v.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +20,11 @@ import { DoorWindowComponent } from './components/devices/door-window/door-windo
     ShieldComponent,
     DimmerComponent,
     DoorWindowComponent,
+    MotionSensorComponent,
+    SwitchComponent,
+    Dht22Component,
+    Ds18b20Component,
+    Dimmer010vComponent,
   ],
   exports: [SvgShieldComponent, SandboxComponent],
   imports: [CommonModule, HostDirective, HighlightPinDirective],

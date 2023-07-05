@@ -7,21 +7,8 @@ import { PinConfig, PinsStateService } from '../../../../../services/store/pins-
   templateUrl: './dimmer.component.svg',
   styleUrls: ['./dimmer.component.scss'],
 })
-export class DimmerComponent implements AfterViewInit {
+export class DimmerComponent {
 
   @Input()
   public pin?: PinConfig;
-
-  constructor() {
-
-  }
-
-  public doSomething(): void {
-    console.log('do it');
-    // this.pinSelectedService.select({ id: 'PWM3' });
-  }
-
-  public ngAfterViewInit(): void {
-
-  }
 }

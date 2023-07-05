@@ -22,7 +22,7 @@ export class SelectorComponent {
     },
     {
       title: $localize`Motion`,
-      value: 'Motion',
+      value: 'motion',
     },
     {
       title: $localize`Smoke`,
@@ -60,7 +60,7 @@ export class SelectorComponent {
       title: $localize`Glass break`,
       value: 'Glass break',
     },
-  ].map((data) => ({...data, withType: true}));
+  ].map((data) => ({ ...data, withType: true }));
 
   private readonly digitalOutput = [
     {
@@ -89,7 +89,7 @@ export class SelectorComponent {
         },
         {
           title: $localize`DS18B20`,
-          value: 'DS18B20',
+          value: 'ds18b20',
         },
       ],
     },
@@ -103,11 +103,11 @@ export class SelectorComponent {
         },
         {
           title: $localize`DS18B20`,
-          value: 'DS18B20',
+          value: 'ds18b20',
         },
       ],
     },
-  ].map((data) => ({...data, withType: true}));
+  ].map((data) => ({ ...data, withType: true }));
 
   private readonly pwmOutput = [
     {
@@ -272,7 +272,7 @@ export class SelectorComponent {
   public topPinList = [
     {
       title: 'PWM4',
-      id: 'PWM4',
+      id: 'pwm4',
       pin: [
         {
           key: 'PWM',
@@ -289,7 +289,7 @@ export class SelectorComponent {
 
     {
       title: 'PWM3',
-      id: 'PWM3',
+      id: 'pwm3',
       pin: [
         {
           key: 'PWM',
@@ -305,7 +305,7 @@ export class SelectorComponent {
     },
     {
       title: 'PWM2',
-      id: 'PWM2',
+      id: 'pwm2',
       pin: [
         {
           key: 'PWM',
@@ -321,7 +321,7 @@ export class SelectorComponent {
     },
     {
       title: 'PWM1',
-      id: 'PWM1',
+      id: 'pwm1',
       pin: [
         {
           key: 'PWM',
@@ -342,7 +342,12 @@ export class SelectorComponent {
         {
           key: '0-10V',
           title: $localize`Analog output 0-10V`,
-          options: this.analogOutput,
+          options: [
+            {
+              title: $localize`Dimmer`,
+              value: '0-10v',
+            },
+          ],
         },
       ],
     },
@@ -353,7 +358,12 @@ export class SelectorComponent {
         {
           key: '0-10V',
           title: $localize`Analog output 0-10V`,
-          options: this.analogOutput,
+          options: [
+            {
+              title: $localize`Dimmer`,
+              value: '0-10v',
+            },
+          ],
         },
       ],
     },
@@ -364,7 +374,12 @@ export class SelectorComponent {
         {
           key: '0-10V',
           title: $localize`Analog output 0-10V`,
-          options: this.analogOutput,
+          options: [
+            {
+              title: $localize`Dimmer`,
+              value: '0-10v',
+            },
+          ],
         },
       ],
     },
@@ -375,7 +390,12 @@ export class SelectorComponent {
         {
           key: '0-10V',
           title: $localize`Analog output 0-10V`,
-          options: this.analogOutput,
+          options: [
+            {
+              title: $localize`Dimmer`,
+              value: '0-10v',
+            },
+          ],
         },
       ],
     },
@@ -441,7 +461,7 @@ export class SelectorComponent {
       id: '12',
       pin: [
         {
-          key: 'Temperature/humidity',
+          key: 'temperature-humidity',
           title: $localize`Temperature/humidity`,
           options: [
             {
@@ -450,7 +470,7 @@ export class SelectorComponent {
             },
             {
               title: $localize`DHT22`,
-              value: 'DHT22',
+              value: 'dht22',
             },
           ],
         },
@@ -519,7 +539,7 @@ export class SelectorComponent {
           ],
         },
         {
-          key: 'Temperature/humidity',
+          key: 'temperature-humidity',
           title: $localize`Temperature/humidity`,
           options: [
             {
@@ -528,7 +548,7 @@ export class SelectorComponent {
             },
             {
               title: $localize`DHT22`,
-              value: 'DHT22',
+              value: 'dht22',
             },
           ],
         },
