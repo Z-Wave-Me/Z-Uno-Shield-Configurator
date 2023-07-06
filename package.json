@@ -4,10 +4,11 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve configurator --configuration=en",
-    "build": "nx build configurator",
+    "build": "nx build configurator --configuration=en",
     "test": "nx test",
     "extract": "nx extract-i18n",
-    "translate": "translate.sh && xlf2xlf -i messages.xlf -o src/locale/messages.ru.xlf -f en -t ru"
+    "translate": "translate.sh && npx xlf2xlf -i messages.xlf -o src/locale/messages.ru.xlf -f en -t ru",
+    "deploy": "nx deploy configurator --configuration=en --base-href=./"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~16.1.0",
     "@angular/router": "~16.1.0",
     "@nx/angular": "16.4.0",
+    "angular-cli-ghpages": "^1.0.6",
     "ngx-highlightjs": "^9.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
