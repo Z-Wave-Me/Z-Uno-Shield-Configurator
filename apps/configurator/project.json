@@ -96,6 +96,9 @@
       "options": {
         "buildTarget": "configurator:build"
       }
+    },
+    "deploy": {
+      "executor": "angular-cli-ghpages:deploy"
     }
   }
 }
