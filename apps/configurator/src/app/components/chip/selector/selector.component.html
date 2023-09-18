@@ -1,0 +1,8 @@
+<div class="row">
+  <configurator-pin-configurator
+    configuratorSelectable
+    *ngFor="let pin of pins"
+    [options]="pin"
+    (click)="select(pin.id)" />
+</div>
+<configurator-svg-chip></configurator-svg-chip>

@@ -5,12 +5,10 @@ import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutComponent } from './components/layout/layout.component';
-import { ChildDeviceConfiguratorComponent } from './components/child-pin-configurator/child-device-configurator.component';
+import { ChildDeviceConfiguratorComponent } from './components/shield-pages/child-pin-configurator/child-device-configurator.component';
 import { TestComponent } from './components/test/test.component';
-import { SelectorComponent } from './components/selector/selector.component';
-import { PinConfiguratorComponent } from './components/pin-configurator/pin-configurator.component';
 import { MatIconModule } from '@angular/material/icon';
-import { SvgShieldModule } from './components/svg-shild/svg-shield.module';
+import { SvgShieldModule } from './components/shield-pages/svg-shild/svg-shield.module';
 import { SelectableDirective } from './directives/selectable/selectable.directive';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FooterComponent } from './components/footer/footer.component';
@@ -25,7 +23,10 @@ import {
 } from '@angular/material/tooltip';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { MatButtonModule } from '@angular/material/button';
-import { RelationsComponent } from './components/relations/relations.component';
+import { PinConfiguratorComponent } from './components/shield-pages/pin-configurator/pin-configurator.component';
+import { SelectorComponent } from './components/shield-pages/selector/selector.component';
+import { RelationsComponent } from './components/shield-pages/relations/relations.component';
+import { ShieldWrapperComponent } from './components/shield-pages/shield-wrapper/shield-wrapper.component';
 
 const customTooltipDefaults: MatTooltipDefaultOptions = {
   showDelay: 1000,
@@ -36,13 +37,13 @@ const customTooltipDefaults: MatTooltipDefaultOptions = {
 @NgModule({
   declarations: [
     AppComponent,
-
     LayoutComponent,
     ChildDeviceConfiguratorComponent,
     PinConfiguratorComponent,
     SelectorComponent,
     TestComponent,
     RelationsComponent,
+    ShieldWrapperComponent,
   ],
   imports: [
     BrowserModule,

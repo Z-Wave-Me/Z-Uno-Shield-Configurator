@@ -8,7 +8,7 @@
     "test": "nx test",
     "extract": "nx extract-i18n",
     "translate": "translate.sh && npx xlf2xlf -i messages.xlf -o src/locale/messages.ru.xlf -f en -t ru",
-    "deploy": "nx deploy configurator --configuration=en --base-href=./"
+    "deploy": "nx deploy configurator --configuration=en --base-href=/Z-Uno-Shield-Configurator/"
   },
   "private": true,
   "dependencies": {

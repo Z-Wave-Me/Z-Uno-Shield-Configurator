@@ -1,9 +1,15 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row class="container">
-    <span
-      [style.font-weight]="'bold'"
-      [style.font-size.%]="120"
-      i18n>Z-Uno Shield Configurator</span>
+    <a
+      mat-button
+      class="header"
+      routerLink="/shield"
+      i18n>Z-Uno Shield Configurator</a>
+    <a
+      mat-button
+      class="header"
+      routerLink="/chip"
+      i18n>ZGM230S Configurator</a>
     <span class="spacer"></span>
     <button
       mat-icon-button

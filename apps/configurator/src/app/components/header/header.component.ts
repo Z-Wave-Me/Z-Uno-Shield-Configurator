@@ -7,6 +7,7 @@ import { NotificationService } from '../../services/notification/notification.se
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PinsStateService } from '../../services/store/pins-state.service';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'configurator-header',
@@ -21,12 +22,13 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatButtonModule,
     MatTooltipModule,
     ClipboardModule,
+    RouterLink,
   ],
 })
 export class HeaderComponent {
   constructor(
     private readonly notificationService: NotificationService,
-    private readonly pinsStateService: PinsStateService,
+    private readonly pinsStateService: PinsStateService
   ) {}
 
   public reset(): void {
