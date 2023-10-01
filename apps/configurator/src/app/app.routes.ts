@@ -4,7 +4,6 @@ import { TestComponent } from './components/test/test.component';
 import { ShieldWrapperComponent } from './components/shield-pages/shield-wrapper/shield-wrapper.component';
 import { SelectorComponent } from './components/shield-pages/selector/selector.component';
 import { RelationsComponent } from './components/shield-pages/relations/relations.component';
-import { ChipWrapperComponent } from './components/chip/chip-wrapper/chip-wrapper.component';
 
 export const appRoutes: Route[] = [
   {
@@ -36,9 +35,14 @@ export const appRoutes: Route[] = [
     ],
   },
   {
-    path: 'chip',
+    path: 'zgm230s',
     component: LayoutComponent,
     loadChildren: () => import('./components/chip/chip.module').then(m => m.ChipModule),
+  },
+  {
+    path: 'zm8202',
+    component: LayoutComponent,
+    loadChildren: () => import('./components/zm8202/zm8202.module').then(m => m.Zm8202Module),
   },
   {
     path: '**',

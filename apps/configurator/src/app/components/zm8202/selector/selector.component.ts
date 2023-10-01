@@ -367,55 +367,6 @@ export class SelectorComponent {
       pin: [...this.adcConfig, ...this.gpioConfig],
     },
     {
-      title: 'PC08',
-      id: 'PC08',
-      pin: [...this.adcConfig, ...this.gpioConfig],
-    },
-    {
-      title: 'PA09',
-      id: 'PA09',
-      pin: [
-        {
-          key: 'UART TX1',
-          title: $localize`UART TX1`,
-          options: this.roter,
-        },
-        ...this.gpioConfig,
-      ],
-    },
-    {
-      title: 'PA08',
-      id: 'PA08',
-      pin: [
-        {
-          key: 'UART RX1',
-          title: $localize`UART RX1`,
-          options: this.roter,
-        },
-        ...this.gpioConfig,
-      ],
-    },
-    {
-      title: 'PC09',
-      id: 'PC09',
-      pin: [...this.ds18b20Config, ...this.dhtConfig, ...this.gpioConfig],
-    },
-    {
-      title: 'PA10',
-      id: 'PA10',
-      pin: [...this.ds18b20Config, ...this.dhtConfig, ...this.gpioConfig],
-    },
-    {
-      title: 'PC01',
-      id: 'PC01',
-      pin: [...this.ds18b20Config, ...this.dhtConfig, ...this.gpioConfig],
-    },
-    {
-      title: 'PC05',
-      id: 'PC05',
-      pin: [...this.ds18b20Config, ...this.dhtConfig, ...this.gpioConfig],
-    },
-    {
       title: 'PA06',
       id: 'PA06',
       pin: [
@@ -426,39 +377,8 @@ export class SelectorComponent {
       ],
     },
     {
-      title: 'PB03',
-      id: 'PB03',
-      pin: [
-        ...this.pwmConfig,
-        ...this.ds18b20Config,
-        ...this.dhtConfig,
-        ...this.gpioConfig,
-      ],
-    },
-    {
-      title: 'PB04',
-      id: 'PB04',
-      pin: [
-        ...this.pwmConfig,
-        ...this.ds18b20Config,
-        ...this.dhtConfig,
-        ...this.gpioConfig,
-      ],
-    },
-    {
-      title: 'PB05',
-      id: 'PB05',
-      pin: [
-        ...this.pwmConfig,
-        ...this.ds18b20Config,
-        ...this.dhtConfig,
-        ...this.gpioConfig,
-      ],
-    },
-
-    {
-      title: 'PB06',
-      id: 'PB06',
+      title: 'PB01',
+      id: 'PB01',
       pin: this.gpioConfig,
     },
     {
@@ -467,97 +387,9 @@ export class SelectorComponent {
       pin: this.gpioConfig,
     },
     {
-      title: 'PC06',
-      id: 'PC06',
-      pin: this.gpioConfig,
-    },
-    {
-      title: 'PC02',
-      id: 'PC02',
-      pin: this.gpioConfig,
-    },
-    {
-      title: 'PC03',
-      id: 'PC03',
-      pin: this.gpioConfig,
-    },
-    {
-      title: 'PC04',
-      id: 'PC04',
-      pin: this.gpioConfig,
-    },
-    {
-      title: 'PB01',
-      id: 'PB01',
-      pin: this.gpioConfig,
-    },
-    {
-      title: 'PB00',
-      id: 'PB00',
-      pin: [
-        {
-          key: 'UART TX0',
-          title: $localize`UART TX0`,
-          options: this.roter,
-        },
-        ...this.gpioConfig,
-      ],
-    },
-    {
-      title: 'PD02',
-      id: 'PD02',
-      pin: [
-        {
-          key: 'UART RX0',
-          title: $localize`UART RX0`,
-          options: this.roter,
-        },
-        ...this.gpioConfig,
-      ],
-    },
-    {
-      title: 'PD00',
-      id: 'PD00',
-      pin: [
-        {
-          key: 'SAPI TX',
-          title: $localize`SAPI TX`,
-          options: this.roter,
-        },
-      ],
-    },
-    {
-      title: 'PD01',
-      id: 'PD01',
-      pin: [
-        {
-          key: 'SAPI RX',
-          title: $localize`SAPI RX`,
-          options: this.roter,
-        },
-      ],
-    },
-    {
-      title: 'PB02',
-      id: 'PB02',
-      pin: [
-        {
-          key: 'SYSTEM LED1',
-          title: $localize`SYSTEM LED1`,
-        },
-        ...this.gpioConfig,
-      ],
-    },
-    {
-      title: 'PD03',
-      id: 'PD03',
-      pin: [
-        {
-          key: 'SYSTEM LED2',
-          title: $localize`SYSTEM LED2`,
-        },
-        ...this.gpioConfig,
-      ],
+      title: 'PC05',
+      id: 'PC05',
+      pin: [...this.ds18b20Config, ...this.dhtConfig, ...this.gpioConfig],
     },
   ];
 
