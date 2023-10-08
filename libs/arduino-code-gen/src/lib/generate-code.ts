@@ -1,67 +1,36 @@
-function generateCode(pins) {
-  // исправление множественного вызова
-  if (!pins.isReadyToCode) {return;}
+import { PinConfig } from '../../../../apps/configurator/src/app/services/store/pins-state.service';
+import { DeviceType } from '../../../../apps/configurator/src/app/shared/device.model';
+import { SwitchBinary } from './devices/switch-binary';
+import { Device } from './devices/device.interface';
+import { Thermostat } from './devices/thermostat';
+import { SwitchMultilevel } from './devices/switch-multilevel';
+import { SwitchColor } from './devices/switch-color';
+import { SensorBinary } from './devices/sensor-binary';
+import { Generator } from './generator';
 
-  const templates = pinsToTemplates(pins),
-    _relation = templatesToRelations(templates),
-    used_pins = [];
-
-  // Собираем используемые в связях пины
-  if (_relation) {Object.keys(_relation).map(function(i){ used_pins.push(_relation[i].device_sb.pin); });}
-
-  const includes = templates.map(function(ch) { return ch.includes; }).filter(function(value, index, self) { return self.indexOf(value) === index && !!value; }).join('\n');
-  const vars = templates.map(function(ch) { return ch.vars; } ).filter(function(value) { return !!value; }).join('\n');
-  const channels = templates.map(function(ch) { return ch.channel; } ).filter(function(value) { return !!value; }).join(',\n');
-  const reports = templates.map(function(ch) { return ch.report; } ).filter(function(value) { return !!value; }).join(',\n');
-  const setup = templates.map(function(ch) { return ch.setup; } ).filter(function(value) { return !!value; }).join('\n');
-  // убираем кусок, если устройство уже используется в связях (предполгается, что в лупе только запись значения на пин)
-  const loop = templates.map(function(ch) { if (!used_pins.includes(ch.key)) {return ch.loop;}} ).filter(function(value) { return !!value; }).join('\n\n') + '\n';
-  const xetter = templates.map(function(ch) { return ch.xetter; } ).filter(function(value) { return !!value; }).join('\n\n');
-  const funcs = templates.map(function(ch) { return ch.funcs; } ).filter(function(value) { return !!value; }).join('\n\n');
-  const notes = templates.map(function(ch) { return ch.note; } ).filter(function(value) { return !!value; }).join('\n\n');
-  const keys = templates.map(function(ch) { if (ch.note) {return ch.key;} } ).filter(function(value) { return !!value; }).join(',');
-  const pwm_map = templates.map(function(ch) { return ch.pwm_map; } ).filter(function(value) { return !!value; }).join('|');
-  const enable0_10V = templates.reduce(function(prev, ch) {
-    if (typeof prev != 'boolean') {// variable is a boolean
-      prev = (prev.enable0_10V == true)
-    }
-
-    return (prev) || (ch.enable0_10V == true) ;
-  } )
-  const rloop = _relation ? ('  // Logical relations code\n' + relations2code(_relation).map(function(ch) { return ch.rloop }).join('\n\n') +  '\n\n') : '';
-
-  if (!includes && !vars && !channels && !setup && !loop && !xetter && !notes && !funcs) {
-    return {
-      'code': '// Please select features',
-      'notes': 'No notes',
-    };
+export function deviceFromConfig(config: PinConfig): Device {
+  switch (config.device?.deviceType) {
+    case DeviceType.SwitchBinary:
+      return new SwitchBinary(config);
+    case DeviceType.Thermostat:
+      return new Thermostat(config);
+    case DeviceType.SwitchMultilevel:
+      return new SwitchMultilevel(config);
+    case DeviceType.SwitchColor:
+      return new SwitchColor(config);
+    case DeviceType.SensorBinary:
+      return new SensorBinary(config);
+    case DeviceType.SensorMultilevel:
+      return new SwitchMultilevel(config);
+    default:
+      throw new Error('Unknown type');
   }
-  // if (!loop.match(/\S/gm)) loop = '';
-  // if (!rloop.match(/\S/gm)) rloop = '';
-  // if channel are empty setup_channels will be hidden
-  // if (channels.match(/\S/gm)) channels = "// Z-Wave channels\n" + " ZUNO_SETUP_CHANNELS(\n" + channels + "\n);\n\n";
+}
 
-  return {
-    'code':
-      '\n#include "ZUNO_SHIELD.h" // Shield library'+ '\n\n'
-      + (includes ? (includes + '\n\n') : '')
-      + (vars ? ('// Global variables\n' + vars + '\n\n' ) : '')
-      + (channels ? ('// Z-Wave channels\n' + 'ZUNO_SETUP_CHANNELS(\n' + channels + '\n);\n\n'): '')
-      + (reports ? ('// External SensorMultilevel reports handler \nZUNO_REPORTS_HANDLER(SensorMultilevel, reportSMLHandler);\n\n') : '')
-      + 'ZUNOShield shield; // Shield object'+ '\n\n'
-      + 'void setup() {\n'
-      + (enable0_10V ? '  shield.init0_10V();\n' : '')
-      + (pwm_map ? '  shield.initPWM('+pwm_map+');\n' :'')
-      +setup + '\n'
-      + '}\n\n'
-      + 'void loop() {\n'
-      + loop
-      + rloop
-      + '}\n\n'
-      + (xetter ? ('// Getters and setters\n' + xetter + '\n\n') : '')
-      + (reports ? ('void reportSMLHandler(ReportAuxData_t * report) {\n' + reports + '\n}' + '\n\n') : '')
-      + (funcs ? ('\n\n// Functions\n' + funcs + '\n\n') : ''),
-    'notes': notes ? notes : 'No notes',
-    'keys': keys ? keys : 'No keys',
-  };
+export function generateCode(devices: Device[]): string {
+  return new Generator(devices).code();
+}
+
+export function generate(config: PinConfig[]): string {
+  return generateCode(config.map(deviceFromConfig));
 }

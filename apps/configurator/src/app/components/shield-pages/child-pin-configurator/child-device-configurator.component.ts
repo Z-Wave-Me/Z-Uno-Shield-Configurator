@@ -10,7 +10,7 @@ import {
 import { PinConfiguratorInput } from '../../../shared/pin-configurator.interface';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { ConnectionMode, DeviceConfig, PinsStateService } from '../../../services/store/pins-state.service';
+import { ConnectionMode, DeviceConfig } from '../../../services/store/pins-state.service';
 
 interface DeviceForm {
   list: FormControl<PinConfiguratorInput | null>;
@@ -65,8 +65,9 @@ export class ChildDeviceConfiguratorComponent implements OnInit, OnDestroy {
     this.deviceForm.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe((config) => {
+        console.log(config);
         const { list, ...other } = config;
-        this.changePin.emit({ ...other, title: list?.title, id: list?.value });
+        this.changePin.emit({ ...other, title: list?.title, id: list?.value, deviceType: list?.type });
       });
 
     if (!this.init) {

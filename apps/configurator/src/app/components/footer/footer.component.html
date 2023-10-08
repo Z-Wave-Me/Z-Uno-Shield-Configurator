@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-accordion>
+  <mat-accordion *ngIf="{code: code$ | async} as data">
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">
       <mat-expansion-panel-header>
@@ -11,7 +11,7 @@
           <button
             mat-icon-button
             (click)="prevent($event)"
-            [configuratorSaveAsFile]="code"
+            [configuratorSaveAsFile]="data.code ?? ''"
             i18n-matTooltip
             matTooltip="Download configuration file"
             i18n
@@ -21,7 +21,7 @@
           <button
             mat-icon-button
             (click)="prevent($event)"
-            [cdkCopyToClipboard]="code"
+            [cdkCopyToClipboard]="data.code ?? ''"
             i18n-matTooltip
             matTooltip="Click to copy to clipboard"
           >
@@ -30,7 +30,7 @@
         </mat-panel-description>
 
       </mat-expansion-panel-header>
-      <pre style="white-space: pre-wrap;"><code [highlight]="code"></code></pre>
+      <pre style="white-space: pre-wrap;"><code [highlight]="data.code ?? ''"></code></pre>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

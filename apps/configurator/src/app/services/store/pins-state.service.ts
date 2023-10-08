@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, filter, first, map, Observable } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
+import { DeviceType } from '../../shared/device.model';
 
 
 export enum ConnectionMode {
@@ -14,6 +15,7 @@ export type DeviceConfig = {
   id: string | number;
   additionally: string | number | null | undefined;
   type: ConnectionMode | null;
+  deviceType?: DeviceType;
   withGround?: number;
   lowerBound: number | null;
   upperBound: number | null;

@@ -1,2 +1,2 @@
-export * from './lib/arduino-code-gen';
-export { generateCode } from './lib/generate-code';
+// export * from './lib/arduino-code-gen';
+export { generate } from './lib/generate-code';

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PinSelectedService } from '../../../services/pin-selected/pin-selected.service';
-
+import { DeviceType } from '../../../shared/device.model';
 
 @Component({
   selector: 'configurator-selector',
@@ -13,6 +13,7 @@ export class SelectorComponent {
     {
       title: $localize`General purpose`,
       value: 'General purpose',
+      type: DeviceType.SensorBinary,
     },
     {
       title: $localize`Door/window`,
@@ -21,22 +22,27 @@ export class SelectorComponent {
     {
       title: $localize`Motion`,
       value: 'motion',
+      type: DeviceType.SensorBinary,
     },
     {
       title: $localize`Smoke`,
       value: 'Smoke',
+      type: DeviceType.SensorBinary,
     },
     {
       title: $localize`Leakage`,
       value: 'Leakage',
+      type: DeviceType.SensorBinary,
     },
     {
       title: $localize`CO`,
       value: 'CO',
+      type: DeviceType.SensorBinary,
     },
     {
       title: $localize`CO2`,
       value: 'CO2',
+      type: DeviceType.SensorBinary,
     },
     {
       title: $localize`Overheat`,
@@ -45,18 +51,22 @@ export class SelectorComponent {
     {
       title: $localize`Freeze`,
       value: 'Freeze',
+      type: DeviceType.SensorBinary,
     },
     {
       title: $localize`Tamper`,
       value: 'Tamper',
+      type: DeviceType.SensorBinary,
     },
     {
       title: $localize`Tilt`,
       value: 'Tilt',
+      type: DeviceType.SensorBinary,
     },
     {
       title: $localize`Glass break`,
       value: 'Glass break',
+      type: DeviceType.SensorBinary,
     },
   ].map((data) => ({ ...data, withType: true }));
 
@@ -64,22 +74,27 @@ export class SelectorComponent {
     {
       title: $localize`Switch`,
       value: 'switch',
+      type: DeviceType.SwitchBinary,
     },
     {
       title: $localize`Door lock`,
       value: 'doorLock',
+      type: DeviceType.SwitchBinary,
     },
     {
       title: $localize`Siren`,
       value: 'siren',
+      type: DeviceType.SwitchBinary,
     },
     {
       title: $localize`Valve`,
       value: 'valve',
+      type: DeviceType.SwitchBinary,
     },
     {
       title: $localize`Heating thermostat`,
       value: 'heatingThermostat',
+      type: DeviceType.Thermostat,
       additionally: [
         {
           title: $localize`Z-Wave temp sensor`,
@@ -88,12 +103,14 @@ export class SelectorComponent {
         {
           title: $localize`DS18B20`,
           value: 'ds18b20',
+          type: DeviceType.DS18B20,
         },
       ],
     },
     {
       title: $localize`Cooling thermostat`,
       value: 'coolingThermostat',
+      type: DeviceType.Thermostat,
       additionally: [
         {
           title: $localize`Z-Wave temp sensor`,
@@ -102,6 +119,7 @@ export class SelectorComponent {
         {
           title: $localize`DS18B20`,
           value: 'ds18b20',
+          type: DeviceType.DS18B20,
         },
       ],
     },
@@ -115,18 +133,22 @@ export class SelectorComponent {
     {
       title: $localize`Red LED`,
       value: 'led red',
+      type: DeviceType.SwitchColor,
     },
     {
       title: $localize`Green LED`,
       value: 'led green',
+      type: DeviceType.SwitchColor,
     },
     {
       title: $localize`Blue LED`,
       value: 'led blue',
+      type: DeviceType.SwitchColor,
     },
     {
       title: $localize`White LED`,
       value: 'led white',
+      type: DeviceType.SwitchColor,
     },
   ];
 
@@ -134,38 +156,47 @@ export class SelectorComponent {
     {
       title: $localize`Percentages, %`,
       value: 'Percentages, %',
+      type: DeviceType.SensorMultilevel,
     },
     {
       title: $localize`Temperature, °C`,
       value: 'Temperature, °C',
+      type: DeviceType.SensorMultilevel,
     },
     {
       title: $localize`Luminance, lux`,
       value: 'Luminance, lux`',
+      type: DeviceType.SensorMultilevel,
     },
     {
       title: $localize`Humidity, %`,
       value: 'Humidity, %',
+      type: DeviceType.SensorMultilevel,
     },
     {
       title: $localize`Voltage, V`,
       value: 'Voltage, V',
+      type: DeviceType.SensorMultilevel,
     },
     {
       title: $localize`Current, A`,
       value: 'Current, A',
+      type: DeviceType.SensorMultilevel,
     },
     {
       title: $localize`Distance, m`,
       value: 'Distance, m',
+      type: DeviceType.SensorMultilevel,
     },
     {
       title: $localize`Pressure, kPa`,
       value: 'Pressure, kPa',
+      type: DeviceType.SensorMultilevel,
     },
     {
       title: $localize`CO2, ppm`,
       value: 'CO2, ppm',
+      type: DeviceType.SensorMultilevel,
     },
   ];
 
@@ -177,18 +208,22 @@ export class SelectorComponent {
     {
       title: $localize`Red LED`,
       value: 'led red',
+      type: DeviceType.SwitchColor,
     },
     {
       title: $localize`Green LED`,
       value: 'led green',
+      type: DeviceType.SwitchColor,
     },
     {
       title: $localize`Blue LED`,
       value: 'led blue',
+      type: DeviceType.SwitchColor,
     },
     {
       title: $localize`White LED`,
       value: 'led white',
+      type: DeviceType.SwitchColor,
     },
   ];
 
@@ -196,30 +231,37 @@ export class SelectorComponent {
     {
       title: $localize`9600 kbps`,
       value: '9600',
+      type: DeviceType.UART,
     },
     {
       title: $localize`14400 kbps`,
       value: '14400',
+      type: DeviceType.UART,
     },
     {
       title: $localize`19200 kbps`,
       value: '19200',
+      type: DeviceType.UART,
     },
     {
       title: $localize`38400 kbps`,
       value: '38400',
+      type: DeviceType.UART,
     },
     {
       title: $localize`57600 kbps`,
       value: '57600',
+      type: DeviceType.UART,
     },
     {
       title: $localize`115200 kbps`,
       value: '115200',
+      type: DeviceType.UART,
     },
     {
       title: $localize`230400 kbps`,
       value: '230400',
+      type: DeviceType.UART,
     },
   ];
 
@@ -465,10 +507,12 @@ export class SelectorComponent {
             {
               title: $localize`DHT11`,
               value: 'dht11',
+              type: DeviceType.DHT,
             },
             {
               title: $localize`DHT22`,
               value: 'dht22',
+              type: DeviceType.DHT,
             },
           ],
         },
@@ -543,10 +587,12 @@ export class SelectorComponent {
             {
               title: $localize`DHT11`,
               value: 'dht11',
+              type: DeviceType.DHT,
             },
             {
               title: $localize`DHT22`,
               value: 'dht22',
+              type: DeviceType.DHT,
             },
           ],
         },

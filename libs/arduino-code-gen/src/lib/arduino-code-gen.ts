@@ -534,7 +534,11 @@ function generateCode(pins) {
     used_pins = [];
 
   // Собираем используемые в связях пины
-  if (_relation) {Object.keys(_relation).map(function(i){ used_pins.push(_relation[i].device_sb.pin); });}
+  if (_relation) {
+    Object.keys(_relation).map(function(i){
+      used_pins.push(_relation[i].device_sb.pin);
+    });
+  }
 
   const includes = templates.map(function(ch) { return ch.includes; }).filter(function(value, index, self) { return self.indexOf(value) === index && !!value; }).join('\n');
   const vars = templates.map(function(ch) { return ch.vars; } ).filter(function(value) { return !!value; }).join('\n');

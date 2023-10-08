@@ -6,9 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CopyToClipboardDirective } from '../../directives/copy-to-clipboard/copy-to-clipboard.directive';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
+import { HighlightModule } from 'ngx-highlightjs';
 import { SaveAsFileDirective } from '../../directives/save-as-file/save-as-file.directive';
-
+import { PinsStateService } from '../../services/store/pins-state.service';
+import { map, Observable, tap } from 'rxjs';
+import { generate } from '@configurator/arduino-code-gen';
+import { AsyncPipe, NgIf } from '@angular/common';
 
 
 @Component({
@@ -27,44 +30,17 @@ import { SaveAsFileDirective } from '../../directives/save-as-file/save-as-file.
     MatTooltipModule,
     HighlightModule,
     SaveAsFileDirective,
+    NgIf,
+    AsyncPipe,
   ],
 })
 export class FooterComponent {
   public panelOpenState = false;
-  public code = `
-  // Global variables
-byte pin3SensorMultilevelState;
-byte pin4SensorMultilevelState;
+  public code$: Observable<string>;
 
-// Z-Wave channels
-ZUNO_SETUP_CHANNELS(
-  ZUNO_SENSOR_MULTILEVEL(ZUNO_SENSOR_MULTILEVEL_TYPE_GENERAL_PURPOSE_VALUE, SENSOR_MULTILEVEL_SCALE_PERCENTAGE_VALUE, SENSOR_MULTILEVEL_SIZE_ONE_BYTE, SENSOR_MULTILEVEL_PRECISION_ZERO_DECIMALS, pin3SensorMultilevelGetter),
-  ZUNO_SENSOR_MULTILEVEL(ZUNO_SENSOR_MULTILEVEL_TYPE_GENERAL_PURPOSE_VALUE, SENSOR_MULTILEVEL_SCALE_PERCENTAGE_VALUE, SENSOR_MULTILEVEL_SIZE_ONE_BYTE, SENSOR_MULTILEVEL_PRECISION_ZERO_DECIMALS, pin4SensorMultilevelGetter)
-);
-
-void setup() {
-  pinMode(3, INPUT);
-  pinMode(4, INPUT);
-}
-
-void loop() {
-  pin3SensorMultilevelState = (byte) (50 * analogRead(3) / 431) + 0; // Math in integer numbers
-  zunoSendReport(1); // report every 30 seconds
-
-  pin4SensorMultilevelState = (byte) (50 * analogRead(4) / 431) + 0; // Math in integer numbers
-  zunoSendReport(2); // report every 30 seconds
-  delay(20);
-}
-
-// Getters and setters
-byte pin3SensorMultilevelGetter() {
-  return pin3SensorMultilevelState;
-}
-
-byte pin4SensorMultilevelGetter() {
-  return pin4SensorMultilevelState;
-}`;
-
+  constructor(private readonly pinsStateService: PinsStateService) {
+    this.code$ = this.pinsStateService.state$.pipe(tap(console.warn),map(generate),tap(console.warn));
+  }
   public prevent(event: Event): void {
     event.stopPropagation();
   }
