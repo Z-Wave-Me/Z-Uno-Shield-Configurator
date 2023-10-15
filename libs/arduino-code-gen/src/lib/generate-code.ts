@@ -7,6 +7,7 @@ import { SwitchMultilevel } from './devices/switch-multilevel';
 import { SwitchColor } from './devices/switch-color';
 import { SensorBinary } from './devices/sensor-binary';
 import { Generator } from './generator';
+import { DHT } from './devices/dht';
 
 export function deviceFromConfig(config: PinConfig): Device {
   switch (config.device?.deviceType) {
@@ -22,8 +23,12 @@ export function deviceFromConfig(config: PinConfig): Device {
       return new SensorBinary(config);
     case DeviceType.SensorMultilevel:
       return new SwitchMultilevel(config);
+    case DeviceType.DHT:
+      return new DHT(config);
     default:
-      throw new Error('Unknown type');
+      throw new Error(`Unknown type 
+
+${JSON.stringify(config, null, 2)}`);
   }
 }
 

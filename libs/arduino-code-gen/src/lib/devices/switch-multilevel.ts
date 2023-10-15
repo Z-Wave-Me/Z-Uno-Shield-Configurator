@@ -10,7 +10,7 @@ export class SwitchMultilevel implements Device {
     return `  ZUNO_SWITCH_MULTILEVEL(pin${this.config.id}SwitchMultilevelState, NULL)`;
   }
 
-  public get loop(): string {
+  public loop(): string {
     return `  // PWM SwitchMultilevel@pin${this.config.id} process code
   shield.writePWMPercentage(PPP3PPP, pin${this.config.id}SwitchMultilevelState);`;
   }

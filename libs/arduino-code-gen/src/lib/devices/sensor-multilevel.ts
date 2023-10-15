@@ -10,12 +10,12 @@ export class SensorMultilevel implements Device {
     return `  ZUNO_SENSOR_MULTILEVEL(PPP4PPP, pin${this.config.id}SensorMultilevelState)`;
   }
 
-  public get loop(): string {
+  public loop(channel: number): string {
     return `  // ADC SensorMultilevel@pin${this.config.id} process code
   pin${this.config.id}SensorMultilevelState = (PPP5PPP) round(PPP1PPP * shield.readADCVoltage(PPP6PPP) + PPP3PPP);
   if(pin${this.config.id}SensorMultilevelState != _pin${this.config.id}SensorMultilevelState){
     _pin${this.config.id}SensorMultilevelState = pin${this.config.id}SensorMultilevelState;
-    zunoSendReport(${this.channels}); // report if value has changed
+    zunoSendReport(${channel}); // report if value has changed
   }`;
   }
 

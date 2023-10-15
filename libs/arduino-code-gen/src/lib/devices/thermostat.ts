@@ -14,7 +14,7 @@ export class Thermostat implements Device {
     return `  ZUNO_THERMOSTAT(THERMOSTAT_FLAGS_OFF | THERMOSTAT_FLAGS_${flag}, THERMOSTAT_UNITS_CELSIUS, THERMOSTAT_RANGE_POS, 4, pin${this.config.id}ThermostatModeGetter, pin${this.config.id}ThermostatModeSetter, pin${this.config.id}ThermostatTemperatureGetter, pin${this.config.id}ThermostatTemperatureSetter)`;
   }
 
-  public get loop(): string {
+  public loop(): string {
     const external = this.config.device?.additionally?.toString().startsWith('Z-wave')
         ? ''
         // TODO Спросить что тут должно быть

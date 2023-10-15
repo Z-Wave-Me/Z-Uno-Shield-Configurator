@@ -25,14 +25,14 @@ export class SensorBinary implements Device {
     return `  ZUNO_SENSOR_BINARY(${this.name}, pin${this.config.id}SensorBinaryState)`;
   }
 
-  public get loop(): string {
+  public loop(channel: number): string {
     const inverted = this.config.device?.type === 'inverted' ? '!': '';
 
     return `  // GPIO SensorBinary@pin${this.config.id} process code
   byte _pin${this.config.id}SensorBinaryState = ${inverted}digitalRead(${this.config.id});
   if (pin${this.config.id}SensorBinaryState != _pin${this.config.id}SensorBinaryState) {
     pin${this.config.id}SensorBinaryState = _pin${this.config.id}SensorBinaryState;
-    zunoSendReport(${this.channels});
+    zunoSendReport(${channel});
   }`;
   }
 

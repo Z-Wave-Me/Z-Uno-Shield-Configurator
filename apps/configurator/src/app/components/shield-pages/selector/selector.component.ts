@@ -26,12 +26,12 @@ export class SelectorComponent {
     },
     {
       title: $localize`Smoke`,
-      value: 'Smoke',
+      value: 'smoke',
       type: DeviceType.SensorBinary,
     },
     {
       title: $localize`Leakage`,
-      value: 'Leakage',
+      value: 'leakage',
       type: DeviceType.SensorBinary,
     },
     {
@@ -46,26 +46,26 @@ export class SelectorComponent {
     },
     {
       title: $localize`Overheat`,
-      value: 'Overheat',
+      value: 'overheat',
     },
     {
       title: $localize`Freeze`,
-      value: 'Freeze',
+      value: 'freeze',
       type: DeviceType.SensorBinary,
     },
     {
       title: $localize`Tamper`,
-      value: 'Tamper',
+      value: 'tamper',
       type: DeviceType.SensorBinary,
     },
     {
       title: $localize`Tilt`,
-      value: 'Tilt',
+      value: 'tilt',
       type: DeviceType.SensorBinary,
     },
     {
       title: $localize`Glass break`,
-      value: 'Glass break',
+      value: 'glass break',
       type: DeviceType.SensorBinary,
     },
   ].map((data) => ({ ...data, withType: true }));
@@ -129,6 +129,7 @@ export class SelectorComponent {
     {
       title: $localize`Dimmer`,
       value: 'dimmer',
+      type: DeviceType.SwitchMultilevel,
     },
     {
       title: $localize`Red LED`,
@@ -204,6 +205,7 @@ export class SelectorComponent {
     {
       title: $localize`Dimmer`,
       value: 'dimmer',
+      type: DeviceType.SwitchMultilevel,
     },
     {
       title: $localize`Red LED`,
@@ -386,6 +388,7 @@ export class SelectorComponent {
             {
               title: $localize`Dimmer`,
               value: '0-10v',
+              type: DeviceType.SwitchMultilevel,
             },
           ],
         },
@@ -402,6 +405,7 @@ export class SelectorComponent {
             {
               title: $localize`Dimmer`,
               value: '0-10v',
+              type: DeviceType.SwitchMultilevel,
             },
           ],
         },
@@ -418,6 +422,7 @@ export class SelectorComponent {
             {
               title: $localize`Dimmer`,
               value: '0-10v',
+              type: DeviceType.SwitchMultilevel,
             },
           ],
         },
@@ -434,6 +439,7 @@ export class SelectorComponent {
             {
               title: $localize`Dimmer`,
               value: '0-10v',
+              type: DeviceType.SwitchMultilevel,
             },
           ],
         },
@@ -537,48 +543,11 @@ export class SelectorComponent {
         {
           key: 'Temperature',
           title: $localize`Temperature`,
-          options: [
-            {
-              title: $localize`1 sensor`,
-              value: '1 sensor',
-            },
-            {
-              title: $localize`2 sensors`,
-              value: '2 sensors',
-            },
-            {
-              title: $localize`3 sensors`,
-              value: '3 sensors',
-            },
-            {
-              title: $localize`4 sensors`,
-              value: '4 sensors',
-            },
-            {
-              title: $localize`5 sensors`,
-              value: '5 sensors',
-            },
-            {
-              title: $localize`6 sensors`,
-              value: '6 sensors',
-            },
-            {
-              title: $localize`7 sensors`,
-              value: '7 sensors',
-            },
-            {
-              title: $localize`8 sensors`,
-              value: '8 sensors',
-            },
-            {
-              title: $localize`9 sensors`,
-              value: '9 sensors',
-            },
-            {
-              title: $localize`10 sensors`,
-              value: '10 sensors',
-            },
-          ],
+          options: Array.from({ length: 10 }).map((_, index) => ({
+            title: $localize`${index + 1} sensor`,
+            value: index + 1,
+            type: DeviceType.DS18B20,
+          })),
         },
         {
           key: 'temperature-humidity',

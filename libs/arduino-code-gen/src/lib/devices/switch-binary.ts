@@ -34,7 +34,7 @@ export class SwitchBinary implements Device {
     return `  ${this.name}(pin${this.config.id}SwitchBinaryState, NULL)`;
   }
 
-  public get loop(): string {
+  public loop(): string {
     const condition = this.config.device?.type === 'normal'
         ? 'HIGH : LOW'
         : 'LOW : HIGH';

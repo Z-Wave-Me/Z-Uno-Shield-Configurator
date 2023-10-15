@@ -1,8 +1,7 @@
 import { Device } from './devices/device.interface';
 
 export class Generator implements Device {
-  public channels = 1;
-
+  private channelBehaviour = 1;
   constructor(private readonly devices: Device[]) {}
 
   public get channel(): string {
@@ -20,10 +19,12 @@ ${channel}
       : '';
   }
 
-  public get loop(): string {
+  public loop(): string {
     return `
 void loop() {
 ${this.collect('loop', 2)}
+
+  delay(20);
 }
 
 `;
@@ -86,7 +87,7 @@ ${this.channel}
 ${this.report}
 ZUNOShield shield; // Shield object
 ${this.setup}
-${this.loop}
+${this.loop()}
 ${this.xetter}`;
   }
 
@@ -97,7 +98,17 @@ ${this.xetter}`;
     filter = Boolean,
   ): string {
     return this.devices
-      .map((device) => device[accessor])
+      .map((device) => {
+        const handler = device[accessor];
+
+        if (typeof handler === 'function') {
+          this.channelBehaviour += device.channels ?? 0;
+
+          return handler.call(device, this.channelBehaviour);
+        }
+
+        return handler;
+      })
       .filter(filter)
       .join(Array.from({ length: lineCount }).fill(sep).join());
   }

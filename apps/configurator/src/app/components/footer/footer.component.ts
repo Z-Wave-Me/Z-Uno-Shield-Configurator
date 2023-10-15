@@ -9,9 +9,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { HighlightModule } from 'ngx-highlightjs';
 import { SaveAsFileDirective } from '../../directives/save-as-file/save-as-file.directive';
 import { PinsStateService } from '../../services/store/pins-state.service';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { generate } from '@configurator/arduino-code-gen';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { J } from '@angular/cdk/keycodes';
 
 
 @Component({
@@ -39,7 +40,10 @@ export class FooterComponent {
   public code$: Observable<string>;
 
   constructor(private readonly pinsStateService: PinsStateService) {
-    this.code$ = this.pinsStateService.state$.pipe(map(generate));
+    this.code$ = this.pinsStateService.state$.pipe(
+      map(generate),
+      catchError(e => of(e.stack)),
+    );
   }
   public prevent(event: Event): void {
     event.stopPropagation();

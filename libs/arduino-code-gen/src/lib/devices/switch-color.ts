@@ -11,7 +11,7 @@ export class SwitchColor implements Device {
     return '  ZUNO_SWITCH_COLOR(PPP2PPP, pinsSwitchColorGetter, pinsSwitchColorSetter)';
   }
 
-  public get loop(): string {
+  public loop(): string {
     return `  // PWM SwitchColor@pin${this.config.id}process code
   analogWriteResolution(8); analogWrite(${this.config.id}, pin${this.config.id}SwitchMultilevelState);`;
   }
