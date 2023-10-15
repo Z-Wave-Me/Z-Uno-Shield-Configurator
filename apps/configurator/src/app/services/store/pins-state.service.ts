@@ -20,6 +20,7 @@ export type DeviceConfig = {
   lowerBound: number | null;
   upperBound: number | null;
   bindPin: string;
+  remove?: boolean;
 };
 
 export type PinConfig = {
@@ -72,11 +73,18 @@ export class PinsStateService {
 
   public patch(pin: PinConfig): Promise<boolean> {
     const value = this._state$.value;
-    const updated = value.filter(({ id }) => id !== pin.id);
 
-    if (pin.device) {
+    const bindPin = pin.device?.bindPin;
+    const updated = value.filter(({ id }) => !(id === pin.id || id === bindPin));
+
+    if (!pin.device?.remove) {
       updated.push(pin);
+
+      if (bindPin) {
+        updated.push({...pin, device: {...pin.device, bindPin: pin.id }, id: bindPin});
+      }
     }
+
 
     this._state$.next(updated);
     console.group('Store');
@@ -110,5 +118,9 @@ export class PinsStateService {
       queryParams: { config: configBase64 },
       queryParamsHandling: 'merge',
     });
+  }
+
+  private serveBindsPins(): void {
+
   }
 }

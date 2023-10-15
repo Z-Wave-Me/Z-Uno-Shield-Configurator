@@ -423,12 +423,12 @@ export class SelectorComponent {
       id: '7',
       pin: [
         {
-          key: 'UART TX',
+          key: 'uart',
           title: $localize`UART TX`,
           options: this.roter(DeviceType.UART, '8'),
         },
         {
-          key: 'RS-485 A',
+          key: 'RS-485',
           title: $localize`RS-485 A`,
           options: this.roter(DeviceType.RS485, '8'),
         },
@@ -450,12 +450,12 @@ export class SelectorComponent {
       id: '8',
       pin: [
         {
-          key: 'UART RX',
+          key: 'uart',
           title: $localize`UART RX`,
           options: this.roter(DeviceType.UART, '7'),
         },
         {
-          key: 'RS-485 B',
+          key: 'RS-485',
           title: $localize`RS-485 B`,
           options: this.roter(DeviceType.RS485, '7'),
         },

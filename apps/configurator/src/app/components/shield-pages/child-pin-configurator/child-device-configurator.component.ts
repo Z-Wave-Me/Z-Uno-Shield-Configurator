@@ -3,14 +3,19 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { PinConfiguratorInput } from '../../../shared/pin-configurator.interface';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { ConnectionMode, DeviceConfig } from '../../../services/store/pins-state.service';
+import {
+  ConnectionMode,
+  DeviceConfig,
+} from '../../../services/store/pins-state.service';
 
 interface DeviceForm {
   list: FormControl<PinConfiguratorInput | null>;
@@ -26,30 +31,22 @@ interface DeviceForm {
   styleUrls: ['./child-device-configurator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChildDeviceConfiguratorComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
-  protected readonly connectionMode = ConnectionMode;
-
-  @Input()
-  public optionsList!: {
+export class ChildDeviceConfiguratorComponent
+  implements OnChanges, OnInit, OnDestroy {
+  @Input() public optionsList!: {
     withGround?: number;
     key: string;
     title: string;
     options: PinConfiguratorInput[];
     map?: number;
   };
-
-  @Input()
-  public init?: Partial<DeviceConfig>;
-
-  @Output()
-  public changePin = new EventEmitter<Partial<DeviceConfig>>();
-
+  @Input() public init?: Partial<DeviceConfig>;
+  @Output() public changePin = new EventEmitter<Partial<DeviceConfig>>();
   public deviceForm: FormGroup<DeviceForm>;
+  protected readonly connectionMode = ConnectionMode;
+  private destroy$ = new Subject<void>();
 
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    ) {
+  constructor(private readonly formBuilder: FormBuilder) {
     this.deviceForm = this.formBuilder.nonNullable.group<DeviceForm>({
       list: new FormControl<PinConfiguratorInput | null>(null),
       type: new FormControl<ConnectionMode | null>(null),
@@ -59,6 +56,17 @@ export class ChildDeviceConfiguratorComponent implements OnInit, OnDestroy {
     });
   }
 
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['init'] && changes['init'].currentValue?.id) {
+      this.deviceForm.controls.list.patchValue(
+        this.optionsList.options.find(
+          (item) => item.value === changes['init'].currentValue.id,
+        ) ?? null,
+        { emitEvent: false },
+      );
+    }
+  }
+
   public ngOnInit(): void {
     this.InitForm();
 
@@ -66,7 +74,13 @@ export class ChildDeviceConfiguratorComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((config) => {
         const { list, ...other } = config;
-        this.changePin.emit({ ...other, title: list?.title, id: list?.value, deviceType: list?.type, bindPin: list?.bindPin });
+        this.changePin.emit({
+          ...other,
+          title: list?.title,
+          id: list?.value,
+          deviceType: list?.type,
+          bindPin: list?.bindPin,
+        });
       });
 
     if (!this.init) {
@@ -74,41 +88,58 @@ export class ChildDeviceConfiguratorComponent implements OnInit, OnDestroy {
     }
   }
 
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   private InitForm(): void {
     this.deviceForm.controls.list.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
-        if (data?.withType) {
-          this.deviceForm.controls.type.patchValue(
-            this.init?.type ?? ConnectionMode.Normal, {
-            emitEvent: false,
-          });
-        } else {
-          this.deviceForm.controls.type.reset(undefined, { emitEvent: false });
-        }
-
-        if (data?.additionally) {
-          this.deviceForm.controls.additionally.patchValue(
-            this.init?.additionally ?? data.additionally[0].value, { emitEvent: false });
-        } else {
-          this.deviceForm.controls.additionally.reset(undefined, {
-            emitEvent: false,
-          });
-        }
-
-        if (this.optionsList.map) {
-          this.deviceForm.controls.lowerBound.patchValue(this.init?.lowerBound ?? 0, { emitEvent: false });
-          this.deviceForm.controls.upperBound.patchValue(this.init?.upperBound ?? 99, { emitEvent: false });
-        }
-
+        this.updateForm(data);
       });
 
-    const initList = this.optionsList.options.find(({ value}) => value === this.init?.id)
-    this.deviceForm.controls.list.patchValue(initList ?? this.optionsList.options[0]);
+    const initList = this.optionsList.options.find(
+      ({ value }) => value === this.init?.id,
+    );
+    this.deviceForm.controls.list.patchValue(
+      initList ?? this.optionsList.options[0],
+    );
   }
 
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  private updateForm(data: PinConfiguratorInput | null): void {
+    if (data?.withType) {
+      this.deviceForm.controls.type.patchValue(
+        this.init?.type ?? ConnectionMode.Normal,
+        {
+          emitEvent: false,
+        },
+      );
+    } else {
+      this.deviceForm.controls.type.reset(undefined, { emitEvent: false });
+    }
+
+    if (data?.additionally) {
+      this.deviceForm.controls.additionally.patchValue(
+        this.init?.additionally ?? data.additionally[0].value,
+        { emitEvent: false },
+      );
+    } else {
+      this.deviceForm.controls.additionally.reset(undefined, {
+        emitEvent: false,
+      });
+    }
+
+    if (this.optionsList.map) {
+      this.deviceForm.controls.lowerBound.patchValue(
+        this.init?.lowerBound ?? 0,
+        { emitEvent: false },
+      );
+      this.deviceForm.controls.upperBound.patchValue(
+        this.init?.upperBound ?? 99,
+        { emitEvent: false },
+      );
+    }
   }
 }

@@ -10,7 +10,7 @@ import {
 import { PinConfiguratorInput } from '../../../shared/pin-configurator.interface';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { ConnectionMode, DeviceConfig, PinsStateService } from '../../../services/store/pins-state.service';
+import { ConnectionMode, DeviceConfig } from '../../../services/store/pins-state.service';
 
 interface DeviceForm {
   list: FormControl<PinConfiguratorInput | null>;

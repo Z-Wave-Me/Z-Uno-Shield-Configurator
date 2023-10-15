@@ -4,20 +4,28 @@ import {
   Component,
   HostBinding,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
 } from '@angular/core';
 import { filter, Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { PinConfiguratorInput } from '../../../shared/pin-configurator.interface';
-import { DeviceConfig, PinsStateService } from '../../../services/store/pins-state.service';
+import {
+  DeviceConfig, PinConfig,
+  PinsStateService
+} from '../../../services/store/pins-state.service';
 
 interface Pin {
   id: string;
   title: string;
   pin: {
-    withGround?: number; key: string; title: string; options: PinConfiguratorInput[];
-  }[]
+    withGround?: number;
+    key: string;
+    title: string;
+    options: PinConfiguratorInput[];
+  }[];
 }
 
 @Component({
@@ -62,7 +70,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
     });
 
     this._options = { ...options, pin };
-    this.setDevice();
+    this.setDevice(this.pinsStateService.snapshot);
   }
 
   public get options(): Pin {
@@ -78,17 +86,15 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly pinsStateService: PinsStateService,
-    private readonly activatedRoute: ActivatedRoute,
     private readonly changeDetectorRef: ChangeDetectorRef,
-    ) {}
+  ) {}
 
   public ngOnInit(): void {
-    this.activatedRoute.queryParams.pipe(
-      filter(data => !data['config']),
-      takeUntil(this.destroyed$),
-    ).subscribe(() => {
-      this.setDevice();
-    });
+    this.pinsStateService.state$.pipe(takeUntil(this.destroyed$)).subscribe(
+      state => {
+        this.setDevice(state);
+      },
+    );
   }
 
   public ngOnDestroy(): void {
@@ -109,12 +115,15 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
     this.selected = undefined;
     this.pinsStateService.patch({
       id: this.options.id,
+      device: {... this.pinsStateService.snapshot.find(
+          ({ id }) => id === this.options.id,
+        )?.device ?? {}, remove: true},
       lockIds: [],
     });
   }
 
-  private setDevice(): void {
-    const stored = this.pinsStateService.snapshot.find(
+  private setDevice(config:  PinConfig[]): void {
+    const stored = config.find(
       ({ id }) => id === this.options.id,
     );
     this.selected = this.options.pin.find(({ key }) => stored?.key === key);

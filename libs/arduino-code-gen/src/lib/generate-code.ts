@@ -10,6 +10,7 @@ import { Generator } from './generator';
 import { DHT } from './devices/dht';
 import { DS18B20 } from './devices/ds18-b20';
 import { UART } from './devices/uart';
+import { RS485 } from './devices/rs485';
 
 export function deviceFromConfig(config: PinConfig): Device {
   switch (config.device?.deviceType) {
@@ -31,6 +32,8 @@ export function deviceFromConfig(config: PinConfig): Device {
       return new DS18B20(config);
     case DeviceType.UART:
       return new UART(config);
+    case DeviceType.RS485:
+      return new RS485(config);
     default:
       throw new Error(`Unknown type 
 
@@ -43,5 +46,13 @@ export function generateCode(devices: Device[]): string {
 }
 
 export function generate(config: PinConfig[]): string {
-  return generateCode(config.map(deviceFromConfig));
+  const excluded: Set<string | number | undefined> = new Set();
+
+  return generateCode(config.filter(item => {
+    if (item.device?.bindPin) {
+      excluded.add(item.device.bindPin);
+    }
+
+    return !excluded.has(item?.id);
+  }).map(deviceFromConfig));
 }

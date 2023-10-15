@@ -342,7 +342,7 @@ export class SelectorComponent {
       id: 'PA09',
       pin: [
         {
-          key: 'UART TX1',
+          key: 'uart',
           title: $localize`UART TX1`,
           options: this.roter,
         },
@@ -354,7 +354,7 @@ export class SelectorComponent {
       id: 'PA08',
       pin: [
         {
-          key: 'UART RX1',
+          key: 'uart',
           title: $localize`UART RX1`,
           options: this.roter,
         },
@@ -462,7 +462,7 @@ export class SelectorComponent {
       id: 'PB00',
       pin: [
         {
-          key: 'UART TX0',
+          key: 'uart',
           title: $localize`UART TX0`,
           options: this.roter,
         },
@@ -474,7 +474,7 @@ export class SelectorComponent {
       id: 'PD02',
       pin: [
         {
-          key: 'UART RX0',
+          key: 'uart',
           title: $localize`UART RX0`,
           options: this.roter,
         },
