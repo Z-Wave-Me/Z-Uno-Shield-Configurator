@@ -1,6 +1,5 @@
 import { Device } from './device.interface';
 import { PinConfig } from '../../../../../apps/configurator/src/app/services/store/pins-state.service';
-import { config } from 'rxjs';
 
 export class RS485 implements Device {
   public channels = 0;
