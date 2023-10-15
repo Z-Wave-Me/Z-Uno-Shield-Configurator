@@ -1,49 +1,18 @@
-import { Device } from './device.interface';
 import { PinConfig } from '@configurator/shared';
+import { BaseDevice } from './base-device';
 
 
-export class UART implements Device{
+export class UART extends BaseDevice {
   public channels = 0;
   public value: number;
 
-  constructor(private readonly config: PinConfig) {
+  constructor(protected readonly config: PinConfig) {
+    super(config);
     this.value = +(this.config.device?.id ?? 0)
-  }
-
-  public get channel(): string {
-    return '';
-  }
-
-  public get includes(): string | undefined {
-    return undefined;
-  }
-
-  public loop(channel?: number): string {
-    return '';
-  }
-
-  public get name(): string | undefined {
-    return undefined;
-  }
-
-  public get note(): string {
-    return '';
-  }
-
-  public get report(): string {
-    return '';
   }
 
   public get setup(): string {
     return `  Serial1.begin(${this.value});`;
-  }
-
-  public get vars(): string {
-    return '';
-  }
-
-  public get xetter(): string {
-    return '';
   }
 
   public get functions(): string {

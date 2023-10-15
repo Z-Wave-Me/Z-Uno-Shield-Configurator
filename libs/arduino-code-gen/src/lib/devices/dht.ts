@@ -1,14 +1,15 @@
-import { Device } from './device.interface';
 import { PinConfig } from '@configurator/shared';
+import { BaseDevice } from './base-device';
 
-
-export class DHT implements Device {
+export class DHT extends BaseDevice {
   public channels = 2;
 
-  constructor(private readonly config: PinConfig) {}
+  constructor(protected readonly config: PinConfig) {
+    super(config);
+  }
 
   public get includes(): string {
-    return '#include "ZUNO_DHT.h"'
+    return '#include "ZUNO_DHT.h"';
   }
 
   public get channel(): string {
@@ -18,30 +19,34 @@ export class DHT implements Device {
 
   public loop(channel: number): string {
     return `  // DHT sensor (@pin${this.config.id}) read procedure
-  int _pin${this.config.id}DHTTemperatureState = pin${this.config.id}DHT.readTemperatureC10();
-  word _pin${this.config.id}DHTHumidityState = pin${this.config.id}DHT.readHumidityH10();
-  if(abs(_pin${this.config.id}DHTTemperatureState-pin${this.config.id}DHTTemperatureState) > 2) {
+  int _pin${this.config.id}DHTTemperatureState = pin${
+      this.config.id
+    }DHT.readTemperatureC10();
+  word _pin${this.config.id}DHTHumidityState = pin${
+      this.config.id
+    }DHT.readHumidityH10();
+  if(abs(_pin${this.config.id}DHTTemperatureState-pin${
+      this.config.id
+    }DHTTemperatureState) > 2) {
     // the temperature has changed by at least 0.2*C
-    pin${this.config.id}DHTTemperatureState = _pin${this.config.id}DHTTemperatureState;
+    pin${this.config.id}DHTTemperatureState = _pin${
+      this.config.id
+    }DHTTemperatureState;
     zunoSendReport(${channel});
   }
-  if(abs(_pin${this.config.id}DHTHumidityState-pin${this.config.id}DHTHumidityState) > 10) {
+  if(abs(_pin${this.config.id}DHTHumidityState-pin${
+      this.config.id
+    }DHTHumidityState) > 10) {
     // the humidity has changed by at least 1%
-    pin${this.config.id}DHTHumidityState = _pin${this.config.id}DHTHumidityState;
+    pin${this.config.id}DHTHumidityState = _pin${
+      this.config.id
+    }DHTHumidityState;
     zunoSendReport(${channel + 1});
   }`;
   }
 
-  public get name(): string | undefined {
-    return undefined;
-  }
-
   public get note(): string {
     return `- Connect ${this.config.id} sensor.`;
-  }
-
-  public get report(): string {
-    return '';
   }
 
   public get setup(): string {
@@ -53,13 +58,5 @@ export class DHT implements Device {
     
 int pin${this.config.id}DHTTemperatureState;
 word pin${this.config.id}DHTHumidityState;`;
-  }
-
-  public get xetter(): string {
-    return '';
-  }
-
-  public get functions(): string {
-    return '';
   }
 }

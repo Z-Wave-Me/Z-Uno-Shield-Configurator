@@ -1,14 +1,12 @@
-import { Device } from './device.interface';
 import { PinConfig } from '@configurator/shared';
+import { BaseDevice } from './base-device';
 
 
-export class SwitchMultilevel implements Device {
+export class SwitchMultilevel extends BaseDevice {
   public channels = 1;
 
-  constructor(private readonly config: PinConfig) { }
-
-  public get includes(): string | undefined {
-    return undefined;
+  constructor(protected readonly config: PinConfig) {
+    super(config);
   }
 
   public get channel(): string {
@@ -20,33 +18,13 @@ export class SwitchMultilevel implements Device {
   shield.writePWMPercentage(PPP3PPP, pin${this.config.id}SwitchMultilevelState);`;
   }
 
-  public get name(): string | undefined {
-    return undefined;
-  }
-
   public get note(): string {
     // TODO уточчить SwitchMultilevelPWM0
     return '- Make sure that output current do not exceed 5 A per channel or 15 A per all PWM1-4 pins';
   }
 
-  public get report(): string {
-    return '';
-  }
-
-  public get setup(): string {
-    return '';
-  }
-
   public get vars(): string {
     return `byte pin${this.config.id}SwitchMultilevelState = 0;`;
-  }
-
-  public get xetter(): string {
-    return '';
-  }
-
-  public get functions(): string {
-    return '';
   }
 
   public pwm_map(): string {

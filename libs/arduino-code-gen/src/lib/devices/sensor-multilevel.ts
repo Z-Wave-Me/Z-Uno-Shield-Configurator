@@ -1,14 +1,13 @@
 import { Device } from './device.interface';
 import { PinConfig } from '@configurator/shared';
+import { BaseDevice } from './base-device';
 
 
-export class SensorMultilevel implements Device {
+export class SensorMultilevel extends BaseDevice {
   public channels = 1;
 
-  constructor(private readonly config: PinConfig) { }
-
-  public get includes(): string | undefined {
-    return undefined;
+  constructor(protected readonly config: PinConfig) {
+    super(config)
   }
 
   public get channel(): string {
@@ -24,16 +23,8 @@ export class SensorMultilevel implements Device {
   }`;
   }
 
-  public get name(): string | undefined {
-    return undefined;
-  }
-
   public get note(): string {
     return '- Reports are sent every 30 seconds';
-  }
-
-  public get report(): string {
-    return '';
   }
 
   public get setup(): string {
@@ -42,13 +33,5 @@ export class SensorMultilevel implements Device {
 
   public get vars(): string {
     return `PPP5PPP pin${this.config.id}SensorMultilevelState=0, _pin${this.config.id}SensorMultilevelState=1;`;
-  }
-
-  public get xetter(): string {
-    return '';
-  }
-
-  public get functions(): string {
-    return '';
   }
 }

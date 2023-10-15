@@ -1,8 +1,9 @@
 import { Device } from './device.interface';
 import { PinConfig } from '@configurator/shared';
+import { BaseDevice } from './base-device';
 
 
-export class SensorBinary implements Device {
+export class SensorBinary extends BaseDevice {
   private static readonly nameMap: Record<string, string> = {
     'general': 'ZUNO_SENSOR_BINARY_TYPE_GENERAL_PURPOSE',
     'smoke': 'ZUNO_SENSOR_BINARY_TYPE_SMOKE',
@@ -19,10 +20,8 @@ export class SensorBinary implements Device {
   }
   public channels = 1;
 
-  constructor(private readonly config: PinConfig) { }
-
-  public get includes(): string | undefined {
-    return undefined;
+  constructor(protected readonly config: PinConfig) {
+    super(config);
   }
 
   public get channel(): string {
@@ -49,14 +48,9 @@ export class SensorBinary implements Device {
     return 'PPP5PPP';
   }
 
-  public get report(): string {
-    return '';
-  }
-
   public get setup(): string {
     // TODO что за 'pullup'
     const inverted = this.config.device?.type === 'inverted' ? '!': '';
-
 
     return `  pinMode(${this.config.id}, PPP4PPP);
   pin${this.config.id}SensorBinaryState = ${inverted}!digitalRead(${this.config.id});`;
@@ -64,13 +58,5 @@ export class SensorBinary implements Device {
 
   public get vars(): string {
     return 'byte pin${this.config.id}SensorBinaryState;';
-  }
-
-  public get xetter(): string {
-    return '';
-  }
-
-  public get functions(): string {
-    return '';
   }
 }

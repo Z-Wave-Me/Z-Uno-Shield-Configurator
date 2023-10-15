@@ -1,8 +1,9 @@
 import { Device } from './device.interface';
 import { PinConfig } from '@configurator/shared';
+import { BaseDevice } from './base-device';
 
 
-export class SwitchBinary implements Device {
+export class SwitchBinary extends BaseDevice {
   private static readonly nameMap: Record<string, string> = {
     switch: 'ZUNO_SWITCH_BINARY',
     doorlock: 'ZUNO_DOORLOCK',
@@ -11,7 +12,9 @@ export class SwitchBinary implements Device {
   };
   public channels = 1;
 
-  constructor(private readonly config: PinConfig) { }
+  constructor(protected readonly config: PinConfig) {
+    super(config);
+  }
 
   public get includes(): string | undefined {
     return undefined;
@@ -54,17 +57,5 @@ export class SwitchBinary implements Device {
 
   public get vars(): string {
     return `byte pin${this.config.id}SwitchBinaryState = 0;`;
-  }
-
-  public get xetter(): string {
-    return '';
-  }
-
-  public get report(): string {
-    return '';
-  }
-
-  public get functions(): string {
-    return '';
   }
 }

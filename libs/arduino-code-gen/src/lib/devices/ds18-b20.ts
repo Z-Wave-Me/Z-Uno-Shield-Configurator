@@ -1,16 +1,17 @@
 import { Device } from './device.interface';
 import { PinConfig } from '@configurator/shared';
+import { BaseDevice } from './base-device';
 
 
-export class DS18B20 implements Device {
+export class DS18B20 extends BaseDevice {
   public channels: number;
   public value: number;
 
-  constructor(private readonly config: PinConfig) {
+  constructor(protected readonly config: PinConfig) {
+    super(config);
     this.value = +(this.config.device?.id ?? 0);
     this.channels = this.value;
   }
-
 
   public get includes(): string {
     return '#include "ZUNO_DS18B20.h"'
@@ -32,18 +33,6 @@ export class DS18B20 implements Device {
   }`;
   }
 
-  public get name(): string | undefined {
-    return undefined;
-  }
-
-  public get note(): string {
-    return '';
-  }
-
-  public get report(): string {
-    return '';
-  }
-
   public get setup(): string {
     return `  number_of_sensors = ds18b20.findAllSensors(addresses, ${this.value});`;
   }
@@ -55,13 +44,5 @@ DS18B20Sensor ds18b20(&ow);
 byte addresses[8 * (${this.value + 1})]; // last one for search
 byte number_of_sensors; // Number of sensors found (if less than ${this.value} connected)
 int temperature[${this.value}];`;
-  }
-
-  public get xetter(): string {
-    return '';
-  }
-
-  public get functions(): string {
-    return '';
   }
 }

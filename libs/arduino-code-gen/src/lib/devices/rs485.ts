@@ -1,14 +1,12 @@
-import { Device } from './device.interface';
 import { PinConfig } from '@configurator/shared';
+import { BaseDevice } from './base-device';
 
 
-export class RS485 implements Device {
+export class RS485 extends BaseDevice{
   public channels = 0;
 
-  constructor(private readonly config: PinConfig) {}
-
-  public get channel(): string {
-    return '';
+  constructor(protected readonly config: PinConfig) {
+    super(config);
   }
 
   public get functions(): string {
@@ -26,37 +24,9 @@ void writeRS485(char b) {
 }`;
   }
 
-  public get includes(): string | undefined {
-    return undefined;
-  }
-
-  public loop(channel?: number): string {
-    return '';
-  }
-
-  public get name(): string | undefined {
-    return undefined;
-  }
-
-  public get note(): string {
-    return '';
-  }
-
-  public get report(): string {
-    return '';
-  }
-
   public get setup(): string {
     return `  Serial1.begin(${this.config.device?.id});
   pinMode(2, OUTPUT);
   digitalWrite(2, LOW);`;
-  }
-
-  public get vars(): string {
-    return '';
-  }
-
-  public get xetter(): string {
-    return '';
   }
 }

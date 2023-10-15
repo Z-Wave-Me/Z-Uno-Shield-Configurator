@@ -1,16 +1,15 @@
 import { Device } from './device.interface';
 import { PinConfig } from '@configurator/shared';
+import { BaseDevice } from './base-device';
 
 
-export class Thermostat implements Device {
+export class Thermostat extends BaseDevice {
   private readonly step = 10; // 1 deg C
 
   public channels = 1;
 
-  constructor(private readonly config: PinConfig) { }
-
-  public get includes(): string | undefined {
-    return undefined;
+  constructor(protected readonly config: PinConfig) {
+    super(config);
   }
 
   public get channel(): string {
@@ -34,10 +33,6 @@ export class Thermostat implements Device {
       digitalWrite(${this.config.id}, ${this.getMode(false)});
     }
   }`;
-  }
-
-  public get name(): string | undefined {
-    return undefined;
   }
 
   public get note(): string {
@@ -87,10 +82,6 @@ signed int pin${this.config.id}ThermostatTemperatureGetter(byte mode) {
     
     pin${this.config.id}ThermostatTemperatureCurrent = temp;
   }`;
-  }
-
-  public get functions(): string {
-    return '';
   }
 
   private getMode(invert = true): string {
