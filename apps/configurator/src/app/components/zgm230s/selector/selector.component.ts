@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DeviceType } from '../../../shared/device.model';
+import { IO } from '../../../module/shared/models';
 
 @Component({
   selector: 'configurator-selector',
@@ -8,204 +9,13 @@ import { DeviceType } from '../../../shared/device.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectorComponent {
-  private readonly digitalInput = [
-    {
-      title: $localize`General purpose`,
-      value: 'General purpose',
-    },
-    {
-      title: $localize`Door/window`,
-      value: 'door-window',
-    },
-    {
-      title: $localize`Motion`,
-      value: 'motion',
-    },
-    {
-      title: $localize`Smoke`,
-      value: 'Smoke',
-    },
-    {
-      title: $localize`Leakage`,
-      value: 'Leakage',
-    },
-    {
-      title: $localize`CO`,
-      value: 'CO',
-    },
-    {
-      title: $localize`CO2`,
-      value: 'CO2',
-    },
-    {
-      title: $localize`Overheat`,
-      value: 'Overheat',
-    },
-    {
-      title: $localize`Freeze`,
-      value: 'Freeze',
-    },
-    {
-      title: $localize`Tamper`,
-      value: 'Tamper',
-    },
-    {
-      title: $localize`Tilt`,
-      value: 'Tilt',
-    },
-    {
-      title: $localize`Glass break`,
-      value: 'Glass break',
-    },
-  ].map((data) => ({ ...data, withType: true }));
 
-  private readonly digitalOutput = [
-    {
-      title: $localize`Switch`,
-      value: 'switch',
-    },
-    {
-      title: $localize`Door lock`,
-      value: 'doorLock',
-    },
-    {
-      title: $localize`Siren`,
-      value: 'siren',
-    },
-    {
-      title: $localize`Valve`,
-      value: 'valve',
-    },
-    {
-      title: $localize`Heating thermostat`,
-      value: 'heatingThermostat',
-      additionally: [
-        {
-          title: $localize`Z-Wave temp sensor`,
-          value: 'Z-Wave temp sensor',
-        },
-        {
-          title: $localize`DS18B20`,
-          value: 'ds18b20',
-          deviceType: DeviceType.DS18B20,
-        },
-      ],
-    },
-    {
-      title: $localize`Cooling thermostat`,
-      value: 'coolingThermostat',
-      additionally: [
-        {
-          title: $localize`Z-Wave temp sensor`,
-          value: 'Z-Wave temp sensor',
-        },
-        {
-          title: $localize`DS18B20`,
-          value: 'ds18b20',
-          deviceType: DeviceType.DS18B20,
-        },
-      ],
-    },
-  ].map((data) => ({ ...data, withType: true }));
-
-  private readonly analogInput = [
-    {
-      title: $localize`Percentages, %`,
-      value: 'Percentages, %',
-    },
-    {
-      title: $localize`Temperature, °C`,
-      value: 'Temperature, °C',
-    },
-    {
-      title: $localize`Luminance, lux`,
-      value: 'Luminance, lux`',
-    },
-    {
-      title: $localize`Humidity, %`,
-      value: 'Humidity, %',
-    },
-    {
-      title: $localize`Voltage, V`,
-      value: 'Voltage, V',
-    },
-    {
-      title: $localize`Current, A`,
-      value: 'Current, A',
-    },
-    {
-      title: $localize`Distance, m`,
-      value: 'Distance, m',
-    },
-    {
-      title: $localize`Pressure, kPa`,
-      value: 'Pressure, kPa',
-    },
-    {
-      title: $localize`CO2, ppm`,
-      value: 'CO2, ppm',
-    },
-  ];
-
-  private readonly analogOutput = [
-    {
-      title: $localize`Dimmer`,
-      value: 'dimmer',
-    },
-    {
-      title: $localize`Red LED`,
-      value: 'led red',
-    },
-    {
-      title: $localize`Green LED`,
-      value: 'led green',
-    },
-    {
-      title: $localize`Blue LED`,
-      value: 'led blue',
-    },
-    {
-      title: $localize`White LED`,
-      value: 'led white',
-    },
-  ];
-
-  private readonly roter = [
-    {
-      title: $localize`9600 kbps`,
-      value: '9600',
-    },
-    {
-      title: $localize`14400 kbps`,
-      value: '14400',
-    },
-    {
-      title: $localize`19200 kbps`,
-      value: '19200',
-    },
-    {
-      title: $localize`38400 kbps`,
-      value: '38400',
-    },
-    {
-      title: $localize`57600 kbps`,
-      value: '57600',
-    },
-    {
-      title: $localize`115200 kbps`,
-      value: '115200',
-    },
-    {
-      title: $localize`230400 kbps`,
-      value: '230400',
-    },
-  ];
 
   private readonly adcConfig = [
     {
       key: 'Analog input 0-3 V',
       title: $localize`Analog input 0-3 V`,
-      options: this.analogInput,
+      options: IO.analogInput,
     },
   ];
 
@@ -213,12 +23,12 @@ export class SelectorComponent {
     {
       key: 'digital input',
       title: $localize`Digital input 0/3 V`,
-      options: this.digitalInput,
+      options: IO.digitalInput,
     },
     {
       key: 'digital output',
       title: $localize`Digital output 0/3 V`,
-      options: this.digitalOutput,
+      options: IO.digitalOutput,
     },
   ];
 
