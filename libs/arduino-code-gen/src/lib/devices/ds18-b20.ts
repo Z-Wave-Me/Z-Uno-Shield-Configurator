@@ -1,5 +1,6 @@
 import { Device } from './device.interface';
-import { PinConfig } from '../../../../../apps/configurator/src/app/services/store/pins-state.service';
+import { PinConfig } from '@configurator/shared';
+
 
 export class DS18B20 implements Device {
   public channels: number;

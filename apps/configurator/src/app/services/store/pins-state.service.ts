@@ -1,34 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged, filter, first, map, Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  distinctUntilChanged,
+  filter,
+  first,
+  map,
+  Observable,
+} from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
-import { DeviceType } from '../../shared/device.model';
-
-
-export enum ConnectionMode {
-  Normal = 'normal',
-  Inverted = 'inverted',
-}
-
-export type DeviceConfig = {
-  title: string;
-  id: string | number;
-  additionally: string | number | null | undefined;
-  type: ConnectionMode | null;
-  deviceType?: DeviceType;
-  withGround?: number;
-  lowerBound: number | null;
-  upperBound: number | null;
-  bindPin: string;
-  remove?: boolean;
-};
-
-export type PinConfig = {
-  id: string;
-  device?: Partial<DeviceConfig>;
-  key?: string;
-  lockIds?: string[];
-};
+import { PinConfig } from '../../../../../../libs/shared/src/lib/models/pin.config';
 
 @Injectable({
   providedIn: 'root',
@@ -41,13 +22,13 @@ export class PinsStateService {
   constructor(
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly localStorageService: LocalStorageService,
+    private readonly localStorageService: LocalStorageService
   ) {
     this.activatedRoute.queryParams
       .pipe(
         first(),
         map((data) => data['config']),
-        filter(Boolean),
+        filter(Boolean)
       )
       .subscribe((config) => {
         const key = this.router.url.split('?')[0].split('/')[1];
@@ -58,11 +39,14 @@ export class PinsStateService {
       });
 
     router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-      map(({ url }) => url.split('?')[0].split('/')[1]),
-      filter(Boolean),
-      distinctUntilChanged(),
-  )
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        ),
+        map(({ url }) => url.split('?')[0].split('/')[1]),
+        filter(Boolean),
+        distinctUntilChanged()
+      )
       .subscribe((key) => {
         this.currentKey = key;
         const config = this.localStorageService.get<PinConfig[]>(key) ?? [];
@@ -75,16 +59,21 @@ export class PinsStateService {
     const value = this._state$.value;
 
     const bindPin = pin.device?.bindPin;
-    const updated = value.filter(({ id }) => !(id === pin.id || id === bindPin));
+    const updated = value.filter(
+      ({ id }) => !(id === pin.id || id === bindPin)
+    );
 
     if (!pin.device?.remove) {
       updated.push(pin);
 
       if (bindPin) {
-        updated.push({...pin, device: {...pin.device, bindPin: pin.id }, id: bindPin});
+        updated.push({
+          ...pin,
+          device: { ...pin.device, bindPin: pin.id },
+          id: bindPin,
+        });
       }
     }
-
 
     this._state$.next(updated);
     console.group('Store');
@@ -120,7 +109,5 @@ export class PinsStateService {
     });
   }
 
-  private serveBindsPins(): void {
-
-  }
+  private serveBindsPins(): void {}
 }

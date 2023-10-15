@@ -1,4 +1,4 @@
-import { DeviceType } from '../../../shared/device.model';
+import { DeviceType } from '@configurator/shared';
 
 export const digitalInput = [
   {

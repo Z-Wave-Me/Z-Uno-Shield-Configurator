@@ -1,5 +1,3 @@
-import { PinConfig } from '../../../../apps/configurator/src/app/services/store/pins-state.service';
-import { DeviceType } from '../../../../apps/configurator/src/app/shared/device.model';
 import { SwitchBinary } from './devices/switch-binary';
 import { Device } from './devices/device.interface';
 import { Thermostat } from './devices/thermostat';
@@ -11,6 +9,7 @@ import { DHT } from './devices/dht';
 import { DS18B20 } from './devices/ds18-b20';
 import { UART } from './devices/uart';
 import { RS485 } from './devices/rs485';
+import { DeviceType, PinConfig } from '@configurator/shared';
 
 export function deviceFromConfig(config: PinConfig): Device {
   switch (config.device?.deviceType) {

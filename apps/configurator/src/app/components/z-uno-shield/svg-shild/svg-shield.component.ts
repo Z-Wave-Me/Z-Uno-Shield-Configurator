@@ -2,9 +2,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { PinSelectedService } from '../../../services/pin-selected/pin-selected.service';
 import { map, Observable, switchMap } from 'rxjs';
 import {
-  PinConfig,
   PinsStateService,
 } from '../../../services/store/pins-state.service';
+import { PinConfig } from '../../../../../../../libs/shared/src/lib/models/pin.config';
 
 @Component({
   selector: 'configurator-svg-shield',

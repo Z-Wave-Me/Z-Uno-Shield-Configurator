@@ -1,5 +1,6 @@
 import { Device } from './device.interface';
-import { PinConfig } from '../../../../../apps/configurator/src/app/services/store/pins-state.service';
+import { PinConfig } from '@configurator/shared';
+
 
 export class SwitchBinary implements Device {
   private static readonly nameMap: Record<string, string> = {

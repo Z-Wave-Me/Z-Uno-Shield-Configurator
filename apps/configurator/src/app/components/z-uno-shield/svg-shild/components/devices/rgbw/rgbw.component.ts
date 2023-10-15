@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
-import {
-  PinConfig,
-} from '../../../../../../services/store/pins-state.service';
+
+import { PinConfig } from '../../../../../../../../../../libs/shared/src/lib/models/pin.config';
 
 @Component({
   selector: '[rgbw]',

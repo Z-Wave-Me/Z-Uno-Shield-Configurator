@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { PinSelectedService } from '../../../../../../services/pin-selected/pin-selected.service';
-import { PinConfig, PinsStateService } from '../../../../../../services/store/pins-state.service';
+import { PinsStateService } from '../../../../../../services/store/pins-state.service';
+import { PinConfig } from '../../../../../../../../../../libs/shared/src/lib/models/pin.config';
 
 @Component({
   selector: '[dimmer]',

@@ -9,13 +9,9 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { PinConfiguratorInput } from '../../../shared/pin-configurator.interface';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  ConnectionMode,
-  DeviceConfig,
-} from '../../../services/store/pins-state.service';
+import { ConnectionMode, DeviceConfig, PinConfiguratorInput } from '@configurator/shared';
 
 interface DeviceForm {
   list: FormControl<PinConfiguratorInput | null>;

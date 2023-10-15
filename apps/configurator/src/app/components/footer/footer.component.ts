@@ -12,7 +12,6 @@ import { PinsStateService } from '../../services/store/pins-state.service';
 import { catchError, map, Observable, of } from 'rxjs';
 import { generate } from '@configurator/arduino-code-gen';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { J } from '@angular/cdk/keycodes';
 
 
 @Component({

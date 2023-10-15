@@ -4,18 +4,14 @@ import {
   Component,
   HostBinding,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
 } from '@angular/core';
-import { filter, Subject, takeUntil } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { PinConfiguratorInput } from '../../../shared/pin-configurator.interface';
+import { Subject, takeUntil } from 'rxjs';
 import {
-  DeviceConfig, PinConfig,
-  PinsStateService
+  PinsStateService,
 } from '../../../services/store/pins-state.service';
+import { DeviceConfig, PinConfig, PinConfiguratorInput } from '@configurator/shared';
 
 interface Pin {
   id: string;

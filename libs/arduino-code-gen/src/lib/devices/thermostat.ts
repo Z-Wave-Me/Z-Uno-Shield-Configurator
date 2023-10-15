@@ -1,5 +1,6 @@
 import { Device } from './device.interface';
-import { PinConfig } from '../../../../../apps/configurator/src/app/services/store/pins-state.service';
+import { PinConfig } from '@configurator/shared';
+
 
 export class Thermostat implements Device {
   private readonly step = 10; // 1 deg C
