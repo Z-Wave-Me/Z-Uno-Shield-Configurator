@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { PinConfig } from '@configurator/shared';
 
-import { PinConfig } from '../../../../../../../../../../libs/shared/src/lib/models/pin.config';
 
 @Component({
   selector: '[motion-sensor]',
