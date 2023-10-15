@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PinSelectedService } from '../../../services/pin-selected/pin-selected.service';
 import { IO } from '../../../module/shared/models';
-import { DeviceType } from "@configurator/shared";
+import { DeviceType } from '@configurator/shared';
 
 @Component({
   selector: 'configurator-selector',

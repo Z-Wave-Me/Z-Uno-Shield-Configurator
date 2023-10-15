@@ -28,7 +28,7 @@ import { RouterLink } from '@angular/router';
 export class HeaderComponent {
   constructor(
     private readonly notificationService: NotificationService,
-    private readonly pinsStateService: PinsStateService
+    private readonly pinsStateService: PinsStateService,
   ) {}
 
   public reset(): void {

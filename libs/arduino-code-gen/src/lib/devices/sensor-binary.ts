@@ -1,4 +1,3 @@
-import { Device } from './device.interface';
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
 

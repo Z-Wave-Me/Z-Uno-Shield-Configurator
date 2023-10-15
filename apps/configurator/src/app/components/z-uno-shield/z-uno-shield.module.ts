@@ -9,6 +9,7 @@ import { SvgShieldModule } from './svg-shild/svg-shield.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SharedModule } from '../../module/shared/shared.module';
 import { SelectableDirective } from '../../directives/selectable/selectable.directive';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { SelectableDirective } from '../../directives/selectable/selectable.dire
     MatTabsModule,
     SharedModule,
     SelectableDirective,
+    MatButtonModule,
   ],
 })
 export class ZUnoShieldModule {}
