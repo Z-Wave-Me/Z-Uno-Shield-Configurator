@@ -6,6 +6,10 @@ export class SwitchMultilevel implements Device {
 
   constructor(private readonly config: PinConfig) { }
 
+  public get includes(): string | undefined {
+    return undefined;
+  }
+
   public get channel(): string {
     return `  ZUNO_SWITCH_MULTILEVEL(pin${this.config.id}SwitchMultilevelState, NULL)`;
   }
@@ -37,6 +41,10 @@ export class SwitchMultilevel implements Device {
   }
 
   public get xetter(): string {
+    return '';
+  }
+
+  public get functions(): string {
     return '';
   }
 

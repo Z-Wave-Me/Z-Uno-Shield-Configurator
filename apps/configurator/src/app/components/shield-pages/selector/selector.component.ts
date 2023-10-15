@@ -229,43 +229,13 @@ export class SelectorComponent {
     },
   ];
 
-  private readonly roter = [
-    {
-      title: $localize`9600 kbps`,
-      value: '9600',
-      type: DeviceType.UART,
-    },
-    {
-      title: $localize`14400 kbps`,
-      value: '14400',
-      type: DeviceType.UART,
-    },
-    {
-      title: $localize`19200 kbps`,
-      value: '19200',
-      type: DeviceType.UART,
-    },
-    {
-      title: $localize`38400 kbps`,
-      value: '38400',
-      type: DeviceType.UART,
-    },
-    {
-      title: $localize`57600 kbps`,
-      value: '57600',
-      type: DeviceType.UART,
-    },
-    {
-      title: $localize`115200 kbps`,
-      value: '115200',
-      type: DeviceType.UART,
-    },
-    {
-      title: $localize`230400 kbps`,
-      value: '230400',
-      type: DeviceType.UART,
-    },
-  ];
+  private readonly roter = (type: DeviceType.RS485 | DeviceType.UART, bindPin: string) =>
+    [9600, 14400, 19200, 38400, 57600, 115200, 230400].map((value) => ({
+      title: $localize`${value} kbps`,
+      value,
+      type,
+      bindPin,
+    }));
 
   private readonly adcConfig = [
     {
@@ -455,12 +425,12 @@ export class SelectorComponent {
         {
           key: 'UART TX',
           title: $localize`UART TX`,
-          options: this.roter,
+          options: this.roter(DeviceType.UART, '8'),
         },
         {
           key: 'RS-485 A',
           title: $localize`RS-485 A`,
-          options: this.roter,
+          options: this.roter(DeviceType.RS485, '8'),
         },
         {
           key: 'digital input',
@@ -482,12 +452,12 @@ export class SelectorComponent {
         {
           key: 'UART RX',
           title: $localize`UART RX`,
-          options: this.roter,
+          options: this.roter(DeviceType.UART, '7'),
         },
         {
           key: 'RS-485 B',
           title: $localize`RS-485 B`,
-          options: this.roter,
+          options: this.roter(DeviceType.RS485, '7'),
         },
         {
           key: 'digital input',

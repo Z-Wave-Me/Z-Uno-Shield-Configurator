@@ -20,6 +20,10 @@ export class SensorBinary implements Device {
 
   constructor(private readonly config: PinConfig) { }
 
+  public get includes(): string | undefined {
+    return undefined;
+  }
+
   public get channel(): string {
 
     return `  ZUNO_SENSOR_BINARY(${this.name}, pin${this.config.id}SensorBinaryState)`;
@@ -65,4 +69,7 @@ export class SensorBinary implements Device {
     return '';
   }
 
+  public get functions(): string {
+    return '';
+  }
 }

@@ -3,9 +3,10 @@ import { PinConfig } from '../../../../../apps/configurator/src/app/services/sto
 
 export class DHT implements Device {
   public channels = 2;
+
   constructor(private readonly config: PinConfig) {}
 
-  public includes(): string {
+  public get includes(): string {
     return '#include "ZUNO_DHT.h"'
   }
 
@@ -54,6 +55,10 @@ word pin${this.config.id}DHTHumidityState;`;
   }
 
   public get xetter(): string {
+    return '';
+  }
+
+  public get functions(): string {
     return '';
   }
 }

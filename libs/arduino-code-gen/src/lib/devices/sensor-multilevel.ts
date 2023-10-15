@@ -6,6 +6,10 @@ export class SensorMultilevel implements Device {
 
   constructor(private readonly config: PinConfig) { }
 
+  public get includes(): string | undefined {
+    return undefined;
+  }
+
   public get channel(): string {
     return `  ZUNO_SENSOR_MULTILEVEL(PPP4PPP, pin${this.config.id}SensorMultilevelState)`;
   }
@@ -40,6 +44,10 @@ export class SensorMultilevel implements Device {
   }
 
   public get xetter(): string {
+    return '';
+  }
+
+  public get functions(): string {
     return '';
   }
 }

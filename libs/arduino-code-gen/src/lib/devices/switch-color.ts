@@ -6,6 +6,10 @@ export class SwitchColor implements Device {
 
   constructor(private readonly config: PinConfig) { }
 
+  public get includes(): string | undefined {
+    return undefined;
+  }
+
   public get channel(): string {
     // TODO тут тоже узнать
     return '  ZUNO_SWITCH_COLOR(PPP2PPP, pinsSwitchColorGetter, pinsSwitchColorSetter)';
@@ -47,4 +51,7 @@ PPP4PPP
 }`;
   }
 
+  public get functions(): string {
+    return '';
+  }
 }

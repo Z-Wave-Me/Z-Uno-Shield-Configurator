@@ -1,5 +1,5 @@
 export interface Device {
-  includes?(): string;
+  get includes(): string | undefined;
   get note(): string;
   get name(): string | undefined;
   get vars(): string;
@@ -8,5 +8,6 @@ export interface Device {
   loop(channel?: number): string;
   get xetter(): string;
   get report(): string;
+  get functions(): string;
   channels?: number;
 }

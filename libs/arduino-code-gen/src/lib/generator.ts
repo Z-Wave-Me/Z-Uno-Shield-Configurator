@@ -4,6 +4,10 @@ export class Generator implements Device {
   private channelBehaviour = 1;
   constructor(private readonly devices: Device[]) {}
 
+  public get includes(): string | undefined {
+    return this.collect('includes');
+  }
+
   public get channel(): string {
     const channel = this.collect('channel', 1, ',\n');
 
@@ -54,7 +58,7 @@ ${report}
   public get setup(): string {
     return `
 void setup() {
-${this.collect('setup')};
+${this.collect('setup')}
 }
 
 `;
@@ -77,10 +81,16 @@ ${xetter}
       : '';
   }
 
+  public get functions(): string {
+    const functions = this.collect('functions');
+
+    return functions.length ? functions : '';
+  }
+
   public code(): string {
     return `
 #include "ZUNO_SHIELD.h" // Shield library
-
+${this.includes}
 
 ${this.vars}
 ${this.channel}
@@ -88,7 +98,9 @@ ${this.report}
 ZUNOShield shield; // Shield object
 ${this.setup}
 ${this.loop()}
-${this.xetter}`;
+${this.xetter}
+
+${this.functions}`;
   }
 
   private collect(
@@ -112,4 +124,5 @@ ${this.xetter}`;
       .filter(filter)
       .join(Array.from({ length: lineCount }).fill(sep).join());
   }
+
 }

@@ -12,6 +12,10 @@ export class SwitchBinary implements Device {
 
   constructor(private readonly config: PinConfig) { }
 
+  public get includes(): string | undefined {
+    return undefined;
+  }
+
   public get note(): string {
     if (this.config.id.includes('pwm')) {
       return '- Make sure that output current do not exceed 5 A per channel or 15 A per all PWM1-4 pins';
@@ -56,6 +60,10 @@ export class SwitchBinary implements Device {
   }
 
   public get report(): string {
+    return '';
+  }
+
+  public get functions(): string {
     return '';
   }
 }

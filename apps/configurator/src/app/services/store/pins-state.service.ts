@@ -19,6 +19,7 @@ export type DeviceConfig = {
   withGround?: number;
   lowerBound: number | null;
   upperBound: number | null;
+  bindPin: string;
 };
 
 export type PinConfig = {

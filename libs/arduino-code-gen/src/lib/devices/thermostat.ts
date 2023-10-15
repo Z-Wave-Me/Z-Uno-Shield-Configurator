@@ -8,6 +8,10 @@ export class Thermostat implements Device {
 
   constructor(private readonly config: PinConfig) { }
 
+  public get includes(): string | undefined {
+    return undefined;
+  }
+
   public get channel(): string {
     const flag = this.config.device?.id === 'heatingThermostat' ? 'HEAT' : 'COOL'
 
@@ -82,6 +86,10 @@ signed int pin${this.config.id}ThermostatTemperatureGetter(byte mode) {
     
     pin${this.config.id}ThermostatTemperatureCurrent = temp;
   }`;
+  }
+
+  public get functions(): string {
+    return '';
   }
 
   private getMode(invert = true): string {
