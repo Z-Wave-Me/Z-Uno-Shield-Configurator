@@ -9,7 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { HighlightModule } from 'ngx-highlightjs';
 import { SaveAsFileDirective } from '../../directives/save-as-file/save-as-file.directive';
 import { PinsStateService } from '../../services/store/pins-state.service';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { generate } from '@configurator/arduino-code-gen';
 import { AsyncPipe, NgIf } from '@angular/common';
 
