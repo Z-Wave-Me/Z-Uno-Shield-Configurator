@@ -69,6 +69,8 @@ MIT
 @angular/router
 MIT
 
+@configurator/shared
+
 highlight.js
 BSD-3-Clause
 BSD 3-Clause License
