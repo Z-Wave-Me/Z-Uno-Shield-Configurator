@@ -3,17 +3,17 @@ import { BaseDevice } from './base-device';
 
 
 export class SensorMultilevel extends BaseDevice {
-  public channels = 1;
+  public override channels = 1;
 
-  constructor(protected readonly config: PinConfig) {
+  constructor(protected override readonly config: PinConfig) {
     super(config)
   }
 
-  public get channel(): string {
+  public override get channel(): string {
     return `  ZUNO_SENSOR_MULTILEVEL(PPP4PPP, pin${this.config.id}SensorMultilevelState)`;
   }
 
-  public loop(channel: number): string {
+  public override loop(channel: number): string {
     return `  // ADC SensorMultilevel@pin${this.config.id} process code
   pin${this.config.id}SensorMultilevelState = (PPP5PPP) round(PPP1PPP * shield.readADCVoltage(PPP6PPP) + PPP3PPP);
   if(pin${this.config.id}SensorMultilevelState != _pin${this.config.id}SensorMultilevelState){
@@ -22,15 +22,15 @@ export class SensorMultilevel extends BaseDevice {
   }`;
   }
 
-  public get note(): string {
+  public override get note(): string {
     return '- Reports are sent every 30 seconds';
   }
 
-  public get setup(): string {
+  public override get setup(): string {
     return '  shield.initADCChannel(PPP6PPP, PPP7PPP);';
   }
 
-  public get vars(): string {
+  public override get vars(): string {
     return `PPP5PPP pin${this.config.id}SensorMultilevelState=0, _pin${this.config.id}SensorMultilevelState=1;`;
   }
 }

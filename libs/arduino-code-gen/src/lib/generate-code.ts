@@ -10,6 +10,7 @@ import { DS18B20 } from './devices/ds18-b20';
 import { UART } from './devices/uart';
 import { RS485 } from './devices/rs485';
 import { DeviceType, PinConfig } from '@configurator/shared';
+import { SensorMultilevel } from './devices/sensor-multilevel';
 
 export function deviceFromConfig(config: PinConfig): Device {
   switch (config.device?.deviceType) {
@@ -24,7 +25,7 @@ export function deviceFromConfig(config: PinConfig): Device {
     case DeviceType.SensorBinary:
       return new SensorBinary(config);
     case DeviceType.SensorMultilevel:
-      return new SwitchMultilevel(config);
+      return new SensorMultilevel(config);
     case DeviceType.DHT:
       return new DHT(config);
     case DeviceType.DS18B20:

@@ -5,19 +5,19 @@ import { BaseDevice } from './base-device';
 export class Thermostat extends BaseDevice {
   private readonly step = 10; // 1 deg C
 
-  public channels = 1;
+  public override channels = 1;
 
-  constructor(protected readonly config: PinConfig) {
+  constructor(protected override readonly config: PinConfig) {
     super(config);
   }
 
-  public get channel(): string {
+  public override get channel(): string {
     const flag = this.config.device?.id === 'heatingThermostat' ? 'HEAT' : 'COOL'
 
     return `  ZUNO_THERMOSTAT(THERMOSTAT_FLAGS_OFF | THERMOSTAT_FLAGS_${flag}, THERMOSTAT_UNITS_CELSIUS, THERMOSTAT_RANGE_POS, 4, pin${this.config.id}ThermostatModeGetter, pin${this.config.id}ThermostatModeSetter, pin${this.config.id}ThermostatTemperatureGetter, pin${this.config.id}ThermostatTemperatureSetter)`;
   }
 
-  public loop(): string {
+  public override loop(): string {
     const external = this.config.device?.additionally?.toString().startsWith('Z-wave')
         ? ''
         // TODO Спросить что тут должно быть
@@ -34,24 +34,24 @@ export class Thermostat extends BaseDevice {
   }`;
   }
 
-  public get note(): string {
+  public override get note(): string {
     // You need to set up DS18B20 channel with at least ' + ds18b20Num + ' sensor' + (ds18b20Num > 1 ? 's' : '') + '.'
     // TODO узнать что в каком случае выводить?
     return 'Put Z-Uno in the Life Line association group of a temperature sensor. Make sure both devices share same security scheme';
 
   }
 
-  public get setup(): string {
+  public override get setup(): string {
     return `  pinMode(${this.config.id}, OUTPUT);`;
   }
 
-  public get vars(): string {
+  public override get vars(): string {
     return `byte pin${this.config.id}ThermostatModeState = 0;
 int pin${this.config.id}ThermostatTemperatureState = 0;
 int pin${this.config.id}ThermostatTemperatureCurrent = 0;`;
   }
 
-  public get xetter(): string {
+  public override get xetter(): string {
     return `void pin${this.config.id}ThermostatModeSetter(byte value) {
   pin${this.config.id}ThermostatModeState = value;
 }
@@ -69,7 +69,7 @@ signed int pin${this.config.id}ThermostatTemperatureGetter(byte mode) {
 }`;
   }
 
-  public get report(): string {
+  public override get report(): string {
     return `  // External temperature sensor for thermostat @pin${this.config.id} processing
   if ( REPORT_SENSOR_MULTILEVEL_TYPE(report) == ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE) {
     int temp = int(REPORT_SENSOR_MULTILEVEL_VALUE(report) * 10);

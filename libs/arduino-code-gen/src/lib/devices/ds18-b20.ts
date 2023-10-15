@@ -3,24 +3,24 @@ import { BaseDevice } from './base-device';
 
 
 export class DS18B20 extends BaseDevice {
-  public channels: number;
+  public override channels: number;
   public value: number;
 
-  constructor(protected readonly config: PinConfig) {
+  constructor(protected override readonly config: PinConfig) {
     super(config);
     this.value = +(this.config.device?.id ?? 0);
     this.channels = this.value;
   }
 
-  public get includes(): string {
+  public override get includes(): string {
     return '#include "ZUNO_DS18B20.h"'
   }
 
-  public get channel(): string {
+  public override get channel(): string {
     return Array.from({ length: this.channels }).map(() => '  ZUNO_SENSOR_MULTILEVEL(ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE, SENSOR_MULTILEVEL_SCALE_CELSIUS, SENSOR_MULTILEVEL_SIZE_TWO_BYTES, SENSOR_MULTILEVEL_PRECISION_TWO_DECIMALS, temperature)').join(',\n');
   }
 
-  public loop(channel?: number): string {
+  public override loop(channel?: number): string {
     return `  // DS18B20 sensors (@pin${this.config.id}) poll
   for(int ds_sen_i = 0; ds_sen_i < number_of_sensors; ds_sen_i++){
     int current_temp = ds18b20.getTempC100(&addresses[ds_sen_i << 3]);
@@ -32,11 +32,11 @@ export class DS18B20 extends BaseDevice {
   }`;
   }
 
-  public get setup(): string {
+  public override get setup(): string {
     return `  number_of_sensors = ds18b20.findAllSensors(addresses, ${this.value});`;
   }
 
-  public get vars(): string {
+  public override get vars(): string {
     return `OneWire ow(${this.config.id});
 DS18B20Sensor ds18b20(&ow);
 

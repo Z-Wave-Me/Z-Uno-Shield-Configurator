@@ -3,27 +3,27 @@ import { BaseDevice } from './base-device';
 
 
 export class SwitchMultilevel extends BaseDevice {
-  public channels = 1;
+  public override channels = 1;
 
-  constructor(protected readonly config: PinConfig) {
+  constructor(protected override readonly config: PinConfig) {
     super(config);
   }
 
-  public get channel(): string {
+  public override get channel(): string {
     return `  ZUNO_SWITCH_MULTILEVEL(pin${this.config.id}SwitchMultilevelState, NULL)`;
   }
 
-  public loop(): string {
+  public override loop(): string {
     return `  // PWM SwitchMultilevel@pin${this.config.id} process code
   shield.writePWMPercentage(PPP3PPP, pin${this.config.id}SwitchMultilevelState);`;
   }
 
-  public get note(): string {
+  public override get note(): string {
     // TODO уточчить SwitchMultilevelPWM0
     return '- Make sure that output current do not exceed 5 A per channel or 15 A per all PWM1-4 pins';
   }
 
-  public get vars(): string {
+  public override get vars(): string {
     return `byte pin${this.config.id}SwitchMultilevelState = 0;`;
   }
 

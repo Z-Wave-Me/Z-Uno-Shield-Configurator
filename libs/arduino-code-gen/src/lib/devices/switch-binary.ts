@@ -9,17 +9,17 @@ export class SwitchBinary extends BaseDevice {
     siren: 'ZUNO_SIREN',
     valve: 'ZUNO_FLOWSTOP',
   };
-  public channels = 1;
+  public override channels = 1;
 
-  constructor(protected readonly config: PinConfig) {
+  constructor(protected override readonly config: PinConfig) {
     super(config);
   }
 
-  public get includes(): string | undefined {
+  public override get includes(): string | undefined {
     return undefined;
   }
 
-  public get note(): string {
+  public override get note(): string {
     if (this.config.id.includes('pwm')) {
       return '- Make sure that output current do not exceed 5 A per channel or 15 A per all PWM1-4 pins';
     }
@@ -27,7 +27,7 @@ export class SwitchBinary extends BaseDevice {
     return '';
   }
 
-  public get name(): string | undefined {
+  public override get name(): string | undefined {
     const key = this.config.key;
 
     if(key) {
@@ -37,11 +37,11 @@ export class SwitchBinary extends BaseDevice {
     return undefined;
   }
 
-  public get channel(): string {
+  public override get channel(): string {
     return `  ${this.name}(pin${this.config.id}SwitchBinaryState, NULL)`;
   }
 
-  public loop(): string {
+  public override loop(): string {
     const condition = this.config.device?.type === 'normal'
         ? 'HIGH : LOW'
         : 'LOW : HIGH';
@@ -50,11 +50,11 @@ export class SwitchBinary extends BaseDevice {
   digitalWrite(${this.config.id}, pin${this.config.id}SwitchBinaryState ? ${condition});`;
   }
 
-  public get setup(): string {
+  public override get setup(): string {
     return `  pinMode(${this.config.id}, OUTPUT);`;
   }
 
-  public get vars(): string {
+  public override get vars(): string {
     return `byte pin${this.config.id}SwitchBinaryState = 0;`;
   }
 }

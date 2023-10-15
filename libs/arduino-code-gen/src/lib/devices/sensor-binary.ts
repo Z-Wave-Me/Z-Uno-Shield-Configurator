@@ -17,18 +17,18 @@ export class SensorBinary extends BaseDevice {
     'motion': 'ZUNO_SENSOR_BINARY_TYPE_MOTION',
     'glassbr': 'ZUNO_SENSOR_BINARY_TYPE_GLASSBREAK',
   }
-  public channels = 1;
+  public override channels = 1;
 
-  constructor(protected readonly config: PinConfig) {
+  constructor(protected override readonly config: PinConfig) {
     super(config);
   }
 
-  public get channel(): string {
+  public override get channel(): string {
 
     return `  ZUNO_SENSOR_BINARY(${this.name}, pin${this.config.id}SensorBinaryState)`;
   }
 
-  public loop(channel: number): string {
+  public override loop(channel: number): string {
     const inverted = this.config.device?.type === 'inverted' ? '!': '';
 
     return `  // GPIO SensorBinary@pin${this.config.id} process code
@@ -39,15 +39,15 @@ export class SensorBinary extends BaseDevice {
   }`;
   }
 
-  public get name(): string | undefined {
+  public override get name(): string | undefined {
     return SensorBinary.nameMap[this.config.device?.id ?? -1];
   }
 
-  public get note(): string {
+  public override get note(): string {
     return 'PPP5PPP';
   }
 
-  public get setup(): string {
+  public override get setup(): string {
     // TODO что за 'pullup'
     const inverted = this.config.device?.type === 'inverted' ? '!': '';
 
@@ -55,7 +55,7 @@ export class SensorBinary extends BaseDevice {
   pin${this.config.id}SensorBinaryState = ${inverted}!digitalRead(${this.config.id});`;
   }
 
-  public get vars(): string {
+  public override get vars(): string {
     return 'byte pin${this.config.id}SensorBinaryState;';
   }
 }

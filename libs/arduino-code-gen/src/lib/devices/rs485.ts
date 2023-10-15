@@ -3,13 +3,13 @@ import { BaseDevice } from './base-device';
 
 
 export class RS485 extends BaseDevice{
-  public channels = 0;
+  public override channels = 0;
 
-  constructor(protected readonly config: PinConfig) {
+  constructor(protected override readonly config: PinConfig) {
     super(config);
   }
 
-  public get functions(): string {
+  public override get functions(): string {
     return `char readByteRS485() {
   while(Serial1.available() <= 0) delay(1);
   return Serial1.read();
@@ -24,7 +24,7 @@ void writeRS485(char b) {
 }`;
   }
 
-  public get setup(): string {
+  public override get setup(): string {
     return `  Serial1.begin(${this.config.device?.id});
   pinMode(2, OUTPUT);
   digitalWrite(2, LOW);`;
