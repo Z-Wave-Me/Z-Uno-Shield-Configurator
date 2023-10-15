@@ -4,27 +4,29 @@ import { PinConfig } from '../../../../../apps/configurator/src/app/services/sto
 export class Thermostat implements Device {
   private readonly step = 10; // 1 deg C
 
+  public channels = 1;
+
   constructor(private readonly config: PinConfig) { }
 
   public get channel(): string {
     const flag = this.config.device?.id === 'heatingThermostat' ? 'HEAT' : 'COOL'
 
-    return `  ZUNO_THERMOSTAT(THERMOSTAT_FLAGS_OFF | THERMOSTAT_FLAGS_${flag}, THERMOSTAT_UNITS_CELSIUS, THERMOSTAT_RANGE_POS, 4, pinXXXThermostatModeGetter, pinXXXThermostatModeSetter, pinXXXThermostatTemperatureGetter, pinXXXThermostatTemperatureSetter)`;
+    return `  ZUNO_THERMOSTAT(THERMOSTAT_FLAGS_OFF | THERMOSTAT_FLAGS_${flag}, THERMOSTAT_UNITS_CELSIUS, THERMOSTAT_RANGE_POS, 4, pin${this.config.id}ThermostatModeGetter, pin${this.config.id}ThermostatModeSetter, pin${this.config.id}ThermostatTemperatureGetter, pin${this.config.id}ThermostatTemperatureSetter)`;
   }
 
   public get loop(): string {
     const external = this.config.device?.additionally?.toString().startsWith('Z-wave')
         ? ''
         // TODO Спросить что тут должно быть
-        : '\n    pinXXXThermostatTemperatureCurrent = temperature[' + (1 - 1) + ']/10;';
+        : `\n    pin${this.config.id}ThermostatTemperatureCurrent = temperature[` + (1 - 1) + ']/10;';
 
-    return `  // Thermostat@pinXXX process code
-  if (pinXXXThermostatModeState) {${external}
-    if (pinXXXThermostatTemperatureState < pinXXXThermostatTemperatureCurrent - ${this.step}) {
-      digitalWrite(XXX, ${this.getMode()});
+    return `  // Thermostat@pin${this.config.id} process code
+  if (pin${this.config.id}ThermostatModeState) {${external}
+    if (pin${this.config.id}ThermostatTemperatureState < pin${this.config.id}ThermostatTemperatureCurrent - ${this.step}) {
+      digitalWrite(${this.config.id}, ${this.getMode()});
     }
-    if (pinXXXThermostatTemperatureState > pinXXXThermostatTemperatureCurrent + ${this.step}) {
-      digitalWrite(XXX, ${this.getMode(false)});
+    if (pin${this.config.id}ThermostatTemperatureState > pin${this.config.id}ThermostatTemperatureCurrent + ${this.step}) {
+      digitalWrite(${this.config.id}, ${this.getMode(false)});
     }
   }`;
   }
@@ -41,35 +43,35 @@ export class Thermostat implements Device {
   }
 
   public get setup(): string {
-    return '  pinMode(XXX, OUTPUT);';
+    return `  pinMode(${this.config.id}, OUTPUT);`;
   }
 
   public get vars(): string {
-    return `byte pinXXXThermostatModeState = 0;
-int pinXXXThermostatTemperatureState = 0;
-int pinXXXThermostatTemperatureCurrent = 0;`;
+    return `byte pin${this.config.id}ThermostatModeState = 0;
+int pin${this.config.id}ThermostatTemperatureState = 0;
+int pin${this.config.id}ThermostatTemperatureCurrent = 0;`;
   }
 
   public get xetter(): string {
-    return `void pinXXXThermostatModeSetter(byte value) {
-  pinXXXThermostatModeState = value;
+    return `void pin${this.config.id}ThermostatModeSetter(byte value) {
+  pin${this.config.id}ThermostatModeState = value;
 }
 
-byte pinXXXThermostatModeGetter() {
-  return pinXXXThermostatModeState;
+byte pin${this.config.id}ThermostatModeGetter() {
+  return pin${this.config.id}ThermostatModeState;
 }
 
-void pinXXXThermostatTemperatureSetter(byte mode, signed int value) {
-  pinXXXThermostatTemperatureState = value;
+void pin${this.config.id}ThermostatTemperatureSetter(byte mode, signed int value) {
+  pin${this.config.id}ThermostatTemperatureState = value;
 }
 
-signed int pinXXXThermostatTemperatureGetter(byte mode) {
-  return pinXXXThermostatTemperatureState;
+signed int pin${this.config.id}ThermostatTemperatureGetter(byte mode) {
+  return pin${this.config.id}ThermostatTemperatureState;
 }`;
   }
 
   public get report(): string {
-    return `  // External temperature sensor for thermostat @pinXXX processing
+    return `  // External temperature sensor for thermostat @pin${this.config.id} processing
   if ( REPORT_SENSOR_MULTILEVEL_TYPE(report) == ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE) {
     int temp = int(REPORT_SENSOR_MULTILEVEL_VALUE(report) * 10);
     
@@ -78,7 +80,7 @@ signed int pinXXXThermostatTemperatureGetter(byte mode) {
       temp = (temp - 32) * 5 / 9;
     }
     
-    pinXXXThermostatTemperatureCurrent = temp;
+    pin${this.config.id}ThermostatTemperatureCurrent = temp;
   }`;
   }
 

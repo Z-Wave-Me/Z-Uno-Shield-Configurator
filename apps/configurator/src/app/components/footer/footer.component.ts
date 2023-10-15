@@ -39,7 +39,7 @@ export class FooterComponent {
   public code$: Observable<string>;
 
   constructor(private readonly pinsStateService: PinsStateService) {
-    this.code$ = this.pinsStateService.state$.pipe(tap(console.warn),map(generate),tap(console.warn));
+    this.code$ = this.pinsStateService.state$.pipe(map(generate));
   }
   public prevent(event: Event): void {
     event.stopPropagation();

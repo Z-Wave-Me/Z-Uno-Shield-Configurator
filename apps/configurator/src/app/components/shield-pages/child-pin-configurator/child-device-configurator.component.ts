@@ -65,7 +65,6 @@ export class ChildDeviceConfiguratorComponent implements OnInit, OnDestroy {
     this.deviceForm.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe((config) => {
-        console.log(config);
         const { list, ...other } = config;
         this.changePin.emit({ ...other, title: list?.title, id: list?.value, deviceType: list?.type });
       });

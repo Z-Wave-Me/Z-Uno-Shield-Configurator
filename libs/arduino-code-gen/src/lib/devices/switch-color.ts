@@ -2,6 +2,8 @@ import { Device } from './device.interface';
 import { PinConfig } from '../../../../../apps/configurator/src/app/services/store/pins-state.service';
 
 export class SwitchColor implements Device {
+  public channels = 1;
+
   constructor(private readonly config: PinConfig) { }
 
   public get channel(): string {
@@ -10,8 +12,8 @@ export class SwitchColor implements Device {
   }
 
   public get loop(): string {
-    return `  // PWM SwitchColor@pinXXXprocess code
-  analogWriteResolution(8); analogWrite(XXX, pinXXXSwitchMultilevelState);`;
+    return `  // PWM SwitchColor@pin${this.config.id}process code
+  analogWriteResolution(8); analogWrite(${this.config.id}, pin${this.config.id}SwitchMultilevelState);`;
   }
 
   public get name(): string | undefined {
@@ -27,11 +29,11 @@ export class SwitchColor implements Device {
   }
 
   public get setup(): string {
-    return '  pinMode(XXX, OUTPUT);';
+    return `  pinMode(${this.config.id}, OUTPUT);`;
   }
 
   public get vars(): string {
-    return 'byte pinXXXSwitchMultilevelState = 0;';
+    return `byte pin${this.config.id}SwitchMultilevelState = 0;`;
   }
 
   public get xetter(): string {

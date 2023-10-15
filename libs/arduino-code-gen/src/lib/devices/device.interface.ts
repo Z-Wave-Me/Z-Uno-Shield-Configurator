@@ -7,5 +7,5 @@ export interface Device {
   get loop(): string;
   get xetter(): string;
   get report(): string;
-  // get preAction(): string;
+  channels?: number;
 }

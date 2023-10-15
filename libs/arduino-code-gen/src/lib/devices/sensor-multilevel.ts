@@ -2,18 +2,20 @@ import { Device } from './device.interface';
 import { PinConfig } from '../../../../../apps/configurator/src/app/services/store/pins-state.service';
 
 export class SensorMultilevel implements Device {
+  public channels = 1;
+
   constructor(private readonly config: PinConfig) { }
 
   public get channel(): string {
-    return '  ZUNO_SENSOR_MULTILEVEL(PPP4PPP, pinXXXSensorMultilevelState)';
+    return `  ZUNO_SENSOR_MULTILEVEL(PPP4PPP, pin${this.config.id}SensorMultilevelState)`;
   }
 
   public get loop(): string {
-    return `  // ADC SensorMultilevel@pinXXX process code
-  pinXXXSensorMultilevelState = (PPP5PPP) round(PPP1PPP * shield.readADCVoltage(PPP6PPP) + PPP3PPP);
-  if(pinXXXSensorMultilevelState != _pinXXXSensorMultilevelState){
-    _pinXXXSensorMultilevelState = pinXXXSensorMultilevelState;
-    zunoSendReport(NNN); // report if value has changed
+    return `  // ADC SensorMultilevel@pin${this.config.id} process code
+  pin${this.config.id}SensorMultilevelState = (PPP5PPP) round(PPP1PPP * shield.readADCVoltage(PPP6PPP) + PPP3PPP);
+  if(pin${this.config.id}SensorMultilevelState != _pin${this.config.id}SensorMultilevelState){
+    _pin${this.config.id}SensorMultilevelState = pin${this.config.id}SensorMultilevelState;
+    zunoSendReport(${this.channels}); // report if value has changed
   }`;
   }
 
@@ -34,7 +36,7 @@ export class SensorMultilevel implements Device {
   }
 
   public get vars(): string {
-    return 'PPP5PPP pinXXXSensorMultilevelState=0, _pinXXXSensorMultilevelState=1;';
+    return `PPP5PPP pin${this.config.id}SensorMultilevelState=0, _pin${this.config.id}SensorMultilevelState=1;`;
   }
 
   public get xetter(): string {

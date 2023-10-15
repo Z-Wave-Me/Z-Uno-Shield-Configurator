@@ -1,10 +1,23 @@
 import { Device } from './devices/device.interface';
 
 export class Generator implements Device {
+  public channels = 1;
+
   constructor(private readonly devices: Device[]) {}
 
   public get channel(): string {
-    return this.collect('channel', 1, ',\n');
+    const channel = this.collect('channel', 1, ',\n');
+
+    return channel.length
+      ? `
+// Z-Wave channels
+ZUNO_SETUP_CHANNELS(
+${channel}
+);
+
+
+`
+      : '';
   }
 
   public get loop(): string {
@@ -40,7 +53,7 @@ ${report}
   public get setup(): string {
     return `
 void setup() {
-  ${this.collect('setup')};
+${this.collect('setup')};
 }
 
 `;
@@ -81,7 +94,7 @@ ${this.xetter}`;
     accessor: keyof Device,
     lineCount = 1,
     sep = '\n',
-    filter = Boolean
+    filter = Boolean,
   ): string {
     return this.devices
       .map((device) => device[accessor])

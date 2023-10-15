@@ -2,16 +2,17 @@ import { Device } from './device.interface';
 import { PinConfig } from '../../../../../apps/configurator/src/app/services/store/pins-state.service';
 
 export class SwitchMultilevel implements Device {
+  public channels = 1;
 
   constructor(private readonly config: PinConfig) { }
 
   public get channel(): string {
-    return '  ZUNO_SWITCH_MULTILEVEL(pinXXXSwitchMultilevelState, NULL)';
+    return `  ZUNO_SWITCH_MULTILEVEL(pin${this.config.id}SwitchMultilevelState, NULL)`;
   }
 
   public get loop(): string {
-    return `  // PWM SwitchMultilevel@pinXXX process code
-  shield.writePWMPercentage(PPP3PPP, pinXXXSwitchMultilevelState);`;
+    return `  // PWM SwitchMultilevel@pin${this.config.id} process code
+  shield.writePWMPercentage(PPP3PPP, pin${this.config.id}SwitchMultilevelState);`;
   }
 
   public get name(): string | undefined {
@@ -32,7 +33,7 @@ export class SwitchMultilevel implements Device {
   }
 
   public get vars(): string {
-    return 'byte pinXXXSwitchMultilevelState = 0;';
+    return `byte pin${this.config.id}SwitchMultilevelState = 0;`;
   }
 
   public get xetter(): string {

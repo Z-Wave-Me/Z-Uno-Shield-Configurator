@@ -8,6 +8,7 @@ export class SwitchBinary implements Device {
     siren: 'ZUNO_SIREN',
     valve: 'ZUNO_FLOWSTOP',
   };
+  public channels = 1;
 
   constructor(private readonly config: PinConfig) { }
 
@@ -30,7 +31,7 @@ export class SwitchBinary implements Device {
   }
 
   public get channel(): string {
-    return '  PPP1PPP(pinXXXSwitchBinaryState, NULL)';
+    return `  ${this.name}(pin${this.config.id}SwitchBinaryState, NULL)`;
   }
 
   public get loop(): string {
@@ -38,16 +39,16 @@ export class SwitchBinary implements Device {
         ? 'HIGH : LOW'
         : 'LOW : HIGH';
 
-    return `  // GPIOSwitchBinary@pinXXX process code
-  digitalWrite(XXX, pinXXXSwitchBinaryState ? ${condition});`;
+    return `  // GPIOSwitchBinary@pin${this.config.id} process code
+  digitalWrite(${this.config.id}, pin${this.config.id}SwitchBinaryState ? ${condition});`;
   }
 
   public get setup(): string {
-    return '  pinMode(XXX, OUTPUT);';
+    return `  pinMode(${this.config.id}, OUTPUT);`;
   }
 
   public get vars(): string {
-    return 'byte pinXXXSwitchBinaryState = 0;';
+    return `byte pin${this.config.id}SwitchBinaryState = 0;`;
   }
 
   public get xetter(): string {

@@ -16,28 +16,28 @@ export class SensorBinary implements Device {
     'motion': 'ZUNO_SENSOR_BINARY_TYPE_MOTION',
     'glassbr': 'ZUNO_SENSOR_BINARY_TYPE_GLASSBREAK',
   }
+  public channels = 1;
 
   constructor(private readonly config: PinConfig) { }
 
   public get channel(): string {
-    const name = SensorBinary.nameMap[this.config.device?.id ?? 1];
 
-    return `  ZUNO_SENSOR_BINARY(${name}, pinXXXSensorBinaryState)`;
+    return `  ZUNO_SENSOR_BINARY(${this.name}, pin${this.config.id}SensorBinaryState)`;
   }
 
   public get loop(): string {
     const inverted = this.config.device?.type === 'inverted' ? '!': '';
 
-    return `  // GPIO SensorBinary@pinXXX process code
-  byte _pinXXXSensorBinaryState = ${inverted}digitalRead(XXX);
-  if (pinXXXSensorBinaryState != _pinXXXSensorBinaryState) {
-    pinXXXSensorBinaryState = _pinXXXSensorBinaryState;
-    zunoSendReport(NNN);
+    return `  // GPIO SensorBinary@pin${this.config.id} process code
+  byte _pin${this.config.id}SensorBinaryState = ${inverted}digitalRead(${this.config.id});
+  if (pin${this.config.id}SensorBinaryState != _pin${this.config.id}SensorBinaryState) {
+    pin${this.config.id}SensorBinaryState = _pin${this.config.id}SensorBinaryState;
+    zunoSendReport(${this.channels});
   }`;
   }
 
   public get name(): string | undefined {
-    return undefined;
+    return SensorBinary.nameMap[this.config.device?.id ?? -1];
   }
 
   public get note(): string {
@@ -53,12 +53,12 @@ export class SensorBinary implements Device {
     const inverted = this.config.device?.type === 'inverted' ? '!': '';
 
 
-    return `  pinMode(XXX, PPP4PPP);
-  pinXXXSensorBinaryState = ${inverted}!digitalRead(XXX);`;
+    return `  pinMode(${this.config.id}, PPP4PPP);
+  pin${this.config.id}SensorBinaryState = ${inverted}!digitalRead(${this.config.id});`;
   }
 
   public get vars(): string {
-    return 'byte pinXXXSensorBinaryState;';
+    return 'byte pin${this.config.id}SensorBinaryState;';
   }
 
   public get xetter(): string {
