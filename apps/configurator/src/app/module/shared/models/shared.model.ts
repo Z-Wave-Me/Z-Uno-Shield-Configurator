@@ -261,3 +261,30 @@ export const adcConfig = [
     options: digitalOutput,
   },
 ];
+
+export const ds18b20 = [{
+  key: 'Temperature',
+  title: $localize`Temperature`,
+  options: Array.from({ length: 10 }).map((_, index) => ({
+    title: $localize`${index + 1} sensor`,
+    value: index + 1,
+    type: DeviceType.DS18B20,
+  })),
+}]
+
+export const temperatureHumidity = [{
+  key: 'temperature-humidity',
+  title: $localize`Temperature/humidity`,
+  options: [
+    {
+      title: $localize`DHT11`,
+      value: 'dht11',
+      type: DeviceType.DHT,
+    },
+    {
+      title: $localize`DHT22`,
+      value: 'dht22',
+      type: DeviceType.DHT,
+    },
+  ],
+}];

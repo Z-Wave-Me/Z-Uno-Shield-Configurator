@@ -9,6 +9,7 @@ import { pinList } from '../z-uno-shield.config';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectorComponent {
+  public pinList = pinList;
   public topPinList = pinList.slice(0, 8);
 
   public bottomPinList = pinList.slice(8);

@@ -1,6 +1,6 @@
 import { Directive, HostBinding, Input, OnDestroy} from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { PinContainer, PinSelectedService } from '../../services/pin-selected/pin-selected.service';
+import { PinSelectedService } from '../../services/pin-selected/pin-selected.service';
 
 @Directive({
   selector: '[configuratorSelectable][options]',

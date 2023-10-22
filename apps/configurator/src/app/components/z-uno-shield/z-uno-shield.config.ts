@@ -201,22 +201,7 @@ export const pinList: Pin[] = [
     title: '12',
     id: ZUnoShieldPin.PIN_12,
     pin: [
-      {
-        key: 'temperature-humidity',
-        title: $localize`Temperature/humidity`,
-        options: [
-          {
-            title: $localize`DHT11`,
-            value: 'dht11',
-            type: DeviceType.DHT,
-          },
-          {
-            title: $localize`DHT22`,
-            value: 'dht22',
-            type: DeviceType.DHT,
-          },
-        ],
-      },
+      ...IO.temperatureHumidity,
       {
         key: 'digital input',
         title: $localize`Digital input 0/3 V`,
@@ -235,31 +220,8 @@ export const pinList: Pin[] = [
     title: '11, One Wire',
     id: ZUnoShieldPin.ONE_WIRE,
     pin: [
-      {
-        key: 'Temperature',
-        title: $localize`Temperature`,
-        options: Array.from({ length: 10 }).map((_, index) => ({
-          title: $localize`${index + 1} sensor`,
-          value: index + 1,
-          type: DeviceType.DS18B20,
-        })),
-      },
-      {
-        key: 'temperature-humidity',
-        title: $localize`Temperature/humidity`,
-        options: [
-          {
-            title: $localize`DHT11`,
-            value: 'dht11',
-            type: DeviceType.DHT,
-          },
-          {
-            title: $localize`DHT22`,
-            value: 'dht22',
-            type: DeviceType.DHT,
-          },
-        ],
-      },
+      ...IO.ds18b20,
+      ...IO.temperatureHumidity,
       {
         key: 'digital input',
         title: $localize`Digital input 0/3 V`,
