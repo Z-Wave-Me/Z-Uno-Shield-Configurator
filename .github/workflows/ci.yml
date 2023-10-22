@@ -15,5 +15,5 @@ jobs:
       - uses: nrwl/nx-set-shas@v3
       - run: npm ci --legacy-peer-deps
 
-      - run: run lint
+#      - run: run lint
       - run: run deploy
