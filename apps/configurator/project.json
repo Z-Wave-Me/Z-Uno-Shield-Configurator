@@ -21,7 +21,9 @@
         ],
         "styles": ["apps/configurator/src/styles.scss"],
         "scripts": [],
-        "baseHref": "/Z-Uno-Shield-Configurator/"
+        "baseHref": "/Z-Uno-Shield-Configurator/",
+        "name": "Xel4ek",
+        "email": "l-baal@yandex.ru"
       },
       "configurations": {
         "production": {

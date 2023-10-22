@@ -16,10 +16,5 @@ jobs:
         with:
           node-version: 18.x
           cache: 'npm'
-      - uses: webfactory/ssh-agent@v0.7.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - run: npm ci --legacy-peer-deps
       - run: npm run deploy
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
