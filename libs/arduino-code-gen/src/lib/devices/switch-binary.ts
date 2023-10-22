@@ -5,7 +5,7 @@ import { BaseDevice } from './base-device';
 export class SwitchBinary extends BaseDevice {
   private static readonly nameMap: Record<string, string> = {
     switch: 'ZUNO_SWITCH_BINARY',
-    doorlock: 'ZUNO_DOORLOCK',
+    doorLock: 'ZUNO_DOORLOCK',
     siren: 'ZUNO_SIREN',
     valve: 'ZUNO_FLOWSTOP',
   };

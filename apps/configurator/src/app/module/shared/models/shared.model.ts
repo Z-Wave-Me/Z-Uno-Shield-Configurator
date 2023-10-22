@@ -1,4 +1,9 @@
 import { DeviceType } from '@configurator/shared';
+import {
+  ColorDevices,
+  SensorMultilevelDevices,
+  VoltageOffset,
+} from '@configurator/arduino-code-gen';
 
 export const digitalInput = [
   {
@@ -8,7 +13,8 @@ export const digitalInput = [
   },
   {
     title: $localize`Door/window`,
-    value: 'door-window',
+    value: 'door',
+    type: DeviceType.SensorBinary,
   },
   {
     title: $localize`Motion`,
@@ -36,8 +42,9 @@ export const digitalInput = [
     type: DeviceType.SensorBinary,
   },
   {
-    title: $localize`Overheat`,
-    value: 'overheat',
+    title: $localize`Heat`,
+    value: 'heat',
+    type: DeviceType.SensorBinary,
   },
   {
     title: $localize`Freeze`,
@@ -124,22 +131,22 @@ export const pwmOutput = [
   },
   {
     title: $localize`Red LED`,
-    value: 'led red',
+    value: ColorDevices.Red,
     type: DeviceType.SwitchColor,
   },
   {
     title: $localize`Green LED`,
-    value: 'led green',
+    value: ColorDevices.Green,
     type: DeviceType.SwitchColor,
   },
   {
     title: $localize`Blue LED`,
-    value: 'led blue',
+    value: ColorDevices.Blue,
     type: DeviceType.SwitchColor,
   },
   {
     title: $localize`White LED`,
-    value: 'led white',
+    value: ColorDevices.White,
     type: DeviceType.SwitchColor,
   },
 ];
@@ -147,47 +154,47 @@ export const pwmOutput = [
 export const analogInput = [
   {
     title: $localize`Percentages, %`,
-    value: 'Percentages, %',
+    value: SensorMultilevelDevices.Percentage,
     type: DeviceType.SensorMultilevel,
   },
   {
     title: $localize`Temperature, °C`,
-    value: 'Temperature, °C',
+    value:  SensorMultilevelDevices.Temperature,
     type: DeviceType.SensorMultilevel,
   },
   {
     title: $localize`Luminance, lux`,
-    value: 'Luminance, lux`',
+    value:  SensorMultilevelDevices.Luminance,
     type: DeviceType.SensorMultilevel,
   },
   {
     title: $localize`Humidity, %`,
-    value: 'Humidity, %',
+    value:  SensorMultilevelDevices.Humidity,
     type: DeviceType.SensorMultilevel,
   },
   {
     title: $localize`Voltage, V`,
-    value: 'Voltage, V',
+    value:  SensorMultilevelDevices.Voltage,
     type: DeviceType.SensorMultilevel,
   },
   {
     title: $localize`Current, A`,
-    value: 'Current, A',
+    value:  SensorMultilevelDevices.Current,
     type: DeviceType.SensorMultilevel,
   },
   {
     title: $localize`Distance, m`,
-    value: 'Distance, m',
+    value:  SensorMultilevelDevices.Distance,
     type: DeviceType.SensorMultilevel,
   },
   {
     title: $localize`Pressure, kPa`,
-    value: 'Pressure, kPa',
+    value:  SensorMultilevelDevices.Pressure,
     type: DeviceType.SensorMultilevel,
   },
   {
     title: $localize`CO2, ppm`,
-    value: 'CO2, ppm',
+    value: SensorMultilevelDevices.Ppm,
     type: DeviceType.SensorMultilevel,
   },
 ];
@@ -200,22 +207,22 @@ export const analogOutput = [
   },
   {
     title: $localize`Red LED`,
-    value: 'led red',
+    value: ColorDevices.Red,
     type: DeviceType.SwitchColor,
   },
   {
     title: $localize`Green LED`,
-    value: 'led green',
+    value: ColorDevices.Green,
     type: DeviceType.SwitchColor,
   },
   {
     title: $localize`Blue LED`,
-    value: 'led blue',
+    value: ColorDevices.Blue,
     type: DeviceType.SwitchColor,
   },
   {
     title: $localize`White LED`,
-    value: 'led white',
+    value: ColorDevices.White,
     type: DeviceType.SwitchColor,
   },
 ];
@@ -233,19 +240,19 @@ export const adcConfig = [
     key: 'Analog input 0-3 V',
     title: $localize`Analog input 0-3 V`,
     options: analogInput,
-    map: 3,
+    offset: VoltageOffset.V3,
   },
   {
     key: 'Analog input 0-5 V',
     title: $localize`Analog input 0-5 V`,
     options: analogInput,
-    map: 5,
+    offset: VoltageOffset.V5,
   },
   {
     key: 'Analog input 0-12 V',
     title: $localize`Analog input 0-12 V`,
     options: analogInput,
-    map: 12,
+    offset: VoltageOffset.V12,
   },
   {
     key: 'Digital input 0/3 V',

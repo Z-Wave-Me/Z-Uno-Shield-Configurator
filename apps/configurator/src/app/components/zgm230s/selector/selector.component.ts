@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DeviceType } from '../../../shared/device.model';
 import { IO } from '../../../module/shared/models';
+import { DeviceType } from '@configurator/shared';
 
 @Component({
   selector: 'configurator-selector',
@@ -90,7 +90,7 @@ export class SelectorComponent {
     },
   ];
 
-  public pins = [
+  public pins: any[] = [
     {
       title: 'PA00',
       id: 'PA00',
@@ -98,7 +98,7 @@ export class SelectorComponent {
         {
           key: 'SPI SCK',
           title: $localize`SPI SCK`,
-          options: this.roter,
+          options: IO.roter(DeviceType.UART, '8'),
         },
         ...this.gpioConfig,
       ],
@@ -110,7 +110,7 @@ export class SelectorComponent {
         {
           key: 'SPI MISO',
           title: $localize`SPI MISO`,
-          options: this.roter,
+          options: IO.roter(DeviceType.UART, '8'),
         },
         ...this.gpioConfig,
       ],
@@ -122,7 +122,7 @@ export class SelectorComponent {
         {
           key: 'SPI MOSI',
           title: $localize`SPI MOSI`,
-          options: this.roter,
+          options: IO.roter(DeviceType.UART, '8'),
         },
         ...this.gpioConfig,
       ],
@@ -154,7 +154,7 @@ export class SelectorComponent {
         {
           key: 'uart',
           title: $localize`UART TX1`,
-          options: this.roter,
+          options: IO.roter(DeviceType.UART, 'PA08'),
         },
         ...this.gpioConfig,
       ],
@@ -166,7 +166,7 @@ export class SelectorComponent {
         {
           key: 'uart',
           title: $localize`UART RX1`,
-          options: this.roter,
+          options: IO.roter(DeviceType.UART, 'PA09'),
         },
         ...this.gpioConfig,
       ],
@@ -274,7 +274,7 @@ export class SelectorComponent {
         {
           key: 'uart',
           title: $localize`UART TX0`,
-          options: this.roter,
+          options: IO.roter(DeviceType.UART, 'PD02'),
         },
         ...this.gpioConfig,
       ],
@@ -286,7 +286,7 @@ export class SelectorComponent {
         {
           key: 'uart',
           title: $localize`UART RX0`,
-          options: this.roter,
+          options: IO.roter(DeviceType.UART, 'PB00'),
         },
         ...this.gpioConfig,
       ],
@@ -298,7 +298,7 @@ export class SelectorComponent {
         {
           key: 'SAPI TX',
           title: $localize`SAPI TX`,
-          options: this.roter,
+          options: IO.roter(DeviceType.UART, 'PD01'),
         },
       ],
     },
@@ -309,7 +309,7 @@ export class SelectorComponent {
         {
           key: 'SAPI RX',
           title: $localize`SAPI RX`,
-          options: this.roter,
+          options: IO.roter(DeviceType.UART, 'PD00'),
         },
       ],
     },

@@ -1,5 +1,6 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
+import { Grounding } from '@configurator/arduino-code-gen';
 
 
 export class SensorBinary extends BaseDevice {
@@ -44,18 +45,24 @@ export class SensorBinary extends BaseDevice {
   }
 
   public override get note(): string {
-    return 'PPP5PPP';
+    return this.isPullUp ? '- Make sure that input is always pulled to high or low level.' : '';
   }
 
   public override get setup(): string {
-    // TODO что за 'pullup'
     const inverted = this.config.device?.type === 'inverted' ? '!': '';
+    const inputType = this.isPullUp ? 'INPUT_PULLUP' : 'INPUT'
 
-    return `  pinMode(${this.config.id}, PPP4PPP);
+    return `  pinMode(${this.config.id}, ${inputType});
   pin${this.config.id}SensorBinaryState = ${inverted}!digitalRead(${this.config.id});`;
   }
 
   public override get vars(): string {
     return 'byte pin${this.config.id}SensorBinaryState;';
   }
+
+  private get isPullUp(): boolean {
+    return  this.config.device?.additionally === Grounding.Free;
+  }
+
 }
+

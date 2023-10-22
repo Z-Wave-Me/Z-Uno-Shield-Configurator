@@ -27,7 +27,7 @@
       <mat-option *ngFor="let item of list" [value]="item.value">{{item.title}}</mat-option>
     </mat-select>
   </mat-form-field>
-  <div *ngIf="optionsList.map" class="inputs">
+  <div *ngIf="optionsList.offset" class="inputs">
     {{ optionsList.key}}
     <mat-icon>arrow_right_alt</mat-icon>
     <input

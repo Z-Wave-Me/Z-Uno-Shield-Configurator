@@ -37,8 +37,8 @@ export class SelectorComponent {
       value: 'CO2',
     },
     {
-      title: $localize`Overheat`,
-      value: 'Overheat',
+      title: $localize`Heat`,
+      value: 'heat',
     },
     {
       title: $localize`Freeze`,
@@ -236,83 +236,8 @@ export class SelectorComponent {
     },
   ];
 
-  private readonly ds18b20Config = [
-    {
-      key: 'Temperature',
-      title: $localize`Temperature`,
-      options: [
-        {
-          title: $localize`1 sensor`,
-          value: '1 sensor',
-        },
-        {
-          title: $localize`2 sensors`,
-          value: '2 sensors',
-        },
-        {
-          title: $localize`3 sensors`,
-          value: '3 sensors',
-        },
-        {
-          title: $localize`4 sensors`,
-          value: '4 sensors',
-        },
-        {
-          title: $localize`5 sensors`,
-          value: '5 sensors',
-        },
-        {
-          title: $localize`6 sensors`,
-          value: '6 sensors',
-        },
-        {
-          title: $localize`7 sensors`,
-          value: '7 sensors',
-        },
-        {
-          title: $localize`8 sensors`,
-          value: '8 sensors',
-        },
-        {
-          title: $localize`9 sensors`,
-          value: '9 sensors',
-        },
-        {
-          title: $localize`10 sensors`,
-          value: '10 sensors',
-        },
-      ],
-    },
-  ];
 
-  private readonly pwmConfig = [
-    {
-      key: 'PWM',
-      title: $localize`PWM output `,
-      options: [
-        {
-          title: $localize`Dimmer`,
-          value: 'dimmer',
-        },
-        {
-          title: $localize`Red LED`,
-          value: 'led red',
-        },
-        {
-          title: $localize`Green LED`,
-          value: 'led green',
-        },
-        {
-          title: $localize`Blue LED`,
-          value: 'led blue',
-        },
-        {
-          title: $localize`White LED`,
-          value: 'led white',
-        },
-      ],
-    },
-  ];
+
 
   public pins = [
     {

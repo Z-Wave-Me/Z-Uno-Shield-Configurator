@@ -12,6 +12,7 @@ import {
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ConnectionMode, DeviceConfig, PinConfiguratorInput } from '@configurator/shared';
+import { VoltageOffset } from '@configurator/arduino-code-gen';
 
 interface DeviceForm {
   list: FormControl<PinConfiguratorInput | null>;
@@ -34,7 +35,7 @@ export class ChildDeviceConfiguratorComponent
     key: string;
     title: string;
     options: PinConfiguratorInput[];
-    map?: number;
+    offset?: VoltageOffset;
   };
   @Input() public init?: Partial<DeviceConfig>;
   @Output() public changePin = new EventEmitter<Partial<DeviceConfig>>();
@@ -127,7 +128,7 @@ export class ChildDeviceConfiguratorComponent
       });
     }
 
-    if (this.optionsList.map) {
+    if (this.optionsList.offset) {
       this.deviceForm.controls.lowerBound.patchValue(
         this.init?.lowerBound ?? 0,
         { emitEvent: false },

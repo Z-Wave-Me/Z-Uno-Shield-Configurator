@@ -279,7 +279,8 @@ const codeTemplates = {
         4: 'SENSOR_MULTILEVEL_SIZE_FOUR_BYTES',
       }[size];
 
-      const m = params[1] * Math.pow(10, precision), M = params[2] * Math.pow(10, precision);
+      const m = params[1] * Math.pow(10, precision),
+        M = params[2] * Math.pow(10, precision);
       //var frac = floatToRatio((M - m) / voltage_offset, 64);
       params[1] = ((M-m)/voltage_offset).toFixed(5);
       params[2] = 0;

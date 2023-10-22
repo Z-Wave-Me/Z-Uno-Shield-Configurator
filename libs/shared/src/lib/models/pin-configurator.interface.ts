@@ -1,4 +1,5 @@
 import { DeviceType } from './device.model';
+import { Grounding } from '@configurator/arduino-code-gen';
 
 export interface PinConfiguratorInput {
   title: string;
@@ -8,7 +9,7 @@ export interface PinConfiguratorInput {
   bindPin?: string;
   additionally?: {
     title: string;
-    value: string | number;
+    value: string | number | Grounding;
   }[];
 }
 

@@ -1,4 +1,5 @@
 import { DeviceType } from './device.model';
+import { VoltageOffset } from '@configurator/arduino-code-gen';
 
 export enum ConnectionMode {
   Normal = 'normal',
@@ -22,4 +23,5 @@ export type PinConfig = {
   device?: Partial<DeviceConfig>;
   key?: string;
   lockIds?: string[];
+  offset?: VoltageOffset;
 };

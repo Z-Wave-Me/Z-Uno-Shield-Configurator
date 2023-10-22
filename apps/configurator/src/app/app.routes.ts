@@ -7,11 +7,11 @@ export const appRoutes: Route[] = [
     component: LayoutComponent,
     loadChildren: () => import('./components/z-uno-shield/z-uno-shield.module').then(m => m.ZUnoShieldModule),
   },
-  // {
-  //   path: 'zgm230s',
-  //   component: LayoutComponent,
-  //   loadChildren: () => import('./components/chip/chip.module').then(m => m.ChipModule),
-  // },
+  {
+    path: 'zgm230s',
+    component: LayoutComponent,
+    loadChildren: () => import('./components/zgm230s/zgm230s.module').then(m => m.ZGM230SModule),
+  },
   // {
   //   path: 'zm8202',
   //   component: LayoutComponent,

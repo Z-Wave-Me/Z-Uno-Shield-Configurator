@@ -11,7 +11,6 @@ import { DeviceType } from '@configurator/shared';
 })
 export class SelectorComponent {
 
-
   public topPinList = [
     {
       title: 'PWM4',

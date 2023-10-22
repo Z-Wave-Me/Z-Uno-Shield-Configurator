@@ -12,6 +12,7 @@ import {
   PinsStateService,
 } from '../../../services/store/pins-state.service';
 import { DeviceConfig, PinConfig, PinConfiguratorInput } from '@configurator/shared';
+import { Grounding, VoltageOffset } from '@configurator/arduino-code-gen';
 
 interface Pin {
   id: string;
@@ -49,11 +50,11 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
             additionally: [
               {
                 title: `${p.withGround} ` + $localize`V or ground`,
-                value: p.withGround + 'V or ground',
+                value: p.withGround ?? -1,
               },
               {
                 title: $localize`Free or ground`,
-                value: 'Free or ground',
+                value: Grounding.Free,
               },
             ],
           };
@@ -78,6 +79,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
     key: string;
     title: string;
     options: PinConfiguratorInput[];
+    offset?: VoltageOffset;
   };
 
   constructor(
@@ -103,6 +105,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
       id: this.options.id,
       key: this.selected?.key,
       device: config,
+      offset: this.selected?.offset,
       lockIds: [],
     });
   }

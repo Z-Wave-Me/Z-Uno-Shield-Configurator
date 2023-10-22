@@ -1,12 +1,26 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
 
+enum ColorFlag {
+  White = 'SWITCH_COLOR_FLAGS_WARM_WHITE',
+  Red = 'SWITCH_COLOR_FLAGS_RED',
+  Green = 'SWITCH_COLOR_FLAGS_GREEN',
+  Blue = 'SWITCH_COLOR_FLAGS_BLUE',
+}
+
+enum ColorMode {
+  White = 'SWITCH_COLOR_COMPONENT_WARM_WHITE',
+  Red = 'SWITCH_COLOR_COMPONENT_RED',
+  Green = 'SWITCH_COLOR_COMPONENT_GREEN',
+  Blue = 'SWITCH_COLOR_COMPONENT_BLUE',
+}
 
 export class SwitchColor extends BaseDevice {
   public override channels = 1;
 
   constructor(protected override readonly config: PinConfig) {
     super(config);
+    console.warn(config);
   }
 
   public override get channel(): string {

@@ -24,7 +24,7 @@ export class BaseDevice implements Device {
   }
 
   public get name(): string | undefined {
-    return undefined;
+    return this.config.device?.id?.toString().toLocaleUpperCase() ?? '';
   }
 
   public get note(): string {
@@ -45,5 +45,9 @@ export class BaseDevice implements Device {
 
   public get xetter(): string {
     return '';
+  }
+
+  public get v10Mode(): boolean  {
+    return  false;
   }
 }

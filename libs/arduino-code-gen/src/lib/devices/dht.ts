@@ -54,7 +54,7 @@ export class DHT extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `DHT pin${this.config.id}DHT(${this.config.id}, PPP1PPP);
+    return `DHT pin${this.config.id}DHT(${this.config.id}, ${this.name});
     
 int pin${this.config.id}DHTTemperatureState;
 word pin${this.config.id}DHTHumidityState;`;
