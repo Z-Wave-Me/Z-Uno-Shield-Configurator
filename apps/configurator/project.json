@@ -20,8 +20,7 @@
           "apps/configurator/src/assets"
         ],
         "styles": ["apps/configurator/src/styles.scss"],
-        "scripts": [],
-        "baseHref": "/Z-Uno-Shield-Configurator/"
+        "scripts": []
       },
       "configurations": {
         "production": {
@@ -99,7 +98,10 @@
       }
     },
     "deploy": {
-      "executor": "angular-cli-ghpages:deploy"
+      "executor": "angular-cli-ghpages:deploy",
+      "name": "Xel4ek",
+      "email": "l-baal@yandex.ru",
+      "baseHref": "/Z-Uno-Shield-Configurator/"
     }
   }
 }
