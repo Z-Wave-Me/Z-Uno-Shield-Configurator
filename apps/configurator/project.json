@@ -99,9 +99,11 @@
     },
     "deploy": {
       "executor": "angular-cli-ghpages:deploy",
-      "name": "Xel4ek",
-      "email": "l-baal@yandex.ru",
-      "baseHref": "/Z-Uno-Shield-Configurator/"
+      "options": {
+        "name": "Xel4ek",
+        "email": "l-baal@yandex.ru",
+        "baseHref": "/Z-Uno-Shield-Configurator/"
+      }
     }
   }
 }
