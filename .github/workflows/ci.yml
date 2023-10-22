@@ -16,4 +16,4 @@ jobs:
       - run: npm ci --legacy-peer-deps
 
 #      - run: run lint
-      - run: run build
+      - run: npm run build
