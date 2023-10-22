@@ -8,6 +8,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PinsStateService } from '../../services/store/pins-state.service';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { RouterLink } from '@angular/router';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { SidenavService } from '../../services/nav-service/sidenav.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'configurator-header',
@@ -23,13 +29,22 @@ import { RouterLink } from '@angular/router';
     MatTooltipModule,
     ClipboardModule,
     RouterLink,
+    MatSidenavModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    AsyncPipe,
   ],
 })
 export class HeaderComponent {
+  public readonly title$: Observable<string>;
+
   constructor(
     private readonly notificationService: NotificationService,
     private readonly pinsStateService: PinsStateService,
-  ) {}
+    private readonly sidenavService: SidenavService,
+  ) {
+    this.title$ = this.sidenavService.title();
+  }
 
   public reset(): void {
     this.pinsStateService.reset();
@@ -38,5 +53,9 @@ export class HeaderComponent {
 
   public get url(): string {
     return window.location.href;
+  }
+
+  public openSidenav(): void {
+    this.sidenavService.open();
   }
 }

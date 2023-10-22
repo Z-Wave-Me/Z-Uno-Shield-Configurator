@@ -1,20 +1,7 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row class="container">
-    <a
-      mat-button
-      class="header"
-      routerLink="/shield"
-      i18n>Z-Uno Shield Configurator</a>
-    <a
-      mat-button
-      class="header"
-      routerLink="/zgm230s"
-      i18n>ZGM230S Configurator</a>
-    <a
-      mat-button
-      class="header"
-      routerLink="/zm8202"
-      i18n>ZM8202 Configurator</a>
+    <button mat-icon-button (click)="openSidenav()"><mat-icon>menu</mat-icon></button>
+    <span class="title">{{ title$ | async }}</span>
     <span class="spacer"></span>
     <button
       mat-icon-button
@@ -34,3 +21,4 @@
     </button>
   </mat-toolbar-row>
 </mat-toolbar>
+

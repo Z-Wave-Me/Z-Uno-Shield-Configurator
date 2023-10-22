@@ -21,6 +21,8 @@ import {
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from './module/shared/shared.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 const customTooltipDefaults: MatTooltipDefaultOptions = {
   showDelay: 1000,
@@ -29,10 +31,7 @@ const customTooltipDefaults: MatTooltipDefaultOptions = {
 };
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LayoutComponent,
-  ],
+  declarations: [AppComponent, LayoutComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes, {
@@ -52,6 +51,8 @@ const customTooltipDefaults: MatTooltipDefaultOptions = {
     ReactiveFormsModule,
     MatButtonModule,
     SharedModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [
     {

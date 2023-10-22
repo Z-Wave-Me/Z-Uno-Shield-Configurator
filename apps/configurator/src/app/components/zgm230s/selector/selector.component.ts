@@ -5,7 +5,7 @@ import { Zgm230sGroups, Zgm230sPin } from '../zgm230s.model';
 import { Pin } from '../../z-uno-shield/z-uno-shield.model';
 
 @Component({
-  selector: 'configurator-selector',
+  selector: 'configurator-zgm230s-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

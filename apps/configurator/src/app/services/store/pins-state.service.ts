@@ -11,6 +11,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
 import { PinConfig } from '@configurator/shared';
 import { Pin } from '../../components/z-uno-shield/z-uno-shield.model';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,7 @@ export class PinsStateService {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly localStorageService: LocalStorageService,
+    private readonly location: Location,
   ) {
     this.activatedRoute.queryParams
       .pipe(
@@ -64,7 +66,7 @@ export class PinsStateService {
     return this._state$.asObservable();
   }
 
-  public patch(pin: PinConfig, possiblePins: Pin[]): Promise<boolean> {
+  public patch(pin: PinConfig, possiblePins: Pin[]): void {
     const value = this._state$.value;
 
     const groupType = pin.group;
@@ -104,7 +106,7 @@ export class PinsStateService {
     console.log(this.snapshot);
     console.groupEnd();
 
-    return this.updateRoute();
+    this.updateRoute();
   }
 
   public reset(): void {
@@ -113,16 +115,15 @@ export class PinsStateService {
     this.router.navigate([]);
   }
 
-  private updateRoute(): Promise<boolean> {
+  private updateRoute(): void {
     const config = this.snapshot;
     const configBase64 = btoa(JSON.stringify(config));
 
     this.localStorageService.set(this.currentKey, config);
 
-    return this.router.navigate([], {
-      queryParams: { config: configBase64 },
-      queryParamsHandling: 'merge',
-    });
+    const query = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {config: configBase64}}).toString();
+
+    this.location.go(query);
   }
 
   private isLinked(group?: string): boolean {

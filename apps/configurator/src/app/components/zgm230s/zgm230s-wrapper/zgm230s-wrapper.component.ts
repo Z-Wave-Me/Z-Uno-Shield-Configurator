@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'configurator-chip-wrapper',
-  templateUrl: './chip-wrapper.component.html',
-  styleUrls: ['./chip-wrapper.component.scss'],
+  templateUrl: './zgm230s-wrapper.component.html',
+  styleUrls: ['./zgm230s-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChipWrapperComponent {
+export class Zgm230sWrapperComponent {
   public links: { path: string; title: string }[] = [
     {
       path: '.',

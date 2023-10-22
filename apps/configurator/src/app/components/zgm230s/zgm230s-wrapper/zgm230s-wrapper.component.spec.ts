@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ChipWrapperComponent } from './chip-wrapper.component';
+import { Zgm230sWrapperComponent } from './zgm230s-wrapper.component';
 
 describe('ChipWrapperComponent', () => {
-  let component: ChipWrapperComponent;
-  let fixture: ComponentFixture<ChipWrapperComponent>;
+  let component: Zgm230sWrapperComponent;
+  let fixture: ComponentFixture<Zgm230sWrapperComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ChipWrapperComponent],
+      declarations: [Zgm230sWrapperComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ChipWrapperComponent);
+    fixture = TestBed.createComponent(Zgm230sWrapperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

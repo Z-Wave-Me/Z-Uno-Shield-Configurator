@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SvgChipComponent } from './svg-chip.component';
+import { SvgZgm230sComponent } from './svg-zgm230s.component';
 
 describe('SvgChipComponent', () => {
-  let component: SvgChipComponent;
-  let fixture: ComponentFixture<SvgChipComponent>;
+  let component: SvgZgm230sComponent;
+  let fixture: ComponentFixture<SvgZgm230sComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SvgChipComponent],
+      declarations: [SvgZgm230sComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SvgChipComponent);
+    fixture = TestBed.createComponent(SvgZgm230sComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

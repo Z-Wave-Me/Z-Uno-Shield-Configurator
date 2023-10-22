@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ChipWrapperComponent } from './chip-wrapper/chip-wrapper.component';
+import { Zgm230sWrapperComponent } from './zgm230s-wrapper/zgm230s-wrapper.component';
 import { SelectorComponent } from './selector/selector.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ChipWrapperComponent,
+    component: Zgm230sWrapperComponent,
     children: [{
       path: '',
       component: SelectorComponent,

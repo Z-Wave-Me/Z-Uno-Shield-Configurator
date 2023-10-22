@@ -2,23 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Zm8202RoutingModule } from './zm8202-routing.module';
-import { ChipWrapperComponent } from './chip-wrapper/chip-wrapper.component';
+import { Zm8202WrapperComponent } from './zm8202-wrapper/zm8202-wrapper.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SelectorComponent } from './selector/selector.component';
-import { SvgChipComponent } from './svg-chip/svg-chip.component';
-import { ChipComponent } from './components/chip/chip.component';
+import { SvgZm8202Component } from './svg-chip/svg-zm8202.component';
+import { Zm8202Component } from './components/zm8202/zm8202.component';
 import { SelectableDirective } from '../../directives/selectable/selectable.directive';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { SharedModule } from '../../module/shared/shared.module';
 
 @NgModule({
   declarations: [
-    ChipWrapperComponent,
+    Zm8202WrapperComponent,
     SelectorComponent,
-    SvgChipComponent,
-    ChipComponent,
+    SvgZm8202Component,
+    Zm8202Component,
   ],
   imports: [
     CommonModule,
@@ -29,6 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     ReactiveFormsModule,
     MatIconModule,
+    SharedModule,
   ],
   exports: [],
 })

@@ -1,3 +1,33 @@
-<configurator-header></configurator-header>
-<router-outlet></router-outlet>
-<configurator-footer></configurator-footer>
+<mat-drawer-container>
+  <mat-drawer #drawer mode="over" >
+    <mat-nav-list>
+      <a
+        mat-list-item
+        matListItemTitle
+        class="header"
+        routerLink="/shield"
+        routerLinkActive="active"
+        i18n>Z-Uno Shield Configurator</a>
+     <a
+        mat-list-item
+        matListItemTitle
+        class="header"
+        routerLink="/zgm230s"
+        routerLinkActive="active"
+        i18n>ZGM230S Configurator</a>
+      <a
+        mat-list-item
+        matListItemTitle
+        class="header"
+        routerLink="/zm8202"
+        routerLinkActive="active"
+        i18n>ZM8202 Configurator</a>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <configurator-header></configurator-header>
+    <router-outlet></router-outlet>
+    <configurator-footer></configurator-footer>
+  </mat-drawer-content>
+</mat-drawer-container>
+

@@ -3,7 +3,7 @@ import { PinSelectedService } from '../../../services/pin-selected/pin-selected.
 import { pinList } from '../z-uno-shield.config';
 
 @Component({
-  selector: 'configurator-selector',
+  selector: 'configurator-zuno-shield-selector',
   templateUrl: './selector.component.html',
   styleUrls: ['./selector.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

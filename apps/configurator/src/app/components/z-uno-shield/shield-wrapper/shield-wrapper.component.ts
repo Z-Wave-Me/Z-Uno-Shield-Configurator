@@ -12,14 +12,14 @@ export class ShieldWrapperComponent {
       path: '.',
       title: $localize`Select peripherals`,
     },
-    {
-      path: 'relations',
-      title: $localize`Define relations`,
-    },
-    {
-      path: 'test',
-      title: $localize`Connect peripherals`,
-    },
+    // {
+    //   path: 'relations',
+    //   title: $localize`Define relations`,
+    // },
+    // {
+    //   path: 'test',
+    //   title: $localize`Connect peripherals`,
+    // },
   ];
 
   public activeLink = '';

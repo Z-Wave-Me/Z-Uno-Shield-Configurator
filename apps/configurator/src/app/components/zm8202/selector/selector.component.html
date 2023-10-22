@@ -3,7 +3,8 @@
     configuratorSelectable
     *ngFor="let pin of pins"
     [options]="pin"
+    [pinList]="pins"
     (click)="select(pin.id)"
   />
 </div>
-<configurator-svg-chip></configurator-svg-chip>
+<configurator-svg-zm8202></configurator-svg-zm8202>
