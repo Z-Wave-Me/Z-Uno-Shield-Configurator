@@ -4,6 +4,7 @@ import {
   SensorMultilevelDevices,
   VoltageOffset,
 } from '@configurator/arduino-code-gen';
+import { ZUnoDeviceGroup } from '../../../components/z-uno-shield/z-uno-shield.model';
 
 export const digitalInput = [
   {
@@ -123,7 +124,7 @@ export const digitalOutput = [
   },
 ].map((data) => ({ ...data, withType: true }));
 
-export const pwmOutput = [
+export const analogOutput = [
   {
     title: $localize`Dimmer`,
     value: 'dimmer',
@@ -133,23 +134,34 @@ export const pwmOutput = [
     title: $localize`Red LED`,
     value: ColorDevices.Red,
     type: DeviceType.SwitchColor,
+    group: ZUnoDeviceGroup.Color,
   },
   {
     title: $localize`Green LED`,
     value: ColorDevices.Green,
     type: DeviceType.SwitchColor,
+    group: ZUnoDeviceGroup.Color,
+
   },
   {
     title: $localize`Blue LED`,
     value: ColorDevices.Blue,
     type: DeviceType.SwitchColor,
+    group: ZUnoDeviceGroup.Color,
+
   },
   {
     title: $localize`White LED`,
     value: ColorDevices.White,
     type: DeviceType.SwitchColor,
+    group: ZUnoDeviceGroup.Color,
+
   },
 ];
+
+export const colorOutput = [
+
+]
 
 export const analogInput = [
   {
@@ -199,40 +211,11 @@ export const analogInput = [
   },
 ];
 
-export const analogOutput = [
-  {
-    title: $localize`Dimmer`,
-    value: 'dimmer',
-    type: DeviceType.SwitchMultilevel,
-  },
-  {
-    title: $localize`Red LED`,
-    value: ColorDevices.Red,
-    type: DeviceType.SwitchColor,
-  },
-  {
-    title: $localize`Green LED`,
-    value: ColorDevices.Green,
-    type: DeviceType.SwitchColor,
-  },
-  {
-    title: $localize`Blue LED`,
-    value: ColorDevices.Blue,
-    type: DeviceType.SwitchColor,
-  },
-  {
-    title: $localize`White LED`,
-    value: ColorDevices.White,
-    type: DeviceType.SwitchColor,
-  },
-];
-
-export const roter = (type: DeviceType.RS485 | DeviceType.UART, bindPin: string) =>
+export const roter = (type: DeviceType.RS485 | DeviceType.UART) =>
   [9600, 14400, 19200, 38400, 57600, 115200, 230400].map((value) => ({
     title: $localize`${value} kbps`,
     value,
     type,
-    bindPin,
   }));
 
 export const adcConfig = [

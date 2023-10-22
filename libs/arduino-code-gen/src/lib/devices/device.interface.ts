@@ -9,5 +9,6 @@ export interface Device {
   get xetter(): string;
   get report(): string;
   get functions(): string;
+  get pwm(): string;
   channels?: number;
 }

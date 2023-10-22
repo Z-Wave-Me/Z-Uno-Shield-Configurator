@@ -50,4 +50,8 @@ export class BaseDevice implements Device {
   public get v10Mode(): boolean  {
     return  false;
   }
+
+  public get pwm(): string {
+    return '';
+  }
 }

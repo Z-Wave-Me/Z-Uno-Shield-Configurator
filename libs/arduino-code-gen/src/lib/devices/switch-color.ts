@@ -1,5 +1,6 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
+import { ColorDevices, notNull } from '@configurator/arduino-code-gen';
 
 enum ColorFlag {
   White = 'SWITCH_COLOR_FLAGS_WARM_WHITE',
@@ -15,22 +16,40 @@ enum ColorMode {
   Blue = 'SWITCH_COLOR_COMPONENT_BLUE',
 }
 
+const isString = (input: unknown): input is string => typeof input === 'string';
+
+const isColorDevices = (
+  input: number | string | null | undefined,
+): input is ColorDevices => Object.values(ColorDevices).includes(input as ColorDevices);
+
+
 export class SwitchColor extends BaseDevice {
   public override channels = 1;
+  private readonly flagMap: Record<ColorDevices, ColorFlag> = {
+    [ColorDevices.Blue]: ColorFlag.Blue,
+    [ColorDevices.Red]: ColorFlag.Red,
+    [ColorDevices.Green]: ColorFlag.Green,
+    [ColorDevices.White]: ColorFlag.White,
+  };
 
-  constructor(protected override readonly config: PinConfig) {
-    super(config);
-    console.warn(config);
+  private readonly modeMap: Record<ColorDevices, ColorMode> = {
+    [ColorDevices.Blue]: ColorMode.Blue,
+    [ColorDevices.Red]: ColorMode.Red,
+    [ColorDevices.Green]: ColorMode.Green,
+    [ColorDevices.White]: ColorMode.White,
+  };
+
+  constructor(protected readonly arrayConfig: PinConfig[]) {
+    super(arrayConfig[0]);
+    console.warn(arrayConfig);
   }
 
   public override get channel(): string {
-    // TODO тут тоже узнать
-    return '  ZUNO_SWITCH_COLOR(PPP2PPP, pinsSwitchColorGetter, pinsSwitchColorSetter)';
-  }
+    const channels = this.ids.filter(isColorDevices)
+      .map((id: ColorDevices) => this.flagMap[id])
+      .join(' | ');
 
-  public override loop(): string {
-    return `  // PWM SwitchColor@pin${this.config.id}process code
-  analogWriteResolution(8); analogWrite(${this.config.id}, pin${this.config.id}SwitchMultilevelState);`;
+    return `  ZUNO_SWITCH_COLOR(${channels}, pinsSwitchColorGetter, pinsSwitchColorSetter)`;
   }
 
   public override get note(): string {
@@ -38,21 +57,46 @@ export class SwitchColor extends BaseDevice {
   }
 
   public override get setup(): string {
-    return `  pinMode(${this.config.id}, OUTPUT);`;
+    return this.arrayConfig
+      .map(({ id }) => `  pinMode(${id}, OUTPUT);`)
+      .join('\n');
   }
 
   public override get vars(): string {
-    return `byte pin${this.config.id}SwitchMultilevelState = 0;`;
+    return this.ids
+      .map((id) => `byte pin${id}SwitchMultilevelState = 0;`)
+      .join('\n');
   }
 
   public override get xetter(): string {
-    // TODO что тут с цветами
+    const modeList = this.arrayConfig
+      .map(({ id, device }) => ({
+        pinId: id,
+        deviceId: device?.id,
+      }))
+      .map(({ pinId, deviceId }) => ({
+        pinId,
+        deviceMode: this.modeMap[deviceId as ColorDevices],
+      }));
+    const setters = modeList.map(({pinId, deviceMode}) => `  if (color == ${deviceMode}) pin${pinId}SwitchMultilevelState = value;`).join('\n');
+
+    const getters = modeList.map(({pinId, deviceMode}) =>`  if (color == ${deviceMode}) return pin${pinId}SwitchMultilevelState;`).join('\n');
+
     return `void pinsSwitchColorSetter(byte color, byte value) {
-PPP3PPP
+${setters}
 }
 
 byte pinsSwitchColorGetter(byte color) {
-PPP4PPP
+${getters}
 }`;
+  }
+
+  public override loop(): string {
+    return this.arrayConfig.map(({ id }) => `  // PWM SwitchColor@pin${id}process code
+  analogWriteResolution(8); analogWrite(${id}, pin${id}SwitchMultilevelState);`).join('\n')
+  }
+
+  private get ids(): string[] {
+    return this.arrayConfig.map(({ device}) => device?.id).filter(isString);
   }
 }

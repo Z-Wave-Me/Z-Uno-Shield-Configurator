@@ -15,13 +15,14 @@ export type DeviceConfig = {
   withGround?: number;
   lowerBound: number | null;
   upperBound: number | null;
-  bindPin: string;
   remove?: boolean;
+  group?: string;
 };
+
 export type PinConfig = {
   id: string;
   device?: Partial<DeviceConfig>;
   key?: string;
-  lockIds?: string[];
   offset?: VoltageOffset;
+  group?: string;
 };

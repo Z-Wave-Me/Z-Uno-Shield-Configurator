@@ -6,11 +6,10 @@ export class UART extends BaseDevice {
   public override channels = 0;
   public value: number;
 
-  constructor(protected override readonly config: PinConfig) {
-    super(config);
-    this.value = +(this.config.device?.id ?? 0)
+  constructor(protected readonly arrayConfig: PinConfig[]) {
+    super(arrayConfig[0]);
+    this.value = +(this.arrayConfig[0]?.device?.id ?? 0)
   }
-
   public override get setup(): string {
     return `  Serial1.begin(${this.value});`;
   }

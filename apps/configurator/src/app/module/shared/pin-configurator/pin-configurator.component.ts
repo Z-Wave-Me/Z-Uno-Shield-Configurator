@@ -13,17 +13,8 @@ import {
 } from '../../../services/store/pins-state.service';
 import { DeviceConfig, PinConfig, PinConfiguratorInput } from '@configurator/shared';
 import { Grounding, VoltageOffset } from '@configurator/arduino-code-gen';
-
-interface Pin {
-  id: string;
-  title: string;
-  pin: {
-    withGround?: number;
-    key: string;
-    title: string;
-    options: PinConfiguratorInput[];
-  }[];
-}
+import { pinList } from '../../../components/z-uno-shield/z-uno-shield.config';
+import { Pin } from '../../../components/z-uno-shield/z-uno-shield.model';
 
 @Component({
   selector: 'configurator-pin-configurator',
@@ -80,6 +71,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
     title: string;
     options: PinConfiguratorInput[];
     offset?: VoltageOffset;
+    group?: string;
   };
 
   constructor(
@@ -106,19 +98,19 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
       key: this.selected?.key,
       device: config,
       offset: this.selected?.offset,
-      lockIds: [],
-    });
+      group: this.selected?.group,
+    }, pinList);
   }
 
   public remove(): void {
-    this.selected = undefined;
     this.pinsStateService.patch({
       id: this.options.id,
       device: {... this.pinsStateService.snapshot.find(
           ({ id }) => id === this.options.id,
         )?.device ?? {}, remove: true},
-      lockIds: [],
-    });
+      group: this.selected?.group,
+    }, pinList);
+    this.selected = undefined;
   }
 
   private setDevice(config:  PinConfig[]): void {

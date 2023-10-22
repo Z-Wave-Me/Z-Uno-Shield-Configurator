@@ -5,7 +5,6 @@ import { BaseDevice } from './base-device';
 export class SwitchMultilevel extends BaseDevice {
   public override channels = 0;
 
-
   constructor(protected override readonly config: PinConfig) {
     super(config);
   }
@@ -28,5 +27,9 @@ export class SwitchMultilevel extends BaseDevice {
     _pin${this.config.id}SwitchMultilevelState = pin${this.config.id}SwitchMultilevelState;
     shield.write0_10V(${this.channels}, pin${this.config.id}SwitchMultilevelState);
   }`;
+  }
+
+  public override get pwm(): string {
+    return `  shield.initPWM(1 << (${this.config.id} - 13));\n`
   }
 }

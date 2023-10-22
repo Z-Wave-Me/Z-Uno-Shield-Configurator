@@ -6,11 +6,11 @@ export interface PinConfiguratorInput {
   value: string | number;
   type?: DeviceType;
   withType?: boolean;
-  bindPin?: string;
   additionally?: {
     title: string;
     value: string | number | Grounding;
   }[];
+  group?: string;
 }
 
 export interface ChildPinConfigurator {

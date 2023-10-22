@@ -9,7 +9,8 @@ import {
 } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
-import { PinConfig } from '../../../../../../libs/shared/src/lib/models/pin.config';
+import { PinConfig } from '@configurator/shared';
+import { Pin } from '../../components/z-uno-shield/z-uno-shield.model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,13 +23,13 @@ export class PinsStateService {
   constructor(
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly localStorageService: LocalStorageService
+    private readonly localStorageService: LocalStorageService,
   ) {
     this.activatedRoute.queryParams
       .pipe(
         first(),
         map((data) => data['config']),
-        filter(Boolean)
+        filter(Boolean),
       )
       .subscribe((config) => {
         const key = this.router.url.split('?')[0].split('/')[1];
@@ -41,11 +42,11 @@ export class PinsStateService {
     router.events
       .pipe(
         filter(
-          (event): event is NavigationEnd => event instanceof NavigationEnd
+          (event): event is NavigationEnd => event instanceof NavigationEnd,
         ),
         map(({ url }) => url.split('?')[0].split('/')[1]),
         filter(Boolean),
-        distinctUntilChanged()
+        distinctUntilChanged(),
       )
       .subscribe((key) => {
         this.currentKey = key;
@@ -55,23 +56,46 @@ export class PinsStateService {
       });
   }
 
-  public patch(pin: PinConfig): Promise<boolean> {
+  public get snapshot(): PinConfig[] {
+    return this._state$.value;
+  }
+
+  public get state$(): Observable<PinConfig[]> {
+    return this._state$.asObservable();
+  }
+
+  public patch(pin: PinConfig, possiblePins: Pin[]): Promise<boolean> {
     const value = this._state$.value;
 
-    const bindPin = pin.device?.bindPin;
+    const groupType = pin.group;
+    const groupPinIds = possiblePins
+      .filter(
+        ({ id, pin: pinConfig }) =>
+          id !== pin.id
+          && this.isLinked(groupType)
+          && pinConfig.some((item) => item.group === groupType),
+      )
+      .map(({ id }) => id);
+
     const updated = value.filter(
-      ({ id }) => !(id === pin.id || id === bindPin)
+      ({ id }) =>
+        !(
+          id === pin.id
+          || (this.isLinked(groupType) && groupPinIds.includes(id))
+        ),
     );
 
     if (!pin.device?.remove) {
       updated.push(pin);
 
-      if (bindPin) {
-        updated.push({
-          ...pin,
-          device: { ...pin.device, bindPin: pin.id },
-          id: bindPin,
-        });
+      if (this.isLinked(groupType)) {
+        updated.push(
+          ...groupPinIds.map((id) => ({
+            ...pin,
+            device: { ...pin.device },
+            id,
+          })),
+        );
       }
     }
 
@@ -89,14 +113,6 @@ export class PinsStateService {
     this.router.navigate([]);
   }
 
-  public get snapshot(): PinConfig[] {
-    return this._state$.value;
-  }
-
-  public get state$(): Observable<PinConfig[]> {
-    return this._state$.asObservable();
-  }
-
   private updateRoute(): Promise<boolean> {
     const config = this.snapshot;
     const configBase64 = btoa(JSON.stringify(config));
@@ -109,5 +125,7 @@ export class PinsStateService {
     });
   }
 
-  private serveBindsPins(): void {}
+  private isLinked(group?: string): boolean {
+    return group ? /\[linked]/.test(group) : false;
+  }
 }

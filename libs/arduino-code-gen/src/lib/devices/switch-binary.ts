@@ -28,7 +28,7 @@ export class SwitchBinary extends BaseDevice {
   }
 
   public override get name(): string | undefined {
-    const key = this.config.key;
+    const key = this.config.device?.id;
 
     if(key) {
       return SwitchBinary.nameMap[key];

@@ -76,7 +76,7 @@ export class ChildDeviceConfiguratorComponent
           title: list?.title,
           id: list?.value,
           deviceType: list?.type,
-          bindPin: list?.bindPin,
+          group: list?.group,
         });
       });
 

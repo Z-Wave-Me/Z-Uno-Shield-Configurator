@@ -5,8 +5,8 @@ import { BaseDevice } from './base-device';
 export class RS485 extends BaseDevice{
   public override channels = 0;
 
-  constructor(protected override readonly config: PinConfig) {
-    super(config);
+  constructor(protected readonly arrayConfig: PinConfig[]) {
+    super(arrayConfig[0]);
   }
 
   public override get functions(): string {

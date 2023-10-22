@@ -12,33 +12,45 @@ import { RS485 } from './devices/rs485';
 import { DeviceType, PinConfig } from '@configurator/shared';
 import { SensorMultilevel } from './devices/sensor-multilevel';
 
-export function deviceFromConfig(config: PinConfig): Device {
-  switch (config.device?.deviceType) {
-    case DeviceType.SwitchBinary:
-      return new SwitchBinary(config);
-    case DeviceType.Thermostat:
-      return new Thermostat(config);
-    case DeviceType.SwitchMultilevel:
-      return new SwitchMultilevel(config);
-    case DeviceType.SwitchColor:
-      return new SwitchColor(config);
-    case DeviceType.SensorBinary:
-      return new SensorBinary(config);
-    case DeviceType.SensorMultilevel:
-      return new SensorMultilevel(config);
-    case DeviceType.DHT:
-      return new DHT(config);
-    case DeviceType.DS18B20:
-      return new DS18B20(config);
-    case DeviceType.UART:
-      return new UART(config);
-    case DeviceType.RS485:
-      return new RS485(config);
-    default:
-      throw new Error(`Unknown type 
+const isSimple = <T>(value: T | T[]): value is T => !Array.isArray(value);
+const isArray = <T>(value: T | T[]): value is T[] => Array.isArray(value);
+
+export function deviceFromConfig(config: PinConfig | PinConfig[]): Device {
+  if (isSimple(config)) {
+    const type = config.device?.deviceType;
+    switch (type) {
+      case DeviceType.SwitchBinary:
+        return new SwitchBinary(config);
+      case DeviceType.Thermostat:
+        return new Thermostat(config);
+      case DeviceType.SwitchMultilevel:
+        return new SwitchMultilevel(config);
+      case DeviceType.SensorBinary:
+        return new SensorBinary(config);
+      case DeviceType.SensorMultilevel:
+        return new SensorMultilevel(config);
+      case DeviceType.DHT:
+        return new DHT(config);
+      case DeviceType.DS18B20:
+        return new DS18B20(config);
+    }
+  }
+
+  if (isArray(config)) {
+    const type = config[0]?.device?.deviceType;
+    switch (type) {
+      case DeviceType.SwitchColor:
+        return new SwitchColor(config);
+      case DeviceType.UART:
+        return new UART(config);
+      case DeviceType.RS485:
+        return new RS485(config);
+    }
+  }
+
+  throw new Error(`Unknown type 
 
 ${JSON.stringify(config, null, 2)}`);
-  }
 }
 
 export function generateCode(devices: Device[]): string {
@@ -46,13 +58,21 @@ export function generateCode(devices: Device[]): string {
 }
 
 export function generate(config: PinConfig[]): string {
-  const excluded: Set<string | number | undefined> = new Set();
+  const groupedConfig = config.reduce<Record<string, PinConfig[] | PinConfig>>(
+    (acc, cur) => {
+      const key = cur.group ?? cur.device?.group;
 
-  return generateCode(config.filter(item => {
-    if (item.device?.bindPin) {
-      excluded.add(item.device.bindPin);
-    }
+      if (key) {
+        const exist = (acc[key] ?? []) as PinConfig[];
+        acc[key] = [...exist, cur];
+      } else {
+        acc[cur.id] = cur;
+      }
 
-    return !excluded.has(item?.id);
-  }).map(deviceFromConfig));
+      return acc;
+    },
+    {},
+  );
+
+  return generateCode(Object.values(groupedConfig).map(deviceFromConfig));
 }
