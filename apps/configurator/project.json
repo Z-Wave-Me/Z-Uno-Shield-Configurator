@@ -20,7 +20,8 @@
           "apps/configurator/src/assets"
         ],
         "styles": ["apps/configurator/src/styles.scss"],
-        "scripts": []
+        "scripts": [],
+        "baseHref": "/Z-Uno-Shield-Configurator/"
       },
       "configurations": {
         "production": {

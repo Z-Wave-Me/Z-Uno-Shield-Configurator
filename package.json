@@ -4,11 +4,12 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve configurator --configuration=en",
-    "build": "nx build configurator --configuration=en",
+    "build": "nx affected -t build --c en",
     "test": "nx test",
     "extract": "nx extract-i18n",
     "translate": "translate.sh && npx xlf2xlf -i messages.xlf -o src/locale/messages.ru.xlf -f en -t ru",
-    "deploy": "nx deploy configurator --configuration=en --base-href=/Z-Uno-Shield-Configurator/"
+    "predeploy": "run build",
+    "deploy": "gh-pages -d dist/apps/configurator"
   },
   "private": true,
   "dependencies": {
@@ -56,6 +57,7 @@
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",
+    "gh-pages": "^6.0.0",
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
     "jest-environment-node": "^29.4.1",
