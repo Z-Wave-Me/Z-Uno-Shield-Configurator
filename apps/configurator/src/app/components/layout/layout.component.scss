@@ -14,8 +14,6 @@ mat-drawer {
   }
   .active {
     background: darken($bg, 10%);
-    a {
-      color: #{$color};
-    }
+    color: map.get($color-config, 'text-contrast');
   }
 }
