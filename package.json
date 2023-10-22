@@ -9,7 +9,7 @@
     "test": "nx test",
     "extract": "nx extract-i18n",
     "translate": "translate.sh && npx xlf2xlf -i messages.xlf -o src/locale/messages.ru.xlf -f en -t ru",
-    "predeploy": "run build",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist/apps/configurator"
   },
   "private": true,
