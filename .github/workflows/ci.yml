@@ -16,5 +16,9 @@ jobs:
         with:
           node-version: 18.x
           cache: 'npm'
-      - run: npm ci --legacy-peer-deps
-      - run: npm run deploy
+      - name: Prepare and deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm ci --legacy-peer-deps
+          npm run deploy
