@@ -4,13 +4,13 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve configurator --configuration=en",
-    "build": "nx run-many -t build --c en",
+    "build": "nx run-many -t build -c en",
     "lint": "nx run-many -t lint",
     "test": "nx test",
     "extract": "nx extract-i18n",
     "translate": "translate.sh && npx xlf2xlf -i messages.xlf -o src/locale/messages.ru.xlf -f en -t ru",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist/apps/configurator"
+    "deploy": "nx deploy -p configurator"
   },
   "private": true,
   "dependencies": {
@@ -26,7 +26,7 @@
     "@angular/platform-browser-dynamic": "~16.1.0",
     "@angular/router": "~16.1.0",
     "@nx/angular": "16.4.0",
-    "angular-cli-ghpages": "^1.0.6",
+    "angular-cli-ghpages": "^1.0.7",
     "ngx-highlightjs": "^9.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -58,7 +58,6 @@
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",
-    "gh-pages": "^6.0.0",
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
     "jest-environment-node": "^29.4.1",
