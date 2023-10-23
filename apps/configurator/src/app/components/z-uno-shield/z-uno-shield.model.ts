@@ -1,22 +1,22 @@
 import { PinConfiguratorInput } from '@configurator/shared';
-
+// ZUNO_PIN_V = 4
 export enum ZUnoShieldPin {
-  PWM1 = '__c_code_here_1__',
-  PWM2 = '__c_code_here_2__',
-  PWM3 = '__c_code_here_3__',
-  PWM4 = '__c_code_here_4__',
-  V10_1 = '__c_code_here_5__',
-  V10_2 = '__c_code_here_6__',
-  V10_3 = '__c_code_here_7__',
-  V10_4 = '__c_code_here_8__',
-  RS_A = '__c_code_here_9__',
-  RS_B = '__c_code_here_10__',
-  PIN_12 = '__c_code_here_11__',
-  ONE_WIRE = '__c_code_here_12__',
-  ADC0 = '__c_code_here_13__',
-  ADC1 = '__c_code_here_14__',
-  ADC2 = '__c_code_here_15__',
-  ADC3 = '__c_code_here_16__',
+  PWM1 = 'PWM1',
+  PWM2 = 'PWM2',
+  PWM3 = 'PWM3',
+  PWM4 = 'PWM4',
+  V10_1 = '0',
+  V10_2 = '1',
+  V10_3 = '2',
+  V10_4 = '3',
+  RS_A = '7',
+  RS_B = '8',
+  PIN_12 = '12',
+  ONE_WIRE = '11',
+  ADC0 = 'A0',
+  ADC1 = 'A1',
+  ADC2 = 'A2',
+  ADC3 = 'A3',
 }
 
 export enum ZUnoDeviceGroup {
