@@ -68,9 +68,7 @@ ZUNO_REPORTS_HANDLER(SensorMultilevel, reportSMLHandler);
   public get setup(): string {
     return `
 void setup() {
-${this.v10Mode}
-${this.pwm}
-${this.collect('setup')}
+${this.v10Mode}${this.pwm}${this.collect('setup')}
 }
 
 `;
