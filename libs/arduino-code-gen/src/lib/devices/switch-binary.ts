@@ -9,7 +9,6 @@ export class SwitchBinary extends BaseDevice {
     siren: 'ZUNO_SIREN',
     valve: 'ZUNO_FLOWSTOP',
   };
-  public override channels = 1;
 
   constructor(protected override readonly config: PinConfig) {
     super(config);

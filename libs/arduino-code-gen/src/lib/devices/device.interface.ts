@@ -10,5 +10,5 @@ export interface Device {
   get report(): string;
   get functions(): string;
   get pwm(): string;
-  channels?: number;
+  channels: number;
 }

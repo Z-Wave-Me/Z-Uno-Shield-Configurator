@@ -1,7 +1,7 @@
 import { Device } from './devices/device.interface';
 
 export class Generator implements Device {
-  private channelBehaviour = 1;
+  public channels = 1;
 
   constructor(private readonly devices: Device[]) {}
 
@@ -152,9 +152,9 @@ ${this.functions}`;
         const handler = device[accessor];
 
         if (typeof handler === 'function') {
-          this.channelBehaviour += device.channels ?? 0;
+          this.channels += device.channels;
 
-          return handler.call(device, this.channelBehaviour);
+          return handler.call(device, this.channels - device.channels);
         }
 
         return handler;

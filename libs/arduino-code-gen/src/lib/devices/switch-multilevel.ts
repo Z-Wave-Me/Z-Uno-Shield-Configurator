@@ -1,10 +1,9 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
+import { ZUnoShieldPin } from '../../../../../apps/configurator/src/app/components/z-uno-shield/z-uno-shield.model';
 
 
 export class SwitchMultilevel extends BaseDevice {
-  public override channels = 0;
-
   constructor(protected override readonly config: PinConfig) {
     super(config);
   }
@@ -30,6 +29,6 @@ export class SwitchMultilevel extends BaseDevice {
   }
 
   public override get pwm(): string {
-    return `  shield.initPWM(1 << (${this.config.id} - 13));\n`
+    return `  shield.initPWM(1 << (${this.config.id} - ${ZUnoShieldPin.PWM1}));\n`
   }
 }

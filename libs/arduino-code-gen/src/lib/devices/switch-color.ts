@@ -1,6 +1,6 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
-import { ColorDevices, notNull } from '@configurator/arduino-code-gen';
+import { ColorDevices } from '@configurator/arduino-code-gen';
 
 enum ColorFlag {
   White = 'SWITCH_COLOR_FLAGS_WARM_WHITE',
@@ -41,7 +41,6 @@ export class SwitchColor extends BaseDevice {
 
   constructor(protected readonly arrayConfig: PinConfig[]) {
     super(arrayConfig[0]);
-    console.warn(arrayConfig);
   }
 
   public override get channel(): string {

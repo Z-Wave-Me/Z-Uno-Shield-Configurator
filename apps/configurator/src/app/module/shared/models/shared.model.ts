@@ -9,7 +9,7 @@ import { ZUnoDeviceGroup } from '../../../components/z-uno-shield/z-uno-shield.m
 export const digitalInput = [
   {
     title: $localize`General purpose`,
-    value: 'General purpose',
+    value: 'general',
     type: DeviceType.SensorBinary,
   },
   {
@@ -64,7 +64,7 @@ export const digitalInput = [
   },
   {
     title: $localize`Glass break`,
-    value: 'glass break',
+    value: 'glassbr',
     type: DeviceType.SensorBinary,
   },
 ].map((data) => ({ ...data, withType: true }));

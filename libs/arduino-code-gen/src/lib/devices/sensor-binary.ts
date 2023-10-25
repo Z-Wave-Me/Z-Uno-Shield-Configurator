@@ -57,7 +57,7 @@ export class SensorBinary extends BaseDevice {
   }
 
   public override get vars(): string {
-    return 'byte pin${this.config.id}SensorBinaryState;';
+    return `byte pin${this.config.id}SensorBinaryState;`;
   }
 
   private get isPullUp(): boolean {
