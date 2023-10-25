@@ -96,7 +96,7 @@ ${vars}
   }
 
   public get xetter(): string {
-    const xetter = this.collect('xetter', 2);
+    const xetter = this.collect('xetter');
 
     return xetter.length
       ? `
