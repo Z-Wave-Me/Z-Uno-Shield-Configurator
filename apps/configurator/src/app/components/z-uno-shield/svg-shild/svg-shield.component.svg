@@ -20,7 +20,7 @@
     <ng-container [ngSwitch]="true">
       <g *ngSwitchCase="pin.device?.id?.toString()?.includes('sensor')" ds18b20 [pin]="pin"></g>
       <g *ngSwitchCase="pin.device?.id?.toString()?.startsWith('dht')" dht [pin]="pin"></g>
-      <g *ngSwitchCase="pin.device?.id?.toString()?.startsWith('led')" rgbw [pin]="pin"></g>
+      <g *ngSwitchCase="isColorDevice(pin.device?.id)" rgbw [pin]="pin"></g>
     </ng-container>
   </ng-container>
 </svg>

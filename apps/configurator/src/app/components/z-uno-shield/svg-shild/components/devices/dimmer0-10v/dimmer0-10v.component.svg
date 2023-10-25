@@ -113,19 +113,19 @@
     <svg:path id="rect95022" d="M2362.205 604.724h15.118v75.591h-15.118z" style="display:inline;opacity:1;fill:red;fill-opacity:1;stroke-width:1.00157"/>
   </svg:g>
   <ng-container [ngSwitch]="pin?.id">
-    <svg:g *ngSwitchCase="'0-10V_1'" id="g82688" style="display:inline;opacity:1">
+    <svg:g *ngSwitchCase="'0'" id="g82688" style="display:inline;opacity:1">
       <svg:path id="rect117458" d="M2694.803-1247.244h15.118v170.079h-15.118z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>
       <svg:path id="rect82680" d="M1659.213-1247.244h15.118v170.079h-15.118z" style="fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>
       <svg:circle id="circle82686" cx="1666.772" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
       <svg:path id="rect82684" d="M1659.213-1247.244h1050.709v15.118H1659.213z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>
     </svg:g>
-    <svg:g *ngSwitchCase="'0-10V_2'" id="g82698" style="display:inline;opacity:1">
+    <svg:g *ngSwitchCase="'1'" id="g82698" style="display:inline;opacity:1">
       <svg:path id="rect82682" d="M2694.803-1247.244h15.118v170.079h-15.118z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>
       <svg:path id="rect82690" d="M1749.921-1247.244h15.118v170.079h-15.118z" style="fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>
       <svg:circle id="circle82696" cx="1757.48" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
       <svg:path id="rect117455" d="M1749.921-1247.244h960v15.118h-960z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>
     </svg:g>
-    <ng-container *ngSwitchCase="'0-10V_3'">
+    <ng-container *ngSwitchCase="'2'">
       <svg:g id="g113662" style="display:inline;opacity:1">
         <svg:path id="rect113658" d="M2694.803-1247.244h15.118v170.079h-15.118z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>
         <svg:path id="rect113660" d="M2029.606-1247.244h680.315v15.118h-680.315z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>
@@ -137,7 +137,7 @@
         <svg:circle id="circle109906" cx="1126.299" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
       </svg:g>
     </ng-container>
-    <ng-container *ngSwitchCase="'0-10V_4'">
+    <ng-container *ngSwitchCase="'3'">
       <svg:g id="g113662" style="display:inline;opacity:1">
         <svg:path id="rect113658" d="M2694.803-1247.244h15.118v170.079h-15.118z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>
         <svg:path id="rect113660" d="M2029.606-1247.244h680.315v15.118h-680.315z" style="display:inline;opacity:1;fill:#50c878;fill-opacity:1;stroke-width:1.00157"/>

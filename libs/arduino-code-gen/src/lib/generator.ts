@@ -160,7 +160,7 @@ ${this.functions}`;
         return handler;
       })
       .filter(filter)
-      .join(Array.from({ length: lineCount }).fill(sep).join());
+      .join(Array.from({ length: lineCount }).fill(sep).join(''));
   }
 
   // public output() {

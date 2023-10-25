@@ -275,22 +275,22 @@
     </ng-container>
 
     <ng-container [ngSwitch]="pin?.id">
-      <ng-container *ngSwitchCase="'pwm1'">
+      <ng-container *ngSwitchCase="'PWM1'">
         <svg:path id="rect57803" d="M1568.504-1303.937h331.27v15.118h-331.27z" style="fill:#000;stroke-width:1.00157"/>
         <svg:path id="rect57799" d="M1568.504-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
         <svg:circle id="circle57805" cx="1576.063" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
       </ng-container>
-      <ng-container *ngSwitchCase="'pwm2'">
+      <ng-container *ngSwitchCase="'PWM2'">
         <svg:path id="rect57793a" d="M1481.575-1303.937h418.199v15.118h-418.199z" style="fill:#000;stroke-width:1.00157"/>
         <svg:path id="rect57789" d="M1481.575-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
         <svg:circle id="circle57795" cx="1489.134" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
       </ng-container>
-      <ng-container *ngSwitchCase="'pwm3'">
+      <ng-container *ngSwitchCase="'PWM3'">
         <svg:path id="rect57783a" d="M1390.866-1303.937h508.908v15.118h-508.908z" style="fill:#000;stroke-width:1.00157"/>
         <svg:path id="rect57779" d="M1390.866-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
         <svg:circle id="circle57785" cx="1398.425" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
       </ng-container>
-      <ng-container *ngSwitchCase="'pwm4'">
+      <ng-container *ngSwitchCase="'PWM4'">
         <svg:path id="rect57773a" d="M1296.378-1303.937h603.396v15.118h-603.396z" style="fill:#000;stroke-width:1.00157"/>
         <svg:path id="rect57769" d="M1296.378-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
         <svg:circle id="circle57775" cx="1303.937" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>

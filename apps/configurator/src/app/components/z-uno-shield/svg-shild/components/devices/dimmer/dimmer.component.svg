@@ -169,25 +169,25 @@
     <svg:path id="rect30100" d="M937.323-1360.63h15.118v283.465h-15.118z" style="fill:red;stroke-width:1.00157"/>
   </svg:g>
   <ng-container [ngSwitch]="pin?.id">
-    <svg:g *ngSwitchCase="'pwm1'" id="g30203" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+    <svg:g *ngSwitchCase="'PWM1'" id="g30203" style="display:inline;opacity:1" transform="translate(0 1360.63)">
       <svg:path id="rect30197" d="M1568.504-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect30199" d="M2403.78-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect30201" d="M1568.504-1303.937h850.394v15.118h-850.394z" style="fill:#000;stroke-width:1.00157"/>
       <svg:circle id="path3685" cx="1576.063" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
     </svg:g>
-    <svg:g *ngSwitchCase="'pwm2'" id="g30195" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+    <svg:g *ngSwitchCase="'PWM2'" id="g30195" style="display:inline;opacity:1" transform="translate(0 1360.63)">
       <svg:path id="rect30189" d="M1481.575-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect30191" d="M2403.78-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect30193" d="M1481.575-1303.937h937.323v15.118h-937.323z" style="fill:#000;stroke-width:1.00157"/>
       <svg:circle id="path3683" cx="1489.134" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
     </svg:g>
-    <svg:g *ngSwitchCase="'pwm3'" id="g30187" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+    <svg:g *ngSwitchCase="'PWM3'" id="g30187" style="display:inline;opacity:1" transform="translate(0 1360.63)">
       <svg:path id="rect30181" d="M1390.866-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect30183" d="M2403.78-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect30185" d="M1390.866-1303.937h1024.252v15.118H1390.866z" style="fill:#000;stroke-width:1.00157"/>
       <svg:circle id="path3681" cx="1398.425" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
     </svg:g>
-    <svg:g *ngSwitchCase="'pwm4'" id="g30179" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+    <svg:g *ngSwitchCase="'PWM4'" id="g30179" style="display:inline;opacity:1" transform="translate(0 1360.63)">
       <svg:path id="rect30170" d="M1296.378-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect30172" d="M2403.78-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect30174" d="M1296.378-1303.937h1122.52v15.118h-1122.52z" style="fill:#000;stroke-width:1.00157"/>

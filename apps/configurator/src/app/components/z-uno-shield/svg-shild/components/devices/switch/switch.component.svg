@@ -142,7 +142,7 @@
     <svg:text xml:space="preserve" id="text7226" x="3318.123" y="669.388" style="font-style:normal;font-variant:normal;font-weight:400;font-stretch:normal;font-size:64.0488px;line-height:125%;font-family:Helvetica;-inkscape-font-specification:Helvetica;letter-spacing:0;word-spacing:0;fill:#000;fill-opacity:1;stroke:none;stroke-width:3.00229px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><svg:tspan id="tspan7224" x="3318.123" y="669.388" style="stroke-width:3.00229px">3</svg:tspan></svg:text>
   </svg:g>
   <ng-container [ngSwitch]="true">
-    <svg:g *ngSwitchCase="pin?.id?.startsWith('pwm')" id="g638223" style="display:inline;opacity:1">
+    <svg:g *ngSwitchCase="pin?.id?.startsWith('PWM')" id="g638223" style="display:inline;opacity:1">
       <svg:path id="rect637714" d="M2006.929-1303.937h15.118V291.024h-15.118z" style="display:inline;opacity:1;fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect638218" d="M2006.929 275.906h124.724v15.118h-124.724z" style="fill:#000;fill-opacity:1;stroke-width:1.00157"/>
     </svg:g>
@@ -152,22 +152,22 @@
     </svg:g>
   </ng-container>
   <ng-container [ngSwitch]="pin?.id">
-    <svg:g *ngSwitchCase="'adc0'" id="g641909" style="display:inline;opacity:1">
+    <svg:g *ngSwitchCase="'A0'" id="g641909" style="display:inline;opacity:1">
       <svg:path id="rect641903" d="M1568.504 721.89h453.543v15.118h-453.543z" style="display:inline;opacity:1;fill:#000;fill-opacity:1;stroke:none;stroke-width:1.00158;stroke-dasharray:none;stroke-opacity:1"/>
       <svg:path id="rect641905" d="M1568.504 593.386h15.118v143.622h-15.118z" style="fill:#000;fill-opacity:1;stroke:none;stroke-width:1.00157;stroke-dasharray:none;stroke-opacity:1"/>
       <svg:circle id="circle641907" cx="1576.063" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
     </svg:g>
-    <svg:g *ngSwitchCase="'adc1'" id="g641901" style="display:inline;opacity:1">
+    <svg:g *ngSwitchCase="'A1'" id="g641901" style="display:inline;opacity:1">
       <svg:path id="rect641895" d="M1477.795 721.89h544.252v15.118h-544.252z" style="display:inline;opacity:1;fill:#000;fill-opacity:1;stroke:none;stroke-width:1.00158;stroke-dasharray:none;stroke-opacity:1"/>
       <svg:path id="rect641897" d="M1477.795 593.386h15.118v143.622h-15.118z" style="fill:#000;fill-opacity:1;stroke:none;stroke-width:1.00157;stroke-dasharray:none;stroke-opacity:1"/>
       <svg:circle id="circle641899" cx="1485.354" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
     </svg:g>
-    <svg:g  *ngSwitchCase="'adc2'" id="g641893" style="display:inline;opacity:1">
+    <svg:g  *ngSwitchCase="'A2'" id="g641893" style="display:inline;opacity:1">
       <svg:path id="rect641887" d="M1387.087 721.89h634.961v15.118h-634.961z" style="display:inline;opacity:1;fill:#000;fill-opacity:1;stroke:none;stroke-width:1.00158;stroke-dasharray:none;stroke-opacity:1"/>
       <svg:path id="rect641889" d="M1387.087 593.386h15.118v143.622h-15.118z" style="fill:#000;fill-opacity:1;stroke:none;stroke-width:1.00157;stroke-dasharray:none;stroke-opacity:1"/>
       <svg:circle id="circle641891" cx="1394.646" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
     </svg:g>
-    <svg:g *ngSwitchCase="'adc3'" id="g641885" style="display:inline;opacity:1">
+    <svg:g *ngSwitchCase="'A3'" id="g641885" style="display:inline;opacity:1">
       <svg:path id="rect641879" d="M1296.378 721.89h725.669v15.118h-725.669z" style="display:inline;opacity:1;fill:#000;fill-opacity:1;stroke:none;stroke-width:1.00158;stroke-dasharray:none;stroke-opacity:1"/>
       <svg:path id="rect641881" d="M1296.378 593.386h15.118v143.622h-15.118z" style="fill:#000;fill-opacity:1;stroke:none;stroke-width:1.00157;stroke-dasharray:none;stroke-opacity:1"/>
       <svg:circle id="circle641883" cx="1303.937" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
@@ -192,22 +192,22 @@
       <svg:path id="rect641865" d="M1118.74 593.386h15.118v143.622h-15.118z" style="fill:#000;fill-opacity:1;stroke:none;stroke-width:1.00157;stroke-dasharray:none;stroke-opacity:1"/>
       <svg:circle id="circle641867" cx="1126.299" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
     </svg:g>
-    <svg:g *ngSwitchCase="'pwm1'" id="g637720" style="display:inline;opacity:1">
+    <svg:g *ngSwitchCase="'PWM1'" id="g637720" style="display:inline;opacity:1">
       <svg:path id="rect637712" d="M1568.504-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect637716" d="M1568.504-1303.937h453.543v15.118h-453.543z" style="fill:#000;stroke-width:1.00157"/>
       <svg:circle id="circle637718" cx="1576.063" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
     </svg:g>
-    <svg:g *ngSwitchCase="'pwm2'" id="g637710" style="display:inline;opacity:1">
+    <svg:g *ngSwitchCase="'PWM2'" id="g637710" style="display:inline;opacity:1">
       <svg:path id="rect637702" d="M1481.575-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect637706" d="M1481.575-1303.937h540.472v15.118h-540.472z" style="fill:#000;stroke-width:1.00157"/>
       <svg:circle id="circle637708" cx="1489.134" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
     </svg:g>
-    <svg:g *ngSwitchCase="'pwm3'" id="g637700" style="display:inline;opacity:1">
+    <svg:g *ngSwitchCase="'PWM3'" id="g637700" style="display:inline;opacity:1">
       <svg:path id="rect637692" d="M1390.866-1303.937h15.118v226.772h-15.118z" style="display:inline;fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect637696" d="M1390.866-1303.937h631.181v15.118h-631.181z" style="fill:#000;stroke-width:1.00157"/>
       <svg:circle id="circle637698" cx="1398.425" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
     </svg:g>
-    <svg:g *ngSwitchCase="'pwm4'" id="g637690" style="display:inline;opacity:1">
+    <svg:g *ngSwitchCase="'PWM4'" id="g637690" style="display:inline;opacity:1">
       <svg:path id="rect637682" d="M1296.378-1303.937h15.118v226.772h-15.118z" style="fill:#000;stroke-width:1.00157"/>
       <svg:path id="rect637686" d="M1296.378-1303.937h725.669v15.118h-725.669z" style="fill:#000;stroke-width:1.00157"/>
       <svg:circle id="circle637688" cx="1303.937" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
