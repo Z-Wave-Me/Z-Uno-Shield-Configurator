@@ -1,7 +1,7 @@
 import { SwitchBinary } from './devices/switch-binary';
 import { Device } from './devices/device.interface';
 import { Thermostat } from './devices/thermostat';
-import { SwitchMultilevel } from './devices/switch-multilevel';
+import { SwitchMultilevel10V } from './devices/switch-multilevel10-v';
 import { SwitchColor } from './devices/switch-color';
 import { SensorBinary } from './devices/sensor-binary';
 import { Generator } from './generator';
@@ -11,6 +11,7 @@ import { UART } from './devices/uart';
 import { RS485 } from './devices/rs485';
 import { DeviceType, PinConfig } from '@configurator/shared';
 import { SensorMultilevel } from './devices/sensor-multilevel';
+import { SwitchMultilevelPwm } from './devices/switch-multilevel-pwm';
 
 const isSimple = <T>(value: T | T[]): value is T => !Array.isArray(value);
 const isArray = <T>(value: T | T[]): value is T[] => Array.isArray(value);
@@ -24,7 +25,11 @@ export function deviceFromConfig(config: PinConfig | PinConfig[]): Device {
       case DeviceType.Thermostat:
         return new Thermostat(config);
       case DeviceType.SwitchMultilevel:
-        return new SwitchMultilevel(config);
+        if (config.id.startsWith('PWM')) {
+          return new SwitchMultilevelPwm(config);
+        }
+
+        return new SwitchMultilevel10V(config);
       case DeviceType.SensorBinary:
         return new SensorBinary(config);
       case DeviceType.SensorMultilevel:

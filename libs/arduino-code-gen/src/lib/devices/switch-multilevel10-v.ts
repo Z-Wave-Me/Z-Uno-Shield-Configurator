@@ -3,7 +3,7 @@ import { BaseDevice } from './base-device';
 import { ZUnoShieldPin } from '../../../../../apps/configurator/src/app/components/z-uno-shield/z-uno-shield.model';
 
 
-export class SwitchMultilevel extends BaseDevice {
+export class SwitchMultilevel10V extends BaseDevice {
   constructor(protected override readonly config: PinConfig) {
     super(config);
   }
@@ -13,7 +13,7 @@ export class SwitchMultilevel extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `byte pin${this.config.id}SwitchMultilevelState = 0, _pin${this.config.id}SwitchMultilevelState = 1;;`;
+    return `byte pin${this.config.id}SwitchMultilevelState = 0, _pin${this.config.id}SwitchMultilevelState = 1;`;
   }
 
   public override get v10Mode(): boolean {
