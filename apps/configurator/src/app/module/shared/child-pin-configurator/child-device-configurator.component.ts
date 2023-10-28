@@ -36,6 +36,7 @@ export class ChildDeviceConfiguratorComponent
     title: string;
     options: PinConfiguratorInput[];
     offset?: VoltageOffset;
+    busBars?: number[];
   };
   @Input() public init?: Partial<DeviceConfig>;
   @Output() public changePin = new EventEmitter<Partial<DeviceConfig>>();
@@ -77,6 +78,7 @@ export class ChildDeviceConfiguratorComponent
           id: list?.value,
           deviceType: list?.type,
           group: list?.group,
+          busBars: list?.busBars,
         });
       });
 

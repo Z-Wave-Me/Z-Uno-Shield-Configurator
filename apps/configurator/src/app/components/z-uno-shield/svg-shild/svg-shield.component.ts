@@ -15,6 +15,7 @@ import { ColorDevices } from '@configurator/arduino-code-gen';
 })
 export class SvgShieldComponent {
   protected selectedPin$: Observable<PinConfig | undefined>;
+  protected selectedBuses$: Observable<PinConfig[] | undefined>;
   protected colorDevices = Object.values(ColorDevices);
 
   constructor(
@@ -27,10 +28,11 @@ export class SvgShieldComponent {
           map((items) => {
             return items.find((item) => item.id === pinId);
           }),
-          filter(Boolean),
         ),
       ),
     );
+
+    this.selectedBuses$ =  this.pinsStateService.state$;
   }
 
   public isColorDevice(deviceId: undefined | string | number): boolean {

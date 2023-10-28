@@ -74,6 +74,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
     options: PinConfiguratorInput[];
     offset?: VoltageOffset;
     group?: string;
+    busBars?: number[];
   };
 
   constructor(
@@ -101,6 +102,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
       device: config,
       offset: this.selected?.offset,
       group: this.selected?.group,
+      busBars: this.selected?.busBars,
     }, this.pinList);
   }
 
@@ -119,6 +121,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
     const stored = config.find(
       ({ id }) => id === this.options.id,
     );
+
     this.selected = this.options.pin.find(({ key }) => stored?.key === key);
     this.init = stored?.device;
     this.changeDetectorRef.detectChanges();

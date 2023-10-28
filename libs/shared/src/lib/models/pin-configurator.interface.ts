@@ -11,6 +11,7 @@ export interface PinConfiguratorInput {
     value: string | number | Grounding;
   }[];
   group?: string;
+  busBars?: number[];
 }
 
 export interface ChildPinConfigurator {

@@ -17,6 +17,7 @@ export type DeviceConfig = {
   upperBound: number | null;
   remove?: boolean;
   group?: string;
+  busBars?: number[];
 };
 
 export type PinConfig = {
@@ -25,4 +26,5 @@ export type PinConfig = {
   key?: string;
   offset?: VoltageOffset;
   group?: string;
+  busBars?: number[];
 };

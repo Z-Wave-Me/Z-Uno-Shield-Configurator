@@ -30,7 +30,7 @@ export class SensorBinary extends BaseDevice {
   }
 
   public override loop(channel: number): string {
-    const inverted = this.config.device?.type === 'inverted' ? '!': '';
+    const inverted = this.config.device?.type === 'inverted' ? '': '!';
 
     return `  // GPIO SensorBinary@pin${this.config.id} process code
   byte _pin${this.config.id}SensorBinaryState = ${inverted}digitalRead(${this.config.id});

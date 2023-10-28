@@ -220,45 +220,52 @@ export const roter = (type: DeviceType.RS485 | DeviceType.UART) =>
 
 export const adcConfig = [
   {
-    key: 'Analog input 0-3 V',
+    key: 'analog input 3',
     title: $localize`Analog input 0-3 V`,
     options: analogInput,
     offset: VoltageOffset.V3,
+    busBars: [1],
   },
   {
-    key: 'Analog input 0-5 V',
+    key: 'analog input 5',
     title: $localize`Analog input 0-5 V`,
     options: analogInput,
     offset: VoltageOffset.V5,
+    busBars: [2,3],
   },
   {
-    key: 'Analog input 0-12 V',
+    key: 'analog input 15',
     title: $localize`Analog input 0-12 V`,
     options: analogInput,
     offset: VoltageOffset.V12,
+    busBars: [0,3],
   },
   {
-    key: 'Digital input 0/3 V',
+    key: 'digital input 3',
     title: $localize`Digital input 0/3 V`,
     withGround: 3,
     options: digitalInput,
+    busBars: [1],
   },
   {
-    key: 'Digital input 0/5 V',
+    key: 'digital input 5',
     title: $localize`Digital input 0/5 V`,
     withGround: 5,
     options: digitalInput,
+    busBars: [2,3],
   },
   {
-    key: 'Digital input 0/12 V',
+    key: 'digital input 15',
     title: $localize`Digital input 0/12 V`,
     withGround: 12,
     options: digitalInput,
+    busBars: [0,3],
   },
   {
-    key: 'Digital output 0/3 V',
+    key: 'digital output 3',
     title: $localize`Digital output 0/3 V`,
     options: digitalOutput,
+    busBars: [1],
   },
 ];
 
