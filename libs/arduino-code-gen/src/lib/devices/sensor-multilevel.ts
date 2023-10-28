@@ -1,6 +1,6 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
-import { SensorMultilevelDevices, VoltageOffset } from '@configurator/arduino-code-gen';
+import { SensorMultilevelDevices, VoltageOffset } from '../device.model';
 
 
 enum Precision {

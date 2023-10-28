@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { PinSelectedService } from '../../../services/pin-selected/pin-selected.service';
-import { config, filter, map, Observable, switchMap } from 'rxjs';
+import { filter, map, Observable, switchMap } from 'rxjs';
 import {
   PinsStateService,
 } from '../../../services/store/pins-state.service';
-import { PinConfig } from '../../../../../../../libs/shared/src/lib/models/pin.config';
-import { ColorDevices, SensorMultilevelDevices } from '@configurator/arduino-code-gen';
+import { PinConfig } from '@configurator/shared';
+import { ColorDevices } from '@configurator/arduino-code-gen';
 
 @Component({
   selector: 'configurator-svg-shield',

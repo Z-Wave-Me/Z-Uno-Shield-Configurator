@@ -1,6 +1,6 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
-import { ColorDevices } from '@configurator/arduino-code-gen';
+import { ColorDevices } from '../device.model';
 
 enum ColorFlag {
   White = 'SWITCH_COLOR_FLAGS_WARM_WHITE',

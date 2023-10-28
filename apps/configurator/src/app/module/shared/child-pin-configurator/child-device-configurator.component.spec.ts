@@ -8,7 +8,7 @@ describe('ChildPinConfiguratorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChildDeviceConfiguratorComponent ]
+      declarations: [ ChildDeviceConfiguratorComponent ],
     })
     .compileComponents();
 

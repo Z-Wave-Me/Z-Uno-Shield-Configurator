@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 
-import { PinConfig } from '../../../../../../../../../../libs/shared/src/lib/models/pin.config';
+import { PinConfig } from '@configurator/shared';
 
 @Component({
   selector: '[dht]',

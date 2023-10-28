@@ -1,6 +1,6 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
-import { Grounding } from '@configurator/arduino-code-gen';
+import { Grounding } from '../device.model';
 
 
 export class SensorBinary extends BaseDevice {

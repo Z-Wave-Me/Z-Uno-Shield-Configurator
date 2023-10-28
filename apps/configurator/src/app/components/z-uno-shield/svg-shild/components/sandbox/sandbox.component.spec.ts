@@ -8,7 +8,7 @@ describe('SundboxComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SandboxComponent ]
+      declarations: [ SandboxComponent ],
     })
     .compileComponents();
 
