@@ -68,34 +68,48 @@ export class SwitchColor extends BaseDevice {
   }
 
   public override get xetter(): string {
-    const modeList = this.arrayConfig
+    const list = this.arrayConfig
       .map(({ id, device }) => ({
         pinId: id,
         deviceId: device?.id,
-      }))
-      .map(({ pinId, deviceId }) => ({
-        pinId,
-        deviceMode: this.modeMap[deviceId as ColorDevices],
       }));
-    const setters = modeList.map(({pinId, deviceMode}) => `  if (color == ${deviceMode}) pin${pinId}SwitchMultilevelState = value;`).join('\n');
 
-    const getters = modeList.map(({pinId, deviceMode}) =>`  if (color == ${deviceMode}) return pin${pinId}SwitchMultilevelState;`).join('\n');
+    const modeList = list.map(({ pinId, deviceId }) => ({
+      pinId,
+      deviceMode: this.modeMap[deviceId as ColorDevices],
+    }));
+
+    const setters = modeList.map(({pinId, deviceMode}) => `    case ${deviceMode}:
+      pin${pinId}SwitchMultilevelState = value;
+      break;`).join('\n');
+
+    const getters = modeList.map(({pinId, deviceMode}) =>`    case ${deviceMode}:
+      return pin${pinId}SwitchMultilevelState;`).join('\n');
 
     return `void pinsSwitchColorSetter(byte color, byte value) {
+  switch(color){
 ${setters}
+  }
 }
 
 byte pinsSwitchColorGetter(byte color) {
+  switch(color){
 ${getters}
+  }
+  return 0;
 }`;
   }
 
   public override loop(): string {
     return this.arrayConfig.map(({ id }) => `  // PWM SwitchColor@pin${id}process code
-  analogWriteResolution(8); analogWrite(${id}, pin${id}SwitchMultilevelState);`).join('\n')
+  shield.writePWMPercentage(PWM_CHANNEL(${id}), pin${id}SwitchMultilevelState);`).join('\n')
+  }
+
+  public override get pwm(): string {
+    return this.ids.map( id =>`PWM_CHANNEL_MASK(${id})`).join(' | ');
   }
 
   private get ids(): string[] {
-    return this.arrayConfig.map(({ device}) => device?.id).filter(isString);
+    return this.arrayConfig.map(({ id}) => id).filter(isString);
   }
 }

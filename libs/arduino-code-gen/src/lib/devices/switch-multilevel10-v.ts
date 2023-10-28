@@ -1,6 +1,5 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
-import { ZUnoShieldPin } from '../../../../../apps/configurator/src/app/components/z-uno-shield/z-uno-shield.model';
 
 
 export class SwitchMultilevel10V extends BaseDevice {
@@ -20,15 +19,11 @@ export class SwitchMultilevel10V extends BaseDevice {
     return true;
   }
 
-  public override loop(): string {
+  public override loop(channel: number): string {
     return `  // 0-10V SwitchMultilevel@pin${this.config.id} process code
   if (pin${this.config.id}SwitchMultilevelState != _pin${this.config.id}SwitchMultilevelState) {
     _pin${this.config.id}SwitchMultilevelState = pin${this.config.id}SwitchMultilevelState;
-    shield.write0_10V(${this.channels}, pin${this.config.id}SwitchMultilevelState);
+    shield.write0_10V(${channel}, pin${this.config.id}SwitchMultilevelState);
   }`;
-  }
-
-  public override get pwm(): string {
-    return `  shield.initPWM(1 << (${this.config.id} - ${ZUnoShieldPin.PWM1}));\n`
   }
 }

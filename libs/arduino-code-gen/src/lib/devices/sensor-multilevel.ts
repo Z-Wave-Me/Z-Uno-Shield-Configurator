@@ -26,9 +26,6 @@ interface SwitchMultilevelConfig {
 }
 
 export class SensorMultilevel extends BaseDevice {
-  public override channels = 0;
-
-
   private readonly switchMultilevelConfig: SwitchMultilevelConfig;
   private readonly propertyMap: Record<
     SensorMultilevelDevices,
@@ -158,7 +155,7 @@ export class SensorMultilevel extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `${sizeToType(this.switchMultilevelConfig.size)} pin${this.config.id} SensorMultilevelState=0, _pin${this.config.id}SensorMultilevelState=1;`;
+    return `${sizeToType(this.switchMultilevelConfig.size)} pin${this.config.id}SensorMultilevelState=0, _pin${this.config.id}SensorMultilevelState=1;`;
   }
 
   private get jumper(): string {

@@ -10,7 +10,7 @@ export class Generator implements Device {
   }
 
   public get channel(): string {
-    const channel = this.collect('channel', 1, ',\n');
+    const channel = this.collect('channel', ',\n');
 
     return channel.length
       ? `
@@ -29,7 +29,7 @@ ${channel}
   }
 
   public get note(): string {
-    return this.collect('note', 2);
+    return this.collect('note', '\n\n');
   }
 
   public get functions(): string {
@@ -43,7 +43,7 @@ ${functions}
   }
 
   public get report(): string {
-    const report = this.collect('report', 1, ',\n');
+    const report = this.collect('report', ',\n');
 
     return report.length
       ? `void reportSMLHandler(ReportAuxData_t * report) {
@@ -81,7 +81,9 @@ ${this.v10Mode}${this.pwm}${this.collect('setup')}
   }
 
   public get pwm(): string {
-    return this.collect('pwm');
+    const pwm = this.collect('pwm', ' | ');
+
+    return pwm.length ? `  shield.initPWM(${pwm});\n` : '';
   }
 
   public get vars(): string {
@@ -111,7 +113,7 @@ ${xetter}
   public loop(): string {
     return `
 void loop() {
-${this.collect('loop', 2)}
+${this.collect('loop', '\n\n')}
 
   delay(20);
 }
@@ -141,7 +143,6 @@ ${this.functions}`;
 
   private collect(
     accessor: keyof Device,
-    lineCount = 1,
     sep = '\n',
     filter = Boolean,
   ): string {
@@ -158,7 +159,7 @@ ${this.functions}`;
         return handler;
       })
       .filter(filter)
-      .join(Array.from({ length: lineCount }).fill(sep).join(''));
+      .join(sep);
   }
 
   // public output() {
