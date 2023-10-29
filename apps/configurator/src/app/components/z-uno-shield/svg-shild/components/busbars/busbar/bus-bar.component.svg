@@ -1,6 +1,6 @@
 <ng-container *ngIf="busBar">
     <svg:g *ngFor="let position of busBar" [attr.transform]="transform(position)" >
-        <svg:path style="opacity:1;fill:#cc0404;stroke:#8c0000;stroke-width:1;" d="M1770.437 2139.85h66v31h-66z"/>
+        <svg:path style="opacity:.8;fill:#cc0404;stroke:#8c0000;stroke-width:3;" d="M1770.437 2139.85h66v31h-66z"/>
     </svg:g>
 </ng-container>
 

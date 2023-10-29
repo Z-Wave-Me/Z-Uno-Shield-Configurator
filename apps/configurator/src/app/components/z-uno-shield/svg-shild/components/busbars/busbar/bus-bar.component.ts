@@ -23,12 +23,32 @@ const defaultOffsets = (position: number): string => {
   }
 }
 
+const rsaOffsets = (position:number): string  => {
+  switch (position) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return `translate(${-820 + (position >> 1) * 30} ${-783 + (position & 1) * 40})`;
+    case 4:
+    case 5:
+      return `translate(${3078 + 37 * position} -410) rotate(90)`;
+    case 6:
+    case 7:
+      return `translate(${2863 + 37 * position} -188) rotate(90)`;
+    default:
+      return '';
+  }
+}
+
 const horizontalOffsets: Record<string, (position: number) => string> = {
   [ZUnoShieldPin.ADC0]: (position: number) => `translate(-82 ${adcOffsets(position)})`,
   [ZUnoShieldPin.ADC1]: (position: number) => `translate(-233 ${adcOffsets(position)})`,
   [ZUnoShieldPin.ADC2]: (position: number) => `translate(-383 ${adcOffsets(position)})`,
   [ZUnoShieldPin.ADC3]: (position: number) => `translate(-531 ${adcOffsets(position)})`,
   default: defaultOffsets,
+  [ZUnoShieldPin.RS_A]: rsaOffsets,
+  [ZUnoShieldPin.RS_B]: rsaOffsets,
 }
 
 @Component({

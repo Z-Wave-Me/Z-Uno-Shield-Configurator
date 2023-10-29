@@ -34,5 +34,6 @@ export interface Pin {
     title: string;
     options: PinConfiguratorInput[];
     group?: string;
+    busBars?: number[],
   }[];
 }
