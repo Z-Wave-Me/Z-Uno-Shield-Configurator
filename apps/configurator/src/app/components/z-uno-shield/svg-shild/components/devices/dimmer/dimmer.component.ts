@@ -1,6 +1,4 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
-import { PinSelectedService } from '../../../../../../services/pin-selected/pin-selected.service';
-import { PinsStateService } from '../../../../../../services/store/pins-state.service';
+import { Component, Input } from '@angular/core';
 import { PinConfig } from '@configurator/shared';
 
 @Component({

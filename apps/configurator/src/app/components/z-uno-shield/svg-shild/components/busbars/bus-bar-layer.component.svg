@@ -1,0 +1,3 @@
+<svg:g>
+    <g *ngFor="let pin of selectedBuses$ | async" bus-bar [pin]="pin"></g>
+</svg:g>

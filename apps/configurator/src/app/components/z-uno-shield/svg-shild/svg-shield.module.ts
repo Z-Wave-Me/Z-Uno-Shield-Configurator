@@ -13,6 +13,8 @@ import { DhtComponent } from './components/devices/dth22/dht.component';
 import { Ds18b20Component } from './components/devices/ds18b20/ds18b20.component';
 import { Dimmer010vComponent } from './components/devices/dimmer0-10v/dimmer010v.component';
 import { RGBWComponent } from './components/devices/rgbw/rgbw.component';
+import { BusBarComponent } from './components/busbars/busbar/bus-bar.component';
+import { BusBarLayerComponent } from './components/busbars/bus-bar-layer.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { RGBWComponent } from './components/devices/rgbw/rgbw.component';
     Ds18b20Component,
     Dimmer010vComponent,
     RGBWComponent,
+    BusBarComponent,
+    BusBarLayerComponent,
   ],
   exports: [SvgShieldComponent, SandboxComponent],
   imports: [CommonModule, HostDirective, HighlightPinDirective],
