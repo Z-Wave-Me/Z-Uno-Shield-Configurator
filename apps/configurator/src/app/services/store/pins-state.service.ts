@@ -137,5 +137,6 @@ export class PinsStateService {
     value[data.to] = pin;
 
     this._state$.next(value);
+    this.updateRoute();
   }
 }

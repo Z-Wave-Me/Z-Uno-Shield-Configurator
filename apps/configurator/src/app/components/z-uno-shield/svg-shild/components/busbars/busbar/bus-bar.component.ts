@@ -9,15 +9,27 @@ const adcOffsets = (position: number): number => ({
   3: -428,
 })[position] ?? 0;
 
-const horizontalOffsets: Record<string, (position: number) => string> = {
-  [ZUnoShieldPin.ADC0]: (position: number) => `-82 ${adcOffsets(position)}`,
-  [ZUnoShieldPin.ADC1]: (position: number) => `-233 ${adcOffsets(position)}`,
-  [ZUnoShieldPin.ADC2]: (position: number) => `-383 ${adcOffsets(position)}`,
-  [ZUnoShieldPin.ADC3]: (position: number) => `-531 ${adcOffsets(position)}`,
+const defaultOffsets = (position: number): string => {
+  switch (position) {
+    case 0:
+    case 1:
+      return `translate(${3279 + 37 * position} -1210) rotate(90)`;
+    case 2:
+    case 3:
+    case 4:
+      return `translate(-444 ${-1489 + 40 * position})`
+    default:
+      return '';
+  }
 }
 
-
-
+const horizontalOffsets: Record<string, (position: number) => string> = {
+  [ZUnoShieldPin.ADC0]: (position: number) => `translate(-82 ${adcOffsets(position)})`,
+  [ZUnoShieldPin.ADC1]: (position: number) => `translate(-233 ${adcOffsets(position)})`,
+  [ZUnoShieldPin.ADC2]: (position: number) => `translate(-383 ${adcOffsets(position)})`,
+  [ZUnoShieldPin.ADC3]: (position: number) => `translate(-531 ${adcOffsets(position)})`,
+  default: defaultOffsets,
+}
 
 @Component({
   selector: '[bus-bar]',
@@ -40,6 +52,6 @@ export class BusBarComponent {
   }
 
   public transform(position: number): string {
-    return `translate(${horizontalOffsets[this.pin?.id ?? ''](position)})`;
+    return `${horizontalOffsets[this.pin?.id ?? ''](position)}`;
   }
 }

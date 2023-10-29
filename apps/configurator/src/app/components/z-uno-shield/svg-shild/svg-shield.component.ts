@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { PinSelectedService } from '../../../services/pin-selected/pin-selected.service';
-import { filter, map, Observable, switchMap } from 'rxjs';
+import {  map, Observable, switchMap } from 'rxjs';
 import {
   PinsStateService,
 } from '../../../services/store/pins-state.service';

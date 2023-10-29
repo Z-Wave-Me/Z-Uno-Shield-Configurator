@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { PinConfig } from '@configurator/shared';
 import { PinsStateService } from '../../../../../services/store/pins-state.service';
 
@@ -12,10 +12,14 @@ import { PinsStateService } from '../../../../../services/store/pins-state.servi
 export class BusBarLayerComponent {
   protected selectedBuses$: Observable<PinConfig[] | undefined>;
 
+  private readonly defaultBars: PinConfig[] = [{
+    id: 'default',
+    busBars: [0,1,2,3,4],
+  }];
+
   constructor(
     private readonly pinsStateService: PinsStateService,
   ) {
-    this.selectedBuses$ =  this.pinsStateService.state$;
-
+    this.selectedBuses$ =  this.pinsStateService.state$.pipe(map(config => [...config, ...this.defaultBars]));
   }
 }
