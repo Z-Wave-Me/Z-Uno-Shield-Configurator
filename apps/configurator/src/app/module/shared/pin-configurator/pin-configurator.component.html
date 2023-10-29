@@ -35,3 +35,9 @@
     ></configurator-child-pin-configurator>
   </div>
 </div>
+<div class="filler"></div>
+<configurator-order-changer
+  *ngIf="position$ | async as position"
+  [position]="position"
+  (indexChange)="updateOrder($event)"
+></configurator-order-changer>

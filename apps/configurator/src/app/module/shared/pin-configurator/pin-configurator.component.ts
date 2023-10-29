@@ -7,13 +7,14 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import {
   PinsStateService,
 } from '../../../services/store/pins-state.service';
 import { DeviceConfig, PinConfig, PinConfiguratorInput } from '@configurator/shared';
 import { Grounding, VoltageOffset } from '@configurator/arduino-code-gen';
 import { Pin } from '../../../components/z-uno-shield/z-uno-shield.model';
+import { Position } from '../order-changer/order-changer.component';
 
 @Component({
   selector: 'configurator-pin-configurator[pinList]',
@@ -23,6 +24,9 @@ import { Pin } from '../../../components/z-uno-shield/z-uno-shield.model';
 })
 export class PinConfiguratorComponent implements OnInit, OnDestroy {
   private readonly destroyed$ = new Subject<void>();
+
+  public readonly position$: Observable<Position>;
+
   private _options!: Pin;
 
   @HostBinding('class.mat-elevation-z8')
@@ -80,14 +84,22 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
   constructor(
     private readonly pinsStateService: PinsStateService,
     private readonly changeDetectorRef: ChangeDetectorRef,
-  ) {}
+  ) {
+    this.position$ = this.pinsStateService.state$.pipe(
+      map((state) => ({
+        current: state.findIndex((pin) => pin.id === this.options.id),
+        total: state.length,
+      })),
+      takeUntil(this.destroyed$),
+    );
+  }
 
   public ngOnInit(): void {
-    this.pinsStateService.state$.pipe(takeUntil(this.destroyed$)).subscribe(
-      state => {
+    this.pinsStateService.state$
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((state) => {
         this.setDevice(state);
-      },
-    );
+      });
   }
 
   public ngOnDestroy(): void {
@@ -96,34 +108,45 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
   }
 
   public changePin(config: Partial<DeviceConfig>): void {
-    this.pinsStateService.patch({
-      id: this.options.id,
-      key: this.selected?.key,
-      device: config,
-      offset: this.selected?.offset,
-      group: this.selected?.group,
-      busBars: this.selected?.busBars,
-    }, this.pinList);
+    this.pinsStateService.patch(
+      {
+        id: this.options.id,
+        key: this.selected?.key,
+        device: config,
+        offset: this.selected?.offset,
+        group: this.selected?.group,
+        busBars: this.selected?.busBars,
+      },
+      this.pinList,
+    );
   }
 
   public remove(): void {
-    this.pinsStateService.patch({
-      id: this.options.id,
-      device: {... this.pinsStateService.snapshot.find(
-          ({ id }) => id === this.options.id,
-        )?.device ?? {}, remove: true},
-      group: this.selected?.group,
-    }, this.pinList);
+    this.pinsStateService.patch(
+      {
+        id: this.options.id,
+        device: {
+          ...(this.pinsStateService.snapshot.find(
+            ({ id }) => id === this.options.id,
+          )?.device ?? {}),
+          remove: true,
+        },
+        group: this.selected?.group,
+      },
+      this.pinList,
+    );
     this.selected = undefined;
   }
 
-  private setDevice(config:  PinConfig[]): void {
-    const stored = config.find(
-      ({ id }) => id === this.options.id,
-    );
+  private setDevice(config: PinConfig[]): void {
+    const stored = config.find(({ id }) => id === this.options.id);
 
     this.selected = this.options.pin.find(({ key }) => stored?.key === key);
     this.init = stored?.device;
     this.changeDetectorRef.detectChanges();
+  }
+
+  public updateOrder(data: { from: number; to: number }): void {
+    this.pinsStateService.switchIndexes(data)
   }
 }

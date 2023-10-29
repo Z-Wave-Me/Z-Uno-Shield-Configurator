@@ -30,7 +30,15 @@ interface DeviceForm {
 })
 export class ChildDeviceConfiguratorComponent
   implements OnChanges, OnInit, OnDestroy {
-  @Input() public optionsList!: {
+
+  private readonly destroy$ = new Subject<void>();
+
+  public readonly deviceForm: FormGroup<DeviceForm>;
+  protected readonly connectionMode = ConnectionMode;
+
+
+  @Input()
+  public optionsList!: {
     withGround?: number;
     key: string;
     title: string;
@@ -38,13 +46,16 @@ export class ChildDeviceConfiguratorComponent
     offset?: VoltageOffset;
     busBars?: number[];
   };
-  @Input() public init?: Partial<DeviceConfig>;
-  @Output() public changePin = new EventEmitter<Partial<DeviceConfig>>();
-  public deviceForm: FormGroup<DeviceForm>;
-  protected readonly connectionMode = ConnectionMode;
-  private destroy$ = new Subject<void>();
 
-  constructor(private readonly formBuilder: FormBuilder) {
+  @Input()
+  public init?: Partial<DeviceConfig>;
+
+  @Output()
+  public changePin = new EventEmitter<Partial<DeviceConfig>>();
+
+  constructor(
+    private readonly formBuilder: FormBuilder,
+    ) {
     this.deviceForm = this.formBuilder.nonNullable.group<DeviceForm>({
       list: new FormControl<PinConfiguratorInput | null>(null),
       type: new FormControl<ConnectionMode | null>(null),

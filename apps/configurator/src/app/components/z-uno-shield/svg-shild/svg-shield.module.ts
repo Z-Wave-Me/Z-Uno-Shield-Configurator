@@ -6,7 +6,7 @@ import { ShieldComponent } from './components/shield/shield.component';
 import { DimmerComponent } from './components/devices/dimmer/dimmer.component';
 import { HostDirective } from './directives/host.directive';
 import { HighlightPinDirective } from './directives/highlight-pin.directive';
-import { DoorWindowComponent } from './components/devices/door-window/door-window.component';
+import { DoorComponent } from './components/devices/door/door.component';
 import { MotionSensorComponent } from './components/devices/motion-senser/motion-sensor.component';
 import { SwitchComponent } from './components/devices/switch/switch.component';
 import { DhtComponent } from './components/devices/dth22/dht.component';
@@ -22,7 +22,7 @@ import { BusBarLayerComponent } from './components/busbars/bus-bar-layer.compone
     SandboxComponent,
     ShieldComponent,
     DimmerComponent,
-    DoorWindowComponent,
+    DoorComponent,
     MotionSensorComponent,
     SwitchComponent,
     DhtComponent,

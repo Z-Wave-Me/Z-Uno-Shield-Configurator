@@ -14,7 +14,7 @@
     </text>
     <ng-container [ngSwitch]="pin.device?.id">
       <g *ngSwitchCase="'dimmer'" dimmer [pin]="pin"></g>
-      <g *ngSwitchCase="'door-window'" door-window [pin]="pin"></g>
+      <g *ngSwitchCase="'door'" door [pin]="pin"></g>
       <g *ngSwitchCase="'motion'" motion-sensor [pin]="pin"></g>
       <g *ngSwitchCase="'switch'" switch [pin]="pin"></g>
       <g *ngSwitchCase="'0-10v'" dimmer0-10v [pin]="pin"></g>

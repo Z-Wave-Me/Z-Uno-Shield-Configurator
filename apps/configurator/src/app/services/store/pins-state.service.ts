@@ -129,4 +129,13 @@ export class PinsStateService {
   private isLinked(group?: string): boolean {
     return group ? /\[linked]/.test(group) : false;
   }
+
+  public switchIndexes(data: { from: number; to: number }): void {
+    const value = this.snapshot;
+    const pin = value[data.from];
+    value[data.from] = value[data.to];
+    value[data.to] = pin;
+
+    this._state$.next(value);
+  }
 }

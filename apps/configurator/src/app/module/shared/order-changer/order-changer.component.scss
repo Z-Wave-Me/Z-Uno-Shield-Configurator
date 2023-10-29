@@ -1,0 +1,37 @@
+:host {
+  ::ng-deep {
+    .mat-mdc-select-arrow-wrapper {
+      display: none;
+    }
+
+    .mat-mdc-form-field-focus-overlay, .mdc-text-field--filled {
+      background: transparent !important;
+    }
+
+    .mat-mdc-text-field-wrapper {
+      padding: 0;
+      background: transparent;
+      height: 1.1rem;
+    }
+
+    .mat-mdc-form-field-infix {
+      padding: 0 !important;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    .mdc-line-ripple::before  {
+      display: none;
+    }
+
+    .mat-mdc-select-trigger {
+      justify-content: flex-end;
+    }
+
+    .mat-mdc-select-value {
+      width: auto;
+    }
+  }
+}
