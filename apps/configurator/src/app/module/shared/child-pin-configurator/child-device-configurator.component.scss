@@ -21,7 +21,6 @@
     width: 2ch;
     font-size: 16px;
     -moz-appearance: textfield;
-    outline: none;
 
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
@@ -33,5 +32,6 @@
   .inputs {
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 }
