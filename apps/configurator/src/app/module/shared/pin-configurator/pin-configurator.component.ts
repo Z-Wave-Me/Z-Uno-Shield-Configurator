@@ -34,6 +34,9 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
 
   public init?: Partial<DeviceConfig>;
 
+  @HostBinding('class')
+  private selectedDeviceType= '';
+
   @Input()
   public pinList!: Pin[];
 
@@ -72,7 +75,6 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
   }
 
   @HostBinding('class.mat-elevation-z8')
-  @HostBinding('class.selected')
   public selected?: {
     withGround?: number;
     key: string;
@@ -145,6 +147,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
 
     this.selected = this.options.pin.find(({ key }) => stored?.key === key);
     this.init = stored?.device;
+    this.selectedDeviceType = stored?.device?.deviceType ?? '';
     this.changeDetectorRef.detectChanges();
   }
 

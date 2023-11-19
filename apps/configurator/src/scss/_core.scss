@@ -48,6 +48,3 @@ $bg: mat.get-color-from-palette($configurator-primary, 500);
 $active-bg: darken($bg, 10%);
 $color: map.get($configurator-theme, 'text-contrast');
 
-.selected {
-  background: linear-gradient(175deg, rgba($bg, .43), transparent, 60%, transparent);
-}
