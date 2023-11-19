@@ -75,33 +75,40 @@ export class PinsStateService {
 
     const groupType = pin.group;
     const groupPinIds = possiblePins
-      .filter(
-        ({ id, pin: pinConfig }) =>
-          id !== pin.id
-          && this.isLinked(groupType)
-          && pinConfig.some((item) => item.group === groupType),
+      .filter(({ id, pin: pinConfig }) =>
+        id !== pin.id
+        && this.isLinked(groupType)
+        && pinConfig.some((item) => item.group === groupType),
       )
       .map(({ id }) => id);
 
-    const updated = value.filter(
-      ({ id }) =>
-        !(
-          id === pin.id
-          || (this.isLinked(groupType) && groupPinIds.includes(id))
-        ),
-    );
+    let updated: PinConfig[];
 
-    if (!pin.device?.remove) {
-      updated.push(pin);
+    if (pin.device?.remove) {
+      updated = value.filter(({ id }) => !(id === pin.id || groupPinIds.includes(id)));
+    } else {
+      updated = value.map(item => {
+        if (item.id === pin.id || groupPinIds.includes(item.id)) {
+          return { ...item, ...pin, device: { ...item.device, ...pin.device } };
+        }
+
+        return item;
+      });
+
+      if (!value.some(item => item.id === pin.id)) {
+        updated.push(pin);
+      }
 
       if (this.isLinked(groupType)) {
-        updated.push(
-          ...groupPinIds.map((id) => ({
-            ...pin,
-            device: { ...pin.device },
-            id,
-          })),
-        );
+        groupPinIds.forEach(groupId => {
+          if (!updated.some(item => item.id === groupId)) {
+            updated.push({
+              ...pin,
+              device: { ...pin.device },
+              id: groupId,
+            });
+          }
+        });
       }
     }
 
@@ -113,6 +120,7 @@ export class PinsStateService {
 
     this.updateRoute();
   }
+
 
   public reset(): void {
     this._state$.next([]);
