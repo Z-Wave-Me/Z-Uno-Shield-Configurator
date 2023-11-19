@@ -3,15 +3,15 @@
   <g shield></g>
 
   <ng-container *ngIf="selectedPin$ | async as pin">
-    <text style="font-size: 70px" x="80%" y="6%" text-anchor="middle" dominant-baseline="middle">
-      {{ pin.id}}
-    </text>
-    <text style="font-size: 70px" x="80%" y="10%" text-anchor="middle" dominant-baseline="middle">
-      {{ pin?.key }}
-    </text>
-    <text style="font-size: 70px" x="80%" y="2%" text-anchor="middle" dominant-baseline="middle">
-      {{ pin.device?.id }}
-    </text>
+<!--    <text style="font-size: 70px" x="80%" y="6%" text-anchor="middle" dominant-baseline="middle">-->
+<!--      {{ pin.id}}-->
+<!--    </text>-->
+<!--    <text style="font-size: 70px" x="80%" y="10%" text-anchor="middle" dominant-baseline="middle">-->
+<!--      {{ pin?.key }}-->
+<!--    </text>-->
+<!--    <text style="font-size: 70px" x="80%" y="2%" text-anchor="middle" dominant-baseline="middle">-->
+<!--      {{ pin.device?.id }}-->
+<!--    </text>-->
     <ng-container [ngSwitch]="pin.device?.id">
       <g *ngSwitchCase="'dimmer'" dimmer [pin]="pin"></g>
       <g *ngSwitchCase="'door'" door [pin]="pin"></g>

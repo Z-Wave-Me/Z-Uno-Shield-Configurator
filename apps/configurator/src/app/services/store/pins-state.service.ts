@@ -114,9 +114,9 @@ export class PinsStateService {
 
     this._state$.next(updated);
 
-    console.group('Store');
-    console.log(this.snapshot);
-    console.groupEnd();
+    // console.group('Store');
+    // console.log(this.snapshot);
+    // console.groupEnd();
 
     this.updateRoute();
   }

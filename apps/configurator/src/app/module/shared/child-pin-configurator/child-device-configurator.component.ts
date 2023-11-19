@@ -147,7 +147,7 @@ export class ChildDeviceConfiguratorComponent
         { emitEvent: false },
       );
       this.deviceForm.controls.upperBound.patchValue(
-        this.init?.upperBound ?? 99,
+        this.init?.upperBound ?? 100,
         { emitEvent: false },
       );
     }
