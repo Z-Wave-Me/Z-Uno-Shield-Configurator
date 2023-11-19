@@ -30,18 +30,20 @@
   <div *ngIf="optionsList.offset" class="inputs">
     {{ optionsList.key}}
     <mat-icon>arrow_right_alt</mat-icon>
-    <input
-      formControlName="lowerBound"
-      maxlength="2"
-      type="number"
-      style="text-align: right;"
-      class="short">
-    -
-    <input
-      type="number"
-      formControlName="upperBound"
-      maxlength="2"
-      class="short"
-    >
+    <div class="input-block">
+      <input
+        formControlName="lowerBound"
+        maxlength="2"
+        type="number"
+        style="text-align: right;"
+        class="short">
+      -
+      <input
+        type="number"
+        formControlName="upperBound"
+        maxlength="2"
+        class="short"
+      >
+    </div>
   </div>
 </form>

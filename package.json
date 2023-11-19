@@ -26,6 +26,7 @@
     "@angular/router": "~16.1.0",
     "@nx/angular": "16.4.0",
     "angular-cli-ghpages": "^1.0.7",
+    "lz-string": "^1.5.0",
     "ngx-highlightjs": "^9.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

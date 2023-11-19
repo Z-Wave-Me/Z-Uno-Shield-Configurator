@@ -1,7 +1,7 @@
 <mat-form-field *ngIf="position.current !== -1">
-  <mat-select [value]="position.current" (valueChange)="indexChange.emit({ from: position.current, to: $event   })">
-    <mat-option *ngFor="let i of list" [value]="i">
-      {{i + 1}}
+  <mat-select [value]="position.current" (valueChange)="indexChange.emit({ from: position.current, to: $event })">
+    <mat-option *ngFor="let i of list" [value]="i" class="option">
+      Channel order {{i + 1}}
     </mat-option>
   </mat-select>
 </mat-form-field>

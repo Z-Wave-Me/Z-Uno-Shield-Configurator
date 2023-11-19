@@ -3,6 +3,7 @@ import { IO } from '../../../module/shared/models';
 import { DeviceType } from '@configurator/shared';
 import { Zm8202Pin, Zm9202Group } from '../zm8202.model';
 import { Pin } from '../../z-uno-shield/z-uno-shield.model';
+import { VoltageOffset } from '@configurator/arduino-code-gen';
 
 @Component({
   selector: 'configurator-zm8202-selector',
@@ -13,9 +14,10 @@ import { Pin } from '../../z-uno-shield/z-uno-shield.model';
 export class SelectorComponent {
   private readonly adcConfig = [
     {
-      key: 'Analog input 0-3 V',
+      key: '0V-3V',
       title: $localize`Analog input 0-3 V`,
       options: IO.analogInput,
+      offset: VoltageOffset.V3,
     },
   ];
 

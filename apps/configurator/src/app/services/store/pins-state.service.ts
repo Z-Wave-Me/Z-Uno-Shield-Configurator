@@ -12,6 +12,10 @@ import { LocalStorageService } from './local-storage.service';
 import { PinConfig } from '@configurator/shared';
 import { Pin } from '../../components/z-uno-shield/z-uno-shield.model';
 import { Location } from '@angular/common';
+import {
+  compressToUTF16,
+  decompressFromUTF16,
+} from 'lz-string';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +40,7 @@ export class PinsStateService {
       .subscribe((config) => {
         const key = this.router.url.split('?')[0].split('/')[1];
         this.currentKey = key;
-        const data = JSON.parse(atob(decodeURIComponent(config)));
+        const data = JSON.parse(decompressFromUTF16(decodeURIComponent(config)));
         this._state$.next(data);
         this.localStorageService.set(key, data);
       });
@@ -102,6 +106,7 @@ export class PinsStateService {
     }
 
     this._state$.next(updated);
+
     console.group('Store');
     console.log(this.snapshot);
     console.groupEnd();
@@ -117,8 +122,7 @@ export class PinsStateService {
 
   private updateRoute(): void {
     const config = this.snapshot;
-    const configBase64 = btoa(JSON.stringify(config));
-
+    const configBase64 = compressToUTF16(JSON.stringify(config, (key, value) => value === null || value === undefined ? undefined : value));
     this.localStorageService.set(this.currentKey, config);
 
     const query = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {config: configBase64}}).toString();

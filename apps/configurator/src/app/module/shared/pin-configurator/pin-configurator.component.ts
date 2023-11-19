@@ -29,7 +29,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
 
   private _options!: Pin;
 
-  @HostBinding('class.mat-elevation-z8')
+  @HostBinding('class.mat-elevation-z2')
   private shadow = true;
 
   public init?: Partial<DeviceConfig>;
@@ -71,6 +71,8 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
     return this._options;
   }
 
+  @HostBinding('class.mat-elevation-z8')
+  @HostBinding('class.selected')
   public selected?: {
     withGround?: number;
     key: string;

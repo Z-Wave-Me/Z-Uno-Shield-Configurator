@@ -3,7 +3,9 @@ import { Device } from './devices/device.interface';
 export class Generator implements Device {
   public channels = 1;
 
-  constructor(private readonly devices: Device[]) {}
+  constructor(
+    private readonly devices: Device[],
+  ) { }
 
   public get includes(): string | undefined {
     return this.collect('includes');

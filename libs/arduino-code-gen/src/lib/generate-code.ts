@@ -63,15 +63,25 @@ export function generateCode(devices: Device[]): string {
 }
 
 export function generate(config: PinConfig[]): string {
-  const groupedConfig = config.reduce<Record<string, PinConfig[] | PinConfig>>(
-    (acc, cur) => {
+  const groupedConfig = config.reduce<Record<string,
+    {
+      order: number;
+      data: PinConfig[] | PinConfig;
+    }>>(
+    (acc, cur, index) => {
       const key = cur.group ?? cur.device?.group;
 
       if (key) {
-        const exist = (acc[key] ?? []) as PinConfig[];
-        acc[key] = [...exist, cur];
+        const exist = (acc[key]?.data ?? []) as PinConfig[];
+        acc[key] = {
+          order: acc[key]?.order ?? index,
+          data: [...exist, cur],
+        };
       } else {
-        acc[cur.id] = cur;
+        acc[cur.id] = {
+          order: index,
+          data: cur,
+        };
       }
 
       return acc;
@@ -79,5 +89,10 @@ export function generate(config: PinConfig[]): string {
     {},
   );
 
-  return generateCode(Object.values(groupedConfig).map(deviceFromConfig));
+  const sortedConfig = Object.values(groupedConfig).sort((
+    {order: a},
+    {order: b},
+  ) => a - b)
+
+  return generateCode(sortedConfig.map(({data}) => deviceFromConfig(data)));
 }

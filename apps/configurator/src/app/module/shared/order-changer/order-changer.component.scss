@@ -1,4 +1,6 @@
 :host {
+  display: block;
+
   ::ng-deep {
     .mat-mdc-select-arrow-wrapper {
       display: none;
@@ -9,7 +11,7 @@
     }
 
     .mat-mdc-text-field-wrapper {
-      padding: 0;
+      padding: 0 0 0 1.2rem;
       background: transparent;
       height: 1.1rem;
     }

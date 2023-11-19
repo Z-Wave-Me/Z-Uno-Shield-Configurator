@@ -22,6 +22,16 @@
     font-size: 16px;
     -moz-appearance: textfield;
 
+    outline: none;
+    border-radius: 4px;
+    padding: 0 4px;
+
+    background: inherit;
+
+    &:focus-visible {
+      backdrop-filter: brightness(0.85);
+    }
+
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
       -webkit-appearance: none;
@@ -32,6 +42,6 @@
   .inputs {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
   }
 }

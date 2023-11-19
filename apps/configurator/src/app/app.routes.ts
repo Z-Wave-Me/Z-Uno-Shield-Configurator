@@ -7,7 +7,7 @@ export const appRoutes: Route[] = [
     component: LayoutComponent,
     loadChildren: () => import('./components/z-uno-shield/z-uno-shield.module').then(m => m.ZUnoShieldModule),
     data: {
-      title: $localize`Z-Uno Shield`,
+      title: $localize`Z-Uno 2 Shield`,
     },
   },
   {
