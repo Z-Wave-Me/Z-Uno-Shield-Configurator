@@ -20,8 +20,6 @@ export class Generator implements Device {
 ZUNO_SETUP_CHANNELS(
 ${channel}
 );
-
-
 `
       : '';
   }
@@ -37,10 +35,8 @@ ${channel}
   public get functions(): string {
     const functions = this.collect('functions');
 
-    return functions.length ? `// Functions
-    
+    return functions.length ? `// Functions    
 ${functions}
-
 ` : '';
   }
 
@@ -51,7 +47,6 @@ ${functions}
       ? `void reportSMLHandler(ReportAuxData_t * report) {
 ${report} 
 }
-
 `
       : '';
   }
@@ -61,8 +56,6 @@ ${report}
       ? `
 // External SensorMultilevel reports handler
 ZUNO_REPORTS_HANDLER(SensorMultilevel, reportSMLHandler);
-
-
 `
       : '';
   }
@@ -72,7 +65,6 @@ ZUNO_REPORTS_HANDLER(SensorMultilevel, reportSMLHandler);
 void setup() {
 ${this.v10Mode}${this.pwm}${this.collect('setup')}
 }
-
 `;
   }
 
@@ -94,7 +86,6 @@ ${this.v10Mode}${this.pwm}${this.collect('setup')}
     return vars.length
       ? `// Global variables
 ${vars}
-
 `
       : '';
   }
@@ -113,14 +104,11 @@ ${xetter}
 
 
   public loop(): string {
-    return `
-void loop() {
+    return `void loop() {
 ${this.collect('loop', '\n\n')}
 
   delay(20);
-}
-
-`;
+}`;
   }
 
   public code(): string {

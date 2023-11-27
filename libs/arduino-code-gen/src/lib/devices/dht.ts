@@ -25,6 +25,7 @@ export class DHT extends BaseDevice {
   word _pin${this.config.id}DHTHumidityState = pin${
       this.config.id
     }DHT.readHumidityH10();
+    
   if(abs(_pin${this.config.id}DHTTemperatureState-pin${
       this.config.id
     }DHTTemperatureState) > 2) {
@@ -34,6 +35,7 @@ export class DHT extends BaseDevice {
     }DHTTemperatureState;
     zunoSendReport(${channel});
   }
+  
   if(abs(_pin${this.config.id}DHTHumidityState-pin${
       this.config.id
     }DHTHumidityState) > 10) {

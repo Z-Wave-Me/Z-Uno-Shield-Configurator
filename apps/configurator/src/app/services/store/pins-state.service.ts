@@ -95,10 +95,6 @@ export class PinsStateService {
         return item;
       });
 
-      if (!value.some(item => item.id === pin.id)) {
-        updated.push(pin);
-      }
-
       if (this.isLinked(groupType)) {
         groupPinIds.forEach(groupId => {
           if (!updated.some(item => item.id === groupId)) {
@@ -110,13 +106,17 @@ export class PinsStateService {
           }
         });
       }
+
+      if (!value.some(item => item.id === pin.id)) {
+        updated.push(pin);
+      }
     }
 
     this._state$.next(updated);
 
-    // console.group('Store');
-    // console.log(this.snapshot);
-    // console.groupEnd();
+    console.group('Store');
+    console.log(this.snapshot);
+    console.groupEnd();
 
     this.updateRoute();
   }

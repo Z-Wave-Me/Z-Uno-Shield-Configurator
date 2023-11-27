@@ -155,7 +155,7 @@ export const pinList: Pin[] = [
         title: $localize`RS-485 A`,
         options: IO.roter(DeviceType.RS485),
         group: ZUnoDeviceGroup.RS,
-        busBars: [2, 3, 4, 5],
+        busBars: [2, 3, 4, 5, 6, 7],
       },
       {
         key: 'digital input',
@@ -188,7 +188,7 @@ export const pinList: Pin[] = [
         title: $localize`RS-485 B`,
         options: IO.roter(DeviceType.RS485),
         group: ZUnoDeviceGroup.RS,
-        busBars: [2, 3, 4, 5],
+        busBars: [2, 3, 4, 5, 6, 7],
       },
       {
         key: 'digital input',

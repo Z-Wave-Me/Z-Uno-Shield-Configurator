@@ -44,7 +44,7 @@ export class SwitchColor extends BaseDevice {
   }
 
   public override get channel(): string {
-    const channels = this.ids.filter(isColorDevices)
+    const channels = this.arrayConfig.map(item => item.device?.id).filter(isColorDevices)
       .map((id: ColorDevices) => this.flagMap[id])
       .join(' | ');
 
@@ -53,12 +53,6 @@ export class SwitchColor extends BaseDevice {
 
   public override get note(): string {
     return '- Make sure that output current do not exceed 5 A per channel or 15 A per all PWM1-4 pins';
-  }
-
-  public override get setup(): string {
-    return this.arrayConfig
-      .map(({ id }) => `  pinMode(${id}, OUTPUT);`)
-      .join('\n');
   }
 
   public override get vars(): string {
