@@ -65,7 +65,7 @@ export class SensorMultilevel extends BaseDevice {
     },
     [SensorMultilevelDevices.Humidity]: {
       precision: Precision.One,
-      size: Size.Byte,
+      size: Size.Word,
       sensorType: [
         'ZUNO_SENSOR_MULTILEVEL_TYPE_RELATIVE_HUMIDITY',
         'SENSOR_MULTILEVEL_SCALE_PERCENTAGE_VALUE',
