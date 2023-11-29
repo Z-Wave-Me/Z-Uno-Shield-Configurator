@@ -1,0 +1,132 @@
+{
+  "$schema": "schema.json",
+  "associations": [
+    {
+      "initName": "ZUNO_ASSOCIATION_GROUP_SET_VALUE",
+      "title": "BasicSet",
+      "actions": [
+        {
+          "name": "SetValue",
+          "function": "zunoSendToGroupSetValueCommand",
+          "parameters": [
+            {
+              "name": "groupNumber",
+              "type": "byte",
+              "userInput": false
+            },
+            {
+              "name": "value",
+              "type": "byte",
+              "userInput": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "initName": "ZUNO_ASSOCIATION_GROUP_SET_VALUE_AND_DIM",
+      "title": "SwitchMultilevelSet",
+      "actions": [
+        {
+          "name": "SetValue",
+          "function": "zunoSendToGroupSetValueCommand",
+          "parameters": [
+            {
+              "name": "groupNumber",
+              "type": "byte",
+              "userInput": false
+            },
+            {
+              "name": "value",
+              "type": "byte",
+              "userInput": true
+            }
+          ]
+        },
+        {
+          "name": "Dim",
+          "function": "zunoSendToGroupDimmingCommand",
+          "parameters": [
+            {
+              "name": "groupNumber",
+              "type": "byte",
+              "userInput": false
+            },
+            {
+              "name": "direction",
+              "type": "byte",
+              "userInput": true,
+              "valueMap": {
+                "0": "down",
+                "1": "up"
+              }
+            },
+            {
+              "name": "start",
+              "type": "byte",
+              "userInput": true,
+              "valueMap": {
+                "0": "stop",
+                "1": "start"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "initName": "ZUNO_ASSOCIATION_GROUP_SCENE_CONTROL",
+      "title": "SceneControl",
+      "actions": [
+        {
+          "name": "Activation",
+          "function": "zunoSendToGroupScene",
+          "parameters": [
+            {
+              "name": "groupNumber",
+              "type": "byte",
+              "userInput": false
+            },
+            {
+              "name": "sceneNumber",
+              "type": "byte",
+              "userInput": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "initName": "ZUNO_ASSOCIATION_GROUP_DOORLOCK",
+      "title": "DoorLockControl",
+      "actions": [
+        {
+          "name": "Activation",
+          "function": "zunoSendToGroupDoorlockControlTiming",
+          "parameters": [
+            {
+              "name": "groupNumber",
+              "type": "byte",
+              "userInput": false
+            },
+            {
+              "name": "action",
+              "type": "byte",
+              "userInput": true,
+              "valueMap": {
+                "0": "close",
+                "1": "open"
+              }
+            },
+            {
+              "name": "timed",
+              "type": "uint16_t",
+              "userInput": true,
+              "default": "0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

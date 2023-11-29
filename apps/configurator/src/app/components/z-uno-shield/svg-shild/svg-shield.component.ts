@@ -25,7 +25,7 @@ export class SvgShieldComponent {
       switchMap((pinId) =>
         this.pinsStateService.state$.pipe(
           map((items) => {
-            return items.find((item) => item.id === pinId);
+            return items.pins.find((item) => item.id === pinId);
           }),
         ),
       ),

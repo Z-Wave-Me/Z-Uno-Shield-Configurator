@@ -16,9 +16,10 @@ export class LocalStorageService {
     return undefined;
   }
 
-  public set(key: string | undefined, data: unknown): void {
+  public set(key: string | undefined, data: object): void {
     if (key) {
-      localStorage.setItem(key, compressToUTF16(JSON.stringify(data)));
+      const oldValue = this.get(key) ?? {};
+      localStorage.setItem(key, compressToUTF16(JSON.stringify({ ...oldValue, ...data })));
     }
   }
 

@@ -67,7 +67,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
     });
 
     this._options = { ...options, pin };
-    this.setDevice(this.pinsStateService.snapshot);
+    this.setDevice(this.pinsStateService.snapshot.pins);
   }
 
   public get options(): Pin {
@@ -91,8 +91,8 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
   ) {
     this.position$ = this.pinsStateService.state$.pipe(
       map((state) => ({
-        current: state.findIndex((pin) => pin.id === this.options.id),
-        total: state.length,
+        current: state.pins.findIndex((pin) => pin.id === this.options.id),
+        total: state.pins.length,
       })),
       takeUntil(this.destroyed$),
     );
@@ -102,7 +102,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
     this.pinsStateService.state$
       .pipe(takeUntil(this.destroyed$))
       .subscribe((state) => {
-        this.setDevice(state);
+        this.setDevice(state.pins);
       });
   }
 
@@ -130,7 +130,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
       {
         id: this.options.id,
         device: {
-          ...(this.pinsStateService.snapshot.find(
+          ...((this.pinsStateService.snapshot.pins).find(
             ({ id }) => id === this.options.id,
           )?.device ?? {}),
           remove: true,

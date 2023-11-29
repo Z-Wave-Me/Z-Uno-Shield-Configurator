@@ -1,0 +1,16 @@
+<mat-list>
+  <mat-list-item *ngFor="let item of data(); let i = index" class="list-item">
+    <div matListItemTitle>{{i + 2}}  {{item.title}}</div>
+    <button matListItemMeta mat-icon-button (click)="removeItem(i)">
+      <mat-icon class="delete-icon">delete</mat-icon>
+    </button>
+  </mat-list-item>
+</mat-list>
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>add</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item *ngFor="let item of list" (click)="addItem(item)">
+    {{item.title}}
+  </button>
+</mat-menu>

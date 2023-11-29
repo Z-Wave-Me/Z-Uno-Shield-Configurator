@@ -1,0 +1,16 @@
+//.list-item {
+//  position: relative;
+//}
+
+//.delete-icon {
+//  position: absolute;
+//  right: 10px;
+//  top: 50%;
+//  transform: translateY(-50%);
+//  opacity: 0;
+//  transition: opacity 0.3s;
+//  cursor: pointer;
+//}
+.list-item:hover .delete-icon {
+  opacity: 1;
+}

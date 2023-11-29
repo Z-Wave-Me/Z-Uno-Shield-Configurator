@@ -20,6 +20,6 @@ export class BusBarLayerComponent {
   constructor(
     private readonly pinsStateService: PinsStateService,
   ) {
-    this.selectedBuses$ =  this.pinsStateService.state$.pipe(map(config => [...config, ...this.defaultBars]));
+    this.selectedBuses$ =  this.pinsStateService.state$.pipe(map(config => [...config.pins, ...this.defaultBars]));
   }
 }

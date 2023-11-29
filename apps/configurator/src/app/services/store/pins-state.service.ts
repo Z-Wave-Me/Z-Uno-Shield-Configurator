@@ -12,16 +12,21 @@ import { LocalStorageService } from './local-storage.service';
 import { PinConfig } from '@configurator/shared';
 import { Pin } from '../../components/z-uno-shield/z-uno-shield.model';
 import { Location } from '@angular/common';
-import {
-  compressToUTF16,
-  decompressFromUTF16,
-} from 'lz-string';
+
+
+import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
+import { Store } from '@configurator/arduino-code-gen';
+import { Association } from '@configurator/arduino-code-gen';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class PinsStateService {
-  private readonly _state$ = new BehaviorSubject<PinConfig[]>([]);
+  private readonly _state$ = new BehaviorSubject<Store>({
+    pins: [],
+    associations: [],
+  });
 
   private currentKey = '';
 
@@ -40,7 +45,7 @@ export class PinsStateService {
       .subscribe((config) => {
         const key = this.router.url.split('?')[0].split('/')[1];
         this.currentKey = key;
-        const data = JSON.parse(decompressFromUTF16(decodeURIComponent(config)));
+        const data = JSON.parse(decompressFromEncodedURIComponent(decodeURIComponent(config)));
         this._state$.next(data);
         this.localStorageService.set(key, data);
       });
@@ -56,22 +61,23 @@ export class PinsStateService {
       )
       .subscribe((key) => {
         this.currentKey = key;
-        const config = this.localStorageService.get<PinConfig[]>(key) ?? [];
+        const config = { pins: [], associations: [], ...(this.localStorageService.get<Store>(key) ?? {}) };
         this._state$.next(config);
         this.updateRoute();
       });
   }
 
-  public get snapshot(): PinConfig[] {
+  public get snapshot(): Store {
     return this._state$.value;
   }
 
-  public get state$(): Observable<PinConfig[]> {
+  public get state$(): Observable<Store> {
     return this._state$.asObservable();
   }
 
   public patch(pin: PinConfig, possiblePins: Pin[]): void {
-    const value = this._state$.value;
+    const state = this._state$.value;
+    const value = state.pins;
 
     const groupType = pin.group;
     const groupPinIds = possiblePins
@@ -112,7 +118,7 @@ export class PinsStateService {
       }
     }
 
-    this._state$.next(updated);
+    this._state$.next({...state, pins: updated });
 
     console.group('Store');
     console.log(this.snapshot);
@@ -123,14 +129,22 @@ export class PinsStateService {
 
 
   public reset(): void {
-    this._state$.next([]);
-    this.localStorageService.set(this.currentKey, []);
+    this._state$.next({
+      pins: [],
+      associations: [],
+    });
+    this.localStorageService.set(this.currentKey, {
+      pins: [],
+      associations: [],
+    });
     this.router.navigate([]);
   }
 
   private updateRoute(): void {
     const config = this.snapshot;
-    const configBase64 = compressToUTF16(JSON.stringify(config, (key, value) => value === null || value === undefined ? undefined : value));
+    console.log(config);
+
+    const configBase64 = compressToEncodedURIComponent(JSON.stringify(config, (key, value) => value === null || value === undefined ? undefined : value));
     this.localStorageService.set(this.currentKey, config);
 
     const query = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {config: configBase64}}).toString();
@@ -143,12 +157,19 @@ export class PinsStateService {
   }
 
   public switchIndexes(data: { from: number; to: number }): void {
-    const value = this.snapshot;
+    const state =  this.snapshot;
+    const value = state.pins;
     const pin = value[data.from];
     value[data.from] = value[data.to];
     value[data.to] = pin;
 
-    this._state$.next(value);
+    this._state$.next({ ...state, pins: value });
+    this.updateRoute();
+  }
+
+  public updateAssociations(associations: Association[]): void {
+    const state =  this.snapshot;
+    this._state$.next({ ...state, associations });
     this.updateRoute();
   }
 }

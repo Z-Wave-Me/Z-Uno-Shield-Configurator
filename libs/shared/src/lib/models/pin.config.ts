@@ -28,3 +28,7 @@ export type PinConfig = {
   group?: string;
   busBars?: number[];
 };
+
+export type AssociationConfig =  {
+  id: string;
+}

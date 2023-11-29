@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "associations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "initName": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "function": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "userInput": {
+                        "type": "boolean"
+                      },
+                      "valueMap": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      },
+                      "default": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["name", "type", "userInput"]
+                  }
+                }
+              },
+              "required": ["name", "function", "parameters"]
+            }
+          }
+        },
+        "required": ["initName", "title", "actions"]
+      }
+    }
+  },
+  "required": ["associations"]
+}

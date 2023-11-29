@@ -40,7 +40,7 @@ export class FooterComponent {
 
   constructor(private readonly pinsStateService: PinsStateService) {
     this.code$ = this.pinsStateService.state$.pipe(
-      map(generate),
+      map(state => generate(state)),
       catchError(e => of(e.stack)),
     );
   }

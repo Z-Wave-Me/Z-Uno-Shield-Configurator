@@ -1,11 +1,13 @@
 import { Device } from './devices/device.interface';
+import { Association } from './association';
 
 export class Generator implements Device {
   public channels = 1;
 
   constructor(
     private readonly devices: Device[],
-  ) { }
+    private readonly associations: Association[],
+  ) {}
 
   public get includes(): string | undefined {
     return this.collect('includes');
@@ -35,9 +37,11 @@ ${channel}
   public get functions(): string {
     const functions = this.collect('functions');
 
-    return functions.length ? `// Functions    
+    return functions.length
+      ? `// Functions    
 ${functions}
-` : '';
+`
+      : '';
   }
 
   public get report(): string {
@@ -69,9 +73,11 @@ ${this.v10Mode}${this.pwm}${this.collect('setup')}
   }
 
   public get v10Mode(): string {
-    const enable = this.devices.some(device => 'v10Mode' in device && device['v10Mode']);
+    const enable = this.devices.some(
+      (device) => 'v10Mode' in device && device['v10Mode'],
+    );
 
-    return enable ? '  shield.init0_10V();\n': '';
+    return enable ? '  shield.init0_10V();\n' : '';
   }
 
   public get pwm(): string {
@@ -101,8 +107,6 @@ ${xetter}
       : '';
   }
 
-
-
   public loop(): string {
     return `void loop() {
 ${this.collect('loop', '\n\n')}
@@ -124,7 +128,7 @@ ${this.vars}
 ${this.channel}
 ${this.reportTop}
 ZUNOShield shield; // Shield object
-${this.setup}
+${this.associationsSetup}${this.setup}
 ${this.loop()}
 ${this.xetter}
 ${this.report}
@@ -152,6 +156,30 @@ ${this.functions}`;
       .join(sep);
   }
 
+  private get associationsSetup(): string {
+    const setup =  this.associations.map(item => `  ${item.initName}`).join(',\n');
+
+    const names = this.associations.map((item, index) => `
+    case ${index + 2}:
+      return "${item.title}"`).join(';');
+
+    if (setup) {
+      return `
+ZUNO_SETUP_ASSOCIATIONS(
+${setup}
+);
+
+const char* zunoAssociationGroupName(uint8_t groupIndex){
+  switch(groupIndex) {${names}
+  }
+  return "Unknown";
+}
+
+`;
+    }
+
+    return '';
+  }
   // public output() {
   //   return {
   //     code: this.code,

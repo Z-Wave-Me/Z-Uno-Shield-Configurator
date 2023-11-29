@@ -12,6 +12,8 @@ import { RS485 } from './devices/rs485';
 import { DeviceType, PinConfig } from '@configurator/shared';
 import { SensorMultilevel } from './devices/sensor-multilevel';
 import { SwitchMultilevelPwm } from './devices/switch-multilevel-pwm';
+import { Association } from './association';
+import { Store } from './store';
 
 const isSimple = <T>(value: T | T[]): value is T => !Array.isArray(value);
 const isArray = <T>(value: T | T[]): value is T[] => Array.isArray(value);
@@ -58,12 +60,13 @@ export function deviceFromConfig(config: PinConfig | PinConfig[]): Device {
 ${JSON.stringify(config, null, 2)}`);
 }
 
-export function generateCode(devices: Device[]): string {
-  return new Generator(devices).code();
+function generateCode(devices: Device[], associations: Association[]): string {
+  return new Generator(devices, associations).code();
 }
 
-export function generate(config: PinConfig[]): string {
-  const groupedConfig = config.reduce<Record<string,
+export function generate(store: Store): string {
+  const pinConfig = store.pins;
+  const groupedConfig = pinConfig.reduce<Record<string,
     {
       order: number;
       data: PinConfig[] | PinConfig;
@@ -94,5 +97,5 @@ export function generate(config: PinConfig[]): string {
     {order: b},
   ) => a - b)
 
-  return generateCode(sortedConfig.map(({data}) => deviceFromConfig(data)));
+  return generateCode(sortedConfig.map(({data}) => deviceFromConfig(data)), store.associations);
 }

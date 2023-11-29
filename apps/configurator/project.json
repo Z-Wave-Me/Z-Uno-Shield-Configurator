@@ -17,7 +17,8 @@
         "tsConfig": "apps/configurator/tsconfig.app.json",
         "assets": [
           "apps/configurator/src/favicon.ico",
-          "apps/configurator/src/assets"
+          "apps/configurator/src/assets",
+          "apps/configurator/src/config"
         ],
         "styles": ["apps/configurator/src/styles.scss"],
         "scripts": []
