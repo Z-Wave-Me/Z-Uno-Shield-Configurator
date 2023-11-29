@@ -142,8 +142,6 @@ export class PinsStateService {
 
   private updateRoute(): void {
     const config = this.snapshot;
-    console.log(config);
-
     const configBase64 = compressToEncodedURIComponent(JSON.stringify(config, (key, value) => value === null || value === undefined ? undefined : value));
     this.localStorageService.set(this.currentKey, config);
 
@@ -168,8 +166,11 @@ export class PinsStateService {
   }
 
   public updateAssociations(associations: Association[]): void {
-    const state =  this.snapshot;
-    this._state$.next({ ...state, associations });
-    this.updateRoute();
+    const state = this.snapshot;
+
+    if (!(state.associations.length === 0 && associations.length === 0)) {
+      this._state$.next({ ...state, associations });
+      this.updateRoute();
+    }
   }
 }

@@ -11,7 +11,7 @@ import { AssociationStateService } from '../../../services/store/association-sta
 })
 export class AssociationsComponent {
 
-  public list: Association[] = config.associations as unknown as Association[];
+  public list: Association[] = config.associations as Association[];
 
   public data: Signal<Association[]>;
   constructor(
