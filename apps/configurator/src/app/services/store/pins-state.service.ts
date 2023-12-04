@@ -9,14 +9,10 @@ import {
 } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
-import { PinConfig } from '@configurator/shared';
+import { Association, PinConfig, Store } from '@configurator/shared';
 import { Pin } from '../../components/z-uno-shield/z-uno-shield.model';
 import { Location } from '@angular/common';
-
-
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
-import { Store } from '@configurator/arduino-code-gen';
-import { Association } from '@configurator/arduino-code-gen';
 
 
 @Injectable({

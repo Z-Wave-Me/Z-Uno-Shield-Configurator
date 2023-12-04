@@ -1,7 +1,7 @@
 import { effect, Injectable, OnDestroy, Signal, signal } from '@angular/core';
 import { PinsStateService } from './pins-state.service';
-import { Association } from '@configurator/arduino-code-gen';
 import { Subject, takeUntil } from 'rxjs';
+import { Association } from '@configurator/shared';
 
 
 @Injectable({

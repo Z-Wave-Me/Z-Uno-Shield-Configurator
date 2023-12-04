@@ -1,5 +1,5 @@
 import { Device } from './devices/device.interface';
-import { Association } from './association';
+import { Association } from '@configurator/shared';
 
 export class Generator implements Device {
   public channels = 1;

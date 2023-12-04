@@ -6,6 +6,7 @@ import {
 } from '../../../services/store/pins-state.service';
 import { PinConfig } from '@configurator/shared';
 import { ColorDevices } from '@configurator/arduino-code-gen';
+import { ZUnoShieldPin } from '../z-uno-shield.model';
 
 @Component({
   selector: 'configurator-svg-shield',
@@ -35,4 +36,6 @@ export class SvgShieldComponent {
   public isColorDevice(deviceId: undefined | string | number): boolean {
     return !!this.colorDevices.find((id => id === deviceId));
   }
+
+  protected readonly ZUnoShieldPin = ZUnoShieldPin;
 }

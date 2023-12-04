@@ -12,7 +12,7 @@ import { SidenavService } from '../../services/nav-service/sidenav.service';
 export class LayoutComponent implements OnDestroy {
   private readonly destroy$ : Subject<void> = new Subject<void>();
 
-  @ViewChild('drawer', { static: true})
+  @ViewChild('drawer', { static: true })
   private readonly drawer!: MatSidenav;
 
   constructor(private readonly sidenavService: SidenavService) {

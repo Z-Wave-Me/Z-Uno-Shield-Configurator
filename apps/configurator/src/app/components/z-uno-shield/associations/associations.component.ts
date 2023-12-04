@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Signal } from '@angular/core';
 import config from '../../../../config/config.json';
-import { Association } from '@configurator/arduino-code-gen';
 import { AssociationStateService } from '../../../services/store/association-state.service';
+import { Association } from '@configurator/shared';
 
 @Component({
   selector: 'configurator-associations',

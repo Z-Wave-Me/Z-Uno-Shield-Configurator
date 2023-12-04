@@ -15,14 +15,16 @@
     <ng-container [ngSwitch]="pin.device?.id">
       <g *ngSwitchCase="'dimmer'" dimmer [pin]="pin"></g>
       <g *ngSwitchCase="'door'" door [pin]="pin"></g>
+      <g *ngSwitchCase="'general'" door [pin]="pin"></g>
       <g *ngSwitchCase="'motion'" motion-sensor [pin]="pin"></g>
       <g *ngSwitchCase="'switch'" switch [pin]="pin"></g>
       <g *ngSwitchCase="'0-10v'" dimmer0-10v [pin]="pin"></g>
     </ng-container>
     <ng-container [ngSwitch]="true">
-      <g *ngSwitchCase="pin.device?.id?.toString()?.includes('sensor')" ds18b20 [pin]="pin"></g>
+      <g *ngSwitchCase="pin.id === ZUnoShieldPin.ONE_WIRE &&  pin.device?.deviceType === 'ds18b20'" ds18b20 [pin]="pin"></g>
       <g *ngSwitchCase="pin.device?.id?.toString()?.startsWith('dht')" dht [pin]="pin"></g>
       <g *ngSwitchCase="isColorDevice(pin.device?.id)" rgbw [pin]="pin"></g>
+      <g *ngSwitchCase="pin.key?.startsWith('0V-')" analog-input [pin]="pin"></g>
     </ng-container>
   </ng-container>
 

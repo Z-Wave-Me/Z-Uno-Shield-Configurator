@@ -9,11 +9,9 @@ import { DHT } from './devices/dht';
 import { DS18B20 } from './devices/ds18-b20';
 import { UART } from './devices/uart';
 import { RS485 } from './devices/rs485';
-import { DeviceType, PinConfig } from '@configurator/shared';
+import { Association, DeviceType, PinConfig, Store } from '@configurator/shared';
 import { SensorMultilevel } from './devices/sensor-multilevel';
 import { SwitchMultilevelPwm } from './devices/switch-multilevel-pwm';
-import { Association } from './association';
-import { Store } from './store';
 
 const isSimple = <T>(value: T | T[]): value is T => !Array.isArray(value);
 const isArray = <T>(value: T | T[]): value is T[] => Array.isArray(value);

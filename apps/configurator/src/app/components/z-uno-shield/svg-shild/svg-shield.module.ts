@@ -15,6 +15,7 @@ import { Dimmer010vComponent } from './components/devices/dimmer0-10v/dimmer010v
 import { RGBWComponent } from './components/devices/rgbw/rgbw.component';
 import { BusBarComponent } from './components/busbars/busbar/bus-bar.component';
 import { BusBarLayerComponent } from './components/busbars/bus-bar-layer.component';
+import { AnalogInputComponent } from './components/devices/analog-input/analog-input.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { BusBarLayerComponent } from './components/busbars/bus-bar-layer.compone
     Ds18b20Component,
     Dimmer010vComponent,
     RGBWComponent,
+    AnalogInputComponent,
     BusBarComponent,
     BusBarLayerComponent,
   ],

@@ -1,5 +1,6 @@
 import { DeviceType } from './device.model';
 import { VoltageOffset } from '@configurator/arduino-code-gen';
+import { ZUnoShieldPin } from '../../../../../apps/configurator/src/app/components/z-uno-shield/z-uno-shield.model';
 
 export enum ConnectionMode {
   Normal = 'normal',

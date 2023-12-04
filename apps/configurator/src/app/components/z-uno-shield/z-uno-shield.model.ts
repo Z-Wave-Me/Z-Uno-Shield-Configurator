@@ -1,5 +1,5 @@
 import { PinConfiguratorInput } from '@configurator/shared';
-// ZUNO_PIN_V = 4
+
 export enum ZUnoShieldPin {
   PWM1 = 'PWM1',
   PWM2 = 'PWM2',
