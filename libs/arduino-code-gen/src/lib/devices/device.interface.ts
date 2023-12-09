@@ -10,5 +10,13 @@ export interface Device {
   get report(): string;
   get functions(): string;
   get pwm(): string;
+  variables(): string[];
+  notes(): Record<number, string>;
   channels: number;
+}
+
+export interface GeneratedData {
+  code?: string;
+  variables: string[];
+  notes : Record<number, string>;
 }

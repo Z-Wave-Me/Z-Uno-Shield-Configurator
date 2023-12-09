@@ -1,6 +1,7 @@
 import { Device } from './devices/device.interface';
 import { Association } from '@configurator/shared';
 
+
 export class Generator implements Device {
   public channels = 1;
 
@@ -113,6 +114,14 @@ ${this.collect('loop', '\n\n')}
 
   delay(20);
 }`;
+  }
+
+  public variables(): string[] {
+    return [];
+  }
+
+  public notes(): Record<number, string> {
+    return {};
   }
 
   public code(): string {

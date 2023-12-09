@@ -24,7 +24,7 @@ export class SvgShieldComponent {
   ) {
     this.selectedPin$ = this.pinSelectedService.selectObserver.pipe(
       switchMap((pinId) =>
-        this.pinsStateService.state$.pipe(
+        this.pinsStateService.boardConfig$.pipe(
           map((items) => {
             return items.pins.find((item) => item.id === pinId);
           }),

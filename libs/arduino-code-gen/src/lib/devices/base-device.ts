@@ -54,4 +54,12 @@ export class BaseDevice implements Device {
   public get pwm(): string {
     return '';
   }
+
+  public notes(): Record<number, string> {
+    return {};
+  }
+
+  public variables(): string[] {
+    return [];
+  }
 }

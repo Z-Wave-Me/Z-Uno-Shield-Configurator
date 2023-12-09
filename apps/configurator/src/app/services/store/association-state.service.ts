@@ -1,6 +1,6 @@
 import { effect, Injectable, OnDestroy, Signal, signal } from '@angular/core';
 import { PinsStateService } from './pins-state.service';
-import { Subject, takeUntil } from 'rxjs';
+import { filter, Subject, takeUntil } from 'rxjs';
 import { Association } from '@configurator/shared';
 
 
@@ -20,12 +20,11 @@ export class AssociationStateService implements OnDestroy {
       this.pinsStateService.updateAssociations(this.state());
     });
 
-    this.pinsStateService.state$.pipe(
+    this.pinsStateService.boardConfig$.pipe(
       takeUntil(this.destroy$),
+      filter(state => !state.associations.length),
     ).subscribe(state => {
-      if (!state.associations.length) {
-        this.state.set(state.associations);
-      }
+      this.state.set(state.associations);
     });
   }
 

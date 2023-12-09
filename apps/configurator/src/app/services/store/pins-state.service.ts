@@ -1,28 +1,31 @@
 import { Injectable } from '@angular/core';
 import {
-  BehaviorSubject,
+  BehaviorSubject, config,
   distinctUntilChanged,
   filter,
   first,
   map,
-  Observable,
+  Observable, ReplaySubject, Subject, takeUntil
 } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
-import { Association, PinConfig, Store } from '@configurator/shared';
+import { Association, PinConfig, BoardConfig } from '@configurator/shared';
 import { Pin } from '../../components/z-uno-shield/z-uno-shield.model';
 import { Location } from '@angular/common';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
+import { generate, GeneratedData } from '@configurator/arduino-code-gen';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class PinsStateService {
-  private readonly _state$ = new BehaviorSubject<Store>({
+  private readonly _boardConfig$ = new BehaviorSubject<BoardConfig>({
     pins: [],
     associations: [],
   });
+
+  private readonly codeGen$ = new ReplaySubject<GeneratedData>(1);
 
   private currentKey = '';
 
@@ -32,47 +35,26 @@ export class PinsStateService {
     private readonly localStorageService: LocalStorageService,
     private readonly location: Location,
   ) {
-    this.activatedRoute.queryParams
-      .pipe(
-        first(),
-        map((data) => data['config']),
-        filter(Boolean),
-      )
-      .subscribe((config) => {
-        const key = this.router.url.split('?')[0].split('/')[1];
-        this.currentKey = key;
-        const data = JSON.parse(decompressFromEncodedURIComponent(decodeURIComponent(config)));
-        this._state$.next(data);
-        this.localStorageService.set(key, data);
-      });
-
-    router.events
-      .pipe(
-        filter(
-          (event): event is NavigationEnd => event instanceof NavigationEnd,
-        ),
-        map(({ url }) => url.split('?')[0].split('/')[1]),
-        filter(Boolean),
-        distinctUntilChanged(),
-      )
-      .subscribe((key) => {
-        this.currentKey = key;
-        const config = { pins: [], associations: [], ...(this.localStorageService.get<Store>(key) ?? {}) };
-        this._state$.next(config);
-        this.updateRoute();
-      });
+    this.init();
   }
 
-  public get snapshot(): Store {
-    return this._state$.value;
+  public code(): Observable<string|undefined> {
+    return this.codeGen$.asObservable().pipe(
+      map(data => data.code),
+    )
   }
 
-  public get state$(): Observable<Store> {
-    return this._state$.asObservable();
+
+  public get snapshot(): BoardConfig {
+    return this._boardConfig$.value;
+  }
+
+  public get boardConfig$(): Observable<BoardConfig> {
+    return this._boardConfig$.asObservable();
   }
 
   public patch(pin: PinConfig, possiblePins: Pin[]): void {
-    const state = this._state$.value;
+    const state = this._boardConfig$.value;
     const value = state.pins;
 
     const groupType = pin.group;
@@ -114,7 +96,7 @@ export class PinsStateService {
       }
     }
 
-    this._state$.next({...state, pins: updated });
+    this._boardConfig$.next({...state, pins: updated });
 
     console.group('Store');
     console.log(this.snapshot);
@@ -125,7 +107,7 @@ export class PinsStateService {
 
 
   public reset(): void {
-    this._state$.next({
+    this._boardConfig$.next({
       pins: [],
       associations: [],
     });
@@ -157,7 +139,7 @@ export class PinsStateService {
     value[data.from] = value[data.to];
     value[data.to] = pin;
 
-    this._state$.next({ ...state, pins: value });
+    this._boardConfig$.next({ ...state, pins: value });
     this.updateRoute();
   }
 
@@ -165,8 +147,45 @@ export class PinsStateService {
     const state = this.snapshot;
 
     if (!(state.associations.length === 0 && associations.length === 0)) {
-      this._state$.next({ ...state, associations });
+      this._boardConfig$.next({ ...state, associations });
       this.updateRoute();
     }
+  }
+
+  private init(): void {
+    this.activatedRoute.queryParams
+      .pipe(
+        first(),
+        map((data) => data['config']),
+        filter(Boolean),
+      )
+      .subscribe((config) => {
+        const key = this.router.url.split('?')[0].split('/')[1];
+        this.currentKey = key;
+        const data = JSON.parse(decompressFromEncodedURIComponent(decodeURIComponent(config)));
+        this._boardConfig$.next(data);
+        this.localStorageService.set(key, data);
+      });
+
+    this.router.events
+      .pipe(
+        filter(
+          (event): event is NavigationEnd => event instanceof NavigationEnd,
+        ),
+        map(({ url }) => url.split('?')[0].split('/')[1]),
+        filter(Boolean),
+        distinctUntilChanged(),
+      )
+      .subscribe((key) => {
+        this.currentKey = key;
+        const config = { pins: [], associations: [], ...(this.localStorageService.get<BoardConfig>(key) ?? {}) };
+        this._boardConfig$.next(config);
+        this.updateRoute();
+      });
+
+    this.boardConfig$.subscribe(config => {
+      const generated = generate(config);
+      this.codeGen$.next(generated);
+    })
   }
 }

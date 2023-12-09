@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-accordion *ngIf="{code: code$ | async} as data">
+  <mat-accordion *ngIf="{code: code$ | async } as data">
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">
       <mat-expansion-panel-header>

@@ -1,5 +1,5 @@
 import { SwitchBinary } from './devices/switch-binary';
-import { Device } from './devices/device.interface';
+import { Device, GeneratedData } from './devices/device.interface';
 import { Thermostat } from './devices/thermostat';
 import { SwitchMultilevel10V } from './devices/switch-multilevel10-v';
 import { SwitchColor } from './devices/switch-color';
@@ -9,7 +9,7 @@ import { DHT } from './devices/dht';
 import { DS18B20 } from './devices/ds18-b20';
 import { UART } from './devices/uart';
 import { RS485 } from './devices/rs485';
-import { Association, DeviceType, PinConfig, Store } from '@configurator/shared';
+import { Association, DeviceType, PinConfig, BoardConfig } from '@configurator/shared';
 import { SensorMultilevel } from './devices/sensor-multilevel';
 import { SwitchMultilevelPwm } from './devices/switch-multilevel-pwm';
 
@@ -58,11 +58,17 @@ export function deviceFromConfig(config: PinConfig | PinConfig[]): Device {
 ${JSON.stringify(config, null, 2)}`);
 }
 
-function generateCode(devices: Device[], associations: Association[]): string {
-  return new Generator(devices, associations).code();
+function generateCode(devices: Device[], associations: Association[]): GeneratedData {
+  const generator = new Generator(devices, associations);
+
+  return {
+    code: generator.code(),
+    variables: generator.variables(),
+    notes: generator.notes(),
+  }
 }
 
-export function generate(store: Store): string {
+export function generate(store: BoardConfig): GeneratedData {
   const pinConfig = store.pins;
   const groupedConfig = pinConfig.reduce<Record<string,
     {

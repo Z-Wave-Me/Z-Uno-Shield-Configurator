@@ -89,7 +89,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
     private readonly pinsStateService: PinsStateService,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) {
-    this.position$ = this.pinsStateService.state$.pipe(
+    this.position$ = this.pinsStateService.boardConfig$.pipe(
       map((state) => ({
         current: state.pins.findIndex((pin) => pin.id === this.options.id),
         total: state.pins.length,
@@ -99,7 +99,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.pinsStateService.state$
+    this.pinsStateService.boardConfig$
       .pipe(takeUntil(this.destroyed$))
       .subscribe((state) => {
         this.setDevice(state.pins);
