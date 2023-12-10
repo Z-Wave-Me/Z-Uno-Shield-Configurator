@@ -9,7 +9,7 @@ import {
 } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
-import { Association, PinConfig, BoardConfig } from '@configurator/shared';
+import { Association, PinConfig, BoardConfig, Rule } from '@configurator/shared';
 import { Pin } from '../../components/z-uno-shield/z-uno-shield.model';
 import { Location } from '@angular/common';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
@@ -23,10 +23,16 @@ export class PinsStateService {
   private readonly _boardConfig$ = new BehaviorSubject<BoardConfig>({
     pins: [],
     associations: [],
+    rules: [],
   });
 
   private readonly codeGen$ = new ReplaySubject<GeneratedData>(1);
 
+  private readonly initialState: BoardConfig = {
+    pins: [],
+    associations: [],
+    rules: [],
+  }
   private currentKey = '';
 
   constructor(
@@ -53,7 +59,20 @@ export class PinsStateService {
     return this._boardConfig$.asObservable();
   }
 
-  public patch(pin: PinConfig, possiblePins: Pin[]): void {
+  public rules(): Observable<Rule[]> {
+    return this._boardConfig$.pipe(map(state => state.rules));
+  }
+
+  public patchRules(rule: Rule): void {
+
+  }
+
+  public removeRule(id: string): void {
+    const { rules, ...other } = this.snapshot;
+    this._boardConfig$.next({...other, rules: rules.filter(rule => rule.id !== id)});
+  }
+
+  public patchDeviceConfig(pin: PinConfig, possiblePins: Pin[]): void {
     const state = this._boardConfig$.value;
     const value = state.pins;
 
@@ -107,10 +126,7 @@ export class PinsStateService {
 
 
   public reset(): void {
-    this._boardConfig$.next({
-      pins: [],
-      associations: [],
-    });
+    this._boardConfig$.next(this.initialState);
     this.localStorageService.set(this.currentKey, {
       pins: [],
       associations: [],
@@ -178,7 +194,7 @@ export class PinsStateService {
       )
       .subscribe((key) => {
         this.currentKey = key;
-        const config = { pins: [], associations: [], ...(this.localStorageService.get<BoardConfig>(key) ?? {}) };
+        const config = { ...this.initialState, ...(this.localStorageService.get<BoardConfig>(key) ?? {}) };
         this._boardConfig$.next(config);
         this.updateRoute();
       });

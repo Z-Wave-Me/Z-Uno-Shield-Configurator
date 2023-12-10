@@ -17,6 +17,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { InstructionsComponent } from './instructions/instructions.component';
 import { CompileComponent } from './compile/compile.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ExpressionComponent } from './rules/expression/expression.component';
+import { ActionComponent } from './rules/action/action.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,8 @@ import { CompileComponent } from './compile/compile.component';
     RulesComponent,
     InstructionsComponent,
     CompileComponent,
+    ExpressionComponent,
+    ActionComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +46,9 @@ import { CompileComponent } from './compile/compile.component';
     MatMenuModule,
     MatIconModule,
     MatListModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatInputModule,
   ],
 })
 export class ZUnoShieldModule {}

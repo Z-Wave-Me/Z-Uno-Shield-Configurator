@@ -1,37 +1,41 @@
 <p>rules works!</p>
 
 если на вкладке есть неразрешенные конфлиты рисовать алерт напротив переменной и на вкладке
-<div class="option">
-<mat-select>
-  <mat-option>
-    association
-  </mat-option>
-</mat-select>
+<div [formGroup]="form">
+  <ng-container formArrayName="rules">
+    <ng-container *ngFor="let ruleForm of form.controls.rules.controls; let ruleIndex = index">
+      <div [formGroup]="ruleForm">
+        <div>
+          <configurator-expression [formControl]="ruleForm.controls.expression"></configurator-expression>
+        </div>
+        <div>
+          ----------------------------------IF-----------------------------------------------------------------
+        </div>
+        <div>
+          <ng-container *ngFor="let action of ruleForm.controls.actions.controls; let actionIndex = index">
+            action {{actionIndex}} {{action.value | json}}
+            <configurator-action [formControl]="action"></configurator-action>
+            <button mat-raised-button (click)="removeAction(ruleForm.controls.actions, actionIndex)">RemoveAction</button>
+          </ng-container>
+          <button mat-raised-button (click)="addAction(ruleForm.controls.actions)">AddAction</button>
+        </div>
+        <div>
 
-<mat-select>
-  <mat-option>
-    >=
-  </mat-option>
-  <mat-option>
-    >
-  </mat-option>
-  <mat-option>
-    =
-  </mat-option>
-  <mat-option>
-    <=
-  </mat-option>
-  <mat-option>
-    <
-  </mat-option>
-  <mat-option>
-    changedBy
-  </mat-option>
-</mat-select>
+          -----------------------------------ELSE------------------------------------------------
+        </div>
+        <div>
+          <ng-container *ngFor="let action of ruleForm.controls.else.controls; let elseIndex = index">
+            else action {{elseIndex}}  {{action.value | json}}
+            <configurator-action [formControl]="action"></configurator-action>
+            <button mat-raised-button (click)="removeAction(ruleForm.controls.else, elseIndex)">RemoveAction</button>
+          </ng-container>
+          <button mat-raised-button (click)="addAction(ruleForm.controls.else)">AddAction</button>
+        </div>
 
-<mat-select>
-  <mat-option>
-    association
-  </mat-option>
-</mat-select>
+        <button mat-raised-button (click)="removeRule(ruleIndex)">RemoveRule</button>
+      </div>
+    </ng-container>
+    <button mat-raised-button (click)="addRule()">AddRule</button>
+  </ng-container>
 </div>
+

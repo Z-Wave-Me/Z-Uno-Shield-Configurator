@@ -1,0 +1,36 @@
+<form [formGroup]="expressionForm" *ngIf="{ variables: variableList$| async } as data">
+  <mat-form-field >
+    <mat-label>Left side</mat-label>
+    <input type="text"
+           placeholder="pin"
+           aria-label="Number"
+           matInput
+           formControlName="left"
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option [value]="variable" *ngFor="let variable of data.variables">{{variable}}</mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field >
+  <mat-label>Operator</mat-label>
+    <mat-select
+      formControlName="operand"
+    >
+      <mat-option [value]="operand.value" *ngFor="let operand of operandList">{{operand.value}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field >
+    <mat-label>Left side</mat-label>
+    <input type="text"
+           placeholder="pin"
+           aria-label="Number"
+           matInput
+           formControlName="right"
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option [value]="variable" *ngFor="let variable of data.variables">{{variable}}</mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

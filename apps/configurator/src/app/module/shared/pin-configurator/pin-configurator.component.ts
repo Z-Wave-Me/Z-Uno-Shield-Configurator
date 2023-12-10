@@ -112,7 +112,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
   }
 
   public changePin(config: Partial<DeviceConfig>): void {
-    this.pinsStateService.patch(
+    this.pinsStateService.patchDeviceConfig(
       {
         id: this.options.id,
         key: this.selected?.key,
@@ -126,7 +126,7 @@ export class PinConfiguratorComponent implements OnInit, OnDestroy {
   }
 
   public remove(): void {
-    this.pinsStateService.patch(
+    this.pinsStateService.patchDeviceConfig(
       {
         id: this.options.id,
         device: {

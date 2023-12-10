@@ -1,7 +1,7 @@
 import { effect, Injectable, OnDestroy, Signal, signal } from '@angular/core';
 import { PinsStateService } from './pins-state.service';
-import { distinctUntilChanged, filter, map, Subject, switchMap, takeUntil } from 'rxjs';
-import { Association, BoardConfig } from '@configurator/shared';
+import { distinctUntilChanged, filter, map, Subject } from 'rxjs';
+import { Association } from '@configurator/shared';
 import { NavigationEnd, Router } from '@angular/router';
 
 
@@ -16,9 +16,8 @@ export class AssociationStateService implements OnDestroy {
     private readonly pinsStateService: PinsStateService,
     private readonly router: Router,
   ) {
-    effect(() => {
-      this.pinsStateService.updateAssociations(this.state());
-    });
+
+    this.state.set(this.pinsStateService.snapshot.associations);
 
     this.router.events
       .pipe(
@@ -28,22 +27,16 @@ export class AssociationStateService implements OnDestroy {
         map(({ url }) => url.split('?')[0].split('/')[1]),
         filter(Boolean),
         distinctUntilChanged(),
-        switchMap(() => this.pinsStateService.boardConfig$),
+        map(() => this.pinsStateService.snapshot),
       )
       .subscribe(({ associations  }) => {
         this.state.set(associations);
       });
 
-    console.log(this.pinsStateService.snapshot.associations);
-    // this.state.set(this.pinsStateService.snapshot.associations);
 
-
-    // this.pinsStateService.boardConfig$.pipe(
-    //   takeUntil(this.destroy$),
-    //   filter(state => !state.associations.length),
-    // ).subscribe(state => {
-    //   this.state.set(state.associations);
-    // });
+    effect(() => {
+      this.pinsStateService.updateAssociations(this.state());
+    });
   }
 
   public ngOnDestroy(): void {

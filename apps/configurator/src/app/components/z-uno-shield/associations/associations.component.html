@@ -1,6 +1,9 @@
 <mat-list>
+  <mat-list-item class="list-item">
+    <div matListItemTitle>1. <span i18n>Lifeline</span>  </div>
+  </mat-list-item>
   <mat-list-item *ngFor="let item of data(); let i = index" class="list-item">
-    <div matListItemTitle>{{i + 2}}  {{item.title}}</div>
+    <div matListItemTitle>{{i + 2}}.  {{item.title}}</div>
     <button matListItemMeta mat-icon-button (click)="removeItem(i)">
       <mat-icon class="delete-icon">delete</mat-icon>
     </button>
