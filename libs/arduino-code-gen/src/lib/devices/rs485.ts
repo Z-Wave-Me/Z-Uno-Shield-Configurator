@@ -2,7 +2,7 @@ import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
 
 
-export class RS485 extends BaseDevice{
+export class RS485 extends BaseDevice {
   public override channels = 0;
 
   constructor(protected readonly arrayConfig: PinConfig[]) {

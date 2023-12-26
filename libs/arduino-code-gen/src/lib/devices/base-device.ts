@@ -1,4 +1,4 @@
-import { Device } from './device.interface';
+import { Device, DeviceVariables } from './device.interface';
 import { PinConfig } from '@configurator/shared';
 
 export class BaseDevice implements Device {
@@ -59,7 +59,7 @@ export class BaseDevice implements Device {
     return {};
   }
 
-  public variables(): string[] {
+  public get variables(): DeviceVariables[] {
     return [];
   }
 }

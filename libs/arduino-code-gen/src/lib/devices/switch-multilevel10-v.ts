@@ -1,5 +1,6 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
+import { DeviceVariables } from './device.interface';
 
 
 export class SwitchMultilevel10V extends BaseDevice {
@@ -25,5 +26,12 @@ export class SwitchMultilevel10V extends BaseDevice {
     _pin${this.config.id}SwitchMultilevelState = pin${this.config.id}SwitchMultilevelState;
     shield.write0_10V(${channel}, pin${this.config.id}SwitchMultilevelState);
   }`;
+  }
+
+  public override get variables(): DeviceVariables[] {
+    return [{
+      code: `pin${this.config.id}SwitchMultilevelState`,
+      name: `Switch Multilevel ${this.config.id}`,
+    }];
   }
 }

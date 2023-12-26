@@ -1,6 +1,7 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
 import { Grounding } from '../device.model';
+import { DeviceVariables } from './device.interface';
 
 
 export class SensorBinary extends BaseDevice {
@@ -61,8 +62,14 @@ export class SensorBinary extends BaseDevice {
   }
 
   private get isPullUp(): boolean {
-    return  this.config.device?.additionally === Grounding.Free;
+    return this.config.device?.additionally === Grounding.Free;
   }
 
+  public override get variables(): DeviceVariables[] {
+    return [{
+      code: `pin${this.config.id}DHTHumidityState`,
+      name: `DHT Humidity ${this.config.id}`,
+    }];
+  }
 }
 

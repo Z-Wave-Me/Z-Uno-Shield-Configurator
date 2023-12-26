@@ -1,5 +1,6 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
+import { DeviceVariables } from './device.interface';
 
 
 export class Thermostat extends BaseDevice {
@@ -84,8 +85,25 @@ signed int pin${this.config.id}ThermostatTemperatureGetter(byte mode) {
   }
 
   private getMode(invert = true): string {
-    const condition = (this.config.device?.type === 'normal') === (this.config.device?.id === 'heatingThermostat');
+    const condition
+      = (this.config.device?.type === 'normal')
+      === (this.config.device?.id === 'heatingThermostat');
 
     return invert === condition ? 'HIGH' : 'LOW';
+  }
+  
+  public override get variables(): DeviceVariables[] {
+    return [{
+      code: `pin${this.config.id}ThermostatModeState`,
+      name: `Thermostat Mode #${this.config.id}`,
+    },
+      {
+        code: `pin${this.config.id}ThermostatTemperatureState`,
+        name: `Thermostat Temperature #${this.config.id}`,
+      },
+      {
+        code: `pin${this.config.id}ThermostatTemperatureCurrent`,
+        name: `Thermostat Temperature Current #${this.config.id}`,
+      }];
   }
 }

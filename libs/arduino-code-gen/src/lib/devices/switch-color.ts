@@ -1,6 +1,7 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
 import { ColorDevices } from '../device.model';
+import { DeviceVariables } from './device.interface';
 
 enum ColorFlag {
   White = 'SWITCH_COLOR_FLAGS_WARM_WHITE',
@@ -44,7 +45,9 @@ export class SwitchColor extends BaseDevice {
   }
 
   public override get channel(): string {
-    const channels = this.arrayConfig.map(item => item.device?.id).filter(isColorDevices)
+    const channels = this.arrayConfig
+      .map((item) => item.device?.id)
+      .filter(isColorDevices)
       .map((id: ColorDevices) => this.flagMap[id])
       .join(' | ');
 
@@ -62,23 +65,30 @@ export class SwitchColor extends BaseDevice {
   }
 
   public override get xetter(): string {
-    const list = this.arrayConfig
-      .map(({ id, device }) => ({
-        pinId: id,
-        deviceId: device?.id,
-      }));
+    const list = this.arrayConfig.map(({ id, device }) => ({
+      pinId: id,
+      deviceId: device?.id,
+    }));
 
     const modeList = list.map(({ pinId, deviceId }) => ({
       pinId,
       deviceMode: this.modeMap[deviceId as ColorDevices],
     }));
 
-    const setters = modeList.map(({pinId, deviceMode}) => `    case ${deviceMode}:
+    const setters = modeList
+      .map(
+        ({ pinId, deviceMode }) => `    case ${deviceMode}:
       pin${pinId}SwitchMultilevelState = value;
-      break;`).join('\n');
+      break;`
+      )
+      .join('\n');
 
-    const getters = modeList.map(({pinId, deviceMode}) =>`    case ${deviceMode}:
-      return pin${pinId}SwitchMultilevelState;`).join('\n');
+    const getters = modeList
+      .map(
+        ({ pinId, deviceMode }) => `    case ${deviceMode}:
+      return pin${pinId}SwitchMultilevelState;`
+      )
+      .join('\n');
 
     return `void pinsSwitchColorSetter(byte color, byte value) {
   switch(color){
@@ -95,15 +105,26 @@ ${getters}
   }
 
   public override loop(): string {
-    return this.arrayConfig.map(({ id }) => `  // PWM SwitchColor@pin${id}process code
-  shield.writePWMPercentage(PWM_CHANNEL(${id}), pin${id}SwitchMultilevelState);`).join('\n')
+    return this.arrayConfig
+      .map(
+        ({ id }) => `  // PWM SwitchColor@pin${id}process code
+  shield.writePWMPercentage(PWM_CHANNEL(${id}), pin${id}SwitchMultilevelState);`)
+      .join('\n');
   }
 
   public override get pwm(): string {
-    return this.ids.map( id =>`PWM_CHANNEL_MASK(${id})`).join(' | ');
+    return this.ids.map((id) => `PWM_CHANNEL_MASK(${id})`).join(' | ');
   }
 
   private get ids(): string[] {
-    return this.arrayConfig.map(({ id}) => id).filter(isString);
+    return this.arrayConfig.map(({ id }) => id).filter(isString);
+  }
+
+  public override get variables(): DeviceVariables[] {
+    return this.ids
+      .map((id) => ({
+        name: `Switch Multilevel #${id}`,
+        code: `pin${id}SwitchMultilevelState`,
+      }));
   }
 }

@@ -33,7 +33,9 @@ export class ActionComponent implements OnInit, OnDestroy {
 
   public onTouched = (): void => void 0;
 
-  constructor() {
+  constructor(
+    // private readonly
+  ) {
     this.variableList$ = of(['pwn1', 'pwm2', 'accociation2', 'asoc2']);
   }
 

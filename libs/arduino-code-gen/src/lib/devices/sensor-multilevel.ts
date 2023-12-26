@@ -1,6 +1,7 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
 import { SensorMultilevelDevices, VoltageOffset } from '../device.model';
+import { DeviceVariables } from './device.interface';
 
 
 enum Precision {
@@ -116,36 +117,52 @@ export class SensorMultilevel extends BaseDevice {
     super(config);
 
     if (config.device?.id) {
-      this.switchMultilevelConfig = this.propertyMap[config.device.id as SensorMultilevelDevices];
+      this.switchMultilevelConfig =
+        this.propertyMap[config.device.id as SensorMultilevelDevices];
     } else {
-      throw new Error('Unknown SensorMultilevelDevices type')
+      throw new Error('Unknown SensorMultilevelDevices type');
     }
   }
 
   public override get note(): string {
-    return '- Reports are sent every 30 seconds'
+    return '- Reports are sent every 30 seconds';
   }
   public override get channel(): string {
-    const channels = [...this.switchMultilevelConfig.sensorType, this.switchMultilevelConfig.precision, this.switchMultilevelConfig.size].join(', ');
+    const channels = [
+      ...this.switchMultilevelConfig.sensorType,
+      this.switchMultilevelConfig.precision,
+      this.switchMultilevelConfig.size,
+    ].join(', ');
 
     return `  ZUNO_SENSOR_MULTILEVEL(${channels}, pin${this.config.id}SensorMultilevelState)`;
   }
 
   public override loop(channel: number): string {
     // Number of Enum 0, 1, 2
-    const precision = Object.values(Precision).indexOf(this.switchMultilevelConfig.precision);
+    const precision = Object.values(Precision).indexOf(
+      this.switchMultilevelConfig.precision
+    );
 
-
-    const lowerBound = (this.config.device?.lowerBound ?? 0) * Math.pow(10, precision);
-    const upperBound = (this.config.device?.upperBound ?? 0) * Math.pow(10, precision);
+    const lowerBound =
+      (this.config.device?.lowerBound ?? 0) * Math.pow(10, precision);
+    const upperBound =
+      (this.config.device?.upperBound ?? 0) * Math.pow(10, precision);
 
     const offset = this.config.offset ?? 0;
-    const base = (upperBound - lowerBound)/ offset;
+    const base = (upperBound - lowerBound) / offset;
 
     return `  // ADC SensorMultilevel@pin${this.config.id} process code
-  pin${this.config.id}SensorMultilevelState = (${sizeToType(this.switchMultilevelConfig.size)}) round(${base.toFixed(5)} * shield.readADCVoltage(${this.config.id}) + ${lowerBound.toFixed(5)});
-  if(pin${this.config.id}SensorMultilevelState != _pin${this.config.id}SensorMultilevelState){
-    _pin${this.config.id}SensorMultilevelState = pin${this.config.id}SensorMultilevelState;
+  pin${this.config.id}SensorMultilevelState = (${sizeToType(
+      this.switchMultilevelConfig.size
+    )}) round(${base.toFixed(5)} * shield.readADCVoltage(${
+      this.config.id
+    }) + ${lowerBound.toFixed(5)});
+  if(pin${this.config.id}SensorMultilevelState != _pin${
+      this.config.id
+    }SensorMultilevelState){
+    _pin${this.config.id}SensorMultilevelState = pin${
+      this.config.id
+    }SensorMultilevelState;
     zunoSendReport(${channel}); // report if value has changed
   }`;
   }
@@ -155,10 +172,19 @@ export class SensorMultilevel extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `${sizeToType(this.switchMultilevelConfig.size)} pin${this.config.id}SensorMultilevelState=0, _pin${this.config.id}SensorMultilevelState=1;`;
+    return `${sizeToType(this.switchMultilevelConfig.size)} pin${
+      this.config.id
+    }SensorMultilevelState=0, _pin${this.config.id}SensorMultilevelState=1;`;
   }
 
   private get jumper(): string {
     return this.jumperMap[this.config.offset ?? VoltageOffset.Unset];
+  }
+
+  public override get variables(): DeviceVariables[] {
+    return [{
+      name: `Sensor Multilevel ${this.config.id}`,
+      code: `pin${this.config.id}SensorMultilevelState`,
+    }];
   }
 }

@@ -1,4 +1,4 @@
-import { Device } from './devices/device.interface';
+import { Device, DeviceVariables } from './devices/device.interface';
 import { Association } from '@configurator/shared';
 
 
@@ -116,8 +116,8 @@ ${this.collect('loop', '\n\n')}
 }`;
   }
 
-  public variables(): string[] {
-    return [];
+  public get variables(): DeviceVariables[] {
+    return this.devices.map(d => d.variables).flat();
   }
 
   public notes(): Record<number, string> {

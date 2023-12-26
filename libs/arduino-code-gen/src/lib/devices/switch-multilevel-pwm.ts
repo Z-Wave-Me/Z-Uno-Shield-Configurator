@@ -1,5 +1,6 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
+import { DeviceVariables } from './device.interface';
 
 
 export class SwitchMultilevelPwm extends BaseDevice {
@@ -22,5 +23,12 @@ export class SwitchMultilevelPwm extends BaseDevice {
 
   public override get pwm(): string {
     return `PWM_CHANNEL_MASK(${this.config.id})`;
+  }
+
+  public override get variables(): DeviceVariables[] {
+    return [{
+      code: `pin${this.config.id}SwitchMultilevelState`,
+      name: `Switch Multilevel #${this.config.id}`,
+    }];
   }
 }

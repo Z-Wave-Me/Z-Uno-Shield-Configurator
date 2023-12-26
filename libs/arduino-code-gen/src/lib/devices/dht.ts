@@ -1,5 +1,6 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
+import { DeviceVariables } from './device.interface';
 
 export class DHT extends BaseDevice {
   public override channels = 2;
@@ -60,5 +61,15 @@ export class DHT extends BaseDevice {
     
 int pin${this.config.id}DHTTemperatureState;
 word pin${this.config.id}DHTHumidityState;`;
+  }
+
+  public override get variables(): DeviceVariables[] {
+    return [{
+      name: `DHT Temperature #${this.config.id}`,
+      code: `pin${this.config.id}DHTTemperatureState`,
+    }, {
+      name: `DHT Humidity ${this.config.id}`,
+      code: `pin${this.config.id}DHTHumidityState`,
+    }];
   }
 }

@@ -63,7 +63,7 @@ function generateCode(devices: Device[], associations: Association[]): Generated
 
   return {
     code: generator.code(),
-    variables: generator.variables(),
+    variables: generator.variables,
     notes: generator.notes(),
   }
 }

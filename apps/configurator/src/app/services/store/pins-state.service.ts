@@ -201,6 +201,7 @@ export class PinsStateService {
 
     this.boardConfig$.subscribe(config => {
       const generated = generate(config);
+      console.log(generated);
       this.codeGen$.next(generated);
     })
   }

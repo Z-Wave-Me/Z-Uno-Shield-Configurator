@@ -1,5 +1,6 @@
 import { PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
+import { DeviceVariables } from './device.interface';
 
 
 export class SwitchBinary extends BaseDevice {
@@ -29,7 +30,7 @@ export class SwitchBinary extends BaseDevice {
   public override get name(): string | undefined {
     const key = this.config.device?.id;
 
-    if(key) {
+    if (key) {
       return SwitchBinary.nameMap[key];
     }
 
@@ -41,9 +42,8 @@ export class SwitchBinary extends BaseDevice {
   }
 
   public override loop(): string {
-    const condition = this.config.device?.type === 'normal'
-        ? 'HIGH : LOW'
-        : 'LOW : HIGH';
+    const condition =
+      this.config.device?.type === 'normal' ? 'HIGH : LOW' : 'LOW : HIGH';
 
     return `  // GPIOSwitchBinary@pin${this.config.id} process code
   digitalWrite(${this.config.id}, pin${this.config.id}SwitchBinaryState ? ${condition});`;
@@ -55,5 +55,12 @@ export class SwitchBinary extends BaseDevice {
 
   public override get vars(): string {
     return `byte pin${this.config.id}SwitchBinaryState = 0;`;
+  }
+
+  public override get variables(): DeviceVariables[] {
+    return [{
+      code: `pin${this.config.id}SwitchBinaryState`,
+      name: `Switch Binary ${this.config.id}`,
+    }];
   }
 }
