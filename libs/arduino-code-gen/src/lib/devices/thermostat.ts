@@ -95,15 +95,15 @@ signed int pin${this.config.id}ThermostatTemperatureGetter(byte mode) {
   public override get variables(): DeviceVariables[] {
     return [{
       code: `pin${this.config.id}ThermostatModeState`,
-      name: `Thermostat Mode #${this.config.id}`,
+      title: `Thermostat Mode #${this.config.id}`,
     },
       {
         code: `pin${this.config.id}ThermostatTemperatureState`,
-        name: `Thermostat Temperature #${this.config.id}`,
+        title: `Thermostat Temperature #${this.config.id}`,
       },
       {
         code: `pin${this.config.id}ThermostatTemperatureCurrent`,
-        name: `Thermostat Temperature Current #${this.config.id}`,
+        title: `Thermostat Temperature Current #${this.config.id}`,
       }];
   }
 }

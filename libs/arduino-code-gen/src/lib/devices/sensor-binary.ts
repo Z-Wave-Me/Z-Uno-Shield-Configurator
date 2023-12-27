@@ -68,7 +68,7 @@ export class SensorBinary extends BaseDevice {
   public override get variables(): DeviceVariables[] {
     return [{
       code: `pin${this.config.id}DHTHumidityState`,
-      name: `DHT Humidity ${this.config.id}`,
+      title: `DHT Humidity ${this.config.id}`,
     }];
   }
 }

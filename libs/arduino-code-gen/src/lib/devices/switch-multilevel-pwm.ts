@@ -28,7 +28,7 @@ export class SwitchMultilevelPwm extends BaseDevice {
   public override get variables(): DeviceVariables[] {
     return [{
       code: `pin${this.config.id}SwitchMultilevelState`,
-      name: `Switch Multilevel #${this.config.id}`,
+      title: `Switch Multilevel #${this.config.id}`,
     }];
   }
 }

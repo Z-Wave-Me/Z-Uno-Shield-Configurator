@@ -60,7 +60,7 @@ export class SwitchBinary extends BaseDevice {
   public override get variables(): DeviceVariables[] {
     return [{
       code: `pin${this.config.id}SwitchBinaryState`,
-      name: `Switch Binary ${this.config.id}`,
+      title: `Switch Binary ${this.config.id}`,
     }];
   }
 }

@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { RuleAction } from '@configurator/shared';
-import { Observable, of, Subject, takeUntil } from 'rxjs';
+import { Association, RuleAction } from '@configurator/shared';
+import { combineLatest, map, Observable, of, Subject, takeUntil } from 'rxjs';
 import { ActionForm } from '../rules.component';
+import { PinsStateService } from '../../../../services/store/pins-state.service';
+import { DeviceVariables } from '@configurator/arduino-code-gen';
 
 @Component({
   selector: 'configurator-action',
@@ -24,7 +26,7 @@ export class ActionComponent implements OnInit, OnDestroy {
     parameters: new FormControl<number>(0, { validators: [Validators.required], nonNullable: true}),
   })
 
-  public readonly variableList$: Observable<string[]>;
+  public readonly variableList$: Observable<(DeviceVariables | Association)[]>;
 
   public action: RuleAction | undefined;
   public disabled = false;
@@ -34,9 +36,13 @@ export class ActionComponent implements OnInit, OnDestroy {
   public onTouched = (): void => void 0;
 
   constructor(
-    // private readonly
+    private readonly pinsStateService: PinsStateService,
   ) {
-    this.variableList$ = of(['pwn1', 'pwm2', 'accociation2', 'asoc2']);
+    this.variableList$ = combineLatest([this.pinsStateService.variables(), this.pinsStateService.associations()]).pipe(
+      map(([variables, associations]) => {
+        return [...variables, ...associations]
+      }),
+    )
   }
 
   public ngOnInit(): void {

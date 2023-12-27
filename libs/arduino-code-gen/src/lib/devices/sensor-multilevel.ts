@@ -183,7 +183,7 @@ export class SensorMultilevel extends BaseDevice {
 
   public override get variables(): DeviceVariables[] {
     return [{
-      name: `Sensor Multilevel ${this.config.id}`,
+      title: `Sensor Multilevel ${this.config.id}`,
       code: `pin${this.config.id}SensorMultilevelState`,
     }];
   }

@@ -9,8 +9,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { HighlightModule } from 'ngx-highlightjs';
 import { SaveAsFileDirective } from '../../directives/save-as-file/save-as-file.directive';
 import { PinsStateService } from '../../services/store/pins-state.service';
-import { Observable } from 'rxjs';
+import { combineLatest, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { rules } from '@typescript-eslint/eslint-plugin';
 
 
 @Component({
@@ -38,9 +39,17 @@ export class FooterComponent {
   public code$: Observable<string| undefined>;
 
   constructor(private readonly pinsStateService: PinsStateService) {
-    this.code$ = this.pinsStateService.code();
+    this.code$ = combineLatest([this.pinsStateService.code(), this.pinsStateService.rules()]).pipe(
+      map(([code, rules]) => {
+        return (code ?? '').replace('#rulesBlock', this.rulesToCode(rules));
+      }),
+    );
   }
   public prevent(event: Event): void {
     event.stopPropagation();
+  }
+
+  private rulesToCode(rules: any): string {
+    return JSON.stringify(rules, null, 2);
   }
 }

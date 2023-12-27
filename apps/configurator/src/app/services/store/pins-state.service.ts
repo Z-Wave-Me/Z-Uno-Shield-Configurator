@@ -14,6 +14,7 @@ import { Pin } from '../../components/z-uno-shield/z-uno-shield.model';
 import { Location } from '@angular/common';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import { generate, GeneratedData } from '@configurator/arduino-code-gen';
+import { DeviceVariables } from '../../../../../../libs/arduino-code-gen/src/lib/devices/device.interface';
 
 
 @Injectable({
@@ -50,7 +51,13 @@ export class PinsStateService {
     )
   }
 
+  public variables(): Observable<DeviceVariables[]> {
+    return this.codeGen$.asObservable().pipe(map(data => data.variables));
+  }
 
+  public associations(): Observable<Association[]> {
+    return this.boardConfig$.pipe(map(config => config.associations));
+  }
   public get snapshot(): BoardConfig {
     return this._boardConfig$.value;
   }
@@ -63,8 +70,9 @@ export class PinsStateService {
     return this._boardConfig$.pipe(map(state => state.rules));
   }
 
-  public patchRules(rule: Rule): void {
-
+  public patchRules(rules: Rule): void {
+    const snapshot = this.snapshot;
+    this._boardConfig$.next({...snapshot, rules});
   }
 
   public removeRule(id: string): void {

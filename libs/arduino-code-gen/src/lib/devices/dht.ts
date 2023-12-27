@@ -65,10 +65,10 @@ word pin${this.config.id}DHTHumidityState;`;
 
   public override get variables(): DeviceVariables[] {
     return [{
-      name: `DHT Temperature #${this.config.id}`,
+      title: `DHT Temperature #${this.config.id}`,
       code: `pin${this.config.id}DHTTemperatureState`,
     }, {
-      name: `DHT Humidity ${this.config.id}`,
+      title: `DHT Humidity ${this.config.id}`,
       code: `pin${this.config.id}DHTHumidityState`,
     }];
   }

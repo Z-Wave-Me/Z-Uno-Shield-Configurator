@@ -3,6 +3,8 @@ import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/
 import { Expression } from '@configurator/shared';
 import { distinctUntilChanged, filter, map, Observable, of, Subject, takeUntil } from 'rxjs';
 import { ExpressionForm } from '../rules.component';
+import { PinsStateService } from '../../../../services/store/pins-state.service';
+import { DeviceVariables } from '@configurator/arduino-code-gen';
 
 @Component({
   selector: 'configurator-expression',
@@ -56,7 +58,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       unary: true,
     },
   ];
-  public readonly variableList$: Observable<string[]>;
+  public readonly variableList$: Observable<DeviceVariables[]>;
   public expression: Expression | undefined;
   public disabled = false;
 
@@ -64,8 +66,10 @@ export class ExpressionComponent implements OnInit, OnDestroy {
 
   public onTouched = (): void => void 0;
 
-  constructor() {
-    this.variableList$ = of(['pwn1', 'pwm2', 'accociation2', 'asoc2']);
+  constructor(
+    private readonly pinsStateService: PinsStateService,
+  ) {
+    this.variableList$ = this.pinsStateService.variables();
 
    
   }

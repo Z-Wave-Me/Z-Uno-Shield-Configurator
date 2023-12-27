@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { PinsStateService } from '../../../services/store/pins-state.service';
-import { Observable, Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -20,6 +20,13 @@ export class RulesComponent implements OnDestroy {
   ) {
     // this.rules$ = this.pinsStateService.rules();
     this.debug();
+    this.form.valueChanges.pipe(
+      takeUntil(this.destroy$),
+    ).subscribe(data => {
+      if (data.rules) {
+        this.pinsStateService.patchRules(data.rules);
+      }
+    })
   }
 
   public ngOnDestroy(): void {

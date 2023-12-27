@@ -123,7 +123,7 @@ ${getters}
   public override get variables(): DeviceVariables[] {
     return this.ids
       .map((id) => ({
-        name: `Switch Multilevel #${id}`,
+        title: `Switch Multilevel #${id}`,
         code: `pin${id}SwitchMultilevelState`,
       }));
   }

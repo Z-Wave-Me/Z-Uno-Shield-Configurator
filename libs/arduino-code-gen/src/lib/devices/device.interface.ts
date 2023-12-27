@@ -23,5 +23,5 @@ export interface GeneratedData {
 
 export interface DeviceVariables {
   code: string;
-  name: string;
+  title: string;
 }

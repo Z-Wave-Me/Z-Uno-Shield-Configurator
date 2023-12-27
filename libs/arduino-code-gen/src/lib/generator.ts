@@ -111,7 +111,8 @@ ${xetter}
   public loop(): string {
     return `void loop() {
 ${this.collect('loop', '\n\n')}
-
+  #rulesBlock
+  
   delay(20);
 }`;
   }

@@ -1,15 +1,16 @@
-<p>rules works!</p>
-
-если на вкладке есть неразрешенные конфлиты рисовать алерт напротив переменной и на вкладке
-<div [formGroup]="form">
+<!--TODO если на вкладке есть неразрешенные конфлиты рисовать алерт напротив переменной и на вкладке-->
+<div [formGroup]="form" class="rules">
   <ng-container formArrayName="rules">
     <ng-container *ngFor="let ruleForm of form.controls.rules.controls; let ruleIndex = index">
-      <div [formGroup]="ruleForm">
+      <div [formGroup]="ruleForm" class="rule">
+        <div>
+          ----------------------------------IF-----------------------------------------------------------------
+        </div>
         <div>
           <configurator-expression [formControl]="ruleForm.controls.expression"></configurator-expression>
         </div>
         <div>
-          ----------------------------------IF-----------------------------------------------------------------
+          ----------------------------------THEN-----------------------------------------------------------------
         </div>
         <div>
           <ng-container *ngFor="let action of ruleForm.controls.actions.controls; let actionIndex = index">
@@ -32,7 +33,7 @@
           <button mat-raised-button (click)="addAction(ruleForm.controls.else)">AddAction</button>
         </div>
 
-        <button mat-raised-button (click)="removeRule(ruleIndex)">RemoveRule</button>
+        <button class="remove-button" mat-icon-button (click)="removeRule(ruleIndex)"><mat-icon>delete</mat-icon></button>
       </div>
     </ng-container>
     <button mat-raised-button (click)="addRule()">AddRule</button>

@@ -1,9 +1,7 @@
 import { PinConfig } from '@configurator/shared';
 import { Association } from './association';
 
-export interface Rule {
-  id: string;
-}
+export type Rule = any;
 
 export interface BoardConfig {
   pins: PinConfig[];
