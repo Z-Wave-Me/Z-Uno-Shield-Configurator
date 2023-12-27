@@ -1,18 +1,19 @@
-<div [formGroup]="actionForm" *ngIf="{ variables: variableList$ | async } as data">
+<div [formGroup]="actionForm" *ngIf="{ variables: variableList$ | async } as data" class="row">
   <mat-form-field >
     <mat-label>Variable</mat-label>
   <mat-select formControlName="action">
-    <mat-option [value]="variable" *ngFor="let variable of data.variables">{{variable.title}}</mat-option>
+    <mat-option [value]="variable.title" *ngFor="let variable of data.variables">{{variable.title}}</mat-option>
   </mat-select>
   </mat-form-field>
 
   <mat-form-field >
     <mat-label>Left side</mat-label>
-    <input type="text"
-           placeholder="..."
-           aria-label="Number"
-           matInput
-           formControlName="parameters"
+    <input
+      type="text"
+      placeholder="..."
+      aria-label="Number"
+      matInput
+      formControlName="parameters"
     >
   </mat-form-field>
 </div>

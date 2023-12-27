@@ -4,34 +4,33 @@
     <ng-container *ngFor="let ruleForm of form.controls.rules.controls; let ruleIndex = index">
       <div [formGroup]="ruleForm" class="rule">
         <div>
-          ----------------------------------IF-----------------------------------------------------------------
+          ----------------------------------- IF ------------------------------------------------
         </div>
         <div>
           <configurator-expression [formControl]="ruleForm.controls.expression"></configurator-expression>
         </div>
-        <div>
-          ----------------------------------THEN-----------------------------------------------------------------
+        <div class="row">
+          -----------------------------------THEN------------------------------------------------
+          <button mat-icon-button (click)="addAction(ruleForm.controls.actions)"><mat-icon>plus_one</mat-icon></button>
+
         </div>
-        <div>
-          <ng-container *ngFor="let action of ruleForm.controls.actions.controls; let actionIndex = index">
-            action {{actionIndex}} {{action.value | json}}
-            <configurator-action [formControl]="action"></configurator-action>
-            <button mat-raised-button (click)="removeAction(ruleForm.controls.actions, actionIndex)">RemoveAction</button>
-          </ng-container>
-          <button mat-raised-button (click)="addAction(ruleForm.controls.actions)">AddAction</button>
+        <div *ngFor="let action of ruleForm.controls.actions.controls; let actionIndex = index" class="row">
+<!--            action {{actionIndex}} {{action.value | json}}-->
+          <configurator-action [formControl]="action"></configurator-action>
+          <button mat-icon-button (click)="removeAction(ruleForm.controls.actions, actionIndex)"><mat-icon>delete</mat-icon></button>
         </div>
-        <div>
+        <div class="row">
 
           -----------------------------------ELSE------------------------------------------------
+          <button mat-icon-button (click)="addAction(ruleForm.controls.else)"><mat-icon>plus_one</mat-icon></button>
+
         </div>
-        <div>
-          <ng-container *ngFor="let action of ruleForm.controls.else.controls; let elseIndex = index">
-            else action {{elseIndex}}  {{action.value | json}}
+          <div *ngFor="let action of ruleForm.controls.else.controls; let elseIndex = index" class="row">
+<!--            else action {{elseIndex}}  {{action.value | json}}-->
             <configurator-action [formControl]="action"></configurator-action>
-            <button mat-raised-button (click)="removeAction(ruleForm.controls.else, elseIndex)">RemoveAction</button>
-          </ng-container>
-          <button mat-raised-button (click)="addAction(ruleForm.controls.else)">AddAction</button>
-        </div>
+            <button mat-icon-button (click)="removeAction(ruleForm.controls.else, elseIndex)"><mat-icon>delete</mat-icon></button>
+          </div>
+
 
         <button class="remove-button" mat-icon-button (click)="removeRule(ruleIndex)"><mat-icon>delete</mat-icon></button>
       </div>
