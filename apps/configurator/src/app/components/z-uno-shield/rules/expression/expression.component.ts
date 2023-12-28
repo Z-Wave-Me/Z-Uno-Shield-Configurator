@@ -38,24 +38,24 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       value: '<',
     },
     {
-      value: '<',
+      value: '>',
     },
-    {
-      value: '≥',
-    },
-    {
-      value: '≤',
-    },
-    {
-      value: '=',
-    },
-    {
-      value: '≠',
-    },
-    {
-      value: 'changedBy',
-      unary: true,
-    },
+    // {
+    //   value: '≥',
+    // },
+    // {
+    //   value: '≤',
+    // },
+    // {
+    //   value: '=',
+    // },
+    // {
+    //   value: '≠',
+    // },
+    // {
+    //   value: 'changedBy',
+    //   unary: true,
+    // },
   ];
   public readonly variableList$: Observable<Action[]>;
   public expression: Expression | undefined;

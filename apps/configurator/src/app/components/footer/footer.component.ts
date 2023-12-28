@@ -62,15 +62,15 @@ export class FooterComponent {
   } else {
     ${
       // @ts-ignore
-      rule.elseBlock.filter(Boolean).map(a => `${a.template.replace('{0}', a.parameters[0])}`).join('\n')}`
+rule.elseBlock.filter(Boolean).map(a => `      ${a.template.replace('{0}', a.parameters[0])}`).join('\n')}`
   }
 
     if(rule.expression && rule.actions.filter(Boolean).length) {
       return `
   if (${// @ts-ignore
       rule.expression[0]['parentId'] ?? rule.expression[0]} ${rule.expression[1]} ${rule.expression[2]['parentId']?? rule.expression[2]}) { 
-    ${// @ts-ignore
-      rule.actions.filter(Boolean).map(a => `${a.template.replace('{0}', a.parameters[0])}`).join('\n')}
+${// @ts-ignore
+      rule.actions.filter(Boolean).map(a => `    ${a.template.replace('{0}', a.parameters[0])}`).join('\n')}
     ${elseBlock}
   }`
         ;
