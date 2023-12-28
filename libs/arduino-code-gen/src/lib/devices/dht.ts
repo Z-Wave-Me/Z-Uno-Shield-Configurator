@@ -66,12 +66,12 @@ word pin${this.config.id}DHTHumidityState;`;
     return [{
       parentId: this.config.id,
       title: `Set DHT Temperature #${this.config.id}`,
-      template: `pin${this.config.id}DHTTemperatureState = {0}`,
+      template: `pin${this.config.id}DHTTemperatureState = {0};`,
       parameters: [0],
     }, {
       parentId: this.config.id,
       title: `DHT Humidity ${this.config.id}`,
-      template: `pin${this.config.id}DHTHumidityState = {0}`,
+      template: `pin${this.config.id}DHTHumidityState = {0};`,
       parameters: [0],
     }];
   }

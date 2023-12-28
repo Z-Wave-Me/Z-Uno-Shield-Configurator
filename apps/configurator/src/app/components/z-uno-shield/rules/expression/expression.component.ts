@@ -65,12 +65,14 @@ export class ExpressionComponent implements OnInit, OnDestroy {
 
   public onTouched = (): void => void 0;
 
+  public getTitle(expression: Action): string {
+    return expression?.title;
+  }
+
   constructor(
     private readonly pinsStateService: PinsStateService,
   ) {
     this.variableList$ = this.pinsStateService.variables();
-
-   
   }
 
   public ngOnInit(): void {

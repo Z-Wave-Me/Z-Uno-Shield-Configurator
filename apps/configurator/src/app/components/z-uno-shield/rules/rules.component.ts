@@ -3,6 +3,8 @@ import { PinsStateService } from '../../../services/store/pins-state.service';
 import { Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Action, Expression } from '@configurator/shared';
+import { rules } from '@typescript-eslint/eslint-plugin';
+import { Rule } from 'eslint';
 
 @Component({
   selector: 'configurator-rules',
@@ -23,19 +25,18 @@ export class RulesComponent implements OnDestroy {
     this.debug();
     this.form.valueChanges.pipe(
       takeUntil(this.destroy$),
-    ).subscribe(data => {
+    ).subscribe((data) => {
       if (data.rules) {
-        const rules = data.rules
-          .filter(({expression, actions, elseBlock}) => expression && (actions || elseBlock))
-          // .map()
-        this.pinsStateService.patchRules(data.rules);
+        // const rules = data.rules
+        //   .filter(({expression, actions, elseBlock}) => expression && (actions || elseBlock))
+        //   // .map()
+
+
+        this.pinsStateService.patchRules(data.rules as Rule[]);
       }
     })
   }
 
-  public convertToStructure(data:{expression: string, actions: string, elseBlock: string}) {
-
-  }
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -47,9 +48,9 @@ export class RulesComponent implements OnDestroy {
 
   public addRule(): void {
     this.form.controls.rules.push(new FormGroup<RuleForm>({
-      expression: new FormControl<ExpressionForm | null >(null),
-      actions: new FormArray<FormControl<ActionForm>>([]),
-      elseBlock: new FormArray<FormControl<ActionForm>>([]),
+      expression: new FormControl<Expression | null >(null),
+      actions: new FormArray<FormControl<Action>>([]),
+      elseBlock: new FormArray<FormControl<Action>>([]),
     }));
   }
 
@@ -67,9 +68,9 @@ export class RulesComponent implements OnDestroy {
 }
 
 export interface RuleForm {
-  expression: FormControl<ExpressionForm | null>,
-  actions:  FormArray<FormControl<ActionForm>>,
-  elseBlock:  FormArray<FormControl<ActionForm>>,
+  expression: FormControl<Expression | null>,
+  actions:  FormArray<FormControl<Action>>,
+  elseBlock:  FormArray<FormControl<Action>>,
 }
 
 export interface RulesForm {
@@ -77,18 +78,18 @@ export interface RulesForm {
 }
 
 export interface ActionForm {
-  action: FormControl<string>;
+  action: FormControl<Action | undefined>;
   parameters: FormControl<number>;
 }
 
 export interface ExpressionForm {
-  left: FormControl<string | null>;
+  left: FormControl<string | Action | null>;
   operand: FormControl<string>;
-  right: FormControl<string>;
+  right: FormControl<string | Action>;
 }
 
 export interface Rule {
   expression: Expression,
   actions: Action[],
-  else: Action[],
+  elseBlock: Action[],
 }

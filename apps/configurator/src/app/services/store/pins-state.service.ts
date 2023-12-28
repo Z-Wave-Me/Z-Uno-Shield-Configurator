@@ -5,7 +5,7 @@ import {
   filter,
   first,
   map,
-  Observable, ReplaySubject, Subject, takeUntil
+  Observable, ReplaySubject, startWith, Subject, takeUntil
 } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
@@ -55,7 +55,9 @@ export class PinsStateService {
   }
 
   public associations(): Observable<Action[]> {
-    return this.boardConfig$.pipe(map(config => config.associations.map(a => a.actions).flat()));
+    return this.boardConfig$.pipe(
+      map(config => config.associations.map(a => a.actions).flat()),
+    );
   }
   public get snapshot(): BoardConfig {
     return this._boardConfig$.value;
@@ -69,14 +71,14 @@ export class PinsStateService {
     return this._boardConfig$.pipe(map(state => state.rules));
   }
 
-  public patchRules(rules: Rule): void {
+  public patchRules(rules: Rule[]): void {
     const snapshot = this.snapshot;
     this._boardConfig$.next({...snapshot, rules});
   }
 
   public removeRule(id: string): void {
-    const { rules, ...other } = this.snapshot;
-    this._boardConfig$.next({...other, rules: rules.filter(rule => rule.id !== id)});
+    // const { rules, ...other } = this.snapshot;
+    // this._boardConfig$.next({...other, rules: rules.filter(rule => rule.id !== id)});
   }
 
   public patchDeviceConfig(pin: PinConfig, possiblePins: Pin[]): void {

@@ -30,8 +30,8 @@ export class SwitchMultilevel10V extends BaseDevice {
   public override get variables(): Action[] {
     return [{
       parentId: this.config.id,
-      template: `pin${this.config.id}SwitchMultilevelState`,
-      title: `Switch Multilevel ${this.config.id} = {0}`,
+      template: `pin${this.config.id}SwitchMultilevelState = {0};`,
+      title: `Switch Multilevel ${this.config.id}`,
       parameters: [0],
     }];
   }

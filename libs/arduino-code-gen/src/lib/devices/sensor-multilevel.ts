@@ -184,7 +184,7 @@ export class SensorMultilevel extends BaseDevice {
     return [{
       parentId: this.config.id,
       title: `Sensor Multilevel ${this.config.id}`,
-      template: `pin${this.config.id}SensorMultilevelState = {0}`,
+      template: `pin${this.config.id}SensorMultilevelState = {0};`,
       parameters: [0],
     }];
   }

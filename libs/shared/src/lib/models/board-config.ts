@@ -1,7 +1,11 @@
-import { PinConfig } from '@configurator/shared';
+import { Action, PinConfig } from '@configurator/shared';
 import { Association } from './association';
 
-export type Rule = any;
+export interface Rule {
+  expression: Expression,
+  actions: Action[],
+  elseBlock: Action[],
+}
 
 export interface BoardConfig {
   pins: PinConfig[];
@@ -9,9 +13,5 @@ export interface BoardConfig {
   rules: Rule[]
 }
 
-export interface RuleAction {
-  action: string;
-  parameters: number;
-}
 
-export type Expression = [string | number | null | undefined, string, string | number]
+export type Expression = [string | number | null | undefined | Action, string, string | number | Action]

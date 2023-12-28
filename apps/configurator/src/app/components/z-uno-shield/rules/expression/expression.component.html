@@ -8,8 +8,8 @@
       matInput
       formControlName="left"
       [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-option [value]="variable.title" *ngFor="let variable of data.variables">{{variable.title}}</mat-option>
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getTitle">
+      <mat-option [value]="variable" *ngFor="let variable of data.variables">{{variable.title}}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
 

@@ -124,7 +124,7 @@ ${getters}
       .map((id) => ({
         parentId: id,
         title: `Switch Multilevel #${id}`,
-        template: `pin${id}SwitchMultilevelState {0}`,
+        template: `pin${id}SwitchMultilevelState = {0};`,
         parameters: [0],
       }));
   }
