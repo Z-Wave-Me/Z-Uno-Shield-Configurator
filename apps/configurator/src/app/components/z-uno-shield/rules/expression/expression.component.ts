@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { Expression } from '@configurator/shared';
+import { Action, Expression } from '@configurator/shared';
 import { distinctUntilChanged, filter, map, Observable, of, Subject, takeUntil } from 'rxjs';
 import { ExpressionForm } from '../rules.component';
 import { PinsStateService } from '../../../../services/store/pins-state.service';
-import { DeviceVariables } from '@configurator/arduino-code-gen';
 
 @Component({
   selector: 'configurator-expression',
@@ -58,7 +57,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       unary: true,
     },
   ];
-  public readonly variableList$: Observable<DeviceVariables[]>;
+  public readonly variableList$: Observable<Action[]>;
   public expression: Expression | undefined;
   public disabled = false;
 
@@ -114,6 +113,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
     const unary = this.operandList
       .filter(({ unary }) => unary)
       .map(({ value }) => value);
+
     this.expressionForm.controls.operand.valueChanges
       .pipe(
         map((value) => unary.includes(value)),

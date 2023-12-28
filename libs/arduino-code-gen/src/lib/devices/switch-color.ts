@@ -1,7 +1,6 @@
-import { PinConfig } from '@configurator/shared';
+import { Action, PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
 import { ColorDevices } from '../device.model';
-import { DeviceVariables } from './device.interface';
 
 enum ColorFlag {
   White = 'SWITCH_COLOR_FLAGS_WARM_WHITE',
@@ -120,11 +119,13 @@ ${getters}
     return this.arrayConfig.map(({ id }) => id).filter(isString);
   }
 
-  public override get variables(): DeviceVariables[] {
+  public override get variables(): Action[] {
     return this.ids
       .map((id) => ({
+        parentId: id,
         title: `Switch Multilevel #${id}`,
-        code: `pin${id}SwitchMultilevelState`,
+        template: `pin${id}SwitchMultilevelState {0}`,
+        parameters: [0],
       }));
   }
 }

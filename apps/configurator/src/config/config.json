@@ -6,16 +6,17 @@
       "title": "BasicSet",
       "actions": [
         {
-          "name": "SetValue",
-          "function": "zunoSendToGroupSetValueCommand",
+          "parentId": "ZUNO_ASSOCIATION_GROUP_SET_VALUE",
+          "title": "SetValue",
+          "template": "zunoSendToGroupSetValueCommand",
           "parameters": [
             {
-              "name": "groupNumber",
+              "title": "groupNumber",
               "type": "byte",
               "userInput": false
             },
             {
-              "name": "value",
+              "title": "value",
               "type": "byte",
               "userInput": true
             }
@@ -28,32 +29,34 @@
       "title": "SwitchMultilevelSet",
       "actions": [
         {
-          "name": "SetValue",
-          "function": "zunoSendToGroupSetValueCommand",
+          "parentId": "ZUNO_ASSOCIATION_GROUP_SET_VALUE_AND_DIM",
+          "title": "SetValue",
+          "template": "zunoSendToGroupSetValueCommand",
           "parameters": [
             {
-              "name": "groupNumber",
+              "title": "groupNumber",
               "type": "byte",
               "userInput": false
             },
             {
-              "name": "value",
+              "title": "value",
               "type": "byte",
               "userInput": true
             }
           ]
         },
         {
-          "name": "Dim",
-          "function": "zunoSendToGroupDimmingCommand",
+          "parentId": "ZUNO_ASSOCIATION_GROUP_SET_VALUE_AND_DIM",
+          "title": "Dim",
+          "template": "zunoSendToGroupDimmingCommand",
           "parameters": [
             {
-              "name": "groupNumber",
+              "title": "groupNumber",
               "type": "byte",
               "userInput": false
             },
             {
-              "name": "direction",
+              "title": "direction",
               "type": "byte",
               "userInput": true,
               "valueMap": {
@@ -62,7 +65,7 @@
               }
             },
             {
-              "name": "start",
+              "title": "start",
               "type": "byte",
               "userInput": true,
               "valueMap": {
@@ -79,16 +82,17 @@
       "title": "SceneControl",
       "actions": [
         {
-          "name": "Activation",
-          "function": "zunoSendToGroupScene",
+          "parentId": "ZUNO_ASSOCIATION_GROUP_SCENE_CONTROL",
+          "title": "Activation",
+          "template": "zunoSendToGroupScene",
           "parameters": [
             {
-              "name": "groupNumber",
+              "title": "groupNumber",
               "type": "byte",
               "userInput": false
             },
             {
-              "name": "sceneNumber",
+              "title": "sceneNumber",
               "type": "byte",
               "userInput": true
             }
@@ -101,16 +105,17 @@
       "title": "DoorLockControl",
       "actions": [
         {
-          "name": "Activation",
-          "function": "zunoSendToGroupDoorlockControlTiming",
+          "parentId": "ZUNO_ASSOCIATION_GROUP_DOORLOCK",
+          "title": "Activation",
+          "template": "zunoSendToGroupDoorlockControlTiming",
           "parameters": [
             {
-              "name": "groupNumber",
+              "title": "groupNumber",
               "type": "byte",
               "userInput": false
             },
             {
-              "name": "action",
+              "title": "action",
               "type": "byte",
               "userInput": true,
               "valueMap": {
@@ -119,7 +124,7 @@
               }
             },
             {
-              "name": "timed",
+              "title": "timed",
               "type": "uint16_t",
               "userInput": true,
               "default": "0"

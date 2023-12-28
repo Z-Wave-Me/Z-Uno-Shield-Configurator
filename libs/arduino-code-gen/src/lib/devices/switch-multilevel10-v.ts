@@ -1,6 +1,5 @@
-import { PinConfig } from '@configurator/shared';
+import { Action, PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
-import { DeviceVariables } from './device.interface';
 
 
 export class SwitchMultilevel10V extends BaseDevice {
@@ -28,10 +27,12 @@ export class SwitchMultilevel10V extends BaseDevice {
   }`;
   }
 
-  public override get variables(): DeviceVariables[] {
+  public override get variables(): Action[] {
     return [{
-      code: `pin${this.config.id}SwitchMultilevelState`,
-      title: `Switch Multilevel ${this.config.id}`,
+      parentId: this.config.id,
+      template: `pin${this.config.id}SwitchMultilevelState`,
+      title: `Switch Multilevel ${this.config.id} = {0}`,
+      parameters: [0],
     }];
   }
 }

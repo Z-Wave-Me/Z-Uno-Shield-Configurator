@@ -1,7 +1,6 @@
-import { PinConfig } from '@configurator/shared';
+import { Action, PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
 import { Grounding } from '../device.model';
-import { DeviceVariables } from './device.interface';
 
 
 export class SensorBinary extends BaseDevice {
@@ -65,10 +64,12 @@ export class SensorBinary extends BaseDevice {
     return this.config.device?.additionally === Grounding.Free;
   }
 
-  public override get variables(): DeviceVariables[] {
+  public override get variables(): Action[] {
     return [{
-      code: `pin${this.config.id}DHTHumidityState`,
+      parentId: this.config.id,
+      template: `pin${this.config.id}DHTHumidityState = {0}`,
       title: `DHT Humidity ${this.config.id}`,
+      parameters: [0],
     }];
   }
 }

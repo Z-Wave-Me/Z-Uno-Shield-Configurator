@@ -1,5 +1,5 @@
-import { Device, DeviceVariables } from './devices/device.interface';
-import { Association } from '@configurator/shared';
+import { Device } from './devices/device.interface';
+import { Action, Association } from '@configurator/shared';
 
 
 export class Generator implements Device {
@@ -117,7 +117,7 @@ ${this.collect('loop', '\n\n')}
 }`;
   }
 
-  public get variables(): DeviceVariables[] {
+  public get variables(): Action[] {
     return this.devices.map(d => d.variables).flat();
   }
 

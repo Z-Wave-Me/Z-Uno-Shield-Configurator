@@ -1,12 +1,13 @@
-<form [formGroup]="expressionForm" *ngIf="{ variables: variableList$| async } as data" class="row">
+<form [formGroup]="expressionForm" *ngIf="{ variables: variableList$ | async } as data" class="row">
   <mat-form-field >
     <mat-label>Left side</mat-label>
-    <input type="text"
-           placeholder="pin"
-           aria-label="Number"
-           matInput
-           formControlName="left"
-           [matAutocomplete]="auto">
+    <input
+      type="text"
+      placeholder="pin"
+      aria-label="Number"
+      matInput
+      formControlName="left"
+      [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
       <mat-option [value]="variable.title" *ngFor="let variable of data.variables">{{variable.title}}</mat-option>
     </mat-autocomplete>

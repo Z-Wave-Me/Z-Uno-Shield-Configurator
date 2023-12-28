@@ -22,13 +22,13 @@
         <div class="row">
 
           -----------------------------------ELSE------------------------------------------------
-          <button mat-icon-button (click)="addAction(ruleForm.controls.else)"><mat-icon>plus_one</mat-icon></button>
+          <button mat-icon-button (click)="addAction(ruleForm.controls.elseBlock)"><mat-icon>plus_one</mat-icon></button>
 
         </div>
-          <div *ngFor="let action of ruleForm.controls.else.controls; let elseIndex = index" class="row">
+          <div *ngFor="let action of ruleForm.controls.elseBlock.controls; let elseIndex = index" class="row">
 <!--            else action {{elseIndex}}  {{action.value | json}}-->
             <configurator-action [formControl]="action"></configurator-action>
-            <button mat-icon-button (click)="removeAction(ruleForm.controls.else, elseIndex)"><mat-icon>delete</mat-icon></button>
+            <button mat-icon-button (click)="removeAction(ruleForm.controls.elseBlock, elseIndex)"><mat-icon>delete</mat-icon></button>
           </div>
 
 

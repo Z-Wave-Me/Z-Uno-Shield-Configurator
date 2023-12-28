@@ -1,7 +1,6 @@
-import { PinConfig } from '@configurator/shared';
+import { Action, PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
 import { SensorMultilevelDevices, VoltageOffset } from '../device.model';
-import { DeviceVariables } from './device.interface';
 
 
 enum Precision {
@@ -181,10 +180,12 @@ export class SensorMultilevel extends BaseDevice {
     return this.jumperMap[this.config.offset ?? VoltageOffset.Unset];
   }
 
-  public override get variables(): DeviceVariables[] {
+  public override get variables(): Action[] {
     return [{
+      parentId: this.config.id,
       title: `Sensor Multilevel ${this.config.id}`,
-      code: `pin${this.config.id}SensorMultilevelState`,
+      template: `pin${this.config.id}SensorMultilevelState = {0}`,
+      parameters: [0],
     }];
   }
 }

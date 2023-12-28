@@ -9,12 +9,11 @@ import {
 } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
-import { Association, PinConfig, BoardConfig, Rule } from '@configurator/shared';
+import { Association, PinConfig, BoardConfig, Rule, Action } from '@configurator/shared';
 import { Pin } from '../../components/z-uno-shield/z-uno-shield.model';
 import { Location } from '@angular/common';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import { generate, GeneratedData } from '@configurator/arduino-code-gen';
-import { DeviceVariables } from '../../../../../../libs/arduino-code-gen/src/lib/devices/device.interface';
 
 
 @Injectable({
@@ -51,12 +50,12 @@ export class PinsStateService {
     )
   }
 
-  public variables(): Observable<DeviceVariables[]> {
+  public variables(): Observable<Action[]> {
     return this.codeGen$.asObservable().pipe(map(data => data.variables));
   }
 
-  public associations(): Observable<Association[]> {
-    return this.boardConfig$.pipe(map(config => config.associations));
+  public associations(): Observable<Action[]> {
+    return this.boardConfig$.pipe(map(config => config.associations.map(a => a.actions).flat()));
   }
   public get snapshot(): BoardConfig {
     return this._boardConfig$.value;

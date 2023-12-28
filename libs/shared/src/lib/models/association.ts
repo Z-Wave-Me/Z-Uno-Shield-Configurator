@@ -4,15 +4,16 @@ export enum ActionParameterType {
 }
 
 export interface ActionParameter {
-  name: string;
+  title: string;
   type: ActionParameterType;
   userInput: boolean;
 }
 
 export interface Action {
-  name: string;
-  function: string;
-  parameters: ActionParameter[];
+  parentId: string;
+  title: string;
+  template: string;
+  parameters: (ActionParameter | number | string)[];
 }
 
 export interface Association {

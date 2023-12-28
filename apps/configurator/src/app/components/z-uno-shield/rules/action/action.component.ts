@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { Association, RuleAction } from '@configurator/shared';
-import { combineLatest, map, Observable, of, Subject, takeUntil } from 'rxjs';
+import { Action, Association, RuleAction } from '@configurator/shared';
+import { combineLatest, map, Observable, of, Subject, takeUntil, withLatestFrom } from 'rxjs';
 import { ActionForm } from '../rules.component';
 import { PinsStateService } from '../../../../services/store/pins-state.service';
-import { DeviceVariables } from '@configurator/arduino-code-gen';
 
 @Component({
   selector: 'configurator-action',
@@ -26,7 +25,7 @@ export class ActionComponent implements OnInit, OnDestroy {
     parameters: new FormControl<number>(0, { validators: [Validators.required], nonNullable: true}),
   })
 
-  public readonly variableList$: Observable<(DeviceVariables | Association)[]>;
+  public readonly variableList$: Observable<Action[]>;
 
   public action: RuleAction | undefined;
   public disabled = false;
@@ -47,9 +46,11 @@ export class ActionComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.actionForm.valueChanges.pipe(
+      withLatestFrom(this.variableList$),
       takeUntil(this.destroy$),
-    ).subscribe(data => {
+    ).subscribe(([data, list]) => {
       if (data.action && !isNaN(Number(data.parameters))) {
+        const code = list.find(item => item.title === data);
         this.onChange({
           action: data.action,
           parameters: data.parameters as number,

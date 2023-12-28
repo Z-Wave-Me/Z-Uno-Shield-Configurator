@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { PinsStateService } from '../../../services/store/pins-state.service';
 import { Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { Action, Expression } from '@configurator/shared';
 
 @Component({
   selector: 'configurator-rules',
@@ -24,11 +25,17 @@ export class RulesComponent implements OnDestroy {
       takeUntil(this.destroy$),
     ).subscribe(data => {
       if (data.rules) {
+        const rules = data.rules
+          .filter(({expression, actions, elseBlock}) => expression && (actions || elseBlock))
+          // .map()
         this.pinsStateService.patchRules(data.rules);
       }
     })
   }
 
+  public convertToStructure(data:{expression: string, actions: string, elseBlock: string}) {
+
+  }
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -42,7 +49,7 @@ export class RulesComponent implements OnDestroy {
     this.form.controls.rules.push(new FormGroup<RuleForm>({
       expression: new FormControl<ExpressionForm | null >(null),
       actions: new FormArray<FormControl<ActionForm>>([]),
-      else: new FormArray<FormControl<ActionForm>>([]),
+      elseBlock: new FormArray<FormControl<ActionForm>>([]),
     }));
   }
 
@@ -62,7 +69,7 @@ export class RulesComponent implements OnDestroy {
 export interface RuleForm {
   expression: FormControl<ExpressionForm | null>,
   actions:  FormArray<FormControl<ActionForm>>,
-  else:  FormArray<FormControl<ActionForm>>,
+  elseBlock:  FormArray<FormControl<ActionForm>>,
 }
 
 export interface RulesForm {
@@ -78,4 +85,10 @@ export interface ExpressionForm {
   left: FormControl<string | null>;
   operand: FormControl<string>;
   right: FormControl<string>;
+}
+
+export interface Rule {
+  expression: Expression,
+  actions: Action[],
+  else: Action[],
 }

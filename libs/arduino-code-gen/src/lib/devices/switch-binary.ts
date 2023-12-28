@@ -1,6 +1,5 @@
-import { PinConfig } from '@configurator/shared';
+import { Action, PinConfig } from '@configurator/shared';
 import { BaseDevice } from './base-device';
-import { DeviceVariables } from './device.interface';
 
 
 export class SwitchBinary extends BaseDevice {
@@ -57,10 +56,12 @@ export class SwitchBinary extends BaseDevice {
     return `byte pin${this.config.id}SwitchBinaryState = 0;`;
   }
 
-  public override get variables(): DeviceVariables[] {
+  public override get variables(): Action[] {
     return [{
-      code: `pin${this.config.id}SwitchBinaryState`,
+      parentId: this.config.id,
+      template: `pin${this.config.id}SwitchBinaryState - {0}`,
       title: `Switch Binary ${this.config.id}`,
+      parameters: [0],
     }];
   }
 }

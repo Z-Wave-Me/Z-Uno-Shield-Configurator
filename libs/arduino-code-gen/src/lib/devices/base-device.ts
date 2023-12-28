@@ -1,5 +1,5 @@
-import { Device, DeviceVariables } from './device.interface';
-import { PinConfig } from '@configurator/shared';
+import { Device } from './device.interface';
+import { Action, PinConfig } from '@configurator/shared';
 
 export class BaseDevice implements Device {
   public channels = 1;
@@ -59,7 +59,7 @@ export class BaseDevice implements Device {
     return {};
   }
 
-  public get variables(): DeviceVariables[] {
+  public get variables(): Action[] {
     return [];
   }
 }
