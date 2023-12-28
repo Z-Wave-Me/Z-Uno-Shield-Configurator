@@ -66,7 +66,7 @@ export class SensorBinary extends BaseDevice {
 
   public override get variables(): Action[] {
     return [{
-      parentId: this.config.id,
+      parentId: `pin${this.config.id}DHTHumidityState`,
       template: `pin${this.config.id}DHTHumidityState = {0}`,
       title: `DHT Humidity ${this.config.id}`,
       parameters: [0],

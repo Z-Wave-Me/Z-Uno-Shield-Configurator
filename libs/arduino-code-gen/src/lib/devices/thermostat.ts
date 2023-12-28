@@ -93,19 +93,19 @@ signed int pin${this.config.id}ThermostatTemperatureGetter(byte mode) {
   
   public override get variables(): Action[] {
     return [{
-      parentId: this.config.id,
+      parentId: `pin${this.config.id}ThermostatModeState`,
       template: `pin${this.config.id}ThermostatModeState = {0};`,
       title: `Thermostat Mode #${this.config.id}`,
       parameters: [0],
     },
       {
-        parentId: this.config.id,
+        parentId: `pin${this.config.id}ThermostatTemperatureState`,
         template: `pin${this.config.id}ThermostatTemperatureState = {0};`,
         title: `Thermostat Temperature #${this.config.id}`,
         parameters: [0],
       },
       {
-        parentId: this.config.id,
+        parentId: `pin${this.config.id}ThermostatTemperatureCurrent`,
         template: `pin${this.config.id}ThermostatTemperatureCurrent = {0};`,
         title: `Thermostat Temperature Current #${this.config.id}`,
         parameters: [0],

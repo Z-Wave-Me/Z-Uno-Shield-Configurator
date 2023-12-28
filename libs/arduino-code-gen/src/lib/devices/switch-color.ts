@@ -122,7 +122,7 @@ ${getters}
   public override get variables(): Action[] {
     return this.ids
       .map((id) => ({
-        parentId: id,
+        parentId: `pin${id}SwitchMultilevelState`,
         title: `Switch Multilevel #${id}`,
         template: `pin${id}SwitchMultilevelState = {0};`,
         parameters: [0],

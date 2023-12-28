@@ -64,12 +64,12 @@ word pin${this.config.id}DHTHumidityState;`;
 
   public override get variables(): Action[] {
     return [{
-      parentId: this.config.id,
+      parentId: `pin${this.config.id}DHTTemperatureState`,
       title: `Set DHT Temperature #${this.config.id}`,
       template: `pin${this.config.id}DHTTemperatureState = {0};`,
       parameters: [0],
     }, {
-      parentId: this.config.id,
+      parentId: `pin${this.config.id}DHTHumidityState`,
       title: `DHT Humidity ${this.config.id}`,
       template: `pin${this.config.id}DHTHumidityState = {0};`,
       parameters: [0],

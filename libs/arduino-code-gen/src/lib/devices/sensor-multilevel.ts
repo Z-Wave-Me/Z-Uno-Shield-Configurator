@@ -182,7 +182,7 @@ export class SensorMultilevel extends BaseDevice {
 
   public override get variables(): Action[] {
     return [{
-      parentId: this.config.id,
+      parentId: `pin${this.config.id}SensorMultilevelState`,
       title: `Sensor Multilevel ${this.config.id}`,
       template: `pin${this.config.id}SensorMultilevelState = {0};`,
       parameters: [0],
