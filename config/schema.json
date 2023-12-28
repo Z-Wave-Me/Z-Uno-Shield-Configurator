@@ -18,10 +18,13 @@
             "items": {
               "type": "object",
               "properties": {
-                "name": {
+                "parentId": {
                   "type": "string"
                 },
-                "function": {
+                "title": {
+                  "type": "string"
+                },
+                "template": {
                   "type": "string"
                 },
                 "parameters": {
@@ -29,7 +32,7 @@
                   "items": {
                     "type": "object",
                     "properties": {
-                      "name": {
+                      "title": {
                         "type": "string"
                       },
                       "type": {
@@ -48,11 +51,11 @@
                         "type": "string"
                       }
                     },
-                    "required": ["name", "type", "userInput"]
+                    "required": ["title", "type", "userInput"]
                   }
                 }
               },
-              "required": ["name", "function", "parameters"]
+              "required": ["title", "template", "parameters", "parentId"]
             }
           }
         },
