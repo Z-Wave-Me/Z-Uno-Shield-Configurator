@@ -23,6 +23,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from './module/shared/shared.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 const customTooltipDefaults: MatTooltipDefaultOptions = {
   showDelay: 1000,
@@ -53,6 +55,8 @@ const customTooltipDefaults: MatTooltipDefaultOptions = {
     SharedModule,
     MatSidenavModule,
     MatListModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
   ],
   providers: [
     {

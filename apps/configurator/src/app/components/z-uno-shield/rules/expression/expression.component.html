@@ -1,6 +1,6 @@
 <form [formGroup]="expressionForm" *ngIf="{ variables: variableList$ | async } as data" class="row">
   <mat-form-field >
-    <mat-label>Left side</mat-label>
+    <mat-label>Value</mat-label>
     <input
       type="text"
       placeholder="pin"
@@ -23,7 +23,7 @@
   </mat-form-field>
 
   <mat-form-field >
-    <mat-label>Left side</mat-label>
+    <mat-label>Right side</mat-label>
     <input type="text"
            placeholder="pin"
            aria-label="Number"

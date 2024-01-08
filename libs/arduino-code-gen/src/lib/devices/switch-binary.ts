@@ -59,9 +59,10 @@ export class SwitchBinary extends BaseDevice {
   public override get variables(): Action[] {
     return [{
       parentId: `pin${this.config.id}SwitchBinaryState`,
-      template: `pin${this.config.id}SwitchBinaryState - {0};`,
+      template: `pin${this.config.id}SwitchBinaryState = {0};`,
       title: `Switch Binary ${this.config.id}`,
       parameters: [0],
     }];
+
   }
 }

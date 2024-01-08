@@ -1,14 +1,25 @@
 {
   "root": true,
-  "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx"],
+  "ignorePatterns": [
+    "**/*"
+  ],
+  "plugins": [
+    "@nrwl/nx"
+  ],
   "env": {
     "jest": true
   },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "extends": ["prettier"],
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx"
+      ],
+      "extends": [
+        "prettier"
+      ],
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
@@ -18,55 +29,140 @@
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "onlyDependOnLibsWithTags": [
+                  "*"
+                ]
               }
             ]
           }
         ],
         "no-console": "warn",
-        "quotes": ["warn", "single"],
+        "quotes": [
+          "warn",
+          "single"
+        ],
         "padding-line-between-statements": [
           "error",
-          { "blankLine": "always", "prev": "*", "next": "return" },
-          { "blankLine": "any",    "prev": ["const", "let", "var"], "next": ["const", "let", "var"] },
-          { "blankLine": "always", "prev": ["if", "for", "while", "do"], "next": "*" },
-          { "blankLine": "always", "prev": "*", "next": ["if", "for", "while", "do"] },
-          { "blankLine": "always", "prev": "*", "next": "return" }
-        ],
-        "curly": ["error", "all"]
-      }
-    },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
-      "rules": {
-        "@typescript-eslint/explicit-member-accessibility": ["error", {
-          "accessibility": "explicit",
-          "overrides": {
-            "accessors": "explicit",
-            "constructors": "no-public",
-            "methods": "explicit",
-            "properties": "explicit",
-            "parameterProperties": "explicit"
+          {
+            "blankLine": "always",
+            "prev": "*",
+            "next": "return"
+          },
+          {
+            "blankLine": "any",
+            "prev": [
+              "const",
+              "let",
+              "var"
+            ],
+            "next": [
+              "const",
+              "let",
+              "var"
+            ]
+          },
+          {
+            "blankLine": "always",
+            "prev": [
+              "if",
+              "for",
+              "while",
+              "do"
+            ],
+            "next": "*"
+          },
+          {
+            "blankLine": "always",
+            "prev": "*",
+            "next": [
+              "if",
+              "for",
+              "while",
+              "do"
+            ]
+          },
+          {
+            "blankLine": "always",
+            "prev": "*",
+            "next": "return"
           }
-        }],
-        "@typescript-eslint/explicit-function-return-type": ["error", {
-          "allowExpressions": true
-        }]
+        ],
+        "curly": [
+          "error",
+          "all"
+        ]
       }
     },
     {
-      "files": ["*.ts", "*.tsx"],
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "extends": [
+        "plugin:@nrwl/nx/typescript"
+      ],
       "rules": {
-        "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
-        "operator-linebreak": ["error", "before"],
-        "comma-dangle": ["error", "always-multiline"]
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "accessibility": "explicit",
+            "overrides": {
+              "accessors": "explicit",
+              "constructors": "no-public",
+              "methods": "explicit",
+              "properties": "explicit",
+              "parameterProperties": "explicit"
+            }
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+          "error",
+          {
+            "allowExpressions": true
+          }
+        ]
       }
     },
     {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "rules": {
+        "brace-style": [
+          "error",
+          "1tbs",
+          {
+            "allowSingleLine": true
+          }
+        ],
+        "operator-linebreak": [
+          "error",
+          "before"
+        ],
+        "comma-dangle": [
+          "error",
+          "always-multiline"
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.js",
+        "*.jsx"
+      ],
+      "extends": [
+        "plugin:@nrwl/nx/javascript"
+      ],
       "rules": {}
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@ngrx/recommended"
+      ]
     }
   ]
 }
