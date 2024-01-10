@@ -45,7 +45,17 @@ export class AssociationStateService implements OnDestroy {
   }
 
   public update(association: Association, index: number): void {
-    this.state.mutate((associations) => (associations[index] = association));
+    
+    const actions = association.actions.map(a => {
+      const template = a.template;
+
+      return { ...a, template: template.replace('{1}', index.toString()), title:  a.title + ` ${index + 1}` };
+    });
+    
+    
+    this.state.mutate(
+      (associations) => (associations[index] = { ...association, actions }),
+    );
   }
 
   public remove(index: number): void {

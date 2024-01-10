@@ -14,6 +14,7 @@ import { Pin } from '../../components/z-uno-shield/z-uno-shield.model';
 import { Location } from '@angular/common';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import { generate, GeneratedData } from '@configurator/arduino-code-gen';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -40,6 +41,7 @@ export class PinsStateService {
     private readonly activatedRoute: ActivatedRoute,
     private readonly localStorageService: LocalStorageService,
     private readonly location: Location,
+    private readonly httpClient: HttpClient,
   ) {
     this.init();
   }
@@ -189,6 +191,22 @@ export class PinsStateService {
         this.currentKey = key;
         const data = JSON.parse(decompressFromEncodedURIComponent(decodeURIComponent(config)));
         this._boardConfig$.next(data);
+
+        // this.httpClient.post('/create', {
+        //   platform: key,
+        //   config: data,
+        // }).subscribe();
+        // this.httpClient.get('/config', {params: {
+        //     platform: key,
+        //   }}).subscribe();
+        // this.httpClient.put('/update', {
+        //   config: data,
+        // }, {
+        //   params: {
+        //     platform: key,
+        //   }
+        // }).subscribe();
+
         this.localStorageService.set(key, data);
       });
 

@@ -25,6 +25,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import * as fromDevices from './+state/devices.reducer';
+import { DevicesEffects } from './+state/devices.effects';
+import { HttpClientModule } from '@angular/common/http';
 
 const customTooltipDefaults: MatTooltipDefaultOptions = {
   showDelay: 1000,
@@ -36,6 +40,7 @@ const customTooltipDefaults: MatTooltipDefaultOptions = {
   declarations: [AppComponent, LayoutComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes, {
       initialNavigation: 'enabledBlocking',
       useHash: true,
@@ -57,6 +62,22 @@ const customTooltipDefaults: MatTooltipDefaultOptions = {
     MatListModule,
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
+    StoreModule.forRoot(
+      {},
+      {
+        metaReducers: [],
+        runtimeChecks: {
+          strictActionImmutability: true,
+          strictStateImmutability: true,
+        },
+      }
+    ),
+    StoreRouterConnectingModule.forRoot(),
+    StoreModule.forFeature(
+      fromDevices.DEVICES_FEATURE_KEY,
+      fromDevices.devicesReducer
+    ),
+    EffectsModule.forFeature([DevicesEffects]),
   ],
   providers: [
     {
