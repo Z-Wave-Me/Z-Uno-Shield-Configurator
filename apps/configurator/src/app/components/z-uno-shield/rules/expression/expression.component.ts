@@ -89,7 +89,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
 
     this.watchUnary();
   }
-  
+
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -108,6 +108,14 @@ export class ExpressionComponent implements OnInit, OnDestroy {
   }
 
   public writeValue(expression: Expression): void {
+    if (expression) {
+      console.log('[Expression]: writeValue', expression);
+      // @ts-ignore
+      this.expressionForm.controls.left.setValue(expression[0]);
+      this.expressionForm.controls.operand.setValue(expression[1]);
+      // @ts-ignore
+      this.expressionForm.controls.right.setValue(expression[2]);
+    }
     this.expression = expression;
   }
 

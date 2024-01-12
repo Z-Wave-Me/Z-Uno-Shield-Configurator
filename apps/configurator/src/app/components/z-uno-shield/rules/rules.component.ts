@@ -1,27 +1,27 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { PinsStateService } from '../../../services/store/pins-state.service';
-import { Subject, takeUntil } from 'rxjs';
+import { filter, first, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Action, Expression } from '@configurator/shared';
 import { rules } from '@typescript-eslint/eslint-plugin';
 import { Rule } from 'eslint';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'configurator-rules',
   templateUrl: './rules.component.html',
   styleUrls: ['./rules.component.scss'],
 })
-export class RulesComponent implements OnDestroy {
+export class RulesComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject<void>();
   public readonly form: FormGroup<RulesForm> =  new FormGroup<RulesForm>({
     rules: new FormArray<FormGroup<RuleForm>>([]),
   })
-  // public readonly rules$: Observable<Rule[]>;
 
   constructor(
     private readonly pinsStateService: PinsStateService,
   ) {
-    // this.rules$ = this.pinsStateService.rules();
+
     this.debug();
     this.form.valueChanges.pipe(
       takeUntil(this.destroy$),
@@ -37,6 +37,18 @@ export class RulesComponent implements OnDestroy {
     })
   }
 
+  public ngOnInit(): void {
+    this.pinsStateService.rules().pipe(
+      filter(d => !!d?.length),
+      first(),
+
+    ).subscribe(rules => {
+      console.warn('=======================================> ', rules);
+
+      rules.map(r => this.addRule(r));
+    })
+  }
+
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -46,12 +58,18 @@ export class RulesComponent implements OnDestroy {
     this.form.valueChanges.subscribe(console.log);
   }
 
-  public addRule(): void {
-    this.form.controls.rules.push(new FormGroup<RuleForm>({
-      expression: new FormControl<Expression | null >(null),
+  // @ts-ignore
+  public addRule({expression, elseBlock, actions}: Rule = {expression: null, elseBlock: [], actions: []}): void {
+    const control = new FormGroup<RuleForm>({
+      expression: new FormControl<Expression | null >(expression),
       actions: new FormArray<FormControl<Action>>([]),
       elseBlock: new FormArray<FormControl<Action>>([]),
-    }));
+    });
+
+    // @ts-ignore
+    (actions ?? []).forEach(a => control.controls.actions.push(new FormControl<Action>(a)));
+    this.form.controls.rules.push(control);
+
   }
 
   public removeRule(index: number): void {

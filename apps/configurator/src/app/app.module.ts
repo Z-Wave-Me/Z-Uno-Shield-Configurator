@@ -44,6 +44,7 @@ const customTooltipDefaults: MatTooltipDefaultOptions = {
     RouterModule.forRoot(appRoutes, {
       initialNavigation: 'enabledBlocking',
       useHash: true,
+
     }),
     BrowserAnimationsModule,
     MatSnackBarModule,

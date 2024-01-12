@@ -15,25 +15,25 @@ import { Location } from '@angular/common';
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import { generate, GeneratedData } from '@configurator/arduino-code-gen';
 import { HttpClient } from '@angular/common/http';
+import { ServerSyncService } from './server-sync.service';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class PinsStateService {
-  private readonly _boardConfig$ = new BehaviorSubject<BoardConfig>({
-    pins: [],
-    associations: [],
-    rules: [],
-  });
-
-  private readonly codeGen$ = new ReplaySubject<GeneratedData>(1);
-
   private readonly initialState: BoardConfig = {
     pins: [],
     associations: [],
     rules: [],
+    remoteUrl: null,
   }
+
+  private readonly _boardConfig$ = new BehaviorSubject<BoardConfig>(this.initialState);
+
+  private readonly codeGen$ = new ReplaySubject<GeneratedData>(1);
+
+
   private currentKey = '';
 
   constructor(
@@ -41,9 +41,13 @@ export class PinsStateService {
     private readonly activatedRoute: ActivatedRoute,
     private readonly localStorageService: LocalStorageService,
     private readonly location: Location,
-    private readonly httpClient: HttpClient,
+    private readonly serverSyncService: ServerSyncService,
   ) {
     this.init();
+    this.serverSyncService.init((config) => {
+      this._boardConfig$.next({...config, lastSyncTime: Date.now()});
+      this.updateRoute();
+    });
   }
 
   public code(): Observable<string|undefined> {
@@ -75,7 +79,8 @@ export class PinsStateService {
 
   public patchRules(rules: Rule[]): void {
     const snapshot = this.snapshot;
-    this._boardConfig$.next({...snapshot, rules});
+    this._boardConfig$.next({...snapshot, rules, lastChangedTime: Date.now()});
+    this.updateRoute();
   }
 
   public removeRule(id: string): void {
@@ -126,7 +131,7 @@ export class PinsStateService {
       }
     }
 
-    this._boardConfig$.next({...state, pins: updated });
+    this._boardConfig$.next({...state, pins: updated, lastChangedTime: Date.now() });
 
     console.group('Store');
     console.log(this.snapshot);
@@ -147,10 +152,10 @@ export class PinsStateService {
 
   private updateRoute(): void {
     const config = this.snapshot;
-    const configBase64 = compressToEncodedURIComponent(JSON.stringify(config, (key, value) => value === null || value === undefined ? undefined : value));
+    // const configBase64 = compressToEncodedURIComponent(JSON.stringify(config, (key, value) => value === null || value === undefined ? undefined : value));
     this.localStorageService.set(this.currentKey, config);
 
-    const query = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {config: configBase64}}).toString();
+    const query = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {url: config.remoteUrl}}).toString();
 
     this.location.go(query);
   }
@@ -166,7 +171,7 @@ export class PinsStateService {
     value[data.from] = value[data.to];
     value[data.to] = pin;
 
-    this._boardConfig$.next({ ...state, pins: value });
+    this._boardConfig$.next({ ...state, pins: value, lastChangedTime: Date.now() });
     this.updateRoute();
   }
 
@@ -174,7 +179,7 @@ export class PinsStateService {
     const state = this.snapshot;
 
     if (!(state.associations.length === 0 && associations.length === 0)) {
-      this._boardConfig$.next({ ...state, associations });
+      this._boardConfig$.next({ ...state, associations, lastChangedTime: Date.now() });
       this.updateRoute();
     }
   }
@@ -183,14 +188,15 @@ export class PinsStateService {
     this.activatedRoute.queryParams
       .pipe(
         first(),
-        map((data) => data['config']),
-        filter(Boolean),
+        // map((data) => data['config']),
+        // filter(Boolean),
       )
-      .subscribe((config) => {
-        const key = this.router.url.split('?')[0].split('/')[1];
-        this.currentKey = key;
-        const data = JSON.parse(decompressFromEncodedURIComponent(decodeURIComponent(config)));
-        this._boardConfig$.next(data);
+      .subscribe(() => {
+        // const key = this.router.url.split('?')[0].split('/')[1];
+        // this.currentKey = key;
+        // const config = this.localStorageService.get(key)
+        // const data = JSON.parse(decompressFromEncodedURIComponent(decodeURIComponent(config)));
+        // this._boardConfig$.next(data);
 
         // this.httpClient.post('/create', {
         //   platform: key,
@@ -207,7 +213,7 @@ export class PinsStateService {
         //   }
         // }).subscribe();
 
-        this.localStorageService.set(key, data);
+        // this.localStorageService.set(key, data);
       });
 
     this.router.events
