@@ -62,7 +62,8 @@ export class PinsStateService {
 
   public associations(): Observable<Action[]> {
     return this.boardConfig$.pipe(
-      map(config => config.associations.map(a => a.actions).flat()),
+      map(config => config.associations.map(a => a.actions).flat()
+      .map(({ title, ...other }, index ) => ({...other, title: `${title} ${index + 2}`}))),
     );
   }
   public get snapshot(): BoardConfig {

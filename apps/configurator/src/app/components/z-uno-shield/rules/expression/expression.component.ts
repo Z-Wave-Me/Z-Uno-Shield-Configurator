@@ -166,7 +166,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
   private makeAction(value: Action | string | number): Action {
     if (typeof value === 'string' || typeof value === 'number') {
       return {
-        parentId: 'custom',
+        parentId: value.toString(),
         title: value.toString(),
         parameters: [value],
         template: '{0}'
