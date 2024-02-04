@@ -11,7 +11,6 @@ import { SaveAsFileDirective } from '../../directives/save-as-file/save-as-file.
 import { PinsStateService } from '../../services/store/pins-state.service';
 import { combineLatest, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { rules } from '@typescript-eslint/eslint-plugin';
 import { Rule } from '@configurator/shared';
 
 

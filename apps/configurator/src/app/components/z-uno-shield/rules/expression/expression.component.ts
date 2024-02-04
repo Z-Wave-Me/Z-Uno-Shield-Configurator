@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Action, Expression } from '@configurator/shared';
-import { distinctUntilChanged, filter, map, Observable, of, Subject, takeUntil } from 'rxjs';
+import { distinctUntilChanged, map, Observable, Subject, takeUntil } from 'rxjs';
 import { ExpressionForm } from '../rules.component';
 import { PinsStateService } from '../../../../services/store/pins-state.service';
 

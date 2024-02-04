@@ -1,5 +1,5 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { config, distinctUntilChanged, filter, first, interval, map, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { filter, first, interval, map, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from './local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -61,7 +61,7 @@ export class ServerSyncService implements OnDestroy {
     this.interval$.pipe(
       takeUntil(this.destroy$),
 
-      map((key) => {
+      map(() => {
         return this.localStorageService.get<BoardConfig>(this.currentKey);
       }),
       filter(Boolean),

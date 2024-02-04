@@ -1,12 +1,9 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PinsStateService } from '../../../services/store/pins-state.service';
 import { filter, first, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Action, Expression } from '@configurator/shared';
-import { rules } from '@typescript-eslint/eslint-plugin';
 import { Rule } from 'eslint';
-import { HttpClient } from '@angular/common/http';
-import { notNull } from '@configurator/arduino-code-gen';
 
 @Component({
   selector: 'configurator-rules',
