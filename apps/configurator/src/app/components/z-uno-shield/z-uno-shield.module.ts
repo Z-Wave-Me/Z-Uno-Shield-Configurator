@@ -22,6 +22,7 @@ import { ExpressionComponent } from './rules/expression/expression.component';
 import { ActionComponent } from './rules/action/action.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
+import { UploaderModule } from '@configurator/uploader';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatInputModule,
+    UploaderModule,
   ],
 })
 export class ZUnoShieldModule {}

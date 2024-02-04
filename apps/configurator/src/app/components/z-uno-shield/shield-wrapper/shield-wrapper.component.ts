@@ -24,10 +24,10 @@ export class ShieldWrapperComponent {
       path: 'instructions',
       title: $localize`Build instructions`,
     },
-    {
-      path: 'compile',
-      title: $localize`Compile`,
-    },
+    // {
+    //   path: 'compile',
+    //   title: $localize`Compile`,
+    // },
   ];
 
   public activeLink = '';

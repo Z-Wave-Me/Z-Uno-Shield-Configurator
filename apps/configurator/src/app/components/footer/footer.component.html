@@ -8,6 +8,10 @@
         </mat-panel-title>
         <mat-panel-description>
           <span></span>
+          <configurator-upload-button
+            (click)="prevent($event)"
+            [code]="data.code ?? ''"
+          ></configurator-upload-button>
           <button
             mat-icon-button
             (click)="prevent($event)"

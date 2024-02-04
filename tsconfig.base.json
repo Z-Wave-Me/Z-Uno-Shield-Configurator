@@ -19,6 +19,7 @@
     "paths": {
       "@configurator/arduino-code-gen": ["libs/arduino-code-gen/src/index.ts"],
       "@configurator/shared": ["libs/shared/src/index.ts"],
+      "@configurator/uploader": ["libs/uploader/src/index.ts"],
       "@configurator/z-uno": ["libs/z-uno/src/index.ts"]
     }
   },

@@ -1,0 +1,16 @@
+:host {
+  padding: 1rem 3rem 3rem;
+  display: block;
+  position: relative;
+  width: 30rem;
+}
+
+.close__button {
+  position: absolute;
+  top: .3rem;
+  right: .3rem;
+}
+
+.error {
+  color: red;
+}

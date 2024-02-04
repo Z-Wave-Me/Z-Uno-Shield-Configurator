@@ -12,6 +12,7 @@ import { PinsStateService } from '../../services/store/pins-state.service';
 import { combineLatest, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Rule } from '@configurator/shared';
+import { UploaderModule } from '@configurator/uploader';
 
 
 @Component({
@@ -32,6 +33,7 @@ import { Rule } from '@configurator/shared';
     SaveAsFileDirective,
     NgIf,
     AsyncPipe,
+    UploaderModule,
   ],
 })
 export class FooterComponent {
