@@ -43,11 +43,8 @@ export class ServerSyncService implements OnDestroy {
           params: {
             short: url,
           }
-        }).pipe(map(res => {
-          console.warn(res);
-
-          return JSON.parse(res.content);
-        }),
+        }).pipe(
+          map(res => JSON.parse(res.content)),
           switchMap(config => this.httpClient.post<{
           content: string;
           url: string;
@@ -56,43 +53,15 @@ export class ServerSyncService implements OnDestroy {
       filter(Boolean),
     )
     .subscribe((config) => {
-      console.log('==========>', config);
-
-
       callback(config);
-
-      // const data = JSON.parse(decompressFromEncodedURIComponent(decodeURIComponent(config)));
-      // this._boardConfig$.next(data);
-      //
-      // this.httpClient.post('/create', {
-      //   platform: key,
-      //   config: data,
-      // }).subscribe();
-      // this.httpClient.get('/config', {params: {
-      //     platform: key,
-      //   }}).subscribe();
-      // this.httpClient.put('/update', {
-      //   config: data,
-      // }, {
-      //   params: {
-      //     platform: key,
-      //   }
-      // }).subscribe();
-      //
-      // this.localStorageService.set(key, data);
     }).add(() => {
-      console.log('DONE!');
       this.firstLoad = false;
     });
 
     this.interval$.pipe(
       takeUntil(this.destroy$),
-      tap(() => console.log('TICK')),
 
-      // map(() => this.router.url.split('?')[0].split('/')[1]),
       map((key) => {
-        // this.currentKey = key;
-
         return this.localStorageService.get<BoardConfig>(this.currentKey);
       }),
       filter(Boolean),
@@ -102,7 +71,6 @@ export class ServerSyncService implements OnDestroy {
         const removeConfigUrl = config.remoteUrl;
 
         if (removeConfigUrl) {
-          console.warn('PUT');
           return this.httpClient.put<BoardConfig>(this.remoteServerAddress, config , {
             params: {
               short: removeConfigUrl,
@@ -116,8 +84,6 @@ export class ServerSyncService implements OnDestroy {
         }>(this.remoteServerAddress, config).pipe(map(c => ({...config, remoteUrl: c.url})));
       })
     ).subscribe((config) => {
-      console.log(config);
-      console.log();
       try {
         this.localStorageService.set(this.currentKey, { ...config, lastSyncTime: Date.now() });
       } catch {}

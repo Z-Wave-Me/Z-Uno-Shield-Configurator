@@ -6,6 +6,7 @@ import { Action, Expression } from '@configurator/shared';
 import { rules } from '@typescript-eslint/eslint-plugin';
 import { Rule } from 'eslint';
 import { HttpClient } from '@angular/common/http';
+import { notNull } from '@configurator/arduino-code-gen';
 
 @Component({
   selector: 'configurator-rules',
@@ -27,11 +28,6 @@ export class RulesComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
     ).subscribe((data) => {
       if (data.rules) {
-        // const rules = data.rules
-        //   .filter(({expression, actions, elseBlock}) => expression && (actions || elseBlock))
-        //   // .map()
-
-
         this.pinsStateService.patchRules(data.rules as Rule[]);
       }
     })
@@ -43,8 +39,6 @@ export class RulesComponent implements OnInit, OnDestroy {
       first(),
 
     ).subscribe(rules => {
-      console.warn('=======================================> ', rules);
-
       rules.map(r => this.addRule(r));
     })
   }
@@ -58,16 +52,16 @@ export class RulesComponent implements OnInit, OnDestroy {
     this.form.valueChanges.subscribe(console.log);
   }
 
-  // @ts-ignore
-  public addRule({expression, elseBlock, actions}: Rule = {expression: null, elseBlock: [], actions: []}): void {
+  public addRule({expression, elseBlock, actions}: Rule = {expression: [null, '', ''], elseBlock: [], actions: []}): void {
     const control = new FormGroup<RuleForm>({
       expression: new FormControl<Expression | null >(expression),
       actions: new FormArray<FormControl<Action>>([]),
       elseBlock: new FormArray<FormControl<Action>>([]),
     });
 
-    // @ts-ignore
-    (actions ?? []).forEach(a => control.controls.actions.push(new FormControl<Action>(a)));
+    (actions ?? []).forEach(a => control.controls.actions.push(new FormControl<Action>(a, { nonNullable: true })));
+    (elseBlock ?? []).forEach(a => control.controls.elseBlock.push(new FormControl<Action>(a, { nonNullable: true })));
+
     this.form.controls.rules.push(control);
 
   }
@@ -101,7 +95,7 @@ export interface ActionForm {
 }
 
 export interface ExpressionForm {
-  left: FormControl<string | Action | null>;
+  left: FormControl<string | Action | null | undefined | number>;
   operand: FormControl<string>;
   right: FormControl<string | Action>;
 }

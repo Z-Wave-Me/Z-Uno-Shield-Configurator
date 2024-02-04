@@ -35,7 +35,7 @@ export class ActionComponent implements OnInit, OnDestroy {
   public onTouched = (): void => void 0;
 
   public getTitle(option: Action, value: Action ): boolean {
-    return option.parentId === value.parentId;
+    return option?.parentId === value?.parentId;
   }
 
   constructor(
@@ -43,8 +43,6 @@ export class ActionComponent implements OnInit, OnDestroy {
   ) {
     this.variableList$ = combineLatest([this.pinsStateService.variables(), this.pinsStateService.associations()]).pipe(
       map(([variables, associations]) => {
-        console.log('=================>', variables, associations);
-
         return [...variables, ...associations]
       }),
     )
@@ -80,6 +78,10 @@ export class ActionComponent implements OnInit, OnDestroy {
 
   public writeValue(action: Action): void {
     this.action = action;
+    this.actionForm.setValue({
+      action: action,
+      parameters: +(action?.parameters[0] ?? 0),
+    });
   }
 
 }

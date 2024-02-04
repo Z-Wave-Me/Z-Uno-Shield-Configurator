@@ -22,7 +22,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
 
   public readonly expressionForm: FormGroup<ExpressionForm>
     = new FormGroup<ExpressionForm>({
-      left: new FormControl<string | null>(null),
+      left: new FormControl<string | null | undefined| number>(null),
       operand: new FormControl<string>('', {
         validators: [Validators.required],
         nonNullable: true,
@@ -33,29 +33,36 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       }),
     });
 
-  public readonly operandList: { value: string; unary?: boolean }[] = [
+  public readonly operandList: Option[] = [
     {
+      label: '<',
       value: '<',
     },
     {
+      label: '>',
       value: '>',
     },
-    // {
-    //   value: '≥',
-    // },
-    // {
-    //   value: '≤',
-    // },
-    // {
-    //   value: '=',
-    // },
-    // {
-    //   value: '≠',
-    // },
-    // {
-    //   value: 'changedBy',
-    //   unary: true,
-    // },
+    {
+      label: '≥',
+      value: '>='
+    },
+    {
+      label: '≤',
+      value: '<='
+    },
+    {
+      label: '=',
+      value: '=='
+    },
+    {
+      value: '≠',
+      label: '!='
+    },
+    {
+      label: 'changedBy',
+      value: 'changeFunction',
+      unary: true,
+    },
   ];
   public readonly variableList$: Observable<Action[]>;
   public expression: Expression | undefined;
@@ -82,8 +89,17 @@ export class ExpressionComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe((data) => {
+        if (typeof data.right === 'string') {
+          const le: Action =  {
+            parentId: 'custom id',
+            title: data.right,
+            parameters: [data.right],
+            template: '{0}',
+          };
+        }
         if (data.right && data.operand) {
-          this.onChange([data.left, data.operand, data.right]);
+          this.onChange([
+            data.left ? this.makeAction(data.left) : data.left, data.operand, this.makeAction(data.right)]);
         }
       });
 
@@ -107,10 +123,13 @@ export class ExpressionComponent implements OnInit, OnDestroy {
     this.disabled = disabled;
   }
 
+  public compareOperand(option: Option, value: string): boolean {
+    return  option.value === value;
+  }
+
   public writeValue(expression: Expression): void {
     if (expression) {
-      console.log('[Expression]: writeValue', expression);
-      // @ts-ignore
+      // console.log('[Expression]: writeValue', expression);
       this.expressionForm.controls.left.setValue(expression[0]);
       this.expressionForm.controls.operand.setValue(expression[1]);
       // @ts-ignore
@@ -143,4 +162,23 @@ export class ExpressionComponent implements OnInit, OnDestroy {
         this.expressionForm.updateValueAndValidity();
       });
   }
+
+  private makeAction(value: Action | string | number): Action {
+    if (typeof value === 'string' || typeof value === 'number') {
+      return {
+        parentId: 'custom',
+        title: value.toString(),
+        parameters: [value],
+        template: '{0}'
+      }
+    }
+
+    return value;
+  }
+}
+
+interface Option {
+  value: string;
+  label: string;
+  unary?: boolean;
 }

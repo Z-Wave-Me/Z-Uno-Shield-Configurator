@@ -3,30 +3,26 @@
   <ng-container formArrayName="rules">
     <ng-container *ngFor="let ruleForm of form.controls.rules.controls; let ruleIndex = index">
       <div [formGroup]="ruleForm" class="rule">
-        <div>
-          ----------------------------------- IF ------------------------------------------------
-        </div>
-        <div>
-          <configurator-expression [formControl]="ruleForm.controls.expression"></configurator-expression>
+        <div class="label" i18n>
+          Condition
         </div>
         <div class="row">
-          -----------------------------------THEN------------------------------------------------
+          <configurator-expression [formControl]="ruleForm.controls.expression"></configurator-expression>
+        </div>
+        <div class="label">
+          Condition fulfilled
           <button mat-icon-button (click)="addAction(ruleForm.controls.actions)"><mat-icon>plus_one</mat-icon></button>
-
         </div>
         <div *ngFor="let action of ruleForm.controls.actions.controls; let actionIndex = index" class="row">
-<!--            action {{actionIndex}} {{action.value | json}}-->
           <configurator-action [formControl]="action"></configurator-action>
           <button mat-icon-button (click)="removeAction(ruleForm.controls.actions, actionIndex)"><mat-icon>delete</mat-icon></button>
         </div>
-        <div class="row">
-
-          -----------------------------------ELSE------------------------------------------------
+        <div class="label">
+          Otherwise
           <button mat-icon-button (click)="addAction(ruleForm.controls.elseBlock)"><mat-icon>plus_one</mat-icon></button>
 
         </div>
           <div *ngFor="let action of ruleForm.controls.elseBlock.controls; let elseIndex = index" class="row">
-<!--            else action {{elseIndex}}  {{action.value | json}}-->
             <configurator-action [formControl]="action"></configurator-action>
             <button mat-icon-button (click)="removeAction(ruleForm.controls.elseBlock, elseIndex)"><mat-icon>delete</mat-icon></button>
           </div>
@@ -38,5 +34,3 @@
     <button mat-raised-button (click)="addRule()">AddRule</button>
   </ng-container>
 </div>
-
-э

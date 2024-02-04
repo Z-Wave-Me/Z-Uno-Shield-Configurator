@@ -7,7 +7,7 @@
 
 .rule {
   border-radius: 5px;
-  background: silver;
+  background: #ececec;
   padding: .5rem;
   position: relative;
 
@@ -28,5 +28,11 @@
 .row {
   display: flex;
   gap: 1.5rem;
+  padding-left: 1rem;
+}
+
+.label {
+  padding-bottom: .5rem;
+  display: flex;
   align-items: center;
 }
