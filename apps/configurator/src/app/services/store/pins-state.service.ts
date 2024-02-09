@@ -25,7 +25,7 @@ export class PinsStateService {
   private readonly initialState: BoardConfig = {
     pins: [],
     associations: [],
-    rules: [],
+    rules: null,
     remoteUrl: null,
   }
 
@@ -62,7 +62,7 @@ export class PinsStateService {
 
   public associations(): Observable<Action[]> {
     return this.boardConfig$.pipe(
-      map(config => config.associations.map(a => a.actions).flat()
+      map(config => config.associations.map(a => a.actions.map(act => ({...act, uuid: a.uuid}))).flat()
       .map(({ title, ...other }, index ) => ({...other, title: `${title} ${index + 2}`}))),
     );
   }
@@ -74,7 +74,7 @@ export class PinsStateService {
     return this._boardConfig$.asObservable();
   }
 
-  public rules(): Observable<Rule[]> {
+  public rules(): Observable<Rule[] | null> {
     return this._boardConfig$.pipe(map(state => state.rules));
   }
 

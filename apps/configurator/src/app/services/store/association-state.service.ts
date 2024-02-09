@@ -35,6 +35,7 @@ export class AssociationStateService implements OnDestroy {
 
 
     effect(() => {
+      console.warn('===========>', this.state());
       this.pinsStateService.updateAssociations(this.state());
     });
   }
@@ -44,15 +45,15 @@ export class AssociationStateService implements OnDestroy {
    this.destroy$.complete();
   }
 
-  public update(association: Association, index: number): void {
+  public update(association: Association): void {
 
     this.state.mutate(
-      (associations) => (associations[index] = association),
+      (associations) => (associations.push(association)),
     );
   }
 
-  public remove(index: number): void {
-    this.state.update((rules) => rules.filter((_, i) => i !== index));
+  public remove(item: Association): void {
+    this.state.update((rules) => rules.filter((association) => association.uuid !== item.uuid));
   }
 
   public associations(): Signal<Association[]> {

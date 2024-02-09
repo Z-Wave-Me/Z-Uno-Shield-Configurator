@@ -10,7 +10,7 @@ export interface Rule {
 export interface BoardConfig {
   pins: PinConfig[];
   associations: Association[];
-  rules: Rule[];
+  rules: Rule[] | null;
   lastChangedTime?: number;
   lastSyncTime?: number;
   remoteUrl: string | null;

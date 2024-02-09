@@ -22,11 +22,12 @@ export class AssociationsComponent {
   }
 
   public addItem(item: Association): void {
-    this.relationsStateService.update(item, this.data().length);
+    const uuid = crypto.randomUUID();
+    this.relationsStateService.update({ ...item, uuid });
     this.changeDetectorRef.detectChanges();
   }
 
-  public removeItem(index: number): void {
-   this.relationsStateService.remove(index)
+  public removeItem(item: Association): void {
+   this.relationsStateService.remove(item)
   }
 }

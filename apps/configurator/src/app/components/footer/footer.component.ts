@@ -11,7 +11,7 @@ import { SaveAsFileDirective } from '../../directives/save-as-file/save-as-file.
 import { PinsStateService } from '../../services/store/pins-state.service';
 import { combineLatest, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Rule } from '@configurator/shared';
+import { Action, Association, Rule } from '@configurator/shared';
 import { UploaderModule } from '@configurator/uploader';
 
 
@@ -41,9 +41,9 @@ export class FooterComponent {
   public code$: Observable<string| undefined>;
 
   constructor(private readonly pinsStateService: PinsStateService) {
-    this.code$ = combineLatest([this.pinsStateService.code(), this.pinsStateService.rules()]).pipe(
-      map(([code, rules]) => {
-        return (code ?? '').replace('#rulesBlock', this.rulesToCode(rules));
+    this.code$ = combineLatest([this.pinsStateService.code(), this.pinsStateService.boardConfig$]).pipe(
+      map(([code, { rules, associations }]) => {
+        return (code ?? '').replace('#rulesBlock', this.rulesToCode(rules ?? [], associations));
       }),
     );
   }
@@ -51,8 +51,13 @@ export class FooterComponent {
     event.stopPropagation();
   }
 
-  private rulesToCode(rules: Rule[]): string {
-    return rules.map(r => this.makeRule(r)).join('\n');
+  private rulesToCode(rules: Rule[], associations: Association[]): string {
+    console.log('==============================');
+    return rules.map(r => {
+      console.log(r, associations);
+
+      return r;
+    }).map(r => this.makeRule(r)).join('\n');
   }
 
   private makeRule(rule: Rule): string {

@@ -4,6 +4,7 @@ import { filter, first, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Action, Expression } from '@configurator/shared';
 import { Rule } from 'eslint';
+import { notNull } from '@configurator/arduino-code-gen';
 
 @Component({
   selector: 'configurator-rules',
@@ -32,10 +33,10 @@ export class RulesComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.pinsStateService.rules().pipe(
-      filter(d => !!d?.length),
+      filter(notNull),
       first(),
-
     ).subscribe(rules => {
+      console.warn('here', rules);
       rules.map(r => this.addRule(r));
     })
   }
@@ -50,6 +51,7 @@ export class RulesComponent implements OnInit, OnDestroy {
   }
 
   public addRule({expression, elseBlock, actions}: Rule = {expression: [null, '', ''], elseBlock: [], actions: []}): void {
+    console.warn('aAAA');
     const control = new FormGroup<RuleForm>({
       expression: new FormControl<Expression | null >(expression),
       actions: new FormArray<FormControl<Action>>([]),
@@ -60,7 +62,6 @@ export class RulesComponent implements OnInit, OnDestroy {
     (elseBlock ?? []).forEach(a => control.controls.elseBlock.push(new FormControl<Action>(a, { nonNullable: true })));
 
     this.form.controls.rules.push(control);
-
   }
 
   public removeRule(index: number): void {

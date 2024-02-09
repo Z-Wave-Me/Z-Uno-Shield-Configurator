@@ -4,7 +4,7 @@
   </mat-list-item>
   <mat-list-item *ngFor="let item of data(); let i = index" class="list-item">
     <div matListItemTitle>{{i + 2}}.  {{item.title}}</div>
-    <button matListItemMeta mat-icon-button (click)="removeItem(i)">
+    <button matListItemMeta mat-icon-button (click)="removeItem(item)">
       <mat-icon class="delete-icon">delete</mat-icon>
     </button>
   </mat-list-item>

@@ -14,11 +14,13 @@ export interface Action {
   title: string;
   template: string;
   parameters: (ActionParameter | number | string)[];
+  uuid?: string;
 }
 
 export interface Association {
   initName: string;
   title: string;
   actions: Action[];
+  uuid?: string;
 }
 
