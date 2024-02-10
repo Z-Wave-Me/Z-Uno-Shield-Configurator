@@ -159,10 +159,6 @@ export const analogOutput = [
   },
 ];
 
-export const colorOutput = [
-
-]
-
 export const analogInput = [
   {
     title: $localize`Percentages, %`,
@@ -243,21 +239,18 @@ export const adcConfig = [
   {
     key: 'digital input 3',
     title: $localize`Digital input 0/3 V`,
-    withGround: 3,
     options: digitalInput,
     busBars: [1],
   },
   {
     key: 'digital input 5',
     title: $localize`Digital input 0/5 V`,
-    withGround: 5,
     options: digitalInput,
     busBars: [2,3],
   },
   {
     key: 'digital input 12',
     title: $localize`Digital input 0/12 V`,
-    withGround: 12,
     options: digitalInput,
     busBars: [0,3],
   },
