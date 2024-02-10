@@ -5,9 +5,11 @@
       <div [formGroup]="ruleForm" class="rule">
         <div class="label" i18n>
           Condition
+          <button mat-icon-button (click)="addExpression(ruleForm.controls.expressions)"><mat-icon>plus_one</mat-icon></button>
         </div>
-        <div class="row">
-          <configurator-expression [formControl]="ruleForm.controls.expression"></configurator-expression>
+        <div *ngFor="let expression of ruleForm.controls.expressions.controls; let expressionIndex = index; let first = first" class="row">
+          <configurator-expression [formControl]="expression" [first]="first"></configurator-expression>
+          <button *ngIf="expressionIndex" mat-icon-button (click)="removeExpression(ruleForm.controls.expressions, expressionIndex)"><mat-icon>delete</mat-icon></button>
         </div>
         <div class="label">
           Condition fulfilled

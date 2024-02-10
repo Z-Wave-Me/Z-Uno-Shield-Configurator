@@ -50,15 +50,16 @@ export class RulesComponent implements OnInit, OnDestroy {
     this.form.valueChanges.subscribe(console.log);
   }
 
-  public addRule({expression, elseBlock, actions}: Rule = {expression: {
-    expression: [null, '', null],
-    }, elseBlock: [], actions: []}): void {
+  public addRule({expressions, elseBlock, actions}: Rule = {expressions: [{
+      expression: [null, '', null],
+    }], elseBlock: [], actions: []}): void {
     const control = new FormGroup<RuleForm>({
-      expression: new FormControl<Expression | null >(expression),
+      expressions: new FormArray<FormControl<Expression>>([]),
       actions: new FormArray<FormControl<Action>>([]),
       elseBlock: new FormArray<FormControl<Action>>([]),
     });
 
+    (expressions ?? []).forEach(e => control.controls.expressions.push(new FormControl<Expression>(e, { nonNullable: true})));
     (actions ?? []).forEach(a => control.controls.actions.push(new FormControl<Action>(a, { nonNullable: true })));
     (elseBlock ?? []).forEach(a => control.controls.elseBlock.push(new FormControl<Action>(a, { nonNullable: true })));
 
@@ -76,12 +77,22 @@ export class RulesComponent implements OnInit, OnDestroy {
   public removeAction(actions: FormArray, index: number): void {
     actions.removeAt(index);
   }
+
+  public addExpression(expression: FormArray) {
+    expression.push(new FormControl<Expression>({
+      expression: [null, '', null]
+    }));
+  }
+
+  public removeExpression(expression: FormArray, expressionIndex: number) {
+    expression.removeAt(expressionIndex);
+  }
 }
 
 export interface RuleForm {
-  expression: FormControl<Expression | null>,
-  actions:  FormArray<FormControl<Action>>,
-  elseBlock:  FormArray<FormControl<Action>>,
+  expressions: FormArray<FormControl<Expression>>;
+  actions:  FormArray<FormControl<Action>>;
+  elseBlock:  FormArray<FormControl<Action>>;
 }
 
 export interface RulesForm {
@@ -101,7 +112,7 @@ export interface ExpressionForm {
 }
 
 export interface Rule {
-  expression: Expression;
+  expressions: Expression[];
   actions: Action[];
   elseBlock: Action[];
 }

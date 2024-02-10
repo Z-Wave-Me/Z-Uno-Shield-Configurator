@@ -68,9 +68,9 @@ ${
     .join('\n')}`
   }
 
-    if(rule.expression && rule.actions.filter(Boolean).length) {
+    if(rule.expressions && rule.actions.filter(Boolean).length) {
       return `
-  if (${this.makeExpression([rule.expression])}) {
+  if (${this.makeExpression(rule.expressions)}) {
 ${
       rule.actions
       .filter(Boolean)
@@ -111,9 +111,9 @@ ${
     const logicalToSting = (operator: Logical | undefined) => {
       switch (operator) {
         case Logical.or:
-          return '|| ';
+          return '      || ';
         case Logical.and:
-          return '&& ';
+          return '      && ';
         default:
           return '';
       }

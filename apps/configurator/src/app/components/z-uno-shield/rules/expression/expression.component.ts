@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Action, Expression, Logical, OperatorType } from '@configurator/shared';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -37,6 +37,17 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       operator: new FormControl<Logical| undefined>(undefined, {nonNullable: true}),
     });
 
+  public readonly operatorList = [
+    {
+      label: 'AND',
+      value: Logical.and,
+    },
+    {
+      label: 'OR',
+      value: Logical.or,
+    }
+  ];
+
   public readonly operandList: Option[] = [
     {
       label: '<',
@@ -71,6 +82,10 @@ export class ExpressionComponent implements OnInit, OnDestroy {
   public readonly variableList$: Observable<Action[]>;
   public expression: Expression | undefined;
   public disabled = false;
+
+
+  @Input()
+  first: boolean = false;
 
   public onChange = (expression: Expression): void => void 0;
 

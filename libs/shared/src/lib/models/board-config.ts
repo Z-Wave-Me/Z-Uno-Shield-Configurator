@@ -2,7 +2,7 @@ import { Action, PinConfig } from '@configurator/shared';
 import { Association } from './association';
 
 export interface Rule {
-  expression: Expression,
+  expressions: Expression[],
   actions: Action[],
   elseBlock: Action[],
 }

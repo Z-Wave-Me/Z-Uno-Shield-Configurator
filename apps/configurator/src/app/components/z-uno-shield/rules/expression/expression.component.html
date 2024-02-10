@@ -1,4 +1,10 @@
 <form [formGroup]="expressionForm" *ngIf="{ variables: variableList$ | async } as data" class="row">
+  <mat-form-field appearance="outline" *ngIf="!first else spacer" [style.width.rem]="5">
+    <mat-select
+    formControlName="operator">
+      <mat-option *ngFor="let item of operatorList" [value]="item.value">{{item.label}}</mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Value</mat-label>
     <input
@@ -35,3 +41,7 @@
     </mat-autocomplete>
   </mat-form-field>
 </form>
+
+<ng-template #spacer>
+  <div [style.width.rem]="5"></div>
+</ng-template>
