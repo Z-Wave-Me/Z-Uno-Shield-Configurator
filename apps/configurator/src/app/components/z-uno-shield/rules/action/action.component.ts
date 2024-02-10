@@ -35,7 +35,7 @@ export class ActionComponent implements OnInit, OnDestroy {
   public onTouched = (): void => void 0;
 
   public getTitle(option: Action, value: Action ): boolean {
-    return option?.parentId === value?.parentId;
+    return (option?.parentId + option?.title) === (value?.parentId + value?.title);
   }
 
   constructor(

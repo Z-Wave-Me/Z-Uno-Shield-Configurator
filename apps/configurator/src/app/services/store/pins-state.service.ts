@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import {
-  BehaviorSubject, config,
+  BehaviorSubject,
   distinctUntilChanged,
   filter,
   first,
   map,
-  Observable, ReplaySubject, startWith, Subject, takeUntil
+  Observable,
+  ReplaySubject,
 } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
 import { Association, PinConfig, BoardConfig, Rule, Action } from '@configurator/shared';
 import { Pin } from '../../components/z-uno-shield/z-uno-shield.model';
 import { Location } from '@angular/common';
-import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string';
 import { generate, GeneratedData } from '@configurator/arduino-code-gen';
-import { HttpClient } from '@angular/common/http';
 import { ServerSyncService } from './server-sync.service';
 
 
@@ -62,8 +61,8 @@ export class PinsStateService {
 
   public associations(): Observable<Action[]> {
     return this.boardConfig$.pipe(
-      map(config => config.associations.map(a => a.actions.map(act => ({...act, uuid: a.uuid}))).flat()
-      .map(({ title, ...other }, index ) => ({...other, title: `${title} ${index + 2}`}))),
+      map(config => config.associations.map((a, index) => a.actions.map(act => ({...act, uuid: a.uuid, index }))).flat()
+      .map(({ title, index, ...other } ) => ({...other, title: `${title} ${index + 2}`}))),
     );
   }
   public get snapshot(): BoardConfig {
@@ -82,11 +81,6 @@ export class PinsStateService {
     const snapshot = this.snapshot;
     this._boardConfig$.next({...snapshot, rules, lastChangedTime: Date.now()});
     this.updateRoute();
-  }
-
-  public removeRule(id: string): void {
-    // const { rules, ...other } = this.snapshot;
-    // this._boardConfig$.next({...other, rules: rules.filter(rule => rule.id !== id)});
   }
 
   public patchDeviceConfig(pin: PinConfig, possiblePins: Pin[]): void {

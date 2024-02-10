@@ -11,7 +11,7 @@ import { SaveAsFileDirective } from '../../directives/save-as-file/save-as-file.
 import { PinsStateService } from '../../services/store/pins-state.service';
 import { combineLatest, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Association, Rule } from '@configurator/shared';
+import { Action, Association, Rule } from '@configurator/shared';
 import { UploaderModule } from '@configurator/uploader';
 
 
@@ -66,8 +66,10 @@ export class FooterComponent {
       elseBlock = `
   } else {
 ${
-      // @ts-ignore
-    rule.elseBlock.filter(Boolean).map(a => `    ${a.template.replace('{0}', a.parameters[0])}`).join('\n')}`
+    rule.elseBlock.filter(Boolean).filter(Boolean)
+    .map(a => this.makeAction(a, associations))
+    .filter(Boolean)
+    .join('\n')}`
   }
 
     if(rule.expression && rule.actions.filter(Boolean).length) {
@@ -77,19 +79,7 @@ ${
 ${
       rule.actions
       .filter(Boolean)
-      .map(a => {
-        const index = associations.findIndex(association => association.uuid === a.parentId);
-        const hasAssociation = a.template.includes('{1}')
-        // TODO добавить сообщение об ошибке в форме (отсутствует ассоциация)
-        if (hasAssociation && index < 0) {
-          return null;
-        }
-
-        return `    ${
-          a.template
-          .replace('{1}', (2 + index).toString())
-          .replace('{0}', a.parameters[0].toString())}`
-      })
+      .map(a => this.makeAction(a, associations))
       .filter(Boolean)
       .join('\n')}${elseBlock
   }
@@ -98,5 +88,19 @@ ${
     }
 
     return '';
+  }
+
+  private makeAction = (action: Action, associations: Association[]): string | null  => {
+    const index = associations.findIndex(association => association.uuid === action.parentId);
+    const hasAssociation = action.template.includes('{1}')
+    // TODO добавить сообщение об ошибке в форме (отсутствует ассоциация)
+    if (hasAssociation && index < 0) {
+      return null;
+    }
+
+    return `    ${
+      action.template
+      .replace('{1}', (2 + index).toString())
+      .replace('{0}', action.parameters[0].toString())}`
   }
 }
