@@ -17,4 +17,12 @@ export interface BoardConfig {
 }
 
 
-export type Expression = [Action | null, string, Action | null]
+export type Expression = {
+  expression: [Action | null, string, Action | null];
+  operator?: Logical;
+};
+
+export enum Logical {
+  or = 'or',
+  and = 'and',
+}

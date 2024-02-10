@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { Action, Expression } from '@configurator/shared';
+import { Action, Expression, Logical, OperatorType } from '@configurator/shared';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ExpressionForm } from '../rules.component';
 import { PinsStateService } from '../../../../services/store/pins-state.service';
@@ -34,6 +34,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
         validators: [Validators.required],
         nonNullable: true,
       }),
+      operator: new FormControl<Logical| undefined>(undefined, {nonNullable: true}),
     });
 
   public readonly operandList: Option[] = [
@@ -63,7 +64,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
     },
     {
       label: 'changedBy',
-      value: 'changeFunction',
+      value: OperatorType.changeBy,
       unary: true,
     },
   ];
@@ -91,10 +92,11 @@ export class ExpressionComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe((data) => {
-        this.onChange([this.makeAction(data.left), data.operand!, this.makeAction(data.right)]);
+        this.onChange({
+          expression: [this.makeAction(data.left), data.operand!, this.makeAction(data.right)],
+          operator: data.operator,
+        });
       });
-
-    // this.watchUnary();
   }
 
   public ngOnDestroy(): void {
@@ -119,38 +121,13 @@ export class ExpressionComponent implements OnInit, OnDestroy {
   }
 
   public writeValue(expression: Expression): void {
-    if (expression[0] && expression[2]) {
-      this.expressionForm.controls.left.setValue(expression[0]);
-      this.expressionForm.controls.operand.setValue(expression[1]);
-      this.expressionForm.controls.right.setValue(expression[2]);
+    if (expression.expression[0] && expression.expression[2]) {
+      this.expressionForm.controls.left.setValue(expression.expression[0]);
+      this.expressionForm.controls.operand.setValue(expression.expression[1]);
+      this.expressionForm.controls.right.setValue(expression.expression[2]);
+      this.expressionForm.controls.operator.setValue(expression.operator);
     }
-    this.expression = expression;
   }
-
-  // private watchUnary(): void {
-  //   const unary = this.operandList
-  //     .filter(({ unary }) => unary)
-  //     .map(({ value }) => value);
-  //
-  //   this.expressionForm.controls.operand.valueChanges
-  //     .pipe(
-  //       map((value) => unary.includes(value)),
-  //       distinctUntilChanged(),
-  //       takeUntil(this.destroy$),
-  //     )
-  //     .subscribe((disable) => {
-  //       const control = this.expressionForm.controls.left;
-  //
-  //       // if (disable) {
-  //       //   control.setValue(null);
-  //       //   control.disable();
-  //       // } else {
-  //       //   control.enable();
-  //       // }
-  //
-  //       this.expressionForm.updateValueAndValidity();
-  //     });
-  // }
 
   private makeAction(value: Action | string | number | undefined | null): Action | null {
     if (typeof value === 'string' || typeof value === 'number') {
@@ -167,7 +144,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
 }
 
 interface Option {
-  value: string;
+  value: string | OperatorType.changeBy;
   label: string;
   unary?: boolean;
 }

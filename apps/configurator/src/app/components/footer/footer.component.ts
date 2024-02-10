@@ -11,7 +11,7 @@ import { SaveAsFileDirective } from '../../directives/save-as-file/save-as-file.
 import { PinsStateService } from '../../services/store/pins-state.service';
 import { combineLatest, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Action, Association, Rule } from '@configurator/shared';
+import { Action, Association, Expression, Logical, OperatorType, Rule } from '@configurator/shared';
 import { UploaderModule } from '@configurator/uploader';
 
 
@@ -52,11 +52,7 @@ export class FooterComponent {
   }
 
   private rulesToCode(rules: Rule[], associations: Association[]): string {
-    return rules.map(r => {
-      console.log(r, associations);
-
-      return r;
-    }).map(r => this.makeRule(r, associations)).join('\n');
+    return rules.map(r => this.makeRule(r, associations)).join('\n');
   }
 
   private makeRule(rule: Rule, associations: Association[]): string {
@@ -74,8 +70,7 @@ ${
 
     if(rule.expression && rule.actions.filter(Boolean).length) {
       return `
-  if (${
-      rule.expression[0]?.['parentId'] ?? rule.expression[0]} ${rule.expression[1]} ${rule.expression[2]?.['parentId'] ?? rule.expression[2]}) {
+  if (${this.makeExpression([rule.expression])}) {
 ${
       rule.actions
       .filter(Boolean)
@@ -103,4 +98,31 @@ ${
       .replace('{1}', (2 + index).toString())
       .replace('{0}', action.parameters[0].toString())}`
   }
+
+  private makeExpression(list: Expression[]): string {
+    const expressionToString = ({ expression }: Expression) => {
+      if (expression[1] === OperatorType.changeBy) {
+        return `changeByFunction(${getName(expression[0])}, ${expression[2]}`
+      }
+
+      return `${getName(expression[0])} ${expression[1]} ${getName(expression[2])}`
+    }
+
+    const logicalToSting = (operator: Logical | undefined) => {
+      switch (operator) {
+        case Logical.or:
+          return '|| ';
+        case Logical.and:
+          return '&& ';
+        default:
+          return '';
+      }
+    }
+
+    return list.map(item => `${logicalToSting(item.operator)}${expressionToString(item)}`).join('\n');
+  }
+}
+
+function getName(action: Action | null): string {
+  return action?.parentId ?? '';
 }

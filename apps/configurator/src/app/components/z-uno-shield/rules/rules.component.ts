@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PinsStateService } from '../../../services/store/pins-state.service';
 import { filter, first, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { Action, Expression } from '@configurator/shared';
+import { Action, Expression, Logical } from '@configurator/shared';
 import { Rule } from 'eslint';
 import { notNull } from '@configurator/arduino-code-gen';
 
@@ -50,7 +50,9 @@ export class RulesComponent implements OnInit, OnDestroy {
     this.form.valueChanges.subscribe(console.log);
   }
 
-  public addRule({expression, elseBlock, actions}: Rule = {expression: [null, '', null], elseBlock: [], actions: []}): void {
+  public addRule({expression, elseBlock, actions}: Rule = {expression: {
+    expression: [null, '', null],
+    }, elseBlock: [], actions: []}): void {
     const control = new FormGroup<RuleForm>({
       expression: new FormControl<Expression | null >(expression),
       actions: new FormArray<FormControl<Action>>([]),
@@ -95,10 +97,11 @@ export interface ExpressionForm {
   left: FormControl<string | Action>;
   operand: FormControl<string>;
   right: FormControl<string | Action>;
+  operator: FormControl<Logical | undefined>;
 }
 
 export interface Rule {
-  expression: Expression,
-  actions: Action[],
-  elseBlock: Action[],
+  expression: Expression;
+  actions: Action[];
+  elseBlock: Action[];
 }

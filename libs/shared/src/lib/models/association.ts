@@ -23,3 +23,6 @@ export interface Association {
   uuid?: string;
 }
 
+export enum OperatorType {
+  changeBy = 'changeBy'
+}
