@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Action, Expression } from '@configurator/shared';
-import { distinctUntilChanged, map, Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { ExpressionForm } from '../rules.component';
 import { PinsStateService } from '../../../../services/store/pins-state.service';
 
@@ -22,7 +22,10 @@ export class ExpressionComponent implements OnInit, OnDestroy {
 
   public readonly expressionForm: FormGroup<ExpressionForm>
     = new FormGroup<ExpressionForm>({
-      left: new FormControl<string | null | undefined| number>(null),
+      left: new FormControl<string>('', {
+        validators: [Validators.required],
+        nonNullable: true,
+      }),
       operand: new FormControl<string>('', {
         validators: [Validators.required],
         nonNullable: true,
@@ -85,25 +88,13 @@ export class ExpressionComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.expressionForm.valueChanges
       .pipe(
-        // filter(() => this.expressionForm.valid),
         takeUntil(this.destroy$),
       )
       .subscribe((data) => {
-        if (typeof data.right === 'string') {
-          const le: Action =  {
-            parentId: 'custom id',
-            title: data.right,
-            parameters: [data.right],
-            template: '{0}',
-          };
-        }
-        if (data.right && data.operand) {
-          this.onChange([
-            data.left ? this.makeAction(data.left) : data.left, data.operand, this.makeAction(data.right)]);
-        }
+        this.onChange([this.makeAction(data.left), data.operand!, this.makeAction(data.right)]);
       });
 
-    this.watchUnary();
+    // this.watchUnary();
   }
 
   public ngOnDestroy(): void {
@@ -128,42 +119,40 @@ export class ExpressionComponent implements OnInit, OnDestroy {
   }
 
   public writeValue(expression: Expression): void {
-    if (expression) {
-      // console.log('[Expression]: writeValue', expression);
+    if (expression[0] && expression[2]) {
       this.expressionForm.controls.left.setValue(expression[0]);
       this.expressionForm.controls.operand.setValue(expression[1]);
-      // @ts-ignore
       this.expressionForm.controls.right.setValue(expression[2]);
     }
     this.expression = expression;
   }
 
-  private watchUnary(): void {
-    const unary = this.operandList
-      .filter(({ unary }) => unary)
-      .map(({ value }) => value);
+  // private watchUnary(): void {
+  //   const unary = this.operandList
+  //     .filter(({ unary }) => unary)
+  //     .map(({ value }) => value);
+  //
+  //   this.expressionForm.controls.operand.valueChanges
+  //     .pipe(
+  //       map((value) => unary.includes(value)),
+  //       distinctUntilChanged(),
+  //       takeUntil(this.destroy$),
+  //     )
+  //     .subscribe((disable) => {
+  //       const control = this.expressionForm.controls.left;
+  //
+  //       // if (disable) {
+  //       //   control.setValue(null);
+  //       //   control.disable();
+  //       // } else {
+  //       //   control.enable();
+  //       // }
+  //
+  //       this.expressionForm.updateValueAndValidity();
+  //     });
+  // }
 
-    this.expressionForm.controls.operand.valueChanges
-      .pipe(
-        map((value) => unary.includes(value)),
-        distinctUntilChanged(),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((disable) => {
-        const control = this.expressionForm.controls.left;
-
-        if (disable) {
-          control.setValue(null);
-          control.disable();
-        } else {
-          control.enable();
-        }
-
-        this.expressionForm.updateValueAndValidity();
-      });
-  }
-
-  private makeAction(value: Action | string | number): Action {
+  private makeAction(value: Action | string | number | undefined | null): Action | null {
     if (typeof value === 'string' || typeof value === 'number') {
       return {
         parentId: value.toString(),
@@ -173,7 +162,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       }
     }
 
-    return value;
+    return value ?? null;
   }
 }
 

@@ -50,8 +50,7 @@ export class RulesComponent implements OnInit, OnDestroy {
     this.form.valueChanges.subscribe(console.log);
   }
 
-  public addRule({expression, elseBlock, actions}: Rule = {expression: [null, '', ''], elseBlock: [], actions: []}): void {
-    console.warn('aAAA');
+  public addRule({expression, elseBlock, actions}: Rule = {expression: [null, '', null], elseBlock: [], actions: []}): void {
     const control = new FormGroup<RuleForm>({
       expression: new FormControl<Expression | null >(expression),
       actions: new FormArray<FormControl<Action>>([]),
@@ -93,7 +92,7 @@ export interface ActionForm {
 }
 
 export interface ExpressionForm {
-  left: FormControl<string | Action | null | undefined | number>;
+  left: FormControl<string | Action>;
   operand: FormControl<string>;
   right: FormControl<string | Action>;
 }

@@ -11,7 +11,7 @@ import { SaveAsFileDirective } from '../../directives/save-as-file/save-as-file.
 import { PinsStateService } from '../../services/store/pins-state.service';
 import { combineLatest, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Action, Association, Rule } from '@configurator/shared';
+import { Association, Rule } from '@configurator/shared';
 import { UploaderModule } from '@configurator/uploader';
 
 
@@ -52,15 +52,14 @@ export class FooterComponent {
   }
 
   private rulesToCode(rules: Rule[], associations: Association[]): string {
-    console.log('==============================');
     return rules.map(r => {
       console.log(r, associations);
 
       return r;
-    }).map(r => this.makeRule(r)).join('\n');
+    }).map(r => this.makeRule(r, associations)).join('\n');
   }
 
-  private makeRule(rule: Rule): string {
+  private makeRule(rule: Rule, associations: Association[]): string {
     let elseBlock = '';
 
     if (rule.elseBlock.filter(Boolean).length) {
@@ -73,10 +72,27 @@ ${
 
     if(rule.expression && rule.actions.filter(Boolean).length) {
       return `
-  if (${// @ts-ignore
+  if (${
       rule.expression[0]?.['parentId'] ?? rule.expression[0]} ${rule.expression[1]} ${rule.expression[2]?.['parentId'] ?? rule.expression[2]}) {
-${// @ts-ignore
-      rule.actions.filter(Boolean).map(a => `    ${a.template.replace('{0}', a.parameters[0])}`).join('\n')}${elseBlock}
+${
+      rule.actions
+      .filter(Boolean)
+      .map(a => {
+        const index = associations.findIndex(association => association.uuid === a.parentId);
+        const hasAssociation = a.template.includes('{1}')
+        // TODO добавить сообщение об ошибке в форме (отсутствует ассоциация)
+        if (hasAssociation && index < 0) {
+          return null;
+        }
+
+        return `    ${
+          a.template
+          .replace('{1}', (2 + index).toString())
+          .replace('{0}', a.parameters[0].toString())}`
+      })
+      .filter(Boolean)
+      .join('\n')}${elseBlock
+  }
   }`
         ;
     }

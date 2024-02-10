@@ -14,7 +14,6 @@ export interface Action {
   title: string;
   template: string;
   parameters: (ActionParameter | number | string)[];
-  uuid?: string;
 }
 
 export interface Association {

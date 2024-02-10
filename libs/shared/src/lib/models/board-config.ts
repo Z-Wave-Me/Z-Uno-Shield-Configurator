@@ -17,4 +17,4 @@ export interface BoardConfig {
 }
 
 
-export type Expression = [string | number | null | undefined | Action, string, string | number | Action]
+export type Expression = [Action | null, string, Action | null]

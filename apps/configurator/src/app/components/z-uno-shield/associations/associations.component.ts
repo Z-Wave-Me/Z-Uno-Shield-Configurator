@@ -22,8 +22,9 @@ export class AssociationsComponent {
   }
 
   public addItem(item: Association): void {
-    const uuid = crypto.randomUUID();
-    this.relationsStateService.update({ ...item, uuid });
+    const parentId = crypto.randomUUID();
+    const { actions, ...other} = item;
+    this.relationsStateService.update({ ...other, actions: actions.map(a => ({...a, parentId})), uuid: parentId });
     this.changeDetectorRef.detectChanges();
   }
 
