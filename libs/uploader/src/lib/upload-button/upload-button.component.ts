@@ -27,7 +27,7 @@ export class UploadButtonComponent {
   }
 
   public build(): void {
-    this.zUnoCompiler.compile(this.code, 'EU', true, 50).catch(() => {});
+    this.zUnoCompiler.compile(this.code, null, true, 50).catch(() => {});
 
 
   }
