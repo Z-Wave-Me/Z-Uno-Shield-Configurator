@@ -17,7 +17,7 @@
             (click)="prevent($event)"
             [configuratorSaveAsFile]="data.code ?? ''"
             i18n-matTooltip
-            matTooltip="Download configuration file"
+            matTooltip="Download code (to upload using Ardiono IDE or VS Code)"
             i18n
           >
             <mat-icon>save</mat-icon>
@@ -27,9 +27,18 @@
             (click)="prevent($event)"
             [cdkCopyToClipboard]="data.code ?? ''"
             i18n-matTooltip
-            matTooltip="Click to copy to clipboard"
+            matTooltip="Copy code to clipboard (to upload using Ardiono IDE or VS Code)"
           >
-            <mat-icon>copy_all</mat-icon>
+            <mat-icon>share</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="prevent($event)"
+            [configuratorEdit]="data.code ?? ''"
+            i18n-matTooltip
+            matTooltip="Edit code online and upload"
+          >
+            <mat-icon>edit</mat-icon>
           </button>
         </mat-panel-description>
 
