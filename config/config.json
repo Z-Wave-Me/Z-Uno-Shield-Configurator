@@ -7,7 +7,7 @@
       "actions": [
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_SET_VALUE",
-          "title": "SetValue",
+          "title": "Send Set value command to group",
           "template": "zunoSendToGroupSetValueCommand({1}, {0});",
           "parameters": [
             {
@@ -30,7 +30,7 @@
       "actions": [
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_SET_VALUE_AND_DIM",
-          "title": "SetValue",
+          "title": "Send Set value command to group",
           "template": "zunoSendToGroupSetValueCommand({1}, {0});",
           "parameters": [
             {
@@ -47,7 +47,7 @@
         },
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_SET_VALUE_AND_DIM",
-          "title": "Dim",
+          "title": "Send Dim command to group",
           "template": "zunoSendToGroupDimmingCommand({1}, {0});",
           "parameters": [
             {
@@ -83,7 +83,7 @@
       "actions": [
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_SCENE_CONTROL",
-          "title": "Activation",
+          "title": "Send Scene to group",
           "template": "zunoSendToGroupScene({1}, {0});",
           "parameters": [
             {
@@ -106,8 +106,8 @@
       "actions": [
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_DOORLOCK",
-          "title": "Activation",
-          "template": "zunoSendToGroupDoorlockControlTiming({1}, {0}",
+          "title": "Send Door Lock command to group",
+          "template": "zunoSendToGroupDoorlockControlTiming({1}, {0});",
           "parameters": [
             {
               "title": "groupNumber",
