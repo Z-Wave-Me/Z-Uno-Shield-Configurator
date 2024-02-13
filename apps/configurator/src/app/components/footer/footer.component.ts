@@ -13,7 +13,7 @@ import { combineLatest, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Action, Association, Expression, Logical, OperatorType, Rule } from '@configurator/shared';
 import { UploaderModule } from '@configurator/uploader';
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'configurator-footer',
@@ -40,7 +40,10 @@ export class FooterComponent {
   public panelOpenState = false;
   public code$: Observable<string| undefined>;
 
-  constructor(private readonly pinsStateService: PinsStateService) {
+  constructor(
+    private readonly pinsStateService: PinsStateService,
+    private readonly location: Location,
+    ) {
     this.code$ = combineLatest([this.pinsStateService.code(), this.pinsStateService.boardConfig$]).pipe(
       map(([code, { rules, associations }]) => {
         return (code ?? '').replace('#rulesBlock', this.rulesToCode(rules ?? [], associations));
@@ -102,7 +105,7 @@ ${
   private makeExpression(list: Expression[]): string {
     const expressionToString = ({ expression }: Expression) => {
       if (expression[1] === OperatorType.changeBy) {
-        return `changeByFunction(${getName(expression[0])}, ${expression[2]}`
+        return `changeByFunction(${getName(expression[0])}, ${getName(expression[2])})`
       }
 
       return `${getName(expression[0])} ${expression[1]} ${getName(expression[2])}`
@@ -120,6 +123,11 @@ ${
     }
 
     return list.map(item => `${logicalToSting(item.operator)}${expressionToString(item)}`).join('\n');
+  }
+
+  public openEditPage(code: string) {
+    localStorage.setItem('zunoCode', code);
+    this.location.go('/editor/');
   }
 }
 

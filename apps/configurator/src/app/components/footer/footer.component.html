@@ -31,6 +31,10 @@
           >
             <mat-icon>copy_all</mat-icon>
           </button>
+          <button
+          mat-icon-button
+          (click)="openEditPage(data.code ?? '')"
+          ></button>
         </mat-panel-description>
 
       </mat-expansion-panel-header>

@@ -52,8 +52,10 @@ export class SensorBinary extends BaseDevice {
     const inverted = this.config.device?.type === 'inverted' ? '!': '';
     const inputType = this.isPullUp ? 'INPUT_PULLUP' : 'INPUT'
 
+    const isDigitalInput3 = this.config?.key?.includes('digital input 3');
+
     return `  pinMode(${this.config.id}, ${inputType});
-  pin${this.config.id}SensorBinaryState = ${inverted}!digitalRead(${this.config.id});`;
+  ${isDigitalInput3 ? 'pinMode(A3, INPUT_PULLDOWN);\n  ' : ''}pin${this.config.id}SensorBinaryState = ${inverted}!digitalRead(${this.config.id});`;
   }
 
   public override get vars(): string {
