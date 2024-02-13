@@ -33,7 +33,7 @@
           </button>
           <button
           mat-icon-button
-          (click)="openEditPage(data.code ?? '')"
+          (click)="prevent($event);openEditPage(data.code ?? '')"
           i18n-matTooltip
           matTooltip="Edit code online and upload"
           ><mat-icon>edit</mat-icon></button>
