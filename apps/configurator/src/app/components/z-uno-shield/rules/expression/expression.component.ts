@@ -70,8 +70,8 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       value: '=='
     },
     {
-      value: '≠',
-      label: '!='
+      label: '≠'
+      value: '!=',
     },
     {
       label: 'changedBy',
