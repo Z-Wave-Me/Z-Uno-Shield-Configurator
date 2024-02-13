@@ -32,17 +32,10 @@
             <mat-icon>share</mat-icon>
           </button>
           <button
-            mat-icon-button
-            (click)="prevent($event)"
-            [configuratorEdit]="data.code ?? ''"
-            i18n-matTooltip
-            matTooltip="Edit code online and upload"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
           mat-icon-button
           (click)="openEditPage(data.code ?? '')"
+          i18n-matTooltip
+          matTooltip="Edit code online and upload"
           ><mat-icon>edit</mat-icon></button>
         </mat-panel-description>
 
