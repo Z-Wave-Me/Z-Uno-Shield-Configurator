@@ -13,7 +13,6 @@ import { combineLatest, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Action, Association, Expression, Logical, OperatorType, Rule } from '@configurator/shared';
 import { UploaderModule } from '@configurator/uploader';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'configurator-footer',
@@ -42,7 +41,6 @@ export class FooterComponent {
 
   constructor(
     private readonly pinsStateService: PinsStateService,
-    private readonly location: Location,
     ) {
     this.code$ = combineLatest([this.pinsStateService.code(), this.pinsStateService.boardConfig$]).pipe(
       map(([code, { rules, associations }]) => {
@@ -127,7 +125,7 @@ ${
 
   public openEditPage(code: string) {
     localStorage.setItem('zunoCode', code);
-    this.location.go('/editor/');
+    location.href = '/editor/';
   }
 }
 
