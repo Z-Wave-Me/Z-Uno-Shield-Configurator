@@ -35,7 +35,6 @@ export class AssociationStateService implements OnDestroy {
 
 
     effect(() => {
-      console.warn('===========>', this.state());
       this.pinsStateService.updateAssociations(this.state());
     });
   }

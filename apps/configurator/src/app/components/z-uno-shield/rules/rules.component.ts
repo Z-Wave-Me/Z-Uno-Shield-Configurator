@@ -21,7 +21,6 @@ export class RulesComponent implements OnInit, OnDestroy {
     private readonly pinsStateService: PinsStateService,
   ) {
 
-    this.debug();
     this.form.valueChanges.pipe(
       takeUntil(this.destroy$),
     ).subscribe((data) => {
@@ -45,9 +44,6 @@ export class RulesComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private debug(): void {
-    this.form.valueChanges.subscribe(console.log);
-  }
 
   public addRule({expressions, elseBlock, actions}: Rule = {expressions: [{
       expression: [null, '', null],
@@ -61,6 +57,8 @@ export class RulesComponent implements OnInit, OnDestroy {
     (expressions ?? []).forEach(e => control.controls.expressions.push(new FormControl<Expression>(e, { nonNullable: true})));
     (actions ?? []).forEach(a => control.controls.actions.push(new FormControl<Action>(a, { nonNullable: true })));
     (elseBlock ?? []).forEach(a => control.controls.elseBlock.push(new FormControl<Action>(a, { nonNullable: true })));
+
+    this.form.controls.rules.push(control);
   }
 
   public removeRule(index: number): void {
