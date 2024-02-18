@@ -4,7 +4,7 @@
     <ng-container *ngFor="let ruleForm of form.controls.rules.controls; let ruleIndex = index">
       <div [formGroup]="ruleForm" class="rule">
         <div class="label" i18n>
-          Condition
+          If
           <button mat-icon-button (click)="addExpression(ruleForm.controls.expressions)"><mat-icon>add_circle_outline</mat-icon></button>
         </div>
         <div *ngFor="let expression of ruleForm.controls.expressions.controls; let expressionIndex = index; let first = first" class="row">
@@ -12,7 +12,7 @@
           <button *ngIf="expressionIndex" mat-icon-button (click)="removeExpression(ruleForm.controls.expressions, expressionIndex)"><mat-icon>delete</mat-icon></button>
         </div>
         <div class="label">
-          Condition fulfilled
+          Then
           <button mat-icon-button (click)="addAction(ruleForm.controls.actions)"><mat-icon>add_circle_outline</mat-icon></button>
         </div>
         <div *ngFor="let action of ruleForm.controls.actions.controls; let actionIndex = index" class="row">
@@ -20,7 +20,7 @@
           <button mat-icon-button (click)="removeAction(ruleForm.controls.actions, actionIndex)"><mat-icon>delete</mat-icon></button>
         </div>
         <div class="label">
-          Otherwise
+          Else
           <button mat-icon-button (click)="addAction(ruleForm.controls.elseBlock)"><mat-icon>add_circle_outline</mat-icon></button>
 
         </div>
