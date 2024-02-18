@@ -72,7 +72,6 @@ export class LinearValuesComponent implements ControlValueAccessor, OnInit, OnDe
      betta: linearValues?.[2] ?? 0,
    });
 
-   console.log('=========>', this.linearFrom.controls.alpha.value, this.linearFrom.controls.betta.value)
    if (this.linearFrom.controls.alpha.value !== 1 || this.linearFrom.controls.betta.value !== 0 ) {
      this.mode = 'linear';
    }

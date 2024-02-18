@@ -36,7 +36,6 @@ export class RulesComponent implements OnInit, OnDestroy {
       filter(notNull),
       first(),
     ).subscribe(rules => {
-      console.warn('here', rules);
       rules.map(r => this.addRule(r));
     })
   }
@@ -62,8 +61,6 @@ export class RulesComponent implements OnInit, OnDestroy {
     (expressions ?? []).forEach(e => control.controls.expressions.push(new FormControl<Expression>(e, { nonNullable: true})));
     (actions ?? []).forEach(a => control.controls.actions.push(new FormControl<Action>(a, { nonNullable: true })));
     (elseBlock ?? []).forEach(a => control.controls.elseBlock.push(new FormControl<Action>(a, { nonNullable: true })));
-
-    this.form.controls.rules.push(control);
   }
 
   public removeRule(index: number): void {

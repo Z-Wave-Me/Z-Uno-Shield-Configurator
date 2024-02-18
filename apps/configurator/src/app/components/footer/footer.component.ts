@@ -129,13 +129,7 @@ ${
   }
 }
 
-function getName(action: Action | null): string {
-  return action?.parentId ?? '';
-}
-
 function makeLinear(linear: LinearValues<Action> | null): string  {
-  console.log(linear);
-
   if (linear?.[1] !== 1 || linear?.[2] !== 0) {
     return `(${linear?.[1]} * ${linear?.[0].parentId ?? ''} + ${linear?.[2]})`;
   }
