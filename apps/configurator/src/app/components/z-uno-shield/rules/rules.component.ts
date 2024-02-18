@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PinsStateService } from '../../../services/store/pins-state.service';
 import { filter, first, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { Action, Expression, Logical } from '@configurator/shared';
+import { Action, Expression, LinearValues, Logical } from '@configurator/shared';
 import { Rule } from 'eslint';
 import { notNull } from '@configurator/arduino-code-gen';
 
@@ -105,9 +105,9 @@ export interface ActionForm {
 }
 
 export interface ExpressionForm {
-  left: FormControl<string | Action>;
+  left: FormControl<LinearValues<Action> | null>;
   operand: FormControl<string>;
-  right: FormControl<string | Action>;
+  right: FormControl<LinearValues<Action> | null>;
   operator: FormControl<Logical | undefined>;
 }
 

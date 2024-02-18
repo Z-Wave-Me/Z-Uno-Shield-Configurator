@@ -1,4 +1,4 @@
-import { Action, PinConfig } from '@configurator/shared';
+import { Action, LinearValues, PinConfig } from '@configurator/shared';
 import { Association } from './association';
 
 export interface Rule {
@@ -18,7 +18,7 @@ export interface BoardConfig {
 
 
 export type Expression = {
-  expression: [Action | null, string, Action | null];
+  expression: [LinearValues<Action> | null, string, LinearValues<Action> | null];
   operator?: Logical;
 };
 
