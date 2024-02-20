@@ -3,13 +3,6 @@ import { MatDialog, MatDialogRef, MatDialogState } from '@angular/material/dialo
 import { UploadModalComponent } from '../upload-modal/upload-modal.component';
 import { ZUnoCompiler } from '../z-uno-compiler';
 
-function _style_cursor_change(id:string, severity: string): void {
-  const id_dialog:HTMLElement|null = document.getElementById(id);
-  if (id_dialog == null)
-    return ;
-  id_dialog.style.cursor = severity === "error" ? "auto" : "progress";
-}
-
 @Component({
   selector: 'configurator-upload-button',
   templateUrl: './upload-button.component.html',
@@ -28,15 +21,15 @@ export class UploadButtonComponent {
       if (this.zUnoCompilerDialogProgress == undefined || this.zUnoCompilerDialogProgress.getState() != MatDialogState.OPEN) {
         this.zUnoCompilerDialogProgress = this.matDialog.open(UploadModalComponent, {
         data: {
-          severity,
-          message,
+          "message":"",
         },
       });
-      _style_cursor_change(this.zUnoCompilerDialogProgress.id, severity);
-      return ;
     }
-    this.zUnoCompilerDialogProgress.componentInstance.data.message += "<br />" + message;
-    _style_cursor_change(this.zUnoCompilerDialogProgress.id, severity);
+    this.zUnoCompilerDialogProgress.componentInstance.data.message += '<span style="color:' + (severity === "error" ? "red" : "green") + '">' + message + '</span><br>';
+    const id_dialog:HTMLElement|null = document.getElementById(this.zUnoCompilerDialogProgress.id);
+    if (id_dialog == null)
+      return ;
+    id_dialog.style.cursor = severity === "error" ? "auto" : "progress";
     })
   }
 

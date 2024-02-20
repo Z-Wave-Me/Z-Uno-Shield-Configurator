@@ -7,9 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+import { NoSanitizePipe } from './nosanitizerpipe';
+
 @NgModule({
   imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule, MatTooltipModule],
-  declarations: [UploadButtonComponent, UploadModalComponent],
+  declarations: [UploadButtonComponent, UploadModalComponent, NoSanitizePipe],
   exports: [
     UploadButtonComponent
   ]
