@@ -16,12 +16,12 @@ export class UploadButtonComponent {
   constructor(
     private readonly matDialog: MatDialog
   ) {
-    this.zUnoCompiler.setProgress((severity: 'error', message: any) => {
+    this.zUnoCompiler.setProgress((severity: string, message: string) => {
       this.matDialog.open(UploadModalComponent, {
         data: {
           severity,
-          message
-        }
+          message,
+        },
       });
     })
   }
