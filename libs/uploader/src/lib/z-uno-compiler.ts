@@ -338,8 +338,6 @@ const ZUnoCompiler:ZUnoCompilerProt = () => {
 	}
 
 	async function resyncZunoPort(self:ZUnoCompilerSelf): Promise<boolean> {
-		if (navigator.platform == "Win32")
-			await sleep(500);
 		const data:Array<number> = await recvIncomingRequest(self);
 		if (data[0x0] != RECV_OK)
 			return (false);
@@ -622,9 +620,10 @@ const ZUnoCompiler:ZUnoCompilerProt = () => {
 		return (md);
 	}
 
-	async function freezeSketch(self:ZUnoCompilerSelf, retries:number = 50): Promise<boolean> {
-		let sleep_time:number, rcv:Array<number>;
+	async function freezeSketch(self:ZUnoCompilerSelf): Promise<boolean> {
+		let sleep_time:number, rcv:Array<number>, retries:number;
 
+		retries = 0x3;
 		sleep_time = 10;
 		if (navigator.platform == "Win32")
 			sleep_time = 50;
