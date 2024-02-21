@@ -14,6 +14,7 @@ type ZUnoCompilerProt = () => {
 	setProgress: (cbk:ZUnoCompilerProgressCbkProt) => void,
 	compile: (code:string, freq:string|null, sec:boolean, main_pow:number) => Promise<ZUnoCompilerLoadSketchOutProt>,
 	drawQR: (id:HTMLElement|string, text:string) => QRCode|null,
+	getFreqList: () =>  Array<string>,
 };
 
 type ZUnoCompilerProgressCbkProt = (severity:string, message:string) => void;
@@ -143,16 +144,16 @@ const ZUnoCompiler:ZUnoCompilerProt = () => {
 		{ name: "US",id: 0x01},
 		{ name: "ANZ",id: 0x02},
 		{ name: "HK",id: 0x03},
-		{ name: "MY",id: 0x04},
+		// { name: "MY",id: 0x04},
 		{ name: "IN",id: 0x05},
 		{ name: "IL",id: 0x06},
 		{ name: "RU",id: 0x07},
 		{ name: "CN",id: 0x08},
 		{ name: "US_LR",id: 0x09},
-		{ name: "US_LR_BK",id: 0x0A},
+		// { name: "US_LR_BK",id: 0x0A},
 		{ name: "JP",id: 0x20},
 		{ name: "KR",id: 0x21},
-		{ name: "FK",id: 0xFE},
+		// { name: "FK",id: 0xFE},
 	];
 
 	const ZUNO_LIC_FLAGS_NAMES_MAX_POWER			= 4;
@@ -1067,5 +1068,22 @@ const ZUnoCompiler:ZUnoCompilerProt = () => {
 		setProgress: function(cbk:ZUnoCompilerProgressCbkProt): void {
 			progressCbk = cbk;
 		},
+
+		/**
+		 * 
+		 * @returns List freq
+		 */
+		getFreqList: function(): Array<string> {
+			let i:number, out:Array<string>;
+
+			i = 0x0;
+			out = [];
+			while (i < FREQ_TABLE_U7.length) {
+				out.push(FREQ_TABLE_U7[i].name);
+				i++;
+			}
+			return (out);
+		}
+
 	};
 }

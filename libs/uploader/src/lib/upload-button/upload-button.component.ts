@@ -34,7 +34,14 @@ export class UploadButtonComponent {
   }
 
   public build(): void {
-    this.zUnoCompiler.compile(this.code, null, true, 50).catch(() => {});
+    let freq:string|null = null;
+    const e = document.getElementById("select_freq_component_id");
+    if (e != null) {
+        if (this.zUnoCompiler.getFreqList().includes(e.innerText) == true)
+            freq = e.innerText;
+    }
+
+    this.zUnoCompiler.compile(this.code, freq, true, 50).catch(() => {});
 
 
   }

@@ -8,6 +8,9 @@
         </mat-panel-title>
         <mat-panel-description>
           <span></span>
+          <select_freq_component
+          (click)="prevent($event)"
+          ></select_freq_component>
           <configurator-upload-button
             (click)="prevent($event)"
             [code]="data.code ?? ''"
