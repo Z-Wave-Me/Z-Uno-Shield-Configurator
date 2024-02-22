@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
-import { Action, Expression, Logical, OperatorType } from '@configurator/shared';
+import { Action, Expression, LinearValues, Logical, OperatorType } from '@configurator/shared';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ExpressionForm } from '../rules.component';
 import { PinsStateService } from '../../../../services/store/pins-state.service';
@@ -22,17 +22,15 @@ export class ExpressionComponent implements OnInit, OnDestroy {
 
   public readonly expressionForm: FormGroup<ExpressionForm>
     = new FormGroup<ExpressionForm>({
-      left: new FormControl<string>('', {
+      left: new FormControl<LinearValues<Action> | null>(null, {
         validators: [Validators.required],
-        nonNullable: true,
       }),
       operand: new FormControl<string>('', {
         validators: [Validators.required],
         nonNullable: true,
       }),
-      right: new FormControl<string>('', {
+      right: new FormControl<LinearValues<Action> | null>(null, {
         validators: [Validators.required],
-        nonNullable: true,
       }),
       operator: new FormControl<Logical| undefined>(undefined, {nonNullable: true}),
     });
@@ -144,14 +142,16 @@ export class ExpressionComponent implements OnInit, OnDestroy {
     }
   }
 
-  private makeAction(value: Action | string | number | undefined | null): Action | null {
-    if (typeof value === 'string' || typeof value === 'number') {
-      return {
-        parentId: value.toString(),
-        title: value.toString(),
-        parameters: [value],
+  private makeAction(value: LinearValues<Action> | null | undefined): LinearValues<Action> | null {
+    const zero: Action | string | number | undefined | null = value?.[0];
+    if (typeof zero === 'string' || typeof zero === 'number') {
+      return [{
+        parentId: `${zero}`,
+        title: `${zero}`,
+        parameters: [zero],
         template: '{0}'
-      }
+        // @ts-ignore
+      }, value[1], value[2]]
     }
 
     return value ?? null;

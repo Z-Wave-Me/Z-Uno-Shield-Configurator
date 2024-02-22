@@ -5,41 +5,16 @@
       <mat-option *ngFor="let item of operatorList" [value]="item.value">{{item.label}}</mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Value</mat-label>
-    <input
-      type="text"
-      placeholder="pin"
-      aria-label="Number"
-      matInput
-      formControlName="left"
-      [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="getTitle">
-      <mat-option [value]="variable" *ngFor="let variable of data.variables">{{variable.title}}</mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-  <mat-label>Operator</mat-label>
+  <configurator-linear-values [displayWith]="getTitle" [options]="data.variables" label="Value" formControlName="left"/>
+  <mat-form-field appearance="outline" [style.width.rem]="9">
+    <mat-label>Operator</mat-label>
     <mat-select
       formControlName="operand"
     >
       <mat-option [value]="operand.value" *ngFor="let operand of operandList">{{operand.label}}</mat-option>
     </mat-select>
   </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Value</mat-label>
-    <input type="text"
-           placeholder="pin"
-           aria-label="Number"
-           matInput
-           formControlName="right"
-           [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-option [value]="variable" *ngFor="let variable of data.variables">{{variable}}</mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
+  <configurator-linear-values [displayWith]="getTitle" [options]="data.variables" label="Value" formControlName="right"/>
 </form>
 
 <ng-template #spacer>

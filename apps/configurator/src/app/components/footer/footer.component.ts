@@ -11,7 +11,7 @@ import { SaveAsFileDirective } from '../../directives/save-as-file/save-as-file.
 import { PinsStateService } from '../../services/store/pins-state.service';
 import { combineLatest, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Action, Association, Expression, Logical, OperatorType, Rule } from '@configurator/shared';
+import { Action, Association, Expression, LinearValues, Logical, OperatorType, Rule } from '@configurator/shared';
 import { UploaderModule } from '@configurator/uploader';
 
 @Component({
@@ -103,10 +103,10 @@ ${
   private makeExpression(list: Expression[]): string {
     const expressionToString = ({ expression }: Expression) => {
       if (expression[1] === OperatorType.changeBy) {
-        return `changeByFunction(${getName(expression[0])}, ${getName(expression[2])})`
+        return `changeByFunction(${makeLinear(expression[0])}, ${makeLinear(expression[2])})`
       }
 
-      return `${getName(expression[0])} ${expression[1]} ${getName(expression[2])}`
+      return `${makeLinear(expression[0])} ${expression[1]} ${makeLinear(expression[2])}`
     }
 
     const logicalToSting = (operator: Logical | undefined) => {
@@ -129,6 +129,10 @@ ${
   }
 }
 
-function getName(action: Action | null): string {
-  return action?.parentId ?? '';
+function makeLinear(linear: LinearValues<Action> | null): string  {
+  if (linear?.[1] !== 1 || linear?.[2] !== 0) {
+    return `(${linear?.[1]} * ${linear?.[0].parentId ?? ''} + ${linear?.[2]})`;
+  }
+
+  return linear?.[0].parentId ?? '';
 }

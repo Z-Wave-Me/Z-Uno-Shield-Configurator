@@ -1,0 +1,40 @@
+<div [formGroup]="linearFrom">
+  <ng-container *ngIf="mode === 'linear'">
+    <mat-form-field appearance="outline" [style.width.rem]="5">
+      <mat-label>Alpha</mat-label>
+      <input
+        type="number"
+        aria-label="Number"
+        matInput
+        formControlName="alpha">
+    </mat-form-field>
+    *
+  </ng-container>
+  <mat-form-field appearance="outline">
+    <mat-label>Value</mat-label>
+    <input
+      type="text"
+      placeholder="pin"
+      aria-label="Number"
+      matInput
+      formControlName="value"
+      [matAutocomplete]="auto">
+    <button matSuffix mat-icon-button (click)="modeToggle($event)">
+      <mat-icon>{{mode ==='simple' ? 'edit' : 'compare_arrows'}}</mat-icon>
+    </button>
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayWith">
+      <mat-option [value]="item" *ngFor="let item of options">{{item.title}}</mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <ng-container *ngIf="mode === 'linear'">
+    +
+    <mat-form-field appearance="outline" [style.width.rem]="5">
+      <mat-label>Betta</mat-label>
+      <input
+        type="number"
+        aria-label="Number"
+        matInput
+        formControlName="betta">
+    </mat-form-field>
+  </ng-container>
+</div>

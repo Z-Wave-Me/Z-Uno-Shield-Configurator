@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PinsStateService } from '../../../services/store/pins-state.service';
 import { filter, first, Subject, takeUntil } from 'rxjs';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { Action, Expression, Logical } from '@configurator/shared';
+import { Action, Expression, LinearValues, Logical } from '@configurator/shared';
 import { Rule } from 'eslint';
 import { notNull } from '@configurator/arduino-code-gen';
 
@@ -21,7 +21,6 @@ export class RulesComponent implements OnInit, OnDestroy {
     private readonly pinsStateService: PinsStateService,
   ) {
 
-    this.debug();
     this.form.valueChanges.pipe(
       takeUntil(this.destroy$),
     ).subscribe((data) => {
@@ -36,7 +35,6 @@ export class RulesComponent implements OnInit, OnDestroy {
       filter(notNull),
       first(),
     ).subscribe(rules => {
-      console.warn('here', rules);
       rules.map(r => this.addRule(r));
     })
   }
@@ -46,9 +44,6 @@ export class RulesComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private debug(): void {
-    this.form.valueChanges.subscribe(console.log);
-  }
 
   public addRule({expressions, elseBlock, actions}: Rule = {expressions: [{
       expression: [null, '', null],
@@ -105,9 +100,9 @@ export interface ActionForm {
 }
 
 export interface ExpressionForm {
-  left: FormControl<string | Action>;
+  left: FormControl<LinearValues<Action> | null>;
   operand: FormControl<string>;
-  right: FormControl<string | Action>;
+  right: FormControl<LinearValues<Action> | null>;
   operator: FormControl<Logical | undefined>;
 }
 
