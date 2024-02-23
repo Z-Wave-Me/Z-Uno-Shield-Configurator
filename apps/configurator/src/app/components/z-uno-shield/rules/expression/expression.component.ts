@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Action, Expression, LinearValues, Logical, OperatorType } from '@configurator/shared';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { ExpressionForm } from '../rules.component';
 import { PinsStateService } from '../../../../services/store/pins-state.service';
 
@@ -32,7 +32,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       right: new FormControl<LinearValues<Action> | null>(null, {
         validators: [Validators.required],
       }),
-      operator: new FormControl<Logical| undefined>(undefined, {nonNullable: true}),
+      operator: new FormControl<Logical | undefined>(undefined, {nonNullable: true}),
     });
 
   public readonly operatorList = [
@@ -134,12 +134,20 @@ export class ExpressionComponent implements OnInit, OnDestroy {
   }
 
   public writeValue(expression: Expression): void {
-    if (expression.expression[0] && expression.expression[2]) {
-      this.expressionForm.controls.left.setValue(expression.expression[0]);
+    const left = expression.expression[0];
+    const right = expression.expression[2];
+    const variables = this.pinsStateService.variablesSnapshot();
+      if (left && (left[0].isUserInput || variables.find(action => action.parentId === left[0].parentId))) {
+        this.expressionForm.controls.left.setValue(expression.expression[0]);
+      }
+
       this.expressionForm.controls.operand.setValue(expression.expression[1]);
-      this.expressionForm.controls.right.setValue(expression.expression[2]);
+
+      if (right && (right[0].isUserInput || variables.find(action => action.parentId === right[0].parentId))) {
+        this.expressionForm.controls.right.setValue(expression.expression[2]);
+      }
+
       this.expressionForm.controls.operator.setValue(expression.operator);
-    }
   }
 
   private makeAction(value: LinearValues<Action> | null | undefined): LinearValues<Action> | null {
@@ -149,7 +157,8 @@ export class ExpressionComponent implements OnInit, OnDestroy {
         parentId: `${zero}`,
         title: `${zero}`,
         parameters: [zero],
-        template: '{0}'
+        template: '{0}',
+        isUserInput: true,
         // @ts-ignore
       }, value[1], value[2]]
     }

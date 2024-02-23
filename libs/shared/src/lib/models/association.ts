@@ -14,6 +14,7 @@ export interface Action {
   title: string;
   template: string;
   parameters: (ActionParameter | number | string)[];
+  isUserInput?: boolean;
 }
 
 export interface Association {

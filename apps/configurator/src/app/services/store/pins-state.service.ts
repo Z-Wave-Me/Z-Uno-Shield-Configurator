@@ -30,7 +30,10 @@ export class PinsStateService {
 
   private readonly _boardConfig$ = new BehaviorSubject<BoardConfig>(this.initialState);
 
-  private readonly codeGen$ = new ReplaySubject<GeneratedData>(1);
+  private readonly codeGen$ = new BehaviorSubject<GeneratedData>({
+    variables: [],
+    notes: {},
+  });
 
 
   private currentKey = '';
@@ -57,6 +60,10 @@ export class PinsStateService {
 
   public variables(): Observable<Action[]> {
     return this.codeGen$.asObservable().pipe(map(data => data.variables));
+  }
+
+  public variablesSnapshot(): Action[] {
+    return this.codeGen$.value.variables;
   }
 
   public associations(): Observable<Action[]> {
