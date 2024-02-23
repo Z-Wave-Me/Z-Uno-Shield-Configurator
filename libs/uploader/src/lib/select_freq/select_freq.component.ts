@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ZUnoCompiler } from '../z-uno-compiler';
+import { ZUnoCompiler } from '../../ZUnoCompiler/src/z-uno-compiler';
 
 @Component({
   selector: 'select_freq_component',

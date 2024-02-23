@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MatDialogState } from '@angular/material/dialog';
 import { UploadModalComponent } from '../upload-modal/upload-modal.component';
-import { ZUnoCompiler, ZUnoCompilerLoadSketchOutProt } from '../z-uno-compiler';
-import { QRCode } from '../qrcode';
+import { ZUnoCompiler, ZUnoCompilerLoadSketchOutProt } from '../../ZUnoCompiler/src/z-uno-compiler';
+import { QRCode } from '../../ZUnoCompiler/src/qrcode';
 
 @Component({
   selector: 'configurator-upload-button',
