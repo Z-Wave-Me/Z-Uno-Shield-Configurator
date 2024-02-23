@@ -1,7 +1,7 @@
 
 import { QRCode, QRCodeOption, QRErrorCorrectLevel } from "./qrcode";
 
-export {ZUnoCompiler};
+export {ZUnoCompiler, ZUnoCompilerLoadSketchOutProt};
 
 type ZUnoCompilerLoadSketchOutFunProt = (out:ZUnoCompilerLoadSketchOutProt) => void;
 
@@ -12,7 +12,7 @@ type ZUnoCompilerLoadSketchOutProt = {
 
 type ZUnoCompilerProt = () => {
 	setProgress: (cbk:ZUnoCompilerProgressCbkProt) => void,
-	compile: (code:string, freq:string|null, sec:boolean, main_pow:number) => Promise<ZUnoCompilerLoadSketchOutProt>,
+	compile: (code:string, freq:string|null, sec:boolean, main_pow:number) => Promise<ZUnoCompilerLoadSketchOutProt|void>,
 	drawQR: (id:HTMLElement|string, text:string) => QRCode|null,
 	getFreqList: () =>  Array<string>,
 };
@@ -918,7 +918,7 @@ const ZUnoCompiler:ZUnoCompilerProt = () => {
 		});
 	}
 
-	async function sketch(text_sketch:string, freq_str:string|null, sec:boolean, main_pow:number): Promise<ZUnoCompilerLoadSketchOutProt> {
+	async function sketch(text_sketch:string, freq_str:string|null, sec:boolean, main_pow:number): Promise<ZUnoCompilerLoadSketchOutProt|void> {
 		return new Promise(async function(resolve:ZUnoCompilerLoadSketchOutFunProt, reject:ZUnoCompilerSketchErrorProt) {
 			let i:number, hw_str:string, sec_prm:number, port:SerialPortProt;
 			const filters = COM_PORT_FILTERS;
@@ -1046,7 +1046,7 @@ const ZUnoCompiler:ZUnoCompilerProt = () => {
 		 * @param {*} main_pow max power (int, without a special license the maximum is 50)
 		 * @returns Returns a dictionary with smart_qr as string and dsk as string
 		 */
-		compile: function(code:string, freq:string|null, sec:boolean, main_pow:number):Promise<ZUnoCompilerLoadSketchOutProt> {
+		compile: function(code:string, freq:string|null, sec:boolean, main_pow:number):Promise<ZUnoCompilerLoadSketchOutProt|void> {
 			return sketch(code, freq, sec, main_pow);
 		},
 	

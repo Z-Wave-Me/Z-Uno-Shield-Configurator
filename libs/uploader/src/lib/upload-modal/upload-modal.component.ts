@@ -10,7 +10,7 @@ export class UploadModalComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public readonly data: { severity: 'info' | 'error', message: string },
+    public readonly data: {items:{severity:string, message: string}[], "dsk_help":string|undefined, "dsk":string|undefined},
     private readonly matDialogRef: MatDialogRef<UploadModalComponent>
   ) {}
 
