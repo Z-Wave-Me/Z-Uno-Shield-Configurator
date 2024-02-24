@@ -9,16 +9,6 @@ import { ZUnoCompiler } from '../../ZUnoCompiler/src/z-uno-compiler';
 export class SelectFreq {
     public selected_freq: string = "Keep current frequency";
 
-
-teams: any[] = [
-    { name: 'Liverpool' },
-    { name: 'Manchester City' },
-    { name: 'Manchester United' },
-    { name: 'Arsenal' },
-    { name: 'Leicester City' },
-    { name: 'Chelsea' },
-    { name: 'Tottenham Hotspur' },
-];
   constructor(
   ) {
   }
