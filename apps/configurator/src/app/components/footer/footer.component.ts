@@ -128,6 +128,10 @@ ${
     localStorage.setItem('zunoCode', code);
     location.href = '/editor/';
   }
+  
+  public get url(): string {
+    return window.location.href;
+  }
 }
 
 function makeLinear(linear: LinearValues<Action> | null): string  {
