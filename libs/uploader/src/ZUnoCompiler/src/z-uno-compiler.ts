@@ -1,73 +1,181 @@
-// @ts-nocheck
-/**
- * ZUnoCompiler module compiles and uploads Z-Uno sketch to the attached Z-Uno. The QR code is printed in a div tag.
- */
-export var ZUnoCompiler = function() {
-	const SOF_CODE							= 0x01;
-	const NACK_CODE							= 0x15;
-	const CAN_CODE							= 0x18;
-	const ACK_CODE							= 0x06;
-	const REQUEST_CODE						= 0x00;
-	// const RESPONSE_CODE						= 0x01;
 
-	// const SUCCESS_CODE						= 0x31;
-	// const FAIL_CODE							= 0x30;
+import { QRCode, QRCodeOption, QRErrorCorrectLevel } from "./qrcode";
 
-	// const WRITECYCLE_OK_CODE				= 0x0D;
+export {ZUnoCompiler, ZUnoCompilerLoadSketchOutProt};
 
-	const RECV_OK 							= 0x00;
-	const RECV_NOACK						= 0x01;
-	const RECV_INVALIDDATALEN				= 0x02;
-	const RECV_INVALIDCRC					= 0x03;
-	// const RECV_WRONGDATA					= 0x04;
-	const RECV_NOSOF						= 0x05;
+type ZUnoCompilerLoadSketchOutFunProt = (out:ZUnoCompilerLoadSketchOutProt) => void;
 
-	const dtr_timeout						= 250;
-	const rcv_sof_timeout					= 3500;
-	// const send_quant_size					= 240;
+type ZUnoCompilerLoadSketchOutProt = {
+	"dsk"?:string,
+	"smart_qr"?:string,
+}
 
-	const ADDITIONAL_SIZE					= 3;
+type ZUnoCompilerProt = () => {
+	setProgress: (cbk:ZUnoCompilerProgressCbkProt) => void,
+	compile: (code:string, freq:string|null, sec:boolean, main_pow:number) => Promise<ZUnoCompilerLoadSketchOutProt|void>,
+	drawQR: (id:HTMLElement|string, text:string) => QRCode|null,
+	getFreqList: () =>  Array<string>,
+};
 
-	const ZUNO_HEADER_PREAMBL				= "ZMEZUNOC";
+type ZUnoCompilerProgressCbkProt = (severity:string, message:string) => void;
 
-	const SK_START_OFFSET_OLD				= 0x30000;
-	// const SK_START_OFFSET					= 0x34800;
-	const SK_HEADER_SIZE					= 0xC0;
-	const SK_HEADER_VERSION_MSB_OFFSET			= 0x08;
-	const SK_HEADER_VERSION_LSB_OFFSET			= 0x09;
-	// const SK_HEADER_SIZE_MSB_OFFSET			= 0x0A;
-	// const SK_HEADER_CRC_MSB_OFFSET			= 0x0C;
-	// const SK_HEADER_CRC_CALC_START			= 0xC0;
-	const SK_HEADER_NAME_START				= 56;
-	const SK_HEADER_MAX_NAME					= 47;
-	const SK_HEADER_HWREW_OFFSET				= SK_HEADER_NAME_START + SK_HEADER_MAX_NAME + 1;
+const ZUnoCompiler:ZUnoCompilerProt = () => {
+	type ZUnoCompilerSketchErrorProt = (str:Error) => void;
 
-	const FREQ_TABLE_U7						= {"EU":0x00, "US":0x01, "ANZ":0x02, "HK": 0x03, "MY": 0x04, "IN":0x05,"IL": 0x06, "RU": 0x07, "CN": 0x08, "US_LR":0x09, "US_LR_BK":0x0A, "JP": 0x20, "KR":0x21, "FK":0xFE };
+	type ZUnoCompilerLoadSketchResultProt = {
+		"status":number,
+		"log":string,
+		"message":string,
+		"bin":string,
+	}
 
-	// const ZUNO_LIC_FLAGS_NAMES_PTI				= 0;
-	// const ZUNO_LIC_FLAGS_NAMES_KEY_DUMP			= 1;
-	// const ZUNO_LIC_FLAGS_NAMES_CUSTOM_VENDOR	= 2;
-	// const ZUNO_LIC_FLAGS_NAMES_MODEM			= 3;
-	const ZUNO_LIC_FLAGS_NAMES_MAX_POWER		= 4;
-	// const ZUNO_LIC_FLAGS_NAMES_LONG_RANGE		= 5;
 
-	const MAX_DEFAULT_RF_POWER					= 50
+	type ZUnoCompilerVersionHwResultProt = {
+		[index:string]:{"seq":number},
+	}
+
+	type ZUnoCompilerVersionResultProt = {
+		"status":number,
+		"log":string,
+		"message":string,
+		"version":{"hw": ZUnoCompilerVersionHwResultProt}
+	}
+
+	type SerialPortOpenOptionProt = {
+		"baudRate":number,
+		"bufferSize":number,
+	}
+
+	type SerialProt = {
+		requestPort(): Promise<SerialPortProt>,
+	}
+
+	type SerialPortProt = {
+		readonly readable:ReadableStream,
+		readonly writable:WritableStream,
+		close(): Promise<void>,
+		open(options?: SerialPortOpenOptionProt): Promise<void>,
+	}
+
+	type ZUnoCompilerParametr = {
+		"freq":number,
+		"sec":number,
+		"main_pow":number,
+	}
+
+	type ZUnoCompilerSelf = {
+		"port":SerialPortProt,
+		"queue":Array<number>,
+		"seqNo":number,
+		"baudRate":number,
+		"paramtr"?:ZUnoCompilerParametr,
+		"md"?: BoardInfoProt
+	}
+
+	type BoardInfoZwDataProt = {
+		"s2_keys":number,
+		"device_type":number,
+		"device_icon":number,
+		"vendor":number,
+		"product_type":number,
+		"product_id":number,
+		"version":number,
+		"LR":boolean,
+	}
+	
+	type BoardInfoProt = {
+		"freq_i"?:number,
+		"version"?:number,
+		"build_number"?:number,
+		"build_ts"?:number,
+		"hw_rev"?:number,
+		"code_size"?:number,
+		"ram_size"?:number,
+		"dbg_lock"?:number,
+		"home_id"?:number,
+		"node_id"?:number,
+		"max_default_power"?:number,
+		"custom_code_offset"?:number,
+		"boot_offset"?:number,
+		"freq_str"?:string,
+		"dsk"?:string,
+		"smart_qr"?:string,
+		"s2_pub"?:Array<number>,
+		"param_info"?:Array<number>,
+		"chip_uid"?:Array<number>,
+		"flag_max_power"?:boolean,
+		"zwdata"?:BoardInfoZwDataProt,
+	}
+
+	interface FreqTableProt {
+		name: string;
+		id: number;
+	}
+
+	const SOF_CODE									= 0x01;
+	const NACK_CODE									= 0x15;
+	const CAN_CODE									= 0x18;
+	const ACK_CODE									= 0x06;
+	const REQUEST_CODE								= 0x00;
+
+	const RECV_OK									= 0x00;
+	const RECV_NOACK								= 0x01;
+	const RECV_INVALIDDATALEN						= 0x02;
+	const RECV_INVALIDCRC							= 0x03;
+	const RECV_NOSOF								= 0x05;
+
+	const dtr_timeout								= 250;
+	const rcv_sof_timeout							= 3500;
+
+	const ADDITIONAL_SIZE							= 3;
+
+	const ZUNO_HEADER_PREAMBL						= "ZMEZUNOC";
+
+	const SK_START_OFFSET_OLD						= 0x30000;
+	const SK_HEADER_SIZE							= 0xC0;
+	const SK_HEADER_VERSION_MSB_OFFSET				= 0x08;
+	const SK_HEADER_VERSION_LSB_OFFSET				= 0x09;
+	const SK_HEADER_NAME_START						= 56;
+	const SK_HEADER_MAX_NAME						= 47;
+	const SK_HEADER_HWREW_OFFSET					= SK_HEADER_NAME_START + SK_HEADER_MAX_NAME + 1;
+
+	const FREQ_TABLE_U7: FreqTableProt[] = [
+		{ name: "EU",id: 0x00},
+		{ name: "US",id: 0x01},
+		{ name: "ANZ",id: 0x02},
+		{ name: "HK",id: 0x03},
+		// { name: "MY",id: 0x04},
+		{ name: "IN",id: 0x05},
+		{ name: "IL",id: 0x06},
+		{ name: "RU",id: 0x07},
+		{ name: "CN",id: 0x08},
+		{ name: "US_LR",id: 0x09},
+		// { name: "US_LR_BK",id: 0x0A},
+		{ name: "JP",id: 0x20},
+		{ name: "KR",id: 0x21},
+		// { name: "FK",id: 0xFE},
+	];
+
+	const ZUNO_LIC_FLAGS_NAMES_MAX_POWER			= 4;
+
+	const MAX_DEFAULT_RF_POWER						= 50
 
 	const COM_PORT_FILTERS = [{ usbVendorId: 0x10c4, usbProductId: 0xea60 }];
 	const ZUNO_BAUD = [230400, 230400*2, 230400*4, 115200];
 
-	const CRC_POLY							= 0x1021;
+	const CRC_POLY									= 0x1021;
 
-	let progressCbk = null;
-	function progress(severity, message) {
+	let progressCbk:ZUnoCompilerProgressCbkProt|null = null;
+	function progress(severity:string, message:string): void {
 		if (progressCbk) {
 			progressCbk(severity, message);
 		}
 	}
-	
-	function calcSigmaCRC16(crc, data, offset, llen) {
-		let new_bit, wrk_data, b, a, bit_mask;
-		let bin_data = data;
+
+	function calcSigmaCRC16(crc:number, data:Array<number>, offset:number, llen:number):number {
+		let new_bit:number, wrk_data:number, b:number, a:number, bit_mask:number;
+		const bin_data:Array<number> = data;
+
 		while (llen != 0) {
 			llen -= 1;
 			if (offset >= bin_data.length)
@@ -86,7 +194,7 @@ export var ZUnoCompiler = function() {
 				new_bit = a ^ b;
 				crc <<= 1;
 				crc = crc & 0xffff;
-				if (new_bit == 1){
+				if (new_bit == 1) {
 					crc ^= CRC_POLY;
 				}
 				bit_mask >>= 1;
@@ -95,9 +203,10 @@ export var ZUnoCompiler = function() {
 		return (crc);
 	}
 
-	function Checksum(data) {
+	function Checksum(data:Array<number>):number {
 		let ret = 0xff;
 		let i = 0x0;
+
 		while (i < data.length) {
 			ret = ret ^ data[i];
 			i++;
@@ -105,37 +214,35 @@ export var ZUnoCompiler = function() {
 		return (ret);
 	}
 
-	function sleep(ms) {
+	function sleep(ms:number):Promise<void> {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
-	async function write(self, data) {
-		// console.debug(">>", data);
-		const data_uint8 = new Uint8Array(data);
+	async function write(self:ZUnoCompilerSelf, data:Array<number>): Promise<void> {
+		const data_uint8:Uint8Array = new Uint8Array(data);
 		const writer = self["port"].writable.getWriter();
 		await writer.write(data_uint8);
 		writer.releaseLock();
 	}
 
-	async function sendNack(self) {
+	async function sendNack(self:ZUnoCompilerSelf): Promise<void> {
 		await write(self, [NACK_CODE])
 	}
 
-	async function sendAck(self) {
+	async function sendAck(self:ZUnoCompilerSelf): Promise<void> {
 		await write(self, [ACK_CODE])
 	}
 
-	async function readWithTimeout(self, timeout) {
-		let out;
+	async function readWithTimeout(self:ZUnoCompilerSelf, timeout:number): Promise<Uint8Array> {
+		let out:Uint8Array;
 		const reader = self["port"].readable.getReader();
 		const timer = setTimeout(() => {
 			reader.releaseLock();
 		}, timeout);
 		try {
-			const { value, done } = await reader.read();
-			out = value;
+			out = (await reader.read()).value;
 		} catch (err) {
-			out = [];
+			out = new Uint8Array([]);
 		}
 		// console.debug("<<", out);
 		clearTimeout(timer);
@@ -143,22 +250,26 @@ export var ZUnoCompiler = function() {
 		return (out);
 	}
 
-	async function read(self, num) {
-		let out, i, rep;
+	async function read(self:ZUnoCompilerSelf, num:number): Promise<Array<number>> {
+		let out:Array<number>, i:number, rep:number, tempos:number|undefined;
+
 		rep = 0x0;
 		while (rep < 10) {
 			if (self["queue"].length >= num) {
 				out = [];
 				i = 0x0;
 				while (i < num) {
-					out.push(self["queue"].shift())
+					tempos = self["queue"].shift();
+					if (tempos == undefined)
+						break ;
+					out.push(tempos);
 					i++;
 				}
 				return (out);
 			}
-			const value = await readWithTimeout(self, 100);
+			const value:Uint8Array = await readWithTimeout(self, 100);
 			i = 0x0;
-			while (i < value.length) {
+			while (i < value.byteLength) {
 				self["queue"].push(value[i])
 				i++;
 			}
@@ -169,13 +280,16 @@ export var ZUnoCompiler = function() {
 		out = [];
 		i = 0x0;
 		while (i < num) {
-			out.push(self["queue"].shift())
+			tempos = self["queue"].shift();
+			if (tempos == undefined)
+				break ;
+			out.push(tempos);
 			i++;
 		}
 		return (out);
 	}
 
-	async function clear(self) {
+	async function clear(self:ZUnoCompilerSelf):  Promise<void> {
 		while (true) {
 			const value = await readWithTimeout(self, 100);
 			if (value.length == 0x0)
@@ -183,11 +297,12 @@ export var ZUnoCompiler = function() {
 		}
 	}
 
-	async function waitSOF(self) {
-		const sof_timeout = Date.now() + rcv_sof_timeout;
+	async function waitSOF(self:ZUnoCompilerSelf): Promise<boolean> {
+		const sof_timeout:number = Date.now() + rcv_sof_timeout;
+
 		while (sof_timeout > Date.now()) {
-			const sof = await read(self, 0x1);
-			if (sof.length == 0x0) {
+			const sof:Array<number> = await read(self, 0x1);
+				if (sof.length == 0x0) {
 				await sleep(100);
 				continue ;
 			}
@@ -198,22 +313,22 @@ export var ZUnoCompiler = function() {
 		return (false);
 	}
 
-	async function recvIncomingRequest(self) {
-		let len_data, buff_data, check_sum, check_buff;
+	async function recvIncomingRequest(self:ZUnoCompilerSelf): Promise<Array<number>> {
+		let buff_data:Array<number>;
 
 		if (await waitSOF(self) == false)
 			return ([RECV_NOSOF]);
-		len_data = await read(self, 0x1);
-		if (len_data.length == 0x0)
+		buff_data = await read(self, 0x1);
+		if (buff_data.length == 0x0)
 			return ([RECV_NOSOF]);
-		len_data = len_data[0x0];
+		const len_data:number = buff_data[0x0];
 		buff_data = await read(self, len_data);
-		if (buff_data.length != len_data) {
+			if (buff_data.length != len_data) {
 			await sendNack(self);
 			return ([RECV_INVALIDDATALEN]);
 		}
-		check_buff = [len_data].concat(buff_data.slice(0, len_data - 0x1))
-		check_sum = Checksum(check_buff);
+		const check_buff:Array<number> = [len_data].concat(buff_data.slice(0, len_data - 0x1))
+		const check_sum:number = Checksum(check_buff);
 		if (check_sum != buff_data[len_data - 1]) {
 			await sendNack(self);
 			return ([RECV_INVALIDCRC]);
@@ -222,26 +337,25 @@ export var ZUnoCompiler = function() {
 		return ([RECV_OK].concat(check_buff));
 	}
 
-	async function resyncZunoPort(self) {
-		if (navigator.platform == "Win32")
-			await sleep(500);
-		let data = await recvIncomingRequest(self);
+	async function resyncZunoPort(self:ZUnoCompilerSelf): Promise<boolean> {
+		const data:Array<number> = await recvIncomingRequest(self);
 		if (data[0x0] != RECV_OK)
 			return (false);
 		return (true);
 	}
 
-	async function sendData(self, cmd, databuff, have_callback = false) {
-		let crc_data, final_data, crc16, crc;
-		let data_len = databuff.length + ADDITIONAL_SIZE;
+	async function sendData(self:ZUnoCompilerSelf, cmd:number, databuff:Array<number>, have_callback:boolean = false): Promise<void> {
+		let final_data:Array<number>, data_len:number;
+
+		data_len = databuff.length + ADDITIONAL_SIZE;
 		if (have_callback == true)
 			data_len++;
 		if (data_len > 255) {
-			crc_data = [0x00, REQUEST_CODE, cmd].concat(databuff);
+			const crc_data:Array<number> = [0x00, REQUEST_CODE, cmd].concat(databuff);
 			final_data = [0x00, (data_len >> 8)& 0x0FF, data_len & 0x0FF, REQUEST_CODE, cmd].concat(databuff);
 			if (have_callback == true)
 				final_data = final_data.concat([self["seqNo"]]);
-			crc16 = calcSigmaCRC16(0x1D0F, crc_data, 0, crc_data.length);
+			const crc16:number = calcSigmaCRC16(0x1D0F, crc_data, 0, crc_data.length);
 			final_data = [SOF_CODE].concat(final_data).concat([(crc16 >> 8) & 0xFF, (crc16) & 0xFF]);
 			await write(self, final_data);
 			self["seqNo"] += 1;
@@ -251,16 +365,16 @@ export var ZUnoCompiler = function() {
 		final_data = [data_len & 0x0FF, REQUEST_CODE, cmd].concat(databuff);
 		if (have_callback == true)
 			final_data = final_data.concat([self["seqNo"]]);
-		crc = Checksum(final_data);
+		const crc:number = Checksum(final_data);
 		final_data = [SOF_CODE].concat(final_data).concat([crc]);
 		await write(self, final_data);
 		self["seqNo"] += 1;
 		self["seqNo"] &= 0XFF;// 1 byte
 	}
 
-	async function sendCommandUnSz(self, cmd, databuff, have_callback = false, retries = 0x3) {
-		let rbuff, result;
-		// In case of unclean buffer
+	async function sendCommandUnSz(self:ZUnoCompilerSelf, cmd:number, databuff:Array<number>, have_callback:boolean = false, retries:number = 0x3): Promise<Array<number>> {
+		let rbuff:Array<number>;
+
 		await clear(self);
 		while (true) {
 			await sendData(self, cmd, databuff, have_callback);
@@ -284,43 +398,59 @@ export var ZUnoCompiler = function() {
 			}
 			return ([RECV_NOACK]);
 		}
-		result = await recvIncomingRequest(self);
+		const result:Array<number> = await recvIncomingRequest(self);
 		return (result);
 	}
 
-	async function readNVM(self, addr, size) {
+	async function readNVM(self:ZUnoCompilerSelf, addr:number, size:number): Promise<Array<number>> {
 		return (await sendCommandUnSz(self, 0x2A, [(addr >> 16) & 0xFF, (addr >> 8) & 0xFF, addr & 0xFF, (size >> 8) & 0xFF, size & 0xFF], false));
 	}
 
-	async function writeNVM(self, addr, buff) {
+	async function writeNVM(self:ZUnoCompilerSelf, addr:number, buff:Array<number>): Promise<Array<number>> {
 		const size = buff.length;
 		const data_addr = [(addr >> 16) & 0xFF, (addr >> 8) & 0xFF, addr & 0xFF, (size >> 8) & 0xFF, size & 0xFF];
 		return (await sendCommandUnSz(self, 0x2B, data_addr.concat(buff), false));
 	}
 
-	async function checkBootImage(self) {
+	async function checkBootImage(self:ZUnoCompilerSelf): Promise<Array<number>> {
 		return (sendCommandUnSz(self, 0x08, [0x04], false));
 	}
 
-	async function softReset(self) {
+	async function softReset(self:ZUnoCompilerSelf): Promise<Array<number>> {
 		return (sendCommandUnSz(self, 0x08, [], false));
 	}
 
-	async function pushSketch(self, addr, size, crc16) {
+	async function pushSketch(self:ZUnoCompilerSelf, addr:number, size:number, crc16:number): Promise<Array<number>> {
 		return sendCommandUnSz(self, 0x08, [0x01, (addr >> 16) & 0xFF, (addr >> 8) & 0xFF, addr & 0xFF, (size >> 8) & 0xFF, size & 0xFF, (crc16 >> 8) & 0xFF, (crc16) & 0xFF], false);
 	}
 
-	function zmeRemapDictVal2Key(d, val) {
-		for (let k in d) {
-			if (d[k] == val)
-				return (k);
+	function freq_int_to_str(val:number): string|null {
+		let i = 0x0;
+		while (i < FREQ_TABLE_U7.length) {
+			if (FREQ_TABLE_U7[i].id == val)
+				return (FREQ_TABLE_U7[i].name);
+			i++;
 		}
 		return (null);
 	}
 
-	function zme_costruct_int(arr, n, inv = true) {
-		let val, i, indx;
-		val =0;
+	function freq_str_to_int(val:string|null): number|null {
+		let i = 0x0;
+
+		if (val == null)
+			return (null);
+		while (i < FREQ_TABLE_U7.length) {
+			if (FREQ_TABLE_U7[i].name == val)
+				return (FREQ_TABLE_U7[i].id);
+			i++;
+		}
+		return (null);
+	}
+
+	function zme_costruct_int(arr:Array<number>, n:number, inv:boolean = true): number {
+		let val:number, i:number, indx:number;
+
+		val = 0;
 		i = 0x0;
 		while (i < arr.length) {
 			val <<= 8;
@@ -334,20 +464,21 @@ export var ZUnoCompiler = function() {
 		return (val);
 	}
 
-	function readBoardInfoCheckFlag(lic_flags, flag_bit) {
-		let byte, flag;
-
-		byte = ((flag_bit - (flag_bit % 0x8)) / 0x8)
+	function readBoardInfoCheckFlag(lic_flags:Array<number>, flag_bit:number): boolean {
+		const byte:number = ((flag_bit - (flag_bit % 0x8)) / 0x8)
 		if (lic_flags.length < byte)
 			return (false);
-		flag = lic_flags[byte];
+		const flag:number = lic_flags[byte];
 		if ((flag & (0x1 << (flag_bit % 0x8))) == 0x0)
 			return (false);
 		return (true);
 	}
 
-	function conv2Decimal(buff, separator="-") {
-		let i = 0x0, text = "", v;
+	function conv2Decimal(buff:Array<number>, separator:string = "-"): string {
+		let i:number, text:string, v:number;
+
+		text = "";
+		i = 0x0;
 		while (i < (buff.length / 2)) {
 			v = buff[ (i * 2)];
 			v <<= 8;
@@ -360,15 +491,17 @@ export var ZUnoCompiler = function() {
 		return (text)
 	}
 
-	function _compile_zwave_qrcode_padding(num, max) {
+	function _compile_zwave_qrcode_padding(num:number, max:number): string {
 		let num_str = num.toString(0xA);
+
 		while (num_str.length < max)
 			num_str = '0' + num_str;
 		return (num_str);
 	}
 
-	async function compile_zwave_qrcode(product_data, dsk, version) {
-		let protocol_map, text;
+	async function compile_zwave_qrcode(product_data:BoardInfoZwDataProt, dsk:Array<number>, version:number): Promise<string> {
+		let protocol_map:number, text:string;
+
 		text = _compile_zwave_qrcode_padding(product_data["s2_keys"], 3);
 		text = text + conv2Decimal(dsk,"");
 		// #ProductType
@@ -383,24 +516,28 @@ export var ZUnoCompiler = function() {
 		text += "0803" + _compile_zwave_qrcode_padding(protocol_map, 3);
 		// # MaxInclusionInterval
 		text = text + "0403005";// # ==5*128=640
-		const buf = Uint8Array.from(unescape(encodeURIComponent(text)), c=>c.charCodeAt(0)).buffer;
-		const digest = new Uint8Array(await crypto.subtle.digest('SHA-1', buf));
+		const buf:ArrayBuffer = Uint8Array.from(unescape(encodeURIComponent(text)), c=>c.charCodeAt(0)).buffer;
+		const digest:Uint8Array = new Uint8Array(await crypto.subtle.digest('SHA-1', buf));
 		text = "9001" + _compile_zwave_qrcode_padding((digest[0x0] << 0x8) | digest[0x1], 5) + text;
 		return (text);
 	}
 
-	function toString(array) {
-		let result = "";
+	function toString(array:Array<number>): string {
+		let result:string;
+	
+		result = "";
 		for (let i = 0; i < array.length; i++) {
 			result += String.fromCharCode(array[i]);
 		}
 		return result;
 	}
 
-	async function readBoardInfo(self) {
-		let md, bLR, info, param_info, r, bts, code_sz_shift, shift_smrt, prod_shift, lic_shift, lic_flags;
-		md = {};
-		info = await readNVM(self, 0xFFFF00, 0x01);
+	async function readBoardInfo(self:ZUnoCompilerSelf): Promise<BoardInfoProt> {
+		let bLR:boolean, param_info:Array<number>, code_sz_shift:number, shift_smrt:number, lic_flags:Array<number>;
+
+		const md:BoardInfoProt = {
+		};
+		const info:Array<number> = await readNVM(self, 0xFFFF00, 0x01);
 		if (info.length < 10)
 			return (md);
 		param_info = await readNVM(self, 0xFFE000, 0x09);
@@ -408,7 +545,7 @@ export var ZUnoCompiler = function() {
 			return (md);
 		bLR = false;
 		param_info = param_info.slice(4, param_info.length);
-		r = zmeRemapDictVal2Key(FREQ_TABLE_U7, param_info[1])
+		const r:string|null = freq_int_to_str(param_info[1])
 		if (r == null)
 			return (md);
 		if (r != null)
@@ -416,7 +553,7 @@ export var ZUnoCompiler = function() {
 				bLR = true;
 		md["freq_i"] = param_info[1];
 		md["freq_str"] = r;
-		bts = info.slice(4, info.length);
+		const bts:Array<number> = info.slice(4, info.length);
 		md["version"] = (bts[0] << 8) | (bts[1]);
 		md["build_number"] = (bts[2] << 24) | (bts[3] << 16) |  (bts[4] << 8) | (bts[5]);
 		md["build_ts"] = (bts[6] << 24) | (bts[7] << 16) |  (bts[8] << 8) | (bts[9]);
@@ -425,8 +562,7 @@ export var ZUnoCompiler = function() {
 		if( md["build_number"] > 1116) {
 			code_sz_shift = 1;
 			md["code_size"] = zme_costruct_int(bts.slice(12,12+3), 3, false);
-		}
-		else
+		} else
 			md["code_size"] =  (bts[12] << 8) | (bts[13]);
 		md["ram_size"] =  (bts[14+code_sz_shift] << 8) | (bts[15+code_sz_shift]);
 		md["chip_uid"] =  bts.slice(16+code_sz_shift,16+code_sz_shift+8);
@@ -448,15 +584,16 @@ export var ZUnoCompiler = function() {
 				md["smart_qr"] = toString(bts.slice(46+code_sz_shift,46+code_sz_shift+90));
 			}
 			else {
-				md["zwdata"] = {};
-				md["zwdata"]["s2_keys"] = bts[46+code_sz_shift];
-				md["zwdata"]["device_type"] = zme_costruct_int(bts.slice(47+code_sz_shift, 47+code_sz_shift+2), 2, false);
-				md["zwdata"]["device_icon"] = zme_costruct_int(bts.slice(49+code_sz_shift, 49+code_sz_shift+2), 2, false);
-				md["zwdata"]["vendor"] = zme_costruct_int(bts.slice(51+code_sz_shift, 51+code_sz_shift+2), 2, false);
-				md["zwdata"]["product_type"] = zme_costruct_int(bts.slice(53+code_sz_shift, 53+code_sz_shift+2), 2, false);
-				md["zwdata"]["product_id"] = zme_costruct_int(bts.slice(55+code_sz_shift, 55+code_sz_shift+2), 2, false);
-				md["zwdata"]["version"] = md["version"];
-				md["zwdata"]["LR"] = bLR;
+				md["zwdata"] = {
+					"s2_keys": bts[46+code_sz_shift],
+					"device_type": zme_costruct_int(bts.slice(47+code_sz_shift, 47+code_sz_shift+2), 2, false),
+					"device_icon": zme_costruct_int(bts.slice(49+code_sz_shift, 49+code_sz_shift+2), 2, false),
+					"vendor": zme_costruct_int(bts.slice(51+code_sz_shift, 51+code_sz_shift+2), 2, false),
+					"product_type": zme_costruct_int(bts.slice(53+code_sz_shift, 53+code_sz_shift+2), 2, false),
+					"product_id": zme_costruct_int(bts.slice(55+code_sz_shift, 55+code_sz_shift+2), 2, false),
+					"version":	md["version"],
+					"LR": bLR,
+				};
 				md["smart_qr"] = await compile_zwave_qrcode(md["zwdata"], md["s2_pub"], md["version"]);
 			}
 		}
@@ -469,8 +606,8 @@ export var ZUnoCompiler = function() {
 		md["max_default_power"] = MAX_DEFAULT_RF_POWER;
 		lic_flags = [0];
 		if (bts.length > (46+shift_smrt+code_sz_shift+8)) {
-			prod_shift = 46+code_sz_shift+shift_smrt+4;
-			lic_shift = prod_shift+8+4+4;
+			const prod_shift:number = 46+code_sz_shift+shift_smrt+4;
+			const lic_shift:number = prod_shift+8+4+4;
 			lic_flags = bts.slice(lic_shift+2,lic_shift+2+8);
 			if (bts.length > (lic_shift + 10) && md["build_number"] >= 2849)
 				md["max_default_power"] = bts[lic_shift+10]
@@ -483,8 +620,10 @@ export var ZUnoCompiler = function() {
 		return (md);
 	}
 
-	async function freezeSketch(self, retries = 50) {
-		let sleep_time, rcv;
+	async function freezeSketch(self:ZUnoCompilerSelf): Promise<boolean> {
+		let sleep_time:number, rcv:Array<number>, retries:number;
+
+		retries = 0x3;
 		sleep_time = 10;
 		if (navigator.platform == "Win32")
 			sleep_time = 50;
@@ -500,7 +639,7 @@ export var ZUnoCompiler = function() {
 		return (false);
 	}
 
-	async function syncWithDevice(self) {
+	async function syncWithDevice(self:ZUnoCompilerSelf): Promise<boolean> {
 		if (await resyncZunoPort(self) == false) {
 			return (false);
 		}
@@ -510,37 +649,36 @@ export var ZUnoCompiler = function() {
 		return (true);
 	}
 
-	function HeaderCmp(header, core_version, hw_rev, build_number) {
-		let header_version, header_hw_rev;
+	function HeaderCmp(header:Array<number>, core_version:number, hw_rev:number, build_number:number): boolean {
 		const data_uint8 = new Uint8Array(header.slice(0, ZUNO_HEADER_PREAMBL.length));
 		const string = new TextDecoder().decode(data_uint8);
 		if (ZUNO_HEADER_PREAMBL != string)
 			return (false);
-		header_version = (header[SK_HEADER_VERSION_MSB_OFFSET] << 8) | header[SK_HEADER_VERSION_LSB_OFFSET];
+		const header_version:number = (header[SK_HEADER_VERSION_MSB_OFFSET] << 8) | header[SK_HEADER_VERSION_LSB_OFFSET];
 		if (header_version != core_version)
 			return (false);
 		if(hw_rev != -1 && build_number >= 2849) {
-			header_hw_rev = zme_costruct_int(header.slice(SK_HEADER_HWREW_OFFSET, SK_HEADER_HWREW_OFFSET + 0x2), 2);
+			const header_hw_rev:number = zme_costruct_int(header.slice(SK_HEADER_HWREW_OFFSET, SK_HEADER_HWREW_OFFSET + 0x2), 2);
 			if(hw_rev != header_hw_rev)
 				return (false);
 		}
 		return (true);
 	}
 
-	async function writeArrayToNVM(self, md, nvmaddr, array, data_offset=0) {
-		let ret_data, data_quant, offset, data_remains, len_send, buff, res;
+	async function writeArrayToNVM(self:ZUnoCompilerSelf, md:BoardInfoProt, nvmaddr:number, array:Array<number>, data_offset:number = 0x0): Promise<Array<number>|null> {
+		let data_quant:number, offset:number, data_remains:number, len_send:number, buff:Array<number>, res:Array<number>;
 
-		ret_data = array;
+		const ret_data:Array<number> = array;
 		offset = data_offset;
 		data_remains = ret_data.length - data_offset;
 		data_quant = 240;
-		if (md["build_number"] >= 3396)
+		if (md["build_number"] != undefined && md["build_number"] >= 3396)
 			data_quant = 2048;
 		while (data_remains != 0x0) {
 			len_send = data_quant;
 			if (data_remains < data_quant)
 				len_send = data_remains;
-			buff = new Array();
+			buff = [];
 			buff = buff.concat(ret_data.slice(offset,offset + len_send));
 			if (buff.length == 1)
 				buff = buff.concat([0xFF]);
@@ -551,34 +689,31 @@ export var ZUnoCompiler = function() {
 			data_remains -= len_send;
 			nvmaddr += len_send;
 		}
-		// console.log("Writing NVM data", "OK");
 		return (ret_data);
 	}
 
-	async function applyPrams(self, md) {
-		let bts, min_len, res;
-
-		bts = md["param_info"];
-		min_len = 8;
-		while (bts.byteLength < min_len)
+	async function applyPrams(self:ZUnoCompilerSelf, md:BoardInfoProt): Promise<boolean> {
+		const bts:Array<number>|undefined = md["param_info"];
+		if (bts == undefined || self["paramtr"] == undefined)
+			return (false);
+		while (bts.length < 8)
 			bts.push(0x0);
 		bts[1] = self["paramtr"]["freq"];
-		if (bts.byteLength > 8)
+		if (bts.length > 8)
 			bts[8] = self["paramtr"]["freq"];
 		bts[4] = self["paramtr"]["sec"];
 		bts[2] = self["paramtr"]["main_pow"];
-		res = await writeNVM(self, 0xFFE000, bts);
+		const res:Array<number> = await writeNVM(self, 0xFFE000, bts);
 		if (res[0] != RECV_OK || res[4] != 1) {
 			return (false);
 		}
 		return (true);
 	}
 
-	async function waitFinware(self) {
-		let result;
-		const sof_timeout = Date.now() + 30000;
+	async function waitFinware(self:ZUnoCompilerSelf): Promise<boolean> {
+		const sof_timeout:number = Date.now() + 30000;
 		while (sof_timeout > Date.now()) {
-			result = await recvIncomingRequest(self);
+			const result:Array<number> = await recvIncomingRequest(self);
 			if (result[0] == RECV_OK) {
 				if (result.length < 6)
 					return (false);
@@ -593,21 +728,21 @@ export var ZUnoCompiler = function() {
 		return (false);
 	}
 
-	function _base64ToArrayBuffer(base64) {
-		const binaryString = atob(base64);
-		const bytes = new Array(binaryString.length);
+	function _base64ToArrayBuffer(base64:string): Array<number> {
+		const binaryString:string = atob(base64);
+		const bytes:Array<number> = new Array(binaryString.length);
 		for (let i = 0; i < binaryString.length; i++) {
 			bytes[i] = binaryString.charCodeAt(i);
 		}
 		return bytes;
 	}
 
-	function _xhr_compile(data, hw_str) {
+	function _xhr_compile(data:string, hw_str:string): Promise<ZUnoCompilerLoadSketchResultProt> {
 		return new Promise(function(resolve, reject) {
 			const xhr = new XMLHttpRequest();
 			const formData = new FormData();
 
-			formData.append("sketch", new File([new Blob([data])], "sketch", { lastModified: new Date(0), type: "text/x-arduino", size: data.length, name:"sketch" }));
+			formData.append("sketch", new File([new Blob([data])], "sketch", { lastModified: Date.now(), type: "text/x-arduino"}));
 			formData.append("referer", document.location.href);
 			const url = 'https://service.z-wave.me/z-uno-compilation-server/?compile&' + 'hw=' + hw_str;
 			xhr.open("POST", url);
@@ -627,7 +762,7 @@ export var ZUnoCompiler = function() {
 		});
 	}
 
-	function _xhr_version() {
+	function _xhr_version(): Promise<ZUnoCompilerVersionResultProt> {
 		return new Promise(function(resolve, reject) {
 			const xhr = new XMLHttpRequest();
 
@@ -647,7 +782,7 @@ export var ZUnoCompiler = function() {
 		});
 	}
 
-	function _xhr_bootloader(hw_str, build_number) {
+	function _xhr_bootloader(hw_str:string, build_number:string): Promise<ZUnoCompilerLoadSketchResultProt> {
 		return new Promise(function(resolve, reject) {
 			const xhr = new XMLHttpRequest();
 
@@ -668,22 +803,21 @@ export var ZUnoCompiler = function() {
 		});
 	}
 
-	async function sketch_info(message) {
+	function sketch_info(message:string): void {
 		progress("info", message);
 	}
 	
-	async function sketch_error(self, reject, result) {
+	async function sketch_error(self:ZUnoCompilerSelf|null, reject:ZUnoCompilerSketchErrorProt, result:Error): Promise<void> {
 		if (self != null)
 			await self["port"].close();
 		progress("error", result.message);
 		reject(result);
 	}
 
-	function load_sketch(self, resolve, reject) {
-		let crc16;
+	function load_sketch(self:ZUnoCompilerSelf, promise_compile: Promise<ZUnoCompilerLoadSketchResultProt>, resolve:ZUnoCompilerLoadSketchOutFunProt, reject:ZUnoCompilerSketchErrorProt): void {
 		sketch_info("Compiling the sketch...");
-		self["promise_compile"].then(async function(result) {
-			let bin, header, md, sk_data, res;
+		promise_compile.then(async function(result:ZUnoCompilerLoadSketchResultProt) {
+			let bin:Array<number>;
 			try {
 				if (result["status"] != 0x0)
 					return (sketch_error(self, reject, Error("Compilation returned incorrect status: " + result["status"] + " log: " + result["log"] + " message: " +  result["message"])));
@@ -692,8 +826,10 @@ export var ZUnoCompiler = function() {
 				return (sketch_error(self, reject, Error("The structure obtained after compilation is not valid")));
 			}
 			sketch_info("Compiling the sketch done");
-			md = self["md"];
-			header = bin.slice(0, SK_HEADER_SIZE);
+			const md:BoardInfoProt|undefined = self["md"];
+			if (md == undefined || md["version"] == undefined ||  md["hw_rev"] == undefined || md["build_number"] == undefined || md["custom_code_offset"] == undefined || md["code_size"] == undefined)
+				return (sketch_error(self, reject, Error("Something unexpected happened and the variable turned out to be empty - contact support.")));
+			const header:Array<number> = bin.slice(0, SK_HEADER_SIZE);
 			if (HeaderCmp(header, md["version"], md["hw_rev"], md["build_number"]) == false)
 				return (sketch_error(self, reject, Error("The sketch and firmware version do not match")));
 			if (bin.length > md["code_size"])
@@ -701,11 +837,11 @@ export var ZUnoCompiler = function() {
 			sketch_info("Uploading the sketch...");
 			if (await applyPrams(self, md) == false)
 				return (sketch_error(self, reject, Error("Failed to apply settings")));
-			sk_data = await writeArrayToNVM(self, md, md["custom_code_offset"], bin);
+			const sk_data:Array<number>|null = await writeArrayToNVM(self, md, md["custom_code_offset"], bin);
 			if (sk_data == null)
 				return (sketch_error(self, reject, Error("Failed to upload sketch")));
-			crc16 = calcSigmaCRC16(0x1D0F, sk_data, 0, sk_data.length);
-			res = await pushSketch(self, md["custom_code_offset"], sk_data.length, crc16);
+			const crc16:number = calcSigmaCRC16(0x1D0F, sk_data, 0, sk_data.length);
+			const res:Array<number> = await pushSketch(self, md["custom_code_offset"], sk_data.length, crc16);
 			if (res[0] != RECV_OK)
 				return (sketch_error(self, reject, Error("Failed to apply sketch")));
 			if(res[4] == 0xFE)
@@ -726,7 +862,7 @@ export var ZUnoCompiler = function() {
 				return (sketch_error(self, reject, Error("Failed to read board info")));
 			await softReset(self);
 			await self["port"].close();
-			const out = {};
+			const out:ZUnoCompilerLoadSketchOutProt = {};
 			out["dsk"] = self["md"]["dsk"];
 			if ("smart_qr" in self["md"]) {
 				out["smart_qr"] = self["md"]["smart_qr"];
@@ -735,17 +871,16 @@ export var ZUnoCompiler = function() {
 				return ;
 			}
 			return (sketch_error(self, reject, Error("Failed to read QR code")));
-		}, async function(err) {
+		}, async function(err:Error) {
 			return (sketch_error(self, reject, err));
 		});
 	}
 
-	function load_bootloader(self, resolve, reject, hw_str, build_number_str) {
+	function load_bootloader(self:ZUnoCompilerSelf, promise_compile: Promise<ZUnoCompilerLoadSketchResultProt>, resolve:ZUnoCompilerLoadSketchOutFunProt, reject:ZUnoCompilerSketchErrorProt, hw_str:string, build_number_str:string): void {
 		sketch_info("Uploading a new bootloader to the Z-Uno...");
-		const promise_bootloader = _xhr_bootloader(hw_str, build_number_str);
-		promise_bootloader.then(async function(result) {
-			let bin, sk_data;
-
+		const promise_bootloader:Promise<ZUnoCompilerLoadSketchResultProt> = _xhr_bootloader(hw_str, build_number_str);
+		promise_bootloader.then(async function(result:ZUnoCompilerLoadSketchResultProt) {
+			let bin:Array<number>;
 			try {
 				if (result["status"] != 0x0)
 					return (sketch_error(self, reject, Error("Get bootloader returned incorrect status: " + result["status"] + " log: " + result["log"] + " message: " +  result["message"])));
@@ -753,7 +888,9 @@ export var ZUnoCompiler = function() {
 			} catch (error) {
 				return (sketch_error(self, reject, Error("The bootloader structure obtained after version is not valid")));
 			}
-			sk_data = await writeArrayToNVM(self, self["md"], self["md"]["boot_offset"], bin);
+			if (self["md"] == undefined || self["md"]["boot_offset"] == undefined)
+				return (sketch_error(self, reject, Error("Something unexpected happened and the variable turned out to be empty - contact support.")));
+			const sk_data:Array<number>|null = await writeArrayToNVM(self, self["md"], self["md"]["boot_offset"], bin);
 			if (sk_data == null)
 				return (sketch_error(self, reject, Error("Failed to upload firmware")));
 			await checkBootImage(self);
@@ -775,31 +912,30 @@ export var ZUnoCompiler = function() {
 			if (Number(build_number_str) != self["md"]["build_number"])
 				return (sketch_error(self, reject, Error("Although the firmware was successfully updated, the actual version was no longer needed")));
 			sketch_info("Uploading a new bootloader to the Z-Uno done");
-			return (load_sketch(self, resolve, reject));
+			return (load_sketch(self, promise_compile, resolve, reject));
 		}, async function(err) {
 			return (sketch_error(self, reject, err));
 		});
 	}
 
-	function sketch(text_sketch, freq, sec, main_pow) {
-		return new Promise(async function(resolve, reject) {
-			let i, hw_str;
-			const self = {"queue":[], "seqNo": 0x0};
-			const paramtr = {};
+	async function sketch(text_sketch:string, freq_str:string|null, sec:boolean, main_pow:number): Promise<ZUnoCompilerLoadSketchOutProt|void> {
+		return new Promise(async function(resolve:ZUnoCompilerLoadSketchOutFunProt, reject:ZUnoCompilerSketchErrorProt) {
+			let i:number, hw_str:string, sec_prm:number, port:SerialPortProt;
 			const filters = COM_PORT_FILTERS;
-			if (!navigator.serial || !navigator.serial.requestPort) {
+			if (!(navigator as any).serial || !(navigator as any).serial.requestPort) {
 				return (sketch_error(null, reject, Error("Sorry, this feature is supported only on Chrome, Edge and Opera")));
 			}
 			try {
-				self["port"] = await navigator.serial.requestPort({filters});
+				port = await (navigator as any).serial.requestPort({filters});
 			} catch(e) {
 				return (sketch_error(null, reject, Error("No port selected")));
 			}
 			try {
-				await self["port"].close();//If the port was already opened by us, but for some reason we left without closing it
+				await port.close();//If the port was already opened by us, but for some reason we left without closing it
 			} catch(e) {
 			}
 			sketch_info("Determining the revision Z-Uno ...");
+			const self:ZUnoCompilerSelf = {"queue":[], "seqNo": 0x0, "port": port, "baudRate": 230400};
 			i = 0x0;
 			while (i < ZUNO_BAUD.length) {
 				try {
@@ -820,33 +956,42 @@ export var ZUnoCompiler = function() {
 			if (Object.keys(self["md"]).length == 0x0)
 				return (sketch_error(self, reject, Error("Failed to read board info")));
 			sketch_info("Determining the revision Z-Uno done");
-			if (freq == null)
-				freq = self["md"]["freq_str"]
-			paramtr["freq"] = FREQ_TABLE_U7[freq];
+			if (self["md"]["freq_str"] == undefined)
+				return (sketch_error(self, reject, Error("Something unexpected happened and the variable turned out to be empty - contact support.")));
+			if (freq_str == null)
+				freq_str = self["md"]["freq_str"]
+			const freq:number|null = freq_str_to_int(freq_str);
 			if (sec === true)
-				paramtr["sec"] = 0x1;
+				sec_prm = 0x1;
 			else if (sec === false)
-				paramtr["sec"] = 0x0;
+				sec_prm = 0x0;
 			else
 				return (sketch_error(null, reject, Error("The security parameter is incorrectly specified")));
+			if (self["md"]["max_default_power"] == undefined)
+				return (sketch_error(self, reject, Error("Something unexpected happened and the variable turned out to be empty - contact support.")));
 			if (main_pow < 0x1 || main_pow > 0xFF)
 				return (sketch_error(null, reject, Error("Radio power is out of range")));
-				if (!(freq in FREQ_TABLE_U7))
+			if (freq == null)
 				return (sketch_error(null, reject, Error("The specified radio frequency is not supported")));
 			if (self["md"]["flag_max_power"] == false) {
 				if (main_pow > self["md"]["max_default_power"])
 					return (sketch_error(self, reject, Error("Your license does not support this maximum radio power value.")));
 			}
-			paramtr["main_pow"] = main_pow;
-			self["paramtr"] = paramtr;
+			self["paramtr"] = {
+				"main_pow":main_pow,
+				"freq": freq,
+				"sec": sec_prm,
+			};
+			if (self["md"]["hw_rev"] == undefined)
+				return (sketch_error(self, reject, Error("Something unexpected happened and the variable turned out to be empty - contact support.")));
 			hw_str = self["md"]["hw_rev"].toString(0x10);
 			while (hw_str.length < 0x4)
 				hw_str = '0' + hw_str;
 			sketch_info("Checking Z-Uno version...");
-			self["promise_version"] = _xhr_version();
-			self["promise_compile"] = _xhr_compile(text_sketch, hw_str);
-			self["promise_version"].then(async function(result) {
-				let version_list, build_number;
+			const promise_version: Promise<ZUnoCompilerVersionResultProt> = _xhr_version();
+			const promise_compile: Promise<ZUnoCompilerLoadSketchResultProt> = _xhr_compile(text_sketch, hw_str);
+			promise_version.then(async function(result:ZUnoCompilerVersionResultProt) {
+				let version_list:ZUnoCompilerVersionHwResultProt;
 				try {
 					if (result["status"] != 0x0)
 						return (sketch_error(self, reject, Error("Get version returned incorrect status: " + result["status"] + " message: " +  result["message"])));
@@ -854,30 +999,41 @@ export var ZUnoCompiler = function() {
 				} catch (error) {
 					return (sketch_error(self, reject, Error("The version structure obtained after version is not valid")));
 				}
-				build_number = version_list[hw_str].seq;
+				const build_number:number = version_list[hw_str].seq;
 				if (build_number === undefined)
 					return (sketch_error(self, reject, Error("The server does not support the specified board revision")));
-				if (self["md"]["build_number"] > Number(build_number))
+				if (self["md"] == undefined || self["md"]["build_number"] == undefined)
+					return (sketch_error(self, reject, Error("Something unexpected happened and the variable turned out to be empty - contact support.")));
+				if (self["md"]["build_number"] > build_number)
 					return (sketch_error(self, reject, Error("The firmware on the board is newer than on the server")));
 				sketch_info("Checking Z-Uno version done");
-				if (self["md"]["build_number"] != Number(build_number))
-					return (load_bootloader(self, resolve, reject, hw_str, build_number));
-				return (load_sketch(self, resolve, reject));
-			}, async function(err) {
+				if (self["md"]["build_number"] != build_number)
+					return (load_bootloader(self, promise_compile, resolve, reject, hw_str, String(build_number)));
+				return (load_sketch(self, promise_compile, resolve, reject));
+			}, async function(err:Error) {
 				return (sketch_error(self, reject, err));
 			});
 		});
 	}
 
-	function generateQrCode(id, qrContent) {
-		return new QRCode(id, {
-			text: qrContent,
+	function generateQrCode(id:HTMLElement|string, text:string): QRCode|null {
+		let obj_QRCode:QRCode;
+		const option:QRCodeOption = {
+			text: text,
 			width: 256,
 			height: 256,
 			colorDark: "#000000",
 			colorLight: "#ffffff",
-			correctLevel: QRCode.CorrectLevel.L,
-		});
+			correctLevel: QRErrorCorrectLevel.L,
+		};
+		
+		try {
+			obj_QRCode = new QRCode(id, option);
+		} catch(e) {
+			progress("error", "Failed to create \"object QRCode\", check parameters.");
+			return (null);
+		}
+		return (obj_QRCode);
 	}
 
 	return {
@@ -890,7 +1046,7 @@ export var ZUnoCompiler = function() {
 		 * @param {*} main_pow max power (int, without a special license the maximum is 50)
 		 * @returns Returns a dictionary with smart_qr as string and dsk as string
 		 */
-		compile: function(code, freq, sec, main_pow) {
+		compile: function(code:string, freq:string|null, sec:boolean, main_pow:number):Promise<ZUnoCompilerLoadSketchOutProt|void> {
 			return sketch(code, freq, sec, main_pow);
 		},
 	
@@ -900,38 +1056,33 @@ export var ZUnoCompiler = function() {
 		 * @param {*} id Id of the div tag that will host the QR-code image
 		 * @param {*} qrContent Content of the QR-code to be printed
 		 */
-		drawQR: function(id, qrContent) {
-			return generateQrCode(id, qrContent);
+		drawQR: function(id:HTMLElement|string, text:string): QRCode|null {
+			return generateQrCode(id, text);
 		},
 		
 		/**
 		 * Set progress log callback
 		 *
 		 */
-		setProgress: function(cbk) {
+		setProgress: function(cbk:ZUnoCompilerProgressCbkProt): void {
 			progressCbk = cbk;
+		},
+
+		/**
+		 * 
+		 * @returns List freq
+		 */
+		getFreqList: function(): Array<string> {
+			let i:number, out:Array<string>;
+
+			i = 0x0;
+			out = [];
+			while (i < FREQ_TABLE_U7.length) {
+				out.push(FREQ_TABLE_U7[i].name);
+				i++;
+			}
+			return (out);
 		}
+
 	};
 }
-
-
-/* Example
-
-HTML:
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<div id="qr-code"></div>
-<div id="dsk"></div>
-
-JS:
-var zcl = ZUnoCompiler();
-async function compileAndLoad(code) {
-	let res = zcl.compile(code, "EU", true, 50);
-	res.then(function(result) {
-		let g_qcode = zcl.generateQrCode("qr-code", result["smart_qr"]);
-		document.getElementById("dsk").innerHTML = result["dsk"];
-		console.log(result);
-	}, function(err) {
-		console.error(err);
-	});
-}
-*/
