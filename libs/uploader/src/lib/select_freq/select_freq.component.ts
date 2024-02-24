@@ -7,7 +7,7 @@ import { ZUnoCompiler } from '../../ZUnoCompiler/src/z-uno-compiler';
   styleUrls: ['./select_freq.component.scss'],
 })
 export class SelectFreq {
-    public selected_freq: string = "None";
+    public selected_freq: string = "Keep current frequency";
 
 
 teams: any[] = [
