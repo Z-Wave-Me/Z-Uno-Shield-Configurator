@@ -29,7 +29,7 @@ export class SwitchMultilevelPwm extends BaseDevice {
       parentId: `pin${this.config.id}SwitchMultilevelState`,
       template: `pin${this.config.id}SwitchMultilevelState = {0};`,
       title: `Switch Multilevel #${this.config.id}`,
-      parameters: [0],
+      parameters: [],
     }];
   }
 }

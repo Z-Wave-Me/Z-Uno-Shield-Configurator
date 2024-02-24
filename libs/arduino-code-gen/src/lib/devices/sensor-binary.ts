@@ -71,7 +71,7 @@ export class SensorBinary extends BaseDevice {
       parentId: `pin${this.config.id}SensorBinaryState`,
       template: `pin${this.config.id}SensorBinaryState = {0}`,
       title: `Sensor binary ${this.config.id}`,
-      parameters: [0],
+      parameters: [],
     }];
   }
 }

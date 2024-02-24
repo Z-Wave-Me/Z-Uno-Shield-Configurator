@@ -1,4 +1,4 @@
-<div *ngIf="{ variables: variableList$ | async } as data" [formGroup]="actionForm" class="row">
+<div *ngIf="{ variables: variableList$ | async, rValues: rValues$ | async } as data" [formGroup]="actionForm" class="row">
   <mat-form-field appearance="outline">
     <mat-label>Variable</mat-label>
     <mat-select
@@ -11,13 +11,14 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Value</mat-label>
-    <input
-      formControlName="parameters"
-      matInput
-      placeholder="..."
-      type="number"
-    >
-  </mat-form-field>
+  <configurator-linear-values [displayWith]="displayWith" [options]="data.rValues" label="Value" formControlName="parameters"/>
+<!--  <mat-form-field appearance="outline">-->
+<!--    <mat-label>Value</mat-label>-->
+<!--    <input-->
+<!--      formControlName="parameters"-->
+<!--      matInput-->
+<!--      placeholder="..."-->
+<!--      type="number"-->
+<!--    >-->
+<!--  </mat-form-field>-->
 </div>

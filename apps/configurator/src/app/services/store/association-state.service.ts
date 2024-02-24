@@ -58,4 +58,8 @@ export class AssociationStateService implements OnDestroy {
   public associations(): Signal<Association[]> {
     return this.state.asReadonly();
   }
+
+  public reset() {
+    this.state.update(() => []);
+  }
 }

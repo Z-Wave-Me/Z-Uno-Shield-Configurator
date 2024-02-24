@@ -6,7 +6,7 @@ import {
   first,
   map,
   Observable,
-  ReplaySubject,
+  Subject,
 } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
@@ -26,15 +26,18 @@ export class PinsStateService {
     associations: [],
     rules: null,
     remoteUrl: null,
-  }
+  };
+
+  private readonly initialCodeGenState = {
+    variables: [],
+    notes: {},
+  };
 
   private readonly _boardConfig$ = new BehaviorSubject<BoardConfig>(this.initialState);
 
-  private readonly codeGen$ = new BehaviorSubject<GeneratedData>({
-    variables: [],
-    notes: {},
-  });
+  private readonly codeGen$ = new BehaviorSubject<GeneratedData>(this.initialCodeGenState);
 
+  private readonly resetBehaviour$ = new Subject<void>();
 
   private currentKey = '';
 
@@ -142,6 +145,9 @@ export class PinsStateService {
     this.updateRoute();
   }
 
+  public resetBehaviour(): Observable<void> {
+    return this.resetBehaviour$.asObservable();
+  }
 
   public reset(): void {
     this._boardConfig$.next(this.initialState);
@@ -149,7 +155,9 @@ export class PinsStateService {
       pins: [],
       associations: [],
     });
+    this.codeGen$.next(this.initialCodeGenState);
     this.router.navigate([]);
+    this.resetBehaviour$.next();
   }
 
   private updateRoute(): void {

@@ -125,7 +125,7 @@ ${getters}
         parentId: `pin${id}SwitchMultilevelState`,
         title: `Switch Multilevel #${id}`,
         template: `pin${id}SwitchMultilevelState = {0};`,
-        parameters: [0],
+        parameters: [],
       }));
   }
 }

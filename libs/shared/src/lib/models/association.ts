@@ -1,3 +1,5 @@
+import { LinearValues } from '../components/linear-values/linear-values';
+
 export enum ActionParameterType {
   Byte = 'byte',
   UInt16 = 'uint16_t',
@@ -13,7 +15,7 @@ export interface Action {
   parentId: string;
   title: string;
   template: string;
-  parameters: (ActionParameter | number | string)[];
+  parameters: (LinearValues)[];
   isUserInput?: boolean;
 }
 

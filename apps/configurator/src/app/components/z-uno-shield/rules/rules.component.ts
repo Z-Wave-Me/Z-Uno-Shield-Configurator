@@ -13,7 +13,7 @@ import { notNull } from '@configurator/arduino-code-gen';
 })
 export class RulesComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject<void>();
-  public readonly form: FormGroup<RulesForm> =  new FormGroup<RulesForm>({
+  public readonly form: FormGroup<RulesForm> = new FormGroup<RulesForm>({
     rules: new FormArray<FormGroup<RuleForm>>([]),
   })
 
@@ -36,6 +36,12 @@ export class RulesComponent implements OnInit, OnDestroy {
       first(),
     ).subscribe(rules => {
       rules.map(r => this.addRule(r));
+    });
+
+    this.pinsStateService.resetBehaviour().pipe(
+      takeUntil(this.destroy$),
+    ).subscribe(() => {
+     this.form.controls.rules.clear();
     })
   }
 
@@ -96,7 +102,7 @@ export interface RulesForm {
 
 export interface ActionForm {
   action: FormControl<Action | undefined>;
-  parameters: FormControl<number>;
+  parameters: FormControl<Action | undefined>;
 }
 
 export interface ExpressionForm {

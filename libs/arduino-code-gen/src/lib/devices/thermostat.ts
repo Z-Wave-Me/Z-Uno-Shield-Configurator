@@ -73,12 +73,12 @@ signed int pin${this.config.id}ThermostatTemperatureGetter(byte mode) {
     return `  // External temperature sensor for thermostat @pin${this.config.id} processing
   if ( REPORT_SENSOR_MULTILEVEL_TYPE(report) == ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE) {
     int temp = int(REPORT_SENSOR_MULTILEVEL_VALUE(report) * 10);
-    
+
     if (REPORT_SENSOR_MULTILEVEL_SCALE(report) != SENSOR_MULTILEVEL_SCALE_CELSIUS) {
       // Conversion from degrees Fahrenheit to degrees Celsius
       temp = (temp - 32) * 5 / 9;
     }
-    
+
     pin${this.config.id}ThermostatTemperatureCurrent = temp;
   }`;
   }
@@ -90,25 +90,25 @@ signed int pin${this.config.id}ThermostatTemperatureGetter(byte mode) {
 
     return invert === condition ? 'HIGH' : 'LOW';
   }
-  
+
   public override get variables(): Action[] {
     return [{
       parentId: `pin${this.config.id}ThermostatModeState`,
       template: `pin${this.config.id}ThermostatModeState = {0};`,
       title: `Thermostat Mode #${this.config.id}`,
-      parameters: [0],
+      parameters: [],
     },
       {
         parentId: `pin${this.config.id}ThermostatTemperatureState`,
         template: `pin${this.config.id}ThermostatTemperatureState = {0};`,
         title: `Thermostat Temperature #${this.config.id}`,
-        parameters: [0],
+        parameters: [],
       },
       {
         parentId: `pin${this.config.id}ThermostatTemperatureCurrent`,
         template: `pin${this.config.id}ThermostatTemperatureCurrent = {0};`,
         title: `Thermostat Temperature Current #${this.config.id}`,
-        parameters: [0],
+        parameters: [],
       }];
   }
 }

@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { LinearValues } from './linear-values';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { Action } from '../../models/association';
 
 @Component({
   selector: 'configurator-linear-values',
@@ -41,11 +42,11 @@ export class LinearValuesComponent implements ControlValueAccessor, OnInit, OnDe
   displayWith: ((value: any) => string) | null = null;
 
   public readonly linearFrom = new FormGroup({
-    value: new  FormControl<number>(0),
+    value: new  FormControl<Action | undefined>(undefined, [Validators.required]),
     alpha: new  FormControl<number>(1),
     betta: new  FormControl<number>(0),
   })
-  public onChange(_: (string | number)[]): null {
+  public onChange(_: LinearValues<Action | null>): null {
     return null;
   }
 
@@ -56,7 +57,7 @@ export class LinearValuesComponent implements ControlValueAccessor, OnInit, OnDe
     this.linearFrom.valueChanges.pipe(
       takeUntil(this.destroy$),
     ).subscribe(data => {
-      this.onChange([data.value ?? 0, data.alpha ?? 1, data.betta ?? 0]);
+      this.onChange([data.value ?? null, data.alpha ?? 1, data.betta ?? 0]);
     })
   }
 
@@ -65,16 +66,18 @@ export class LinearValuesComponent implements ControlValueAccessor, OnInit, OnDe
     this.destroy$.complete();
   }
 
-  public writeValue(linearValues: LinearValues): void {
-   this.linearFrom.patchValue({
-     value: linearValues?.[0] ?? 0,
+  public writeValue(linearValues: LinearValues<Action | null>): void {
+    this.linearFrom.patchValue({
+     value: this.getValue(linearValues?.[0]),
      alpha: linearValues?.[1] ?? 1,
      betta: linearValues?.[2] ?? 0,
-   });
+    });
 
-   if (this.linearFrom.controls.alpha.value !== 1 || this.linearFrom.controls.betta.value !== 0 ) {
-     this.mode = 'linear';
-   }
+    if (this.linearFrom.controls.alpha.value !== 1 || this.linearFrom.controls.betta.value !== 0 ) {
+      this.mode = 'linear';
+    }
+
+    this.linearFrom.controls.value.markAsTouched();
   }
 
   public registerOnChange(fn: any): void {
@@ -95,6 +98,14 @@ export class LinearValuesComponent implements ControlValueAccessor, OnInit, OnDe
     } else  {
       this.mode = 'linear';
     }
+  }
+
+  private getValue(linearValue: Action | null): Action | null {
+    if (linearValue?.isUserInput || this.options?.find(item => item.title === linearValue?.title)) {
+      return linearValue;
+    }
+
+    return null;
   }
 }
 

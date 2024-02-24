@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Action, Expression, LinearValues, Logical, OperatorType } from '@configurator/shared';
-import { Observable, Subject, takeUntil, tap } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { ExpressionForm } from '../rules.component';
 import { PinsStateService } from '../../../../services/store/pins-state.service';
 
@@ -134,20 +134,18 @@ export class ExpressionComponent implements OnInit, OnDestroy {
   }
 
   public writeValue(expression: Expression): void {
-    const left = expression.expression[0];
-    const right = expression.expression[2];
-    const variables = this.pinsStateService.variablesSnapshot();
-      if (left && (left[0].isUserInput || variables.find(action => action.parentId === left[0].parentId))) {
-        this.expressionForm.controls.left.setValue(expression.expression[0]);
-      }
-
+    if (expression.expression) {
+      this.expressionForm.controls.left.setValue(expression.expression[0]);
       this.expressionForm.controls.operand.setValue(expression.expression[1]);
+      this.expressionForm.controls.operand.markAsTouched();
+      this.expressionForm.controls.right.setValue(expression.expression[2]);
 
-      if (right && (right[0].isUserInput || variables.find(action => action.parentId === right[0].parentId))) {
-        this.expressionForm.controls.right.setValue(expression.expression[2]);
+      if (!this.first) {
+        this.expressionForm.controls.operator.setValue(expression.operator);
+        this.expressionForm.controls.operator.setValidators([Validators.required]);
+        this.expressionForm.controls.operator.markAsTouched();
       }
-
-      this.expressionForm.controls.operator.setValue(expression.operator);
+    }
   }
 
   private makeAction(value: LinearValues<Action> | null | undefined): LinearValues<Action> | null {

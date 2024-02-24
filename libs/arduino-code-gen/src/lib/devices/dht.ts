@@ -25,7 +25,7 @@ export class DHT extends BaseDevice {
   word _pin${this.config.id}DHTHumidityState = pin${
       this.config.id
     }DHT.readHumidityH10();
-    
+
   if(abs(_pin${this.config.id}DHTTemperatureState-pin${
       this.config.id
     }DHTTemperatureState) > 2) {
@@ -35,7 +35,7 @@ export class DHT extends BaseDevice {
     }DHTTemperatureState;
     zunoSendReport(${channel});
   }
-  
+
   if(abs(_pin${this.config.id}DHTHumidityState-pin${
       this.config.id
     }DHTHumidityState) > 10) {
@@ -57,7 +57,7 @@ export class DHT extends BaseDevice {
 
   public override get vars(): string {
     return `DHT pin${this.config.id}DHT(${this.config.id}, ${this.name});
-    
+
 int pin${this.config.id}DHTTemperatureState;
 word pin${this.config.id}DHTHumidityState;`;
   }
@@ -67,12 +67,12 @@ word pin${this.config.id}DHTHumidityState;`;
       parentId: `pin${this.config.id}DHTTemperatureState`,
       title: `Set DHT Temperature #${this.config.id}`,
       template: `pin${this.config.id}DHTTemperatureState = {0};`,
-      parameters: [0],
+      parameters: [],
     }, {
       parentId: `pin${this.config.id}DHTHumidityState`,
       title: `DHT Humidity ${this.config.id}`,
       template: `pin${this.config.id}DHTHumidityState = {0};`,
-      parameters: [0],
+      parameters: [],
     }];
   }
 }

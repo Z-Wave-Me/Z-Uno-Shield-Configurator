@@ -22,10 +22,11 @@ export class ActionComponent implements OnInit, OnDestroy {
 
   public readonly actionForm: FormGroup<ActionForm> = new FormGroup<ActionForm>({
     action: new FormControl<Action | undefined>(undefined, { validators: [Validators.required], nonNullable: true }),
-    parameters: new FormControl<number>(0, { validators: [Validators.required], nonNullable: true}),
+    parameters: new FormControl<Action | undefined>(undefined, { validators: [Validators.required], nonNullable: true}),
   })
 
   public readonly variableList$: Observable<Action[]>;
+  public readonly rValues$: Observable<Action[]>;
 
   public action: Action | undefined;
   public disabled = false;
@@ -33,6 +34,10 @@ export class ActionComponent implements OnInit, OnDestroy {
   public onChange = (action: Action): void => void 0;
 
   public onTouched = (): void => void 0;
+
+  public displayWith(expression: Action): string {
+    return expression?.title;
+  }
 
   public getTitle(option: Action, value: Action ): boolean {
     return (option?.parentId + option?.title) === (value?.parentId + value?.title);
@@ -45,7 +50,8 @@ export class ActionComponent implements OnInit, OnDestroy {
       map(([variables, associations]) => {
         return [...variables, ...associations]
       }),
-    )
+    );
+    this.rValues$ = this.pinsStateService.variables();
   }
 
   public ngOnInit(): void {
@@ -54,9 +60,8 @@ export class ActionComponent implements OnInit, OnDestroy {
     ).subscribe((data) => {
       const {action, parameters} = data;
 
-      if (action && !isNaN(Number(parameters))) {
-        this.onChange({ ...action, parameters: [parameters ?? 0] });
-      }
+      // @ts-ignore
+        this.onChange({ ...action, parameters: [parameters] });
     })
   }
 
@@ -78,9 +83,10 @@ export class ActionComponent implements OnInit, OnDestroy {
 
   public writeValue(action: Action): void {
     this.action = action;
-    this.actionForm.setValue({
+    this.actionForm.patchValue({
       action: action,
-      parameters: +(action?.parameters[0] ?? 0),
+      // @ts-ignore
+      parameters: action?.parameters[0] ?? undefined,
     });
   }
 
