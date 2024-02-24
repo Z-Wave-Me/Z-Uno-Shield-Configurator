@@ -171,7 +171,7 @@ ${this.functions}`;
 
     const names = this.associations.map((item, index) => `
     case ${index + 2}:
-      return "${item.title}"`).join(';');
+      return "${item.title}";`).join('');
 
     if (setup) {
       return `
