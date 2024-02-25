@@ -106,7 +106,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         this.onChange({
-          expression: [this.makeAction(data.left), data.operand!, this.makeAction(data.right)],
+          expression: [data.left as LinearValues, data.operand!, data.right as LinearValues],
           operator: data.operator,
         });
       });
@@ -146,22 +146,6 @@ export class ExpressionComponent implements OnInit, OnDestroy {
         this.expressionForm.controls.operator.markAsTouched();
       }
     }
-  }
-
-  private makeAction(value: LinearValues<Action> | null | undefined): LinearValues<Action> | null {
-    const zero: Action | string | number | undefined | null = value?.[0];
-    if (typeof zero === 'string' || typeof zero === 'number') {
-      return [{
-        parentId: `${zero}`,
-        title: `${zero}`,
-        parameters: [zero],
-        template: '{0}',
-        isUserInput: true,
-        // @ts-ignore
-      }, value[1], value[2]]
-    }
-
-    return value ?? null;
   }
 }
 

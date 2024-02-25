@@ -42,7 +42,7 @@ export class LinearValuesComponent implements ControlValueAccessor, OnInit, OnDe
   displayWith: ((value: any) => string) | null = null;
 
   public readonly linearFrom = new FormGroup({
-    value: new  FormControl<Action | undefined>(undefined, [Validators.required]),
+    value: new  FormControl<Action | null | string | number>(null, [Validators.required]),
     alpha: new  FormControl<number>(1),
     betta: new  FormControl<number>(0),
   })
@@ -57,7 +57,17 @@ export class LinearValuesComponent implements ControlValueAccessor, OnInit, OnDe
     this.linearFrom.valueChanges.pipe(
       takeUntil(this.destroy$),
     ).subscribe(data => {
-      this.onChange([data.value ?? null, data.alpha ?? 1, data.betta ?? 0]);
+      let value = data.value;
+      if (value && (typeof value === 'string' || typeof value === 'number')) {
+        value = {
+          parentId: `${value}`,
+          title: `${value}`,
+          parameters: [],
+          template: '{0}',
+          isUserInput: true,
+        };
+      }
+      this.onChange([value as Action, data.alpha ?? 1, data.betta ?? 0]);
     })
   }
 
