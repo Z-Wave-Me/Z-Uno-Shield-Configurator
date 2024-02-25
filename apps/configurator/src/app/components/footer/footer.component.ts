@@ -88,17 +88,17 @@ ${
 
   private makeAction = (action: Action, associations: Association[]): string | null  => {
     console.log(action);
-    const index = associations.findIndex(association => association.uuid === action.parentId);
-    const hasAssociation = action.template?.includes('{1}')
-    // TODO добавить сообщение об ошибке в форме (отсутствует ассоциация)
-    if (hasAssociation && index < 0) {
-      return null;
-    }
+      const index = associations.findIndex(association => association.uuid === action.parentId);
+      const hasAssociation = action.template?.includes('{1}')
+      // TODO добавить сообщение об ошибке в форме (отсутствует ассоциация)
+      if ((hasAssociation && index < 0) ||!action.template) {
+        return null;
+      }
 
-    return `    ${
-      action.template
-      .replace('{1}', (2 + index).toString())
-      .replace('{0}', makeLinear(action.parameters[0]))}`
+      return `    ${
+        action.template
+        .replace('{1}', (2 + index).toString())
+        .replace('{0}', makeLinear(action.parameters[0]))}`
   }
 
   private makeExpression(list: Expression[]): string {
@@ -128,7 +128,7 @@ ${
     localStorage.setItem('zunoCode', code);
     location.href = '/editor/';
   }
-  
+
   public get url(): string {
     return window.location.href;
   }

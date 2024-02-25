@@ -160,7 +160,6 @@ export const pinList: Pin[] = [
       {
         key: 'digital input',
         title: $localize`Digital input 0/3 V`,
-        withGround: 3,
         options: IO.digitalInput,
         busBars: [0],
       },
@@ -193,7 +192,6 @@ export const pinList: Pin[] = [
       {
         key: 'digital input',
         title: $localize`Digital input 0/3 V`,
-        withGround: 3,
         options: IO.digitalInput,
         busBars: [1],
       },
@@ -213,7 +211,6 @@ export const pinList: Pin[] = [
       {
         key: 'digital input',
         title: $localize`Digital input 0/3 V`,
-        withGround: 3,
         options: IO.digitalInput,
       },
       {
@@ -233,7 +230,6 @@ export const pinList: Pin[] = [
       {
         key: 'digital input',
         title: $localize`Digital input 0/3 V`,
-        withGround: 3,
         options: IO.digitalInput,
       },
       {

@@ -1,11 +1,18 @@
 <svg:g id="layer9" style="display:inline;opacity:1" transform="translate(0 1360.63)">
-  <svg:g id="g91410" style="display:inline">
-    <svg:path id="rect91398" d="M1209.449-1303.937h854.173v15.118h-854.173z" style="fill:#000;stroke-width:1.00157"/>
-    <svg:path id="rect91400" d="M2048.504-1303.937h15.118V661.417h-15.118z" style="fill:#000;stroke-width:1.00157"/>
-    <svg:path id="rect91402" d="M2048.504 646.299h359.055v15.118h-359.055z" style="fill:#000;stroke-width:1.00157"/>
-    <svg:path id="rect91404" d="M2392.441 597.165h15.118v64.252h-15.118z" style="fill:#000;stroke-width:1.00157"/>
-<!--    <svg:path id="rect91412" d="M1209.449-1303.937h15.118v226.772h-15.118z" style="display:inline;opacity:1;fill:#000;stroke-width:1.00157"/>-->
+  <svg:g id="g8327" style="display:inline;opacity:1">
+    <svg:path id="rect8317" d="M937.323-1360.63h1126.299v15.118H937.323z" style="fill:red;stroke-width:1.00157"/>
+    <svg:path id="rect8319" d="M2048.504-1360.63h15.118V661.417h-15.118z" style="fill:red;stroke-width:1.00157"/>
+    <svg:path id="rect8321" d="M2048.504 646.299h359.055v15.118h-359.055z" style="fill:red;stroke-width:1.00157"/>
+    <svg:path id="rect8323" d="M2392.441 597.165h15.118v64.252h-15.118z" style="fill:red;stroke-width:1.00157"/>
+    <svg:path id="rect8325" d="M937.323-1360.63h15.118v283.465h-15.118z" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
   </svg:g>
+<!--  <svg:g id="g91410" style="display:inline">-->
+<!--    <svg:path id="rect91398" d="M1209.449-1303.937h854.173v15.118h-854.173z" style="fill:#000;stroke-width:1.00157"/>-->
+<!--    <svg:path id="rect91400" d="M2048.504-1303.937h15.118V661.417h-15.118z" style="fill:#000;stroke-width:1.00157"/>-->
+<!--    <svg:path id="rect91402" d="M2048.504 646.299h359.055v15.118h-359.055z" style="fill:#000;stroke-width:1.00157"/>-->
+<!--    <svg:path id="rect91404" d="M2392.441 597.165h15.118v64.252h-15.118z" style="fill:#000;stroke-width:1.00157"/>-->
+<!--    <svg:path id="rect91412" d="M1209.449-1303.937h15.118v226.772h-15.118z" style="display:inline;opacity:1;fill:#000;stroke-width:1.00157"/>-->
+<!--  </svg:g>-->
   <svg:g id="g4194" style="display:inline" transform="translate(-930.315 -1603.436)">
     <svg:path id="rect4518" d="M-1535.184 3083.648h140v766.667h-140z" style="opacity:1;fill:#d4d6d6;fill-opacity:1;stroke:#6b6e6e;stroke-width:6.66666;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.701961;paint-order:fill markers stroke" transform="rotate(-90)"/>
     <svg:circle id="ellipse4520" cx="-1465.184" cy="3153.648" r="24.666" style="opacity:1;fill:#fff;fill-opacity:1;stroke:#6b6e6e;stroke-width:4.00144;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:.701961;paint-order:fill markers stroke" transform="rotate(-90)"/>

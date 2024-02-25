@@ -20,10 +20,10 @@ export class ShieldWrapperComponent {
       path: 'rules',
       title: $localize`Define rules`,
     },
-    {
-      path: 'instructions',
-      title: $localize`Build instructions`,
-    },
+    // {
+    //   path: 'instructions',
+    //   title: $localize`Build instructions`,
+    // },
     // {
     //   path: 'compile',
     //   title: $localize`Compile`,
