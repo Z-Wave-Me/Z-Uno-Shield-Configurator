@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ZUnoCompiler } from '../../ZUnoCompiler/src/z-uno-compiler';
+import { ZUnoCompilerClass } from '../../ZUnoCompiler/src/z-uno-compiler';
 
 @Component({
   selector: 'select_freq_component',
@@ -23,7 +23,7 @@ teams: any[] = [
   ) {
   }
   public getFreqList(): Array<string> {
-    return (ZUnoCompiler().getFreqList());
+    return (ZUnoCompilerClass.getFreqList());
   }
 
 }

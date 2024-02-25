@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MatDialogState } from '@angular/material/dialog';
 import { UploadModalComponent } from '../upload-modal/upload-modal.component';
-import { ZUnoCompiler, ZUnoCompilerLoadSketchOutProt } from '../../ZUnoCompiler/src/z-uno-compiler';
-import { QRCode } from '../../ZUnoCompiler/src/qrcode';
+import { ZUnoCompilerLoadSketchOutProt, ZUnoCompilerClass} from '../../ZUnoCompiler/src/z-uno-compiler';
 
 @Component({
   selector: 'configurator-upload-button',
@@ -13,22 +12,22 @@ export class UploadButtonComponent {
   @Input()
   code: string = '';
 
-  private readonly zUnoCompiler = ZUnoCompiler()
+  private readonly zUnoCompilerClass = new ZUnoCompilerClass((severity: string, message: string) => {
+    if (this.progress_dialog == undefined || this.progress_dialog.getState() != MatDialogState.OPEN) {
+      this.progress_dialog = this.matDialog.open(UploadModalComponent, {
+      data: {"items": [], "dsk_help": undefined, "dsk": undefined, },
+    });
+  }
+  this.items.push({"severity":severity, "message":message});
+  this.progress_dialog.componentInstance.data.items = this.items;
+  });
+
   private progress_dialog: MatDialogRef<UploadModalComponent>|undefined = undefined;
   private items:Array<{"severity":string, "message": string}> = [];
   private b_run:boolean = false;
   constructor(
     private readonly matDialog: MatDialog,
   ) {
-    this.zUnoCompiler.setProgress((severity: string, message: string) => {
-      if (this.progress_dialog == undefined || this.progress_dialog.getState() != MatDialogState.OPEN) {
-        this.progress_dialog = this.matDialog.open(UploadModalComponent, {
-        data: {"items": [], "dsk_help": undefined, "dsk": undefined, },
-      });
-    }
-    this.items.push({"severity":severity, "message":message});
-    this.progress_dialog.componentInstance.data.items = this.items;
-    })
   }
 
   public build(): void {
@@ -45,11 +44,11 @@ export class UploadButtonComponent {
     let freq:string|null = null;
     const e = document.getElementById("select_freq_component_id");
     if (e != null) {
-        if (this.zUnoCompiler.getFreqList().includes(e.innerText) == true)
+        if (ZUnoCompilerClass.getFreqList().includes(e.innerText) == true)
             freq = e.innerText;
     }
 
-    const res:Promise<ZUnoCompilerLoadSketchOutProt|void> = this.zUnoCompiler.compile(this.code, freq, true, 50);
+    const res:Promise<ZUnoCompilerLoadSketchOutProt|void> = this.zUnoCompilerClass.compile(this.code, freq, true, 50);
     const self:UploadButtonComponent = this;
     res.then( result => {
         self.b_run = false;
@@ -63,8 +62,8 @@ export class UploadButtonComponent {
           const qr_code:HTMLElement|null =  document.getElementById("configurator-upload-button_qr-code");
           if (qr_code == null)
             return ;
-          const res:QRCode|null = self.zUnoCompiler.drawQR(qr_code, result["smart_qr"]);
-          if (res != null) {
+          const res:boolean = self.zUnoCompilerClass.drawQR(qr_code, result["smart_qr"]);
+          if (res != false) {
             qr_code.style.display ='';
             return ;
           }
