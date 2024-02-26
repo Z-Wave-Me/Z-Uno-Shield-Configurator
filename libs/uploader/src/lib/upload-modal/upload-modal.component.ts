@@ -1,6 +1,7 @@
-import { Component, HostBinding, HostListener, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogState } from '@angular/material/dialog';
 import { ZUnoCompilerClass } from '../../ZUnoCompiler';
+import { verifyHostBindings } from '@angular/compiler';
 
 @Component({
   selector: 'configurator-upload-modal',
@@ -11,6 +12,9 @@ export class UploadModalComponent implements OnInit {
   private readonly compiler = new ZUnoCompilerClass(this.data.code, this.data.freq, true, 50, (severity: string, message: string) => {
     this.items.push({severity, message})
   });
+
+  @ViewChild('qr')
+  public qr!: ElementRef<HTMLElement>;
 
   @HostBinding('class.loading')
   public get loading() {
@@ -38,10 +42,10 @@ export class UploadModalComponent implements OnInit {
         if (result && result.smart_qr && result?.dsk) {
          this.dskHelp = "Use this QR-code to include your device using Z-Wave Smart Start or triple click BTN button";
           this.dsk = result.dsk;
-          const qr_code:HTMLElement|null =  document.getElementById("configurator-upload-button_qr-code");
-          if (qr_code) {
-            this.compiler.drawQR(qr_code, result.smart_qr);
-            qr_code.style.display ='';
+          const qrCode = this.qr.nativeElement;
+          if (qrCode) {
+            this.compiler.drawQR(qrCode, result.smart_qr);
+            qrCode.style.display = '';
           }
         }
       },
