@@ -519,7 +519,7 @@ class ZUnoCompilerClass {
 
 	private toString(array:Array<number>): string {
 		let result:string;
-	
+
 		result = "";
 		for (let i = 0; i < array.length; i++) {
 			result += String.fromCharCode(array[i]);
@@ -801,7 +801,7 @@ class ZUnoCompilerClass {
 	private sketch_info(variable_this:ZUnoCompilerClass, message:string): void {
 		variable_this.progress(variable_this, "info", message);
 	}
-	
+
 	private async sketch_error(variable_this:ZUnoCompilerClass, variable_self:ZUnoCompilerSelf|null, reject:ZUnoCompilerSketchErrorProt, result:Error): Promise<void> {
 		if (variable_self != null)
 			await variable_self["port"].close();
@@ -1021,7 +1021,7 @@ class ZUnoCompilerClass {
 			colorLight: "#ffffff",
 			correctLevel: QRErrorCorrectLevel.L,
 		};
-		
+
 		try {
 			obj_QRCode = new QRCode(id, option);
 		} catch(e) {
@@ -1055,7 +1055,7 @@ class ZUnoCompilerClass {
 	}
 
 	/**
-	 * 
+	 *
 	 * @returns List freq
 	 */
 	public static getFreqList(): Array<string> {

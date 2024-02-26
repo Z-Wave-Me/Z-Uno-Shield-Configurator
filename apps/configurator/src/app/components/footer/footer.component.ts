@@ -12,7 +12,7 @@ import { PinsStateService } from '../../services/store/pins-state.service';
 import { combineLatest, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Action, Association, Expression, LinearValues, Logical, OperatorType, Rule } from '@configurator/shared';
-import { UploaderModule } from '@configurator/uploader';
+import { PreventDirective, UploaderModule } from '@configurator/uploader';
 
 @Component({
   selector: 'configurator-footer',
@@ -33,6 +33,7 @@ import { UploaderModule } from '@configurator/uploader';
     NgIf,
     AsyncPipe,
     UploaderModule,
+    PreventDirective,
   ],
 })
 export class FooterComponent {
@@ -47,9 +48,6 @@ export class FooterComponent {
         return (code ?? '').replace('#rulesBlock', this.rulesToCode(rules ?? [], associations));
       }),
     );
-  }
-  public prevent(event: Event): void {
-    event.stopPropagation();
   }
 
   private rulesToCode(rules: Rule[], associations: Association[]): string {
