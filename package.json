@@ -9,7 +9,8 @@
     "test": "nx test",
     "extract": "nx extract-i18n",
     "translate": "translate.sh && npx xlf2xlf -i messages.xlf -o src/locale/messages.ru.xlf -f en -t ru",
-    "deploy": "nx deploy -p configurator --no-silent"
+    "deploy": "nx deploy -p configurator --no-silent",
+    "svgo": "svgo --config svgo.config.mjs <inputPath> -o <oputpuPath>"
   },
   "private": true,
   "dependencies": {

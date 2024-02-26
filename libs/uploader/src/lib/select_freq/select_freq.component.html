@@ -1,6 +1,6 @@
 <div id="select_freq_component_id" hidden>{{selected_freq}}</div>
 <select  matTooltip="Select frequency" matNativeControl [(ngModel)]="selected_freq">
-    <option>None</option>
+    <option>Keep current frequency</option>
     <option *ngFor="let freq of getFreqList()" [value]="freq">
       {{freq}}
     </option>

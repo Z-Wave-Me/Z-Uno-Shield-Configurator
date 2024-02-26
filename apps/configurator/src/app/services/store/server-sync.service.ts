@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { filter, first, interval, map, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { filter, first, interval, map, of, startWith, Subject, switchMap, takeUntil } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from './local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -60,7 +60,7 @@ export class ServerSyncService implements OnDestroy {
 
     this.interval$.pipe(
       takeUntil(this.destroy$),
-
+      startWith(),
       map(() => {
         return this.localStorageService.get<BoardConfig>(this.currentKey);
       }),

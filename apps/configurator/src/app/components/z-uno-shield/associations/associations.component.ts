@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, Signal } from '@angular/core';
 import config from '../../../../config/config.json';
 import { AssociationStateService } from '../../../services/store/association-state.service';
 import { Association } from '@configurator/shared';
+import { PinsStateService } from '../../../services/store/pins-state.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'configurator-associations',
@@ -9,16 +11,31 @@ import { Association } from '@configurator/shared';
   styleUrls: ['./associations.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AssociationsComponent {
-
+export class AssociationsComponent implements OnInit, OnDestroy {
+  private readonly destroy$: Subject<void> = new Subject<void>();
+  // @ts-ignore
   public list: Association[] = config.associations as Association[];
 
   public data: Signal<Association[]>;
   constructor(
     private readonly relationsStateService: AssociationStateService,
     private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly pinsStateService: PinsStateService,
   ) {
     this.data = this.relationsStateService.associations();
+  }
+
+  public ngOnInit(): void {
+    this.pinsStateService.resetBehaviour().pipe(
+      takeUntil(this.destroy$),
+    ).subscribe(() => {
+      this.relationsStateService.reset();
+    })
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public addItem(item: Association): void {

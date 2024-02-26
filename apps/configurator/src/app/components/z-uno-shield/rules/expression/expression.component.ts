@@ -32,7 +32,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       right: new FormControl<LinearValues<Action> | null>(null, {
         validators: [Validators.required],
       }),
-      operator: new FormControl<Logical| undefined>(undefined, {nonNullable: true}),
+      operator: new FormControl<Logical | undefined>(undefined, {nonNullable: true}),
     });
 
   public readonly operatorList = [
@@ -106,7 +106,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         this.onChange({
-          expression: [this.makeAction(data.left), data.operand!, this.makeAction(data.right)],
+          expression: [data.left as LinearValues, data.operand!, data.right as LinearValues],
           operator: data.operator,
         });
       });
@@ -134,27 +134,18 @@ export class ExpressionComponent implements OnInit, OnDestroy {
   }
 
   public writeValue(expression: Expression): void {
-    if (expression.expression[0] && expression.expression[2]) {
+    if (expression.expression) {
       this.expressionForm.controls.left.setValue(expression.expression[0]);
       this.expressionForm.controls.operand.setValue(expression.expression[1]);
+      this.expressionForm.controls.operand.markAsTouched();
       this.expressionForm.controls.right.setValue(expression.expression[2]);
-      this.expressionForm.controls.operator.setValue(expression.operator);
-    }
-  }
 
-  private makeAction(value: LinearValues<Action> | null | undefined): LinearValues<Action> | null {
-    const zero: Action | string | number | undefined | null = value?.[0];
-    if (typeof zero === 'string' || typeof zero === 'number') {
-      return [{
-        parentId: `${zero}`,
-        title: `${zero}`,
-        parameters: [zero],
-        template: '{0}'
-        // @ts-ignore
-      }, value[1], value[2]]
+      if (!this.first) {
+        this.expressionForm.controls.operator.setValue(expression.operator);
+        this.expressionForm.controls.operator.setValidators([Validators.required]);
+        this.expressionForm.controls.operator.markAsTouched();
+      }
     }
-
-    return value ?? null;
   }
 }
 

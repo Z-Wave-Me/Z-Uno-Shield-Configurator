@@ -20,7 +20,7 @@
       formControlName="value"
       [matAutocomplete]="auto">
     <button matSuffix mat-icon-button (click)="modeToggle($event)">
-      <mat-icon>{{mode ==='simple' ? 'edit' : 'compare_arrows'}}</mat-icon>
+      <mat-icon>{{mode ==='simple' ? 'linear_scale' : 'compare_arrows'}}</mat-icon>
     </button>
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayWith">
       <mat-option [value]="item" *ngFor="let item of options">{{item.title}}</mat-option>

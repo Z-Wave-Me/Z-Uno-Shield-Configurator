@@ -61,7 +61,7 @@ export class SwitchBinary extends BaseDevice {
       parentId: `pin${this.config.id}SwitchBinaryState`,
       template: `pin${this.config.id}SwitchBinaryState = {0};`,
       title: `Switch Binary ${this.config.id}`,
-      parameters: [0],
+      parameters: [],
     }];
 
   }

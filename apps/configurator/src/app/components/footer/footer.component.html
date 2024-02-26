@@ -32,14 +32,22 @@
             i18n-matTooltip
             matTooltip="Copy code to clipboard (to upload using Ardiono IDE or VS Code)"
           >
-            <mat-icon>share</mat-icon>
+            <mat-icon>copy_all</mat-icon>
           </button>
           <button
-          mat-icon-button
-          (click)="prevent($event);openEditPage(data.code ?? '')"
-          i18n-matTooltip
-          matTooltip="Edit code online and upload"
+            mat-icon-button
+            (click)="prevent($event);openEditPage(data.code ?? '')"
+            i18n-matTooltip
+            matTooltip="Edit code online and upload"
           ><mat-icon>edit</mat-icon></button>
+          <button
+            mat-icon-button
+            i18n-matTooltip
+            [cdkCopyToClipboard]="url"
+            matTooltip="Copy the link to this project to clipboard"
+          >
+            <mat-icon>share</mat-icon>
+          </button>
         </mat-panel-description>
 
       </mat-expansion-panel-header>
