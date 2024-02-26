@@ -155,10 +155,15 @@ class ZUnoCompilerClass {
 	private readonly CRC_POLY:number							= 0x1021;
 
 	private progressCbk:ZUnoCompilerProgressCbkProt|null;
+	private promise_wait: Promise<ZUnoCompilerLoadSketchOutProt|void>;
+	private variable_self:ZUnoCompilerSelf|undefined = undefined;
+	private xhr_compile:XMLHttpRequest|undefined = undefined;
+	private xhr_version:XMLHttpRequest|undefined = undefined;
+	private xhr_bootloader:XMLHttpRequest|undefined = undefined;
 
-
-	constructor(cbk:ZUnoCompilerProgressCbkProt|null = null) {
+	constructor(code:string, freq:string|null, sec:boolean, main_pow:number, cbk:ZUnoCompilerProgressCbkProt|null = null) {
 		this.progressCbk = cbk;
+		this.promise_wait = this.sketch(this, code, freq, sec, main_pow);
 	}
 
 	private progress(variable_this:ZUnoCompilerClass, severity:string, message:string): void {
@@ -732,9 +737,8 @@ class ZUnoCompilerClass {
 		return bytes;
 	}
 
-	private _xhr_compile(data:string, hw_str:string): Promise<ZUnoCompilerLoadSketchResultProt> {
+	private _xhr_compile(xhr:XMLHttpRequest, data:string, hw_str:string): Promise<ZUnoCompilerLoadSketchResultProt> {
 		return new Promise(function(resolve, reject) {
-			const xhr = new XMLHttpRequest();
 			const formData = new FormData();
 
 			formData.append("sketch", new File([new Blob([data])], "sketch", { lastModified: Date.now(), type: "text/x-arduino"}));
@@ -757,9 +761,8 @@ class ZUnoCompilerClass {
 		});
 	}
 
-	private _xhr_version(): Promise<ZUnoCompilerVersionResultProt> {
+	private _xhr_version(xhr:XMLHttpRequest): Promise<ZUnoCompilerVersionResultProt> {
 		return new Promise(function(resolve, reject) {
-			const xhr = new XMLHttpRequest();
 
 			xhr.open("POST", 'https://service.z-wave.me/z-uno-compilation-server/?version');
 			xhr.responseType = 'json';
@@ -777,10 +780,8 @@ class ZUnoCompilerClass {
 		});
 	}
 
-	private _xhr_bootloader(hw_str:string, build_number:string): Promise<ZUnoCompilerLoadSketchResultProt> {
+	private _xhr_bootloader(xhr:XMLHttpRequest, hw_str:string, build_number:string): Promise<ZUnoCompilerLoadSketchResultProt> {
 		return new Promise(function(resolve, reject) {
-			const xhr = new XMLHttpRequest();
-
 			const url = 'https://service.z-wave.me/z-uno-compilation-server/?bootloader&' + 'hw=' + hw_str + "&seq=" + build_number;
 			xhr.open("POST", url);
 			xhr.responseType = 'json';
@@ -873,7 +874,9 @@ class ZUnoCompilerClass {
 
 	private load_bootloader(variable_this:ZUnoCompilerClass, variable_self:ZUnoCompilerSelf, promise_compile: Promise<ZUnoCompilerLoadSketchResultProt>, resolve:ZUnoCompilerLoadSketchOutFunProt, reject:ZUnoCompilerSketchErrorProt, hw_str:string, build_number_str:string): void {
 		variable_this.sketch_info(variable_this, "Uploading a new bootloader to the Z-Uno...");
-		const promise_bootloader:Promise<ZUnoCompilerLoadSketchResultProt> = variable_this._xhr_bootloader(hw_str, build_number_str);
+		const xhr_bootloader = new XMLHttpRequest();
+		const promise_bootloader:Promise<ZUnoCompilerLoadSketchResultProt> = variable_this._xhr_bootloader(xhr_bootloader, hw_str, build_number_str);
+		variable_this.xhr_bootloader = xhr_bootloader;
 		promise_bootloader.then(async function(result:ZUnoCompilerLoadSketchResultProt) {
 			let bin:Array<number>;
 			try {
@@ -931,6 +934,7 @@ class ZUnoCompilerClass {
 			}
 			variable_this.sketch_info(variable_this, "Determining the revision Z-Uno ...");
 			const variable_self:ZUnoCompilerSelf = {"queue":[], "seqNo": 0x0, "port": port, "baudRate": 230400};
+			variable_this.variable_self = variable_self;
 			i = 0x0;
 			while (i < variable_this.ZUNO_BAUD.length) {
 				try {
@@ -983,8 +987,12 @@ class ZUnoCompilerClass {
 			while (hw_str.length < 0x4)
 				hw_str = '0' + hw_str;
 			variable_this.sketch_info(variable_this, "Checking Z-Uno version...");
-			const promise_version: Promise<ZUnoCompilerVersionResultProt> = variable_this._xhr_version();
-			const promise_compile: Promise<ZUnoCompilerLoadSketchResultProt> = variable_this._xhr_compile(text_sketch, hw_str);
+			const xhr_version = new XMLHttpRequest();
+			const promise_version: Promise<ZUnoCompilerVersionResultProt> = variable_this._xhr_version(xhr_version);
+			variable_this.xhr_version = xhr_version;
+			const xhr_compile = new XMLHttpRequest();
+			variable_this.xhr_compile = xhr_compile;
+			const promise_compile: Promise<ZUnoCompilerLoadSketchResultProt> = variable_this._xhr_compile(xhr_compile, text_sketch, hw_str);
 			promise_version.then(async function(result:ZUnoCompilerVersionResultProt) {
 				let version_list:ZUnoCompilerVersionHwResultProt;
 				try {
@@ -1031,17 +1039,31 @@ class ZUnoCompilerClass {
 		return (true);
 	}
 
-	/**
-	 * Compile the sketch and load it to the Z-Uno board
-	 *
-	 * @param {*} code Sketch source code (string)
-	 * @param {*} freq Frequncy (string, ex. 'EU') or null - current use
-	 * @param {*} sec With security or not (boolean)
-	 * @param {*} main_pow max power (int, without a special license the maximum is 50)
-	 * @returns Returns a dictionary with smart_qr as string and dsk as string
-	 */
-	public compile(code:string, freq:string|null, sec:boolean, main_pow:number):Promise<ZUnoCompilerLoadSketchOutProt|void> {
-		return this.sketch(this, code, freq, sec, main_pow);
+	public getWait(): Promise<ZUnoCompilerLoadSketchOutProt|void> {
+		return this.promise_wait;
+	}
+
+	public cancel(): void {
+		try {
+			if (this.variable_self != undefined)
+				this.variable_self.port.close();
+		} catch (err) {
+		}
+		try {
+			if (this.xhr_version != undefined)
+				this.xhr_version.abort();
+		} catch (err) {
+		}
+		try {
+			if (this.xhr_bootloader != undefined)
+				this.xhr_bootloader.abort();
+		} catch (err) {
+		}
+		try {
+			if (this.xhr_compile != undefined)
+				this.xhr_compile.abort();
+		} catch (err) {
+		}
 	}
 
 	/**
