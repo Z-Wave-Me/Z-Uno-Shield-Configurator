@@ -8,16 +8,10 @@
         </mat-panel-title>
         <mat-panel-description>
           <span></span>
-          <select_freq_component
-          (click)="prevent($event)"
-          ></select_freq_component>
-          <configurator-upload-button
-            (click)="prevent($event)"
-            [code]="data.code ?? ''"
-          ></configurator-upload-button>
+          <configurator-upload-control [code]="data.code ?? ''"/>
           <button
             mat-icon-button
-            (click)="prevent($event)"
+            configuratorPrevent
             [configuratorSaveAsFile]="data.code ?? ''"
             i18n-matTooltip
             matTooltip="Download code (to upload using Ardiono IDE or VS Code)"
@@ -27,7 +21,7 @@
           </button>
           <button
             mat-icon-button
-            (click)="prevent($event)"
+            configuratorPrevent
             [cdkCopyToClipboard]="data.code ?? ''"
             i18n-matTooltip
             matTooltip="Copy code to clipboard (to upload using Ardiono IDE or VS Code)"
@@ -36,13 +30,15 @@
           </button>
           <button
             mat-icon-button
-            (click)="prevent($event);openEditPage(data.code ?? '')"
+            configuratorPrevent
+            (click)="openEditPage(data.code ?? '')"
             i18n-matTooltip
             matTooltip="Edit code online and upload"
           ><mat-icon>edit</mat-icon></button>
           <button
             mat-icon-button
             i18n-matTooltip
+            configuratorPrevent
             [cdkCopyToClipboard]="url"
             matTooltip="Copy the link to this project to clipboard"
           >

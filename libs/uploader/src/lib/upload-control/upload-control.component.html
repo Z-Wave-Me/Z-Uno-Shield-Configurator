@@ -1,0 +1,20 @@
+<mat-form-field>
+    <mat-select
+      matTooltip="Select frequency"
+      [(ngModel)]="selectedFreq"
+      class="select__display"
+      panelClass="select__item"
+    >
+      <mat-option value="Keep current frequency">Keep current frequency</mat-option>
+      <mat-option *ngFor="let freq of getFreqList()" [value]="freq">
+        {{freq}}
+      </mat-option>
+  </mat-select>
+</mat-form-field>
+  <button
+    mat-icon-button
+    (click)="build()"
+    matTooltip="Upload configuration"
+  >
+    <mat-icon>usb</mat-icon>
+  </button>
