@@ -23,7 +23,7 @@ export class UploadModalComponent implements OnInit {
   ) {}
 
   public close(): void {
-
+    this.compiler.cancel();
     this.matDialogRef.close();
   }
 

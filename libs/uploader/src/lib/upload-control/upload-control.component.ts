@@ -35,7 +35,7 @@ export class UploadControlComponent {
     this.matDialog.open(UploadModalComponent, {
       disableClose: true,
       data: {
-        freq: this.selectedFreq,
+        freq: this.selectedFreq === '' ? null : this.selectedFreq,
         code: this.code,
       },
     });
