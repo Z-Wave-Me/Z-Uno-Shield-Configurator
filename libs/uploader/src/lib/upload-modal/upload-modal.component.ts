@@ -15,7 +15,6 @@ export class UploadModalComponent implements OnInit {
   public items: Severity[] = [];
   public dsk_help: string = '';
   public dsk: string = '';
-
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public readonly data: UploadModalComponentDetails,
@@ -49,6 +48,7 @@ export class UploadModalComponent implements OnInit {
           // }
           if (qr_code) {
             this.compiler.drawQR(qr_code, result.smart_qr);
+            qr_code.style.display =''
           }
           // if (res != false) {
           //   qr_code.style.display ='';
