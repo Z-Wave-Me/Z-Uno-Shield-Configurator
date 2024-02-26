@@ -5,6 +5,7 @@
   },
   "files": [],
   "include": [],
+  "exclude": ["./src/ZUnoCompiler/ZUnoCompiler.min.js"],
   "references": [
     {
       "path": "./tsconfig.lib.json"
