@@ -1,10 +1,8 @@
 <h3>Uploading the sketch to your Z-Uno:</h3>
-<!-- <div [innerHTML]="data.message | noSanitize">
-</div> -->
-<div *ngFor="let item of data.items" [class]="item.severity">
+<div *ngFor="let item of items" [class]="item.severity">
     {{item.message}}
 </div>
-<div *ngIf="data.dsk_help !== undefined">{{data.dsk_help}}</div>
+<div *ngIf="dsk_help">{{dsk_help}}</div>
 <div style="display:none" id="configurator-upload-button_qr-code"></div>
-<div *ngIf="data.dsk !== undefined">{{data.dsk}}</div>
+<div *ngIf="dsk">{{dsk}}</div>
 <button class="close__button" mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>

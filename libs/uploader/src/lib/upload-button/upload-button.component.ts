@@ -22,57 +22,53 @@ export class UploadButtonComponent {
   }
 
   public build(): void {
-    if (this.zUnoCompilerClass != undefined) {
-        // this.zUnoCompilerClass.cancel();
-        // this.zUnoCompilerClass = undefined;
-        if (this.progress_dialog == undefined || this.progress_dialog.getState() != MatDialogState.OPEN) {
-            this.progress_dialog = this.matDialog.open(UploadModalComponent, {
-            data: {"items": this.items, "dsk_help": undefined, "dsk": undefined, },
-          });
-          }
-          return ;
-    }
-    this.items = [];
-    let freq:string|null = null;
-    const e = document.getElementById("select_freq_component_id");
-    if (e != null) {
-        if (ZUnoCompilerClass.getFreqList().includes(e.innerText) == true)
-            freq = e.innerText;
-    }
-    const self:UploadButtonComponent = this;
-    this.zUnoCompilerClass = new ZUnoCompilerClass(this.code, freq, true, 50, (severity: string, message: string) => {
-        if (this.progress_dialog == undefined || this.progress_dialog.getState() != MatDialogState.OPEN) {
-          this.progress_dialog = this.matDialog.open(UploadModalComponent, {
-          data: {"items": [], "dsk_help": undefined, "dsk": undefined, },
-        });
-      }
-      this.items.push({"severity":severity, "message":message});
-      this.progress_dialog.componentInstance.data.items = this.items;
-      });
-    this.zUnoCompilerClass.getWait().then( result => {
-        if (self.progress_dialog == undefined || self.progress_dialog.getState() != MatDialogState.OPEN) {
-          self.progress_dialog = self.matDialog.open(UploadModalComponent, { data: {"items": [], "dsk_help": undefined, "dsk": undefined, },
-          });
-        }
-        if (result != undefined && result["smart_qr"] != undefined && result["dsk"] != undefined) {
-          self.progress_dialog.componentInstance.data.dsk_help = "Use this QR-code to include your device using Z-Wave Smart Start or triple click BTN button";
-          self.progress_dialog.componentInstance.data.dsk = result["dsk"];
-          const qr_code:HTMLElement|null =  document.getElementById("configurator-upload-button_qr-code");
-          if (qr_code == null || self.zUnoCompilerClass == undefined) {
-            self.zUnoCompilerClass = undefined;
-            return ;
-          }
-          const res:boolean = self.zUnoCompilerClass.drawQR(qr_code, result["smart_qr"]);
-          if (res != false) {
-            qr_code.style.display ='';
-            self.zUnoCompilerClass = undefined;
-            return ;
-          }
-        }
-      },
-      error => {
-        self.zUnoCompilerClass = undefined;
-      }
-    );
+  //   if (this.zUnoCompilerClass != undefined) {
+  //       // this.zUnoCompilerClass.cancel();
+  //       // this.zUnoCompilerClass = undefined;
+  //       if (this.progress_dialog == undefined || this.progress_dialog.getState() != MatDialogState.OPEN) {
+  //           this.progress_dialog = this.matDialog.open(UploadModalComponent, {
+  //           data: {"items": this.items, "dsk_help": undefined, "dsk": undefined, },
+  //         });
+  //         }
+  //         return ;
+  //   }
+  //   this.items = [];
+  //   let freq:string|null = null;
+  //   const e = document.getElementById("select_freq_component_id");
+  //   if (e != null) {
+  //       if (ZUnoCompilerClass.getFreqList().includes(e.innerText) == true)
+  //           freq = e.innerText;
+  //   }
+  //   const self:UploadButtonComponent = this;
+  //   this.zUnoCompilerClass = new ZUnoCompilerClass(this.code, freq, true, 50, (severity: string, message: string) => {
+  //       if (this.progress_dialog == undefined || this.progress_dialog.getState() != MatDialogState.OPEN) {
+  //         this.progress_dialog = this.matDialog.open(UploadModalComponent, {
+  //         data: {"items": [], "dsk_help": undefined, "dsk": undefined, },
+  //       });
+  //     }
+  //     this.items.push({"severity":severity, "message":message});
+  //     });
+  //   this.zUnoCompilerClass.getWait().then( result => {
+  //
+  //       if (result && result.smart_qr && resul.dsk) {
+  //         self.progress_dialog.componentInstance.data.dsk_help = "Use this QR-code to include your device using Z-Wave Smart Start or triple click BTN button";
+  //         self.progress_dialog.componentInstance.data.dsk = result["dsk"];
+  //         const qr_code:HTMLElement|null =  document.getElementById("configurator-upload-button_qr-code");
+  //         if (qr_code == null || self.zUnoCompilerClass == undefined) {
+  //           self.zUnoCompilerClass = undefined;
+  //           return ;
+  //         }
+  //         const res:boolean = self.zUnoCompilerClass.drawQR(qr_code, result["smart_qr"]);
+  //         if (res != false) {
+  //           qr_code.style.display ='';
+  //           self.zUnoCompilerClass = undefined;
+  //           return ;
+  //         }
+  //       }
+  //     },
+  //     error => {
+  //       self.zUnoCompilerClass = undefined;
+  //     }
+  //   );
   }
 }
