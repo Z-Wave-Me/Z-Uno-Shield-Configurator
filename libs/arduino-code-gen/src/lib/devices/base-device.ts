@@ -19,7 +19,11 @@ export class BaseDevice implements Device {
     return undefined;
   }
 
-  public loop(channel?: number): string {
+  public loop_pre(channel?: number): string {
+    return '';
+  }
+
+  public loop_post(channel?: number): string {
     return '';
   }
 

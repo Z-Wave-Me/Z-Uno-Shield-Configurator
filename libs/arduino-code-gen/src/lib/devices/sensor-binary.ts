@@ -29,13 +29,19 @@ export class SensorBinary extends BaseDevice {
     return `  ZUNO_SENSOR_BINARY(${this.name}, pin${this.config.id}SensorBinaryState)`;
   }
 
-  public override loop(channel: number): string {
+  public override loop_pre(channel: number): string {
     const inverted = this.config.device?.type === 'inverted' ? '': '!';
 
     return `  // GPIO SensorBinary@pin${this.config.id} process code
-  byte _pin${this.config.id}SensorBinaryState = ${inverted}digitalRead(${this.config.id});
-  if (pin${this.config.id}SensorBinaryState != _pin${this.config.id}SensorBinaryState) {
-    pin${this.config.id}SensorBinaryState = _pin${this.config.id}SensorBinaryState;
+  pin${this.config.id}SensorBinaryState = ${inverted}digitalRead(${this.config.id});`;
+  }
+
+  public override loop_post(channel: number): string {
+    const inverted = this.config.device?.type === 'inverted' ? '': '!';
+
+    return `  // GPIO SensorBinary@pin${this.config.id} process code
+  if (zunoChanged(pin${this.config.id}SensorBinaryState)) {
+    zunoChangeUpdate(pin${this.config.id}SensorBinaryState);
     zunoSendReport(${channel});
   }`;
   }
@@ -50,16 +56,13 @@ export class SensorBinary extends BaseDevice {
 
   public override get setup(): string {
     const inverted = this.config.device?.type === 'inverted' ? '!': '';
-    const inputType = this.isPullUp ? 'INPUT_PULLUP' : 'INPUT'
 
-    const isDigitalInput3 = this.config?.key?.includes('digital input 3');
-
-    return `  pinMode(${this.config.id}, ${inputType});
-  ${isDigitalInput3 ? 'pinMode(A3, INPUT_PULLDOWN);\n  ' : ''}pin${this.config.id}SensorBinaryState = ${inverted}!digitalRead(${this.config.id});`;
+    return `  pinMode(A3, INPUT_PULLDOWN);
+  zunoChangeInit(pin${this.config.id}SensorBinaryState, ${inverted}!digitalRead(${this.config.id}));`;
   }
 
   public override get vars(): string {
-    return `byte pin${this.config.id}SensorBinaryState;`;
+    return `byte zunoChangeDefine(pin${this.config.id}SensorBinaryState);`;
   }
 
   private get isPullUp(): boolean {

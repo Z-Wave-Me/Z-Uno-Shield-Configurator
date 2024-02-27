@@ -58,9 +58,10 @@ export class SwitchColor extends BaseDevice {
   }
 
   public override get vars(): string {
-    return this.ids
-      .map((id) => `byte pin${id}SwitchMultilevelState = 0;`)
-      .join('\n');
+    return 'byte ' + this.ids
+      .map((id) => `zunoChangeDefine(pin${id}SwitchColorState)`)
+      .join(',')
+      + ';';
   }
 
   public override get xetter(): string {
@@ -77,7 +78,7 @@ export class SwitchColor extends BaseDevice {
     const setters = modeList
       .map(
         ({ pinId, deviceMode }) => `    case ${deviceMode}:
-      pin${pinId}SwitchMultilevelState = value;
+      pin${pinId}SwitchColorState = value;
       break;`
       )
       .join('\n');
@@ -85,7 +86,7 @@ export class SwitchColor extends BaseDevice {
     const getters = modeList
       .map(
         ({ pinId, deviceMode }) => `    case ${deviceMode}:
-      return pin${pinId}SwitchMultilevelState;`
+      return pin${pinId}SwitchColorState;`
       )
       .join('\n');
 
@@ -103,12 +104,32 @@ ${getters}
 }`;
   }
 
-  public override loop(): string {
+  public override loop_pre(channel: number): string {
+    return '';
+  }
+  
+  public override loop_post(channel: number): string {
+    return `  // PWM SwitchColor@pin process code
+  ` + this.arrayConfig
+      .map(
+        ({ id }) => `  shield.writePWMPercentage(PWM_CHANNEL(${id}), pin${id}SwitchColorState);`)
+      .join('\n') + 
+    `  if(` + this.arrayConfig
+      .map(
+        ({ id }) => `zunoChanged(pin${id}SwitchColorState)`)
+      .join(' || ') + `) {
+` + this.arrayConfig
+      .map(
+        ({ id }) => `zunoChangeUpdate(pin${id}SwitchColorState);`)
+      .join('\n') + `  zunoSendReport(${channel});
+  }`;
+  }
+
+  public override get setup(): string {
     return this.arrayConfig
       .map(
-        ({ id }) => `  // PWM SwitchColor@pin${id}process code
-  shield.writePWMPercentage(PWM_CHANNEL(${id}), pin${id}SwitchMultilevelState);`)
-      .join('\n');
+        ({ id }) => `  zunoChangeInit(pin${id}SwitchColorState, 0);`
+      ).join('\n');
   }
 
   public override get pwm(): string {
@@ -122,9 +143,9 @@ ${getters}
   public override get variables(): Action[] {
     return this.ids
       .map((id) => ({
-        parentId: `pin${id}SwitchMultilevelState`,
-        title: `Switch Multilevel #${id}`,
-        template: `pin${id}SwitchMultilevelState = {0};`,
+        parentId: `pin${id}SwitchColorState`,
+        title: `Switch Color #${id}`,
+        template: `pin${id}SwitchColorState = {0};`,
         parameters: [],
       }));
   }

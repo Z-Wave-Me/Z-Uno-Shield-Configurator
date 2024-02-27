@@ -40,20 +40,30 @@ export class SwitchBinary extends BaseDevice {
     return `  ${this.name}(pin${this.config.id}SwitchBinaryState, NULL)`;
   }
 
-  public override loop(): string {
-    const condition =
-      this.config.device?.type === 'normal' ? 'HIGH : LOW' : 'LOW : HIGH';
+  public override loop_pre(channel: number): string {
+    return '';
+  }
+  
+  public override loop_post(channel: number): string {
+    const condition = this.config.device?.type === 'normal' ? 'HIGH : LOW' : 'LOW : HIGH';
 
     return `  // GPIOSwitchBinary@pin${this.config.id} process code
-  digitalWrite(${this.config.id}, pin${this.config.id}SwitchBinaryState ? ${condition});`;
+  digitalWrite(${this.config.id}, pin${this.config.id}SwitchBinaryState ? ${condition});
+  if (zunoChanged(pin${this.config.id}SwitchBinaryState)) {
+    zunoChangeUpdate(pin${this.config.id}SwitchBinaryState);
+    zunoSendReport(${channel});
+  }`;
   }
 
   public override get setup(): string {
-    return `  pinMode(${this.config.id}, OUTPUT);`;
+    const condition = this.config.device?.type === 'normal' ? 'LOW' : 'HIGH';
+
+    return `  pinMode(${this.config.id}, OUTPUT);
+  zunoChangeInit(pin${this.config.id}SwitchBinaryState, ${condition});`;
   }
 
   public override get vars(): string {
-    return `byte pin${this.config.id}SwitchBinaryState = 0;`;
+    return `byte zunoChangeDefine(pin${this.config.id}SwitchBinaryState);`;
   }
 
   public override get variables(): Action[] {
