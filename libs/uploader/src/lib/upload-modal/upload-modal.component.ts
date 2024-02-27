@@ -41,6 +41,17 @@ export class UploadModalComponent implements AfterViewInit {
     this.matDialogRef.close();
   }
 
+  public getClipboardTxt(): string {
+    let i:number, str:string;
+    i = 0x0;
+    str = "";
+    while (i < this.items.length) {
+        str = str + this.items[i].message + "\n";
+        i++;
+    }
+    return (str);
+  }
+
   ngAfterViewInit(): void {
     this.isLoading = true;
     this.compiler.getWait().then( result => {
