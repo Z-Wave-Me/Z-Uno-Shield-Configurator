@@ -108,12 +108,19 @@ ${xetter}
       : '';
   }
 
+  public loop_pre(): string {
+    return `${this.collect('loop_pre', '\n\n')}`;
+  }
+
+  public loop_post(): string {
+    return `${this.collect('loop_post', '\n\n')}`;
+  }
+
   public loop(): string {
     return `void loop() {
-${this.collect('loop', '\n\n')}
+${this.loop_pre()}
   #rulesBlock
-  
-  delay(20);
+${this.loop_post()}
 }`;
   }
 

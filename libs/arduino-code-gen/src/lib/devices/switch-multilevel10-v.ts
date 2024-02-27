@@ -12,19 +12,28 @@ export class SwitchMultilevel10V extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `byte pin${this.config.id}SwitchMultilevelState = 0, _pin${this.config.id}SwitchMultilevelState = 1;`;
+    return `byte zunoChangeDefine(pin${this.config.id}SwitchMultilevelState);`;
   }
 
   public override get v10Mode(): boolean {
     return true;
   }
 
-  public override loop(channel: number): string {
+  public override loop_pre(channel: number): string {
+    return '';
+  }
+
+  public override loop_post(channel: number): string {
     return `  // 0-10V SwitchMultilevel@pin${this.config.id} process code
-  if (pin${this.config.id}SwitchMultilevelState != _pin${this.config.id}SwitchMultilevelState) {
-    _pin${this.config.id}SwitchMultilevelState = pin${this.config.id}SwitchMultilevelState;
+  if (zunoChanged(pin${this.config.id}SwitchMultilevelState)) {
     shield.write0_10V(${channel}, pin${this.config.id}SwitchMultilevelState);
+    zunoChangeUpdate(pin${this.config.id}SwitchMultilevelState);
+    zunoSendReport(${channel});
   }`;
+  }
+
+  public override get setup(): string {
+    return `  zunoChangeInit(pin${this.config.id}SwitchMultilevelState, 0);`;
   }
 
   public override get variables(): Action[] {

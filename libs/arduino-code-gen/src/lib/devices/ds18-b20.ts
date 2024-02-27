@@ -20,20 +20,29 @@ export class DS18B20 extends BaseDevice {
     return Array.from({ length: this.channels }).map(() => '  ZUNO_SENSOR_MULTILEVEL(ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE, SENSOR_MULTILEVEL_SCALE_CELSIUS, SENSOR_MULTILEVEL_SIZE_TWO_BYTES, SENSOR_MULTILEVEL_PRECISION_TWO_DECIMALS, temperature)').join(',\n');
   }
 
-  public override loop(channel?: number): string {
+  public override loop_pre(channel?: number): string {
     return `  // DS18B20 sensors (@pin${this.config.id}) poll
-  for(int ds_sen_i = 0; ds_sen_i < number_of_sensors; ds_sen_i++){
-    int current_temp = ds18b20.getTempC100(&addresses[ds_sen_i << 3]);
-    if(abs(current_temp - temperature[ds_sen_i]) >= 10){ 
+  for(int ds_sen_i = 0; ds_sen_i < number_of_sensors; ds_sen_i++) {
+    temperature[ds_sen_i] = ds18b20.getTempC100(&addresses[ds_sen_i << 3]);
+  }`;
+  }
+
+  public override loop_post(channel?: number): string {
+    return `  // DS18B20 sensors (@pin${this.config.id}) poll
+  for(int ds_sen_i = 0; ds_sen_i < number_of_sensors; ds_sen_i++) {
+    if (zunoChangedBy(temperature[ds_sen_i], 10)) { 
       // the temperature has changed by at least 0.1*C
-      temperature[ds_sen_i] = current_temp;
+      zunoChangeUpdate(temperature[ds_sen_i]);
       zunoSendReport(${channel} + ds_sen_i);
     }
   }`;
   }
 
   public override get setup(): string {
-    return `  number_of_sensors = ds18b20.findAllSensors(addresses, ${this.value});`;
+    return `  number_of_sensors = ds18b20.findAllSensors(addresses, ${this.value});
+  for(int ds_sen_i = 0; ds_sen_i < number_of_sensors; ds_sen_i++) {
+    zunoChangeInit(temperature[ds_sen_i], ds18b20.getTempC100(&addresses[ds_sen_i << 3]));
+  }`;
   }
 
   public override get vars(): string {
@@ -42,6 +51,6 @@ DS18B20Sensor ds18b20(&ow);
 
 byte addresses[8 * (${this.value + 1})]; // last one for search
 byte number_of_sensors; // Number of sensors found (if less than ${this.value} connected)
-int temperature[${this.value}];`;
+int zunoChangeDefine(temperature[${this.value}]);`;
   }
 }

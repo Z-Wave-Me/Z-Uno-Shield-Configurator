@@ -7,7 +7,8 @@ export interface Device {
   get vars(): string;
   get channel(): string;
   get setup(): string;
-  loop(channel?: number): string;
+  loop_pre(channel?: number): string;
+  loop_post(channel?: number): string;
   get xetter(): string;
   get report(): string;
   get functions(): string;

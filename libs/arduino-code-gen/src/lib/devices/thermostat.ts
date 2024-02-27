@@ -17,14 +17,23 @@ export class Thermostat extends BaseDevice {
     return `  ZUNO_THERMOSTAT(THERMOSTAT_FLAGS_OFF | THERMOSTAT_FLAGS_${flag}, THERMOSTAT_UNITS_CELSIUS, THERMOSTAT_RANGE_POS, 4, pin${this.config.id}ThermostatModeGetter, pin${this.config.id}ThermostatModeSetter, pin${this.config.id}ThermostatTemperatureGetter, pin${this.config.id}ThermostatTemperatureSetter)`;
   }
 
-  public override loop(): string {
-    const external = this.config.device?.additionally?.toString().startsWith('Z-wave')
-        ? ''
-        // TODO Спросить что тут должно быть
-        : `\n    pin${this.config.id}ThermostatTemperatureCurrent = temperature[` + (1 - 1) + ']/10;';
+  public override loop_pre(channel: number): string {
+    if (this.config.device?.additionally?.toString().startsWith('Z-Wave')) {
+      return '';
+    } else {
+      return `  // Thermostat@pin${this.config.id} process code
+  pin${this.config.id}ThermostatTemperatureCurrent = temperature[` + (1 - 1) + `]/10;`;
+    }
+  }
 
+  public override loop_post(channel: number): string {
     return `  // Thermostat@pin${this.config.id} process code
-  if (pin${this.config.id}ThermostatModeState) {${external}
+  if (zunoChanged(pin${this.config.id}ThermostatModeState) || zunoChanged(pin${this.config.id}ThermostatTemperatureState)) {
+    zunoChangeUpdate(pin${this.config.id}ThermostatModeState);
+    zunoChangeUpdate(pin${this.config.id}ThermostatTemperatureState);
+    zunoSendReport(${channel});
+  }
+  if (pin${this.config.id}ThermostatModeState) {
     if (pin${this.config.id}ThermostatTemperatureState < pin${this.config.id}ThermostatTemperatureCurrent - ${this.step}) {
       digitalWrite(${this.config.id}, ${this.getMode()});
     }
@@ -42,12 +51,14 @@ export class Thermostat extends BaseDevice {
   }
 
   public override get setup(): string {
-    return `  pinMode(${this.config.id}, OUTPUT);`;
+    return `  pinMode(${this.config.id}, OUTPUT);
+  zunoChangeInit(pin${this.config.id}ThermostatModeState, 0);
+  zunoChangeInit(pin${this.config.id}ThermostatTemperatureState, 0);`;
   }
 
   public override get vars(): string {
-    return `byte pin${this.config.id}ThermostatModeState = 0;
-int pin${this.config.id}ThermostatTemperatureState = 0;
+    return `byte zunoChangeDefine(pin${this.config.id}ThermostatModeState);
+int zunoChangeDefine(pin${this.config.id}ThermostatTemperatureState);
 int pin${this.config.id}ThermostatTemperatureCurrent = 0;`;
   }
 
@@ -70,17 +81,21 @@ signed int pin${this.config.id}ThermostatTemperatureGetter(byte mode) {
   }
 
   public override get report(): string {
-    return `  // External temperature sensor for thermostat @pin${this.config.id} processing
-  if ( REPORT_SENSOR_MULTILEVEL_TYPE(report) == ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE) {
-    int temp = int(REPORT_SENSOR_MULTILEVEL_VALUE(report) * 10);
+    if (this.config.device?.additionally?.toString().startsWith('Z-Wave')) {
+      return `  // External temperature sensor for thermostat @pin${this.config.id} processing
+    if (REPORT_SENSOR_MULTILEVEL_TYPE(report) == ZUNO_SENSOR_MULTILEVEL_TYPE_TEMPERATURE) {
+      int temp = int(REPORT_SENSOR_MULTILEVEL_VALUE(report) * 10);
 
-    if (REPORT_SENSOR_MULTILEVEL_SCALE(report) != SENSOR_MULTILEVEL_SCALE_CELSIUS) {
-      // Conversion from degrees Fahrenheit to degrees Celsius
-      temp = (temp - 32) * 5 / 9;
+      if (REPORT_SENSOR_MULTILEVEL_SCALE(report) != SENSOR_MULTILEVEL_SCALE_CELSIUS) {
+        // Conversion from degrees Fahrenheit to degrees Celsius
+        temp = (temp - 32) * 5 / 9;
+      }
+
+      pin${this.config.id}ThermostatTemperatureCurrent = temp;
+    }`;
+    } else {
+      return '';
     }
-
-    pin${this.config.id}ThermostatTemperatureCurrent = temp;
-  }`;
   }
 
   private getMode(invert = true): string {

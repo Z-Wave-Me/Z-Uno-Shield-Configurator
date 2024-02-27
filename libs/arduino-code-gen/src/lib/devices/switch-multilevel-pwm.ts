@@ -12,12 +12,24 @@ export class SwitchMultilevelPwm extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `byte pin${this.config.id}SwitchMultilevelState = 0;`;
+    return `byte zunoChangeDefine(pin${this.config.id}SwitchMultilevelState);`;
   }
 
-  public override loop(): string {
+  public override loop_pre(channel: number): string {
+    return '';
+  }
+
+  public override loop_post(channel: number): string {
     return `  // PWM SwitchMultilevel@pin${this.config.id} process code
-  shield.writePWMPercentage(PWM_CHANNEL(${this.config.id}), pin${this.config.id}SwitchMultilevelState);`;
+  shield.writePWMPercentage(PWM_CHANNEL(${this.config.id}), pin${this.config.id}SwitchMultilevelState);
+  if (zunoChanged(pin${this.config.id}SwitchMultilevelState)) {
+    zunoChangeUpdate(pin${this.config.id}SwitchMultilevelState);
+    zunoSendReport(${channel});
+  }`;
+  }
+
+  public override get setup(): string {
+    return `  zunoChangeInit(pin${this.config.id}SwitchMultilevelState, 0);`;
   }
 
   public override get pwm(): string {

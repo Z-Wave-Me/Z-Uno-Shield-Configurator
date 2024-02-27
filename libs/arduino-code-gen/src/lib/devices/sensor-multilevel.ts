@@ -136,7 +136,7 @@ export class SensorMultilevel extends BaseDevice {
     return `  ZUNO_SENSOR_MULTILEVEL(${channels}, pin${this.config.id}SensorMultilevelState)`;
   }
 
-  public override loop(channel: number): string {
+  public override loop_pre(channel: number): string {
     // Number of Enum 0, 1, 2
     const precision = Object.values(Precision).indexOf(
       this.switchMultilevelConfig.precision
@@ -155,25 +155,24 @@ export class SensorMultilevel extends BaseDevice {
       this.switchMultilevelConfig.size
     )}) round(${base.toFixed(5)} * shield.readADCVoltage(${
       this.config.id
-    }) + ${lowerBound.toFixed(5)});
-  if(pin${this.config.id}SensorMultilevelState != _pin${
-      this.config.id
-    }SensorMultilevelState){
-    _pin${this.config.id}SensorMultilevelState = pin${
-      this.config.id
-    }SensorMultilevelState;
+    }) + ${lowerBound.toFixed(5)});`;
+  }
+
+  public override loop_post(channel: number): string {
+    return `  // ADC SensorMultilevel@pin${this.config.id} process code
+  if (zunoChanged(pin${this.config.id}SensorMultilevelState)){
+    zunoChangeUpdate(pin${this.config.id}SensorMultilevelState);
     zunoSendReport(${channel}); // report if value has changed
   }`;
   }
 
   public override get setup(): string {
-    return `  shield.initADCChannel(${this.config.id}, ${this.jumper});`;
+    return `  shield.initADCChannel(${this.config.id}, ${this.jumper});
+  zunoChangeInit(pin${this.config.id}SensorMultilevelState, 0);`;
   }
 
   public override get vars(): string {
-    return `${sizeToType(this.switchMultilevelConfig.size)} pin${
-      this.config.id
-    }SensorMultilevelState=0, _pin${this.config.id}SensorMultilevelState=1;`;
+    return `${sizeToType(this.switchMultilevelConfig.size)} zunoChangeDefine(pin${this.config.id}SensorMultilevelState);`;
   }
 
   private get jumper(): string {
