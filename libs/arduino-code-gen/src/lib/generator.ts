@@ -118,8 +118,16 @@ ${xetter}
 
   public loop(): string {
     return `void loop() {
+  // read values
+
 ${this.loop_pre()}
+
+  // check rules
+
   #rulesBlock
+
+  // set values and send reports
+  
 ${this.loop_post()}
 }`;
   }
