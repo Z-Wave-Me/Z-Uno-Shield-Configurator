@@ -165,14 +165,15 @@ ${this.functions}`;
     sep = '\n',
     filter = Boolean,
   ): string {
+    var _channels = 1;
     return this.devices
       .map((device) => {
         const handler = device[accessor];
 
         if (typeof handler === 'function') {
-          this.channels += device.channels;
+          _channels += device.channels;
 
-          return handler.call(device, this.channels - device.channels);
+          return handler.call(device, _channels - device.channels);
         }
 
         return handler;
