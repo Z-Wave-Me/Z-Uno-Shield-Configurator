@@ -5,4 +5,5 @@
 <div *ngIf="dskHelp">{{dskHelp}}</div>
 <div style="display:none" #qr></div>
 <div *ngIf="dsk">{{dsk}}</div>
-<button class="close__button" mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
+<button [cdkCopyToClipboard]="getClipboardTxt()" class="content_copy" mat-icon-button matTooltip="Copies the log to the clipboard"><mat-icon>content_copy</mat-icon></button>
+<button class="close__button" mat-icon-button (click)="close()" mat-icon-button matTooltip="Close and stop building the sketch"><mat-icon>close</mat-icon></button>

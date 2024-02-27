@@ -9,7 +9,13 @@ import { ZUnoCompilerClass } from '../../ZUnoCompiler';
 })
 export class UploadModalComponent implements AfterViewInit {
   private readonly compiler = new ZUnoCompilerClass(this.data.code, this.data.freq, true, 50, (severity: string, message: string) => {
-    this.items.push({severity, message})
+    const str_array:Array<string> = message.split("\n");
+    let i:number = 0x0;
+    while (i < str_array.length) {
+        this.items.push({severity, "message":str_array[i]})
+        console.log(str_array[i]);
+        i++;
+    }
   });
 
   @ViewChild('qr')
@@ -33,6 +39,17 @@ export class UploadModalComponent implements AfterViewInit {
   public close(): void {
     this.compiler.cancel();
     this.matDialogRef.close();
+  }
+
+  public getClipboardTxt(): string {
+    let i:number, str:string;
+    i = 0x0;
+    str = "";
+    while (i < this.items.length) {
+        str = str + this.items[i].message + "\n";
+        i++;
+    }
+    return (str);
   }
 
   ngAfterViewInit(): void {
