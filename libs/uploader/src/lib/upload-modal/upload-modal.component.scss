@@ -1,21 +1,33 @@
-:host {
-  padding: 1rem 3rem 3rem;
-  display: block;
-  position: relative;
-  width: 30rem;
+.section_button {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .close__button {
-  position: absolute;
-  top: .3rem;
-  right: .3rem;
+    top: .3rem;
+    right: .3rem;
 }
 
 .content_copy {
-    position: absolute;
     top: .3rem;
     left: .3rem;
-  }
+}
+
+.report_zway {
+    top: .5rem;
+}
+
+.log {
+      padding-top: 0rem;
+      padding-right: 1.5rem;
+      padding-bottom: 1rem;
+      padding-left: 1.5rem;
+      display: block;
+      position: relative;
+      width: 40rem;
+}
 
 .error {
   color: red;

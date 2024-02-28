@@ -9,11 +9,12 @@ import { ZUnoCompilerClass } from '../../ZUnoCompiler';
 })
 export class UploadModalComponent implements AfterViewInit {
   private readonly compiler = new ZUnoCompilerClass(this.data.code, this.data.freq, true, 50, (severity: string, message: string) => {
+    if (severity === "error")
+        this.report = "Report to Z-Wave.Me";
     const str_array:Array<string> = message.split("\n");
     let i:number = 0x0;
     while (i < str_array.length) {
         this.items.push({severity, "message":str_array[i]})
-        console.log(str_array[i]);
         i++;
     }
   });
@@ -30,6 +31,7 @@ export class UploadModalComponent implements AfterViewInit {
   public items: Severity[] = [];
   public dskHelp: string = '';
   public dsk: string = '';
+  public report: string|undefined = undefined;
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public readonly data: UploadModalComponentDetails,

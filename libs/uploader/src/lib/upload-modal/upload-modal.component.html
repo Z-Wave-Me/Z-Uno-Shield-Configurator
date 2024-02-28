@@ -1,9 +1,15 @@
-<h3>Uploading the sketch to your Z-Uno:</h3>
-<div *ngFor="let item of items" [class]="item.severity">
-    {{item.message}}
+<section class="section_button">
+	<button [cdkCopyToClipboard]="getClipboardTxt()" class="content_copy" mat-icon-button matTooltip="Copies the log to the clipboard"><mat-icon>content_copy</mat-icon></button>
+	<button class="report_zway" mat-raised-button matTooltip="Do you think it is a compiler problem? Report to Z-Wave.Me" *ngIf="report !== undefined">{{report}}</button>
+	<button class="close__button" mat-icon-button (click)="close()" mat-icon-button matTooltip="Close and stop building the sketch"><mat-icon>close</mat-icon></button>
+</section>
+<div class="log">
+  <h3>Uploading the sketch to your Z-Uno:</h3>
+  <div *ngFor="let item of items" [class]="item.severity">
+      {{item.message}}
+  </div>
+  <div *ngIf="dskHelp">{{dskHelp}}</div>
+  <div style="display:none" #qr></div>
+  <div *ngIf="dsk">{{dsk}}</div>
 </div>
-<div *ngIf="dskHelp">{{dskHelp}}</div>
-<div style="display:none" #qr></div>
-<div *ngIf="dsk">{{dsk}}</div>
-<button [cdkCopyToClipboard]="getClipboardTxt()" class="content_copy" mat-icon-button matTooltip="Copies the log to the clipboard"><mat-icon>content_copy</mat-icon></button>
-<button class="close__button" mat-icon-button (click)="close()" mat-icon-button matTooltip="Close and stop building the sketch"><mat-icon>close</mat-icon></button>
+
