@@ -160,6 +160,7 @@ class ZUnoCompilerClass {
 	private xhr_compile:XMLHttpRequest|undefined = undefined;
 	private xhr_version:XMLHttpRequest|undefined = undefined;
 	private xhr_bootloader:XMLHttpRequest|undefined = undefined;
+	private error_complite:boolean = false;
 
 	constructor(code:string, freq:string|null, sec:boolean, main_pow:number, cbk:ZUnoCompilerProgressCbkProt|null = null) {
 		this.progressCbk = cbk;
@@ -815,8 +816,10 @@ class ZUnoCompilerClass {
 		promise_compile.then(async function (result:ZUnoCompilerLoadSketchResultProt) {
 			let bin:Array<number>;
 			try {
-				if (result["status"] != 0x0)
+				if (result["status"] != 0x0) {
+					variable_this.error_complite = true;
 					return (variable_this.sketch_error(variable_this, variable_self, reject, Error("Compilation returned incorrect status: " + result["status"] + " log: " + result["log"] + " message: " +  result["message"])));
+				}
 				bin = variable_this._base64ToArrayBuffer(result["bin"]);
 			} catch (error) {
 				return (variable_this.sketch_error(variable_this, variable_self, reject, Error("The structure obtained after compilation is not valid")));
@@ -1041,6 +1044,10 @@ class ZUnoCompilerClass {
 
 	public getWait(): Promise<ZUnoCompilerLoadSketchOutProt|void> {
 		return this.promise_wait;
+	}
+
+	public errorComplite(): boolean {
+		return this.error_complite;
 	}
 
 	public cancel(): void {

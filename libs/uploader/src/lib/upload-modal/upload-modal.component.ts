@@ -9,7 +9,7 @@ import { ZUnoCompilerClass } from '../../ZUnoCompiler';
 })
 export class UploadModalComponent implements AfterViewInit {
   private readonly compiler = new ZUnoCompilerClass(this.data.code, this.data.freq, true, 50, (severity: string, message: string) => {
-    if (severity === "error")
+    if (severity === "error" && this.compiler.errorComplite() == true)
         this.report = "Report to Z-Wave.Me";
     const str_array:Array<string> = message.split("\n");
     let i:number = 0x0;
