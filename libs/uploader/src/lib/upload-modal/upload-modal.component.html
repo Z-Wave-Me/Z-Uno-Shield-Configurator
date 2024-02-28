@@ -5,7 +5,7 @@
 </section>
 <div class="log">
   <h3>Uploading the sketch to your Z-Uno:</h3>
-  <div *ngFor="let item of items" [class]="item.severity">
+  <div class="log_item" *ngFor="let item of items" [class]="item.severity">
       {{item.message}}
   </div>
   <div *ngIf="dskHelp">{{dskHelp}}</div>

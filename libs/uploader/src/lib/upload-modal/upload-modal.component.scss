@@ -26,11 +26,20 @@
       padding-left: 1.5rem;
       display: block;
       position: relative;
-      width: 40rem;
+      min-height: 10rem;
+      max-height: 50rem;
+      min-width: 30rem;
+      max-width: 50rem;
+      overflow: auto;
+}
+
+.log_item {
+    white-space: nowrap;
 }
 
 .error {
   color: red;
+
 }
 
 .info {
