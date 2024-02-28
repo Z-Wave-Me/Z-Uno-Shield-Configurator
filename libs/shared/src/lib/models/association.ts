@@ -27,5 +27,6 @@ export interface Association {
 }
 
 export enum OperatorType {
-  changeBy = 'changeBy'
+  zunoChangedBy = 'zunoChangedBy',
+  zunoChanged = 'zunoChanged'
 }

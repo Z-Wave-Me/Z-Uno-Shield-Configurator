@@ -72,8 +72,13 @@ export class ExpressionComponent implements OnInit, OnDestroy {
       value: '!='
     },
     {
-      label: 'Δ',
-      value: OperatorType.changeBy,
+      label: 'changed by',
+      value: OperatorType.zunoChangedBy,
+      unary: false,
+    },
+    {
+      label: 'changed',
+      value: OperatorType.zunoChanged,
       unary: true,
     },
   ];
@@ -150,7 +155,13 @@ export class ExpressionComponent implements OnInit, OnDestroy {
 }
 
 interface Option {
-  value: string | OperatorType.changeBy;
+  value: string | OperatorType.zunoChangedBy;
+  label: string;
+  unary?: boolean;
+}
+
+interface Option {
+  value: string | OperatorType.zunoChanged;
   label: string;
   unary?: boolean;
 }

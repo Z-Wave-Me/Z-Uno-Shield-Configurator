@@ -101,8 +101,11 @@ ${
 
   private makeExpression(list: Expression[]): string {
     const expressionToString = ({ expression }: Expression) => {
-      if (expression[1] === OperatorType.changeBy) {
-        return `changeByFunction(${makeLinear(expression[0])}, ${makeLinear(expression[2])})`
+      if (expression[1] === OperatorType.zunoChangedBy) {
+        return `zunoChangedBy(${makeLinear(expression[0])}, ${makeLinear(expression[2])})`
+      }
+      else if (expression[1] === OperatorType.zunoChanged) {
+        return `zunoChanged(${makeLinear(expression[0])})`
       }
 
       return `${makeLinear(expression[0])} ${expression[1]} ${makeLinear(expression[2])}`
