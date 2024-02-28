@@ -8,8 +8,8 @@
   <div class="log_item" *ngFor="let item of items" [class]="item.severity">
       {{item.message}}
   </div>
-  <div *ngIf="dskHelp">{{dskHelp}}</div>
-  <div style="display:none" #qr></div>
-  <div *ngIf="dsk">{{dsk}}</div>
+  <div class="log_item" *ngIf="dskHelp">{{dskHelp}}</div>
+  <div class="log_item" style="display:none" #qr></div>
+  <div class="log_item" *ngIf="dsk">{{dsk}}</div>
 </div>
 

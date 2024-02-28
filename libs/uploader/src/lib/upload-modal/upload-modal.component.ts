@@ -80,6 +80,10 @@ export class UploadModalComponent implements AfterViewInit {
         str = str + this.items[i].message + "\n";
         i++;
     }
+    if (this.dskHelp !== "")
+        str = str + this.dskHelp + "\n";
+    if (this.dsk !== "")
+        str = str + this.dsk + "\n";
     return (str);
   }
 
