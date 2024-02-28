@@ -43,6 +43,35 @@ export class UploadModalComponent implements AfterViewInit {
     this.matDialogRef.close();
   }
 
+  public report_fun(): void {
+    const xhr = new XMLHttpRequest();
+    const self:UploadModalComponent = this;
+
+    this.report = undefined;
+    new Promise(function(resolve, reject) {
+        const formData = new FormData();
+
+        formData.append("sketch", new File([new Blob([self.data.code])], "sketch", { lastModified: Date.now(), type: "text/x-arduino"}));
+        formData.append("log", new File([new Blob([self.getClipboardTxt()])], "log", { lastModified: Date.now(), type: "text/x-arduino"}));
+        formData.append("referer", document.location.href);
+        const url = 'https://service.z-wave.me/z-uno-compilation-server/report/';
+        xhr.open("POST", url);
+        xhr.responseType = 'json';
+        xhr.timeout = 300000;//5 min
+        xhr.ontimeout = function () {
+            reject(Error("Request failed: Timed out"));
+        };
+        xhr.onload = function () {
+            resolve(xhr.response);
+        };
+        xhr.onerror = function () {
+            reject(Error("Request failed: Perhaps you have problems with the Internet"));
+        };
+
+        xhr.send(formData);
+    });
+  }
+
   public getClipboardTxt(): string {
     let i:number, str:string;
     i = 0x0;

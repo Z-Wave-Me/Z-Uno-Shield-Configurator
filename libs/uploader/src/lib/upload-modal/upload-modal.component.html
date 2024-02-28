@@ -1,7 +1,7 @@
 <section class="section_button">
 	<button [cdkCopyToClipboard]="getClipboardTxt()" class="content_copy" mat-icon-button matTooltip="Copies the log to the clipboard"><mat-icon>content_copy</mat-icon></button>
-	<button class="report_zway" mat-raised-button matTooltip="Do you think it is a compiler problem? Report to Z-Wave.Me" *ngIf="report !== undefined">{{report}}</button>
-	<button class="close__button" mat-icon-button (click)="close()" mat-icon-button matTooltip="Close and stop building the sketch"><mat-icon>close</mat-icon></button>
+	<button class="report_zway" (click)="report_fun()" mat-raised-button matTooltip="Do you think it is a compiler problem? Report to Z-Wave.Me" *ngIf="report !== undefined">{{report}}</button>
+	<button class="close__button" mat-icon-button (click)="close()" matTooltip="Close and stop building the sketch"><mat-icon>close</mat-icon></button>
 </section>
 <div class="log">
   <h3>Uploading the sketch to your Z-Uno:</h3>
