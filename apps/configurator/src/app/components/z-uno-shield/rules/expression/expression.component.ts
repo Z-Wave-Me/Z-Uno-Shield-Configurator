@@ -155,13 +155,7 @@ export class ExpressionComponent implements OnInit, OnDestroy {
 }
 
 interface Option {
-  value: string | OperatorType.zunoChangedBy;
-  label: string;
-  unary?: boolean;
-}
-
-interface Option {
-  value: string | OperatorType.zunoChanged;
+  value: string | OperatorType.zunoChangedBy | OperatorType.zunoChanged;
   label: string;
   unary?: boolean;
 }
