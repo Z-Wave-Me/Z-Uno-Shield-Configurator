@@ -62,7 +62,7 @@ export class SensorBinary extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `byte zunoChangeDefine(pin${this.config.id}SensorBinaryState);`;
+    return `zunoChangeDefine(byte, pin${this.config.id}SensorBinaryState);`;
   }
 
   private get isPullUp(): boolean {

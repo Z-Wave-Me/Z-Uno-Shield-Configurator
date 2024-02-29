@@ -57,8 +57,8 @@ export class Thermostat extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `byte zunoChangeDefine(pin${this.config.id}ThermostatModeState);
-int zunoChangeDefine(pin${this.config.id}ThermostatTemperatureState);
+    return `zunoChangeDefine(byte, pin${this.config.id}ThermostatModeState);
+zunoChangeDefine(int, pin${this.config.id}ThermostatTemperatureState);
 int pin${this.config.id}ThermostatTemperatureCurrent = 0;`;
   }
 

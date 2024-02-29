@@ -54,8 +54,8 @@ export class DHT extends BaseDevice {
 
   public override get vars(): string {
     return `DHT pin${this.config.id}DHT(${this.config.id}, ${this.name});
-int zunoChangeDefine(pin${this.config.id}DHTTemperatureState);
-word zunoChangeDefine(pin${this.config.id}DHTHumidityState);`;
+zunoChangeDefine(int, pin${this.config.id}DHTTemperatureState);
+zunoChangeDefine(word, pin${this.config.id}DHTHumidityState);`;
   }
 
   public override get variables(): Action[] {

@@ -51,6 +51,6 @@ DS18B20Sensor ds18b20(&ow);
 
 byte addresses[8 * (${this.value + 1})]; // last one for search
 byte number_of_sensors; // Number of sensors found (if less than ${this.value} connected)
-int zunoChangeDefine(temperature[${this.value}]);`;
+zunoChangeDefine(int, temperature[${this.value}]);`;
   }
 }

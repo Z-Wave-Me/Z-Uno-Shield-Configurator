@@ -58,10 +58,9 @@ export class SwitchColor extends BaseDevice {
   }
 
   public override get vars(): string {
-    return 'byte ' + this.ids
-      .map((id) => `zunoChangeDefine(pin${id}SwitchColorState)`)
-      .join(',')
-      + ';';
+    return this.ids
+      .map((id) => `zunoChangeDefine(byte, pin${id}SwitchColorState);`)
+      .join('\n');
   }
 
   public override get xetter(): string {

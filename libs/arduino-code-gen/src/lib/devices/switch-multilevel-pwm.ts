@@ -12,7 +12,7 @@ export class SwitchMultilevelPwm extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `byte zunoChangeDefine(pin${this.config.id}SwitchMultilevelState);`;
+    return `zunoChangeDefine(byte, pin${this.config.id}SwitchMultilevelState);`;
   }
 
   public override loop_pre(channel: number): string {

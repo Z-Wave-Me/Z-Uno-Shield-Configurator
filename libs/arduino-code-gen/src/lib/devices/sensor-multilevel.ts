@@ -172,7 +172,7 @@ export class SensorMultilevel extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `${sizeToType(this.switchMultilevelConfig.size)} zunoChangeDefine(pin${this.config.id}SensorMultilevelState);`;
+    return `zunoChangeDefine(${sizeToType(this.switchMultilevelConfig.size)}, pin${this.config.id}SensorMultilevelState);`;
   }
 
   private get jumper(): string {

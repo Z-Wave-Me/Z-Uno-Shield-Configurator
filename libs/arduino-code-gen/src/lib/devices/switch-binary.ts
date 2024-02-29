@@ -63,7 +63,7 @@ export class SwitchBinary extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `byte zunoChangeDefine(pin${this.config.id}SwitchBinaryState);`;
+    return `zunoChangeDefine(byte, pin${this.config.id}SwitchBinaryState);`;
   }
 
   public override get variables(): Action[] {

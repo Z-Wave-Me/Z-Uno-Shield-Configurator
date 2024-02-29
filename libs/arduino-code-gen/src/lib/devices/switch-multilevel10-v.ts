@@ -12,7 +12,7 @@ export class SwitchMultilevel10V extends BaseDevice {
   }
 
   public override get vars(): string {
-    return `byte zunoChangeDefine(pin${this.config.id}SwitchMultilevelState);`;
+    return `zunoChangeDefine(byte, pin${this.config.id}SwitchMultilevelState);`;
   }
 
   public override get v10Mode(): boolean {
