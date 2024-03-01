@@ -109,18 +109,20 @@ ${getters}
   
   public override loop_post(channel: number): string {
     return `  // PWM SwitchColor@pin process code
-  ` + this.arrayConfig
+` + this.arrayConfig
       .map(
         ({ id }) => `  shield.writePWMPercentage(PWM_CHANNEL(${id}), pin${id}SwitchColorState);`)
       .join('\n') + 
-    `  if(` + this.arrayConfig
+    `
+  if(` + this.arrayConfig
       .map(
         ({ id }) => `zunoChanged(pin${id}SwitchColorState)`)
       .join(' || ') + `) {
 ` + this.arrayConfig
       .map(
-        ({ id }) => `zunoChangeUpdate(pin${id}SwitchColorState);`)
-      .join('\n') + `  zunoSendReport(${channel});
+        ({ id }) => `    zunoChangeUpdate(pin${id}SwitchColorState);`)
+      .join('\n') + `
+    zunoSendReport(${channel});
   }`;
   }
 
