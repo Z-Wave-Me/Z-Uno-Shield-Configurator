@@ -35,9 +35,10 @@ export class ServerSyncService implements OnDestroy {
         this.currentKey = this.router.url.split('?')[0].split('/')[1];
         const config = this.localStorageService.get<BoardConfig>(this.currentKey);
 
-        if (config?.remoteUrl === url) {
+        if (config?.remoteUrl !== null && config?.remoteUrl === url) {
           return of(null);
         }
+
 
         return this.httpClient.get<{content: string}>(this.remoteServerAddress, {
           params: {
