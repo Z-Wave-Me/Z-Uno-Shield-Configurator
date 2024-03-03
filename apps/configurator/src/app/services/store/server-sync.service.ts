@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { filter, first, interval, map, of, startWith, Subject, switchMap, takeUntil } from 'rxjs';
+import { filter, first, interval, map, of, startWith, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from './local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,13 +29,13 @@ export class ServerSyncService implements OnDestroy {
     this.activatedRoute.queryParams
     .pipe(
       first(),
+      tap(() => this.currentKey = this.router.url.split('?')[0].split('/')[1]),
       map((data) => data['url']),
       filter(Boolean),
       switchMap(url => {
-        this.currentKey = this.router.url.split('?')[0].split('/')[1];
         const config = this.localStorageService.get<BoardConfig>(this.currentKey);
 
-        if (config?.remoteUrl !== null && config?.remoteUrl === url) {
+        if (config?.remoteUrl === url) {
           return of(null);
         }
 
@@ -56,6 +56,7 @@ export class ServerSyncService implements OnDestroy {
       callback(config);
     }).add(() => {
       this.firstLoad = false;
+      console.warn('firstLoad');
     });
 
     this.interval$.pipe(
@@ -66,7 +67,7 @@ export class ServerSyncService implements OnDestroy {
       }),
       filter(Boolean),
       filter(() => !this.firstLoad),
-      filter(config => !config.remoteUrl || !config.lastSyncTime || config.lastSyncTime < (config.lastChangedTime ?? 0)),
+      filter(config => !config.lastSyncTime || config.lastSyncTime < (config.lastChangedTime ?? 0)),
       switchMap((config) => {
         const removeConfigUrl = config.remoteUrl;
 
@@ -85,7 +86,9 @@ export class ServerSyncService implements OnDestroy {
       })
     ).subscribe((config) => {
       try {
-        this.localStorageService.set(this.currentKey, { ...config, lastSyncTime: Date.now() });
+        const updatedConfig = { ...config, lastSyncTime: Date.now() };
+        this.localStorageService.set(this.currentKey, updatedConfig);
+        callback(updatedConfig);
       } catch {}
 
         const query = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {url: config.remoteUrl}}).toString();

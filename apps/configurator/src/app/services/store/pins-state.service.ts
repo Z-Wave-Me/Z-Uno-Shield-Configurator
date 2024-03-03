@@ -3,7 +3,6 @@ import {
   BehaviorSubject,
   distinctUntilChanged,
   filter,
-  first,
   map,
   Observable,
   Subject,
@@ -150,7 +149,7 @@ export class PinsStateService {
   }
 
   public reset(): void {
-    this._boardConfig$.next(this.initialState);
+    this._boardConfig$.next({ ...this.initialState, lastChangedTime: Date.now()});
     this.localStorageService.set(this.currentKey, {
       pins: [],
       associations: [],
@@ -166,6 +165,8 @@ export class PinsStateService {
     this.localStorageService.set(this.currentKey, config);
 
     const query = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {url: config.remoteUrl}}).toString();
+
+    console.warn(config.remoteUrl);
 
     this.location.go(query);
   }
@@ -195,37 +196,6 @@ export class PinsStateService {
   }
 
   private init(): void {
-    this.activatedRoute.queryParams
-      .pipe(
-        first(),
-        // map((data) => data['config']),
-        // filter(Boolean),
-      )
-      .subscribe(() => {
-        // const key = this.router.url.split('?')[0].split('/')[1];
-        // this.currentKey = key;
-        // const config = this.localStorageService.get(key)
-        // const data = JSON.parse(decompressFromEncodedURIComponent(decodeURIComponent(config)));
-        // this._boardConfig$.next(data);
-
-        // this.httpClient.post('/create', {
-        //   platform: key,
-        //   config: data,
-        // }).subscribe();
-        // this.httpClient.get('/config', {params: {
-        //     platform: key,
-        //   }}).subscribe();
-        // this.httpClient.put('/update', {
-        //   config: data,
-        // }, {
-        //   params: {
-        //     platform: key,
-        //   }
-        // }).subscribe();
-
-        // this.localStorageService.set(key, data);
-      });
-
     this.router.events
       .pipe(
         filter(
