@@ -39,7 +39,6 @@ export class ServerSyncService implements OnDestroy {
           return of(null);
         }
 
-
         return this.httpClient.get<{content: string}>(this.remoteServerAddress, {
           params: {
             short: url,

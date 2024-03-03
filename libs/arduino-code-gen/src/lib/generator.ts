@@ -39,7 +39,7 @@ ${channel}
     const functions = this.collect('functions');
 
     return functions.length
-      ? `// Functions    
+      ? `// Functions
 ${functions}
 `
       : '';
@@ -50,7 +50,7 @@ ${functions}
 
     return report.length
       ? `void reportSMLHandler(ReportAuxData_t * report) {
-${report} 
+${report}
 }
 `
       : '';
@@ -127,7 +127,7 @@ ${this.loop_pre()}
   #rulesBlock
 
   // set values and send reports
-  
+
 ${this.loop_post()}
 }`;
   }
@@ -146,6 +146,11 @@ ${this.loop_post()}
     }
 
     return `
+/*
+ * This code was generated using the configurator
+ * ${location.href}
+ */
+
 #include "ZUNO_SHIELD.h" // Shield library
 ${this.includes}
 

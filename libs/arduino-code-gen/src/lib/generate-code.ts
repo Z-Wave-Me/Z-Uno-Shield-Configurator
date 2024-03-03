@@ -53,7 +53,7 @@ export function deviceFromConfig(config: PinConfig | PinConfig[]): Device {
     }
   }
 
-  throw new Error(`Unknown type 
+  throw new Error(`Unknown type
 
 ${JSON.stringify(config, null, 2)}`);
 }
