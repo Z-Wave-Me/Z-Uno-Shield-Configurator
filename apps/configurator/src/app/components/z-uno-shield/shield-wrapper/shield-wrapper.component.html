@@ -7,7 +7,7 @@
         *ngFor="let link of links"
         mat-tab-link
         [style.flex-grow]="'unset'"
-        queryParamsHandling="merge"
+        queryParamsHandling="preserve"
         [routerLink]="link.path"
         (click)="activeLink = link.path"
         [active]="activeLink === link.path"
