@@ -13,10 +13,19 @@
 <!--      {{ pin.device?.id }}-->
 <!--    </text>-->
     <ng-container [ngSwitch]="pin.device?.id">
-      <g *ngSwitchCase="'dimmer'" dimmer [pin]="pin"></g>
+      <g *ngSwitchCase="'general'" general [pin]="pin"></g>
       <g *ngSwitchCase="'door'" door [pin]="pin"></g>
-      <g *ngSwitchCase="'general'" door [pin]="pin"></g>
       <g *ngSwitchCase="'motion'" motion-sensor [pin]="pin"></g>
+      <g *ngSwitchCase="'smoke'" general [pin]="pin"></g>
+      <g *ngSwitchCase="'leakage'" general [pin]="pin"></g>
+      <g *ngSwitchCase="'CO'" general [pin]="pin"></g>
+      <g *ngSwitchCase="'CO2'" general [pin]="pin"></g>
+      <g *ngSwitchCase="'heat'" general [pin]="pin"></g>
+      <g *ngSwitchCase="'freeze'" general [pin]="pin"></g>
+      <g *ngSwitchCase="'tamper'" general [pin]="pin"></g>
+      <g *ngSwitchCase="'tilt'" general [pin]="pin"></g>
+      <g *ngSwitchCase="'glassbr'" general [pin]="pin"></g>
+      <g *ngSwitchCase="'dimmer'" dimmer [pin]="pin"></g>
       <g *ngSwitchCase="'switch'" switch [pin]="pin"></g>
       <g *ngSwitchCase="'0-10v'" dimmer0-10v [pin]="pin"></g>
     </ng-container>
