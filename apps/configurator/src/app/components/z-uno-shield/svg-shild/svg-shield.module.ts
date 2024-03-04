@@ -17,6 +17,7 @@ import { BusBarComponent } from './components/busbars/busbar/bus-bar.component';
 import { BusBarLayerComponent } from './components/busbars/bus-bar-layer.component';
 import { AnalogInputComponent } from './components/devices/analog-input/analog-input.component';
 import { GeneralComponent } from './components/devices/general/general.component';
+import { MotorComponent } from './components/devices/motor/motor.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { GeneralComponent } from './components/devices/general/general.component
     BusBarComponent,
     BusBarLayerComponent,
     GeneralComponent,
+    MotorComponent,
   ],
   exports: [SvgShieldComponent, SandboxComponent],
   imports: [CommonModule, HostDirective, HighlightPinDirective],

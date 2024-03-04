@@ -26,8 +26,14 @@
       <g *ngSwitchCase="'tilt'" general [pin]="pin"></g>
       <g *ngSwitchCase="'glassbr'" general [pin]="pin"></g>
       <g *ngSwitchCase="'dimmer'" dimmer [pin]="pin"></g>
-      <g *ngSwitchCase="'switch'" switch [pin]="pin"></g>
       <g *ngSwitchCase="'0-10v'" dimmer0-10v [pin]="pin"></g>
+      <g *ngSwitchCase="'switch'" switch [pin]="pin"></g>
+      <g *ngSwitchCase="'doorLock'" motor [pin]="pin"></g>
+      <g *ngSwitchCase="'siren'" motor [pin]="pin"></g>
+      <g *ngSwitchCase="'valve'" motor [pin]="pin"></g>
+      <g *ngSwitchCase="'heatingThermostat'" motor [pin]="pin"></g>
+      <g *ngSwitchCase="'coolingThermostat'" motor [pin]="pin"></g>
+      
     </ng-container>
     <ng-container [ngSwitch]="true">
       <g *ngSwitchCase="pin.id === ZUnoShieldPin.ONE_WIRE &&  pin.device?.deviceType === 'ds18b20'" ds18b20 [pin]="pin"></g>
