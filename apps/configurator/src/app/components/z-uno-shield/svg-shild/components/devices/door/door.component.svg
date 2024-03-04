@@ -15,11 +15,10 @@
       <svg:path id="rect5733" d="M1028.032-1360.63h15.118v283.465h-15.118z" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
     </svg:g>
     <svg:g *ngSwitchCase="'digital input 3'" id="g91410">
-      <svg:path id="rect91398" d="M1118.74-1360.63h944.882v15.118H1118.74z" style="fill:red;stroke-width:1.00157"/>
-      <svg:path id="rect91400" d="M2048.504-1360.63h15.118V661.417h-15.118z" style="fill:red;stroke-width:1.00157"/>
-      <svg:path id="rect91402" d="M2048.504 646.299h359.055v15.118h-359.055z" style="fill:red;stroke-width:1.00157"/>
-      <svg:path id="rect91404" d="M2392.441 597.165h15.118v64.252h-15.118z" style="fill:red;stroke-width:1.00157"/>
-      <svg:path id="rect91412" d="M1118.74-1360.63h15.118v283.465h-15.118z" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
+      <svg:path id="rect91398" d="M1209.449-1303.937h854.173v15.118h-854.173z" style="fill:black;stroke-width:1.00157"/>
+      <svg:path id="rect91400" d="M2048.504-1303.937h15.118V661.417h-15.118z" style="fill:black;stroke-width:1.00157"/>
+      <svg:path id="rect91402" d="M2048.504 646.299h359.055v15.118h-359.055z" style="fill:black;stroke-width:1.00157"/>
+      <svg:path id="rect91404" d="M2392.441 597.165h15.118v64.252h-15.118z" style="fill:black;stroke-width:1.00157"/>
     </svg:g>
   </ng-container>
   <svg:g id="g4194" style="display:inline" transform="translate(-930.315 -1603.436)">

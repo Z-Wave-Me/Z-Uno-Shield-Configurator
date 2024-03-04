@@ -57,7 +57,7 @@ export class SensorBinary extends BaseDevice {
   public override get setup(): string {
     const inverted = this.config.device?.type === 'inverted' ? '!': '';
 
-    return `  pinMode(A3, INPUT_PULLDOWN);
+    return `  pinMode(${this.config.id}, INPUT_PULLUP);
   zunoChangeInit(pin${this.config.id}SensorBinaryState, ${inverted}!digitalRead(${this.config.id}));`;
   }
 
