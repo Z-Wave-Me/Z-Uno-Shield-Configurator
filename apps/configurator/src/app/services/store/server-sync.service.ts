@@ -56,7 +56,6 @@ export class ServerSyncService implements OnDestroy {
       callback(config);
     }).add(() => {
       this.firstLoad = false;
-      console.warn('firstLoad');
     });
 
     this.interval$.pipe(

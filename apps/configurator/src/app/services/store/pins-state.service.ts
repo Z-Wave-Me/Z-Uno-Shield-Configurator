@@ -166,8 +166,6 @@ export class PinsStateService {
 
     const query = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {url: config.remoteUrl}}).toString();
 
-    console.warn(config.remoteUrl);
-
     this.location.go(query);
   }
 
