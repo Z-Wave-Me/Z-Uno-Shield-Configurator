@@ -5,8 +5,15 @@ svg {
   max-height: 50vh;
   max-width: 100%;
   padding: 16px 0;
+
+}
+
+.cls-2 {
+  color: white;
 }
 
 .--active {
-  stroke: lawngreen;
+  .cls-2 {
+    color: rgba(0, 248, 14, 0.88);
+  }
 }

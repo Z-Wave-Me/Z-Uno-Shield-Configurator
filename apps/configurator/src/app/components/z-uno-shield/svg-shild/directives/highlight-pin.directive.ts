@@ -1,27 +1,20 @@
-import { Directive, ElementRef, HostBinding, HostListener, Input, OnDestroy } from '@angular/core';
+import { Directive, HostBinding, HostListener, Input, OnDestroy } from '@angular/core';
 import { PinSelectedService } from '../../../../services/pin-selected/pin-selected.service';
-import { Subscription } from 'rxjs';
+import { PinsStateService } from '../../../../services/store/pins-state.service';
 
 @Directive({
   selector: '[configuratorHighlightPin]',
   standalone: true,
 })
-export class HighlightPinDirective implements OnDestroy {
-
-  private subscription: Subscription;
+export class HighlightPinDirective {
 
   @Input()
   public configuratorHighlightPin!: string;
 
-  constructor(private readonly pinSelectedService: PinSelectedService) {
-    this.subscription = this.pinSelectedService.selectObserver.subscribe(
-      (pinId) => (this.active = this.configuratorHighlightPin === pinId),
-    );
-  }
-
-  public ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+  constructor(
+    private readonly pinSelectedService: PinSelectedService,
+    private readonly pinsStateService: PinsStateService,
+    ) { }
 
   @HostListener('mouseenter')
   public onMouseOver(): void {
@@ -33,5 +26,7 @@ export class HighlightPinDirective implements OnDestroy {
   public click(): void {}
 
   @HostBinding('class.--active')
-  private active = false;
+  private get active(): boolean {
+    return !!this.pinsStateService.snapshot.pins.find(pin => pin.id === this.configuratorHighlightPin);
+  };
 }
