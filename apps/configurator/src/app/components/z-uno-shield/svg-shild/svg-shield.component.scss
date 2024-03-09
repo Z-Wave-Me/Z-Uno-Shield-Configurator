@@ -12,8 +12,16 @@ svg {
   color: white;
 }
 
+.cls-3 {
+  color: #614259;
+}
+
 .--active {
   .cls-2 {
-    color: rgba(0, 248, 14, 0.88);
+    color: rgb(62, 217, 70);
+  }
+
+  .cls-3 {
+    color: rgb(3, 199, 13);
   }
 }
