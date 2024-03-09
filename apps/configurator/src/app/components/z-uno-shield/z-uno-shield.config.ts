@@ -158,7 +158,7 @@ export const pinList: Pin[] = [
         busBars: [2, 3, 4, 5, 6, 7],
       },
       {
-        key: 'digital input',
+        key: 'digital input 3',
         title: $localize`Digital input 0/3 V`,
         options: IO.digitalInput,
         busBars: [0],
@@ -190,7 +190,7 @@ export const pinList: Pin[] = [
         busBars: [2, 3, 4, 5, 6, 7],
       },
       {
-        key: 'digital input',
+        key: 'digital input 3',
         title: $localize`Digital input 0/3 V`,
         options: IO.digitalInput,
         busBars: [1],
@@ -209,7 +209,7 @@ export const pinList: Pin[] = [
     pin: [
       ...IO.temperatureHumidity,
       {
-        key: 'digital input',
+        key: 'digital input 3',
         title: $localize`Digital input 0/3 V`,
         options: IO.digitalInput,
       },
@@ -228,7 +228,7 @@ export const pinList: Pin[] = [
       ...IO.ds18b20,
       ...IO.temperatureHumidity,
       {
-        key: 'digital input',
+        key: 'digital input 3',
         title: $localize`Digital input 0/3 V`,
         options: IO.digitalInput,
       },

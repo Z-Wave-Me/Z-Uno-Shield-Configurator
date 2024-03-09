@@ -16,6 +16,8 @@ import { RGBWComponent } from './components/devices/rgbw/rgbw.component';
 import { BusBarComponent } from './components/busbars/busbar/bus-bar.component';
 import { BusBarLayerComponent } from './components/busbars/bus-bar-layer.component';
 import { AnalogInputComponent } from './components/devices/analog-input/analog-input.component';
+import { GeneralComponent } from './components/devices/general/general.component';
+import { MotorComponent } from './components/devices/motor/motor.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { AnalogInputComponent } from './components/devices/analog-input/analog-i
     AnalogInputComponent,
     BusBarComponent,
     BusBarLayerComponent,
+    GeneralComponent,
+    MotorComponent,
   ],
   exports: [SvgShieldComponent, SandboxComponent],
   imports: [CommonModule, HostDirective, HighlightPinDirective],
