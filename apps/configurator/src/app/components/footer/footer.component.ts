@@ -85,7 +85,6 @@ ${
   }
 
   private makeAction = (action: Action, associations: Association[]): string | null  => {
-    console.log(action);
       const index = associations.findIndex(association => association.uuid === action.parentId);
       const hasAssociation = action.template?.includes('{1}')
       // TODO добавить сообщение об ошибке в форме (отсутствует ассоциация)

@@ -12,7 +12,7 @@ export class SandboxComponent {
   }
 
   doSomething() {
-    console.log('do it');
+    // console.log('do it');
     // this.pinSelectedService.select({ id: 'PWM3' });
   }
 }

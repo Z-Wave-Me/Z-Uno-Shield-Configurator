@@ -19,7 +19,6 @@ export class HighlightPinDirective {
   @HostListener('mouseenter')
   public onMouseOver(): void {
     this.pinSelectedService.select(this.configuratorHighlightPin);
-    console.log('Mouse over', this.configuratorHighlightPin);
   }
 
   @HostListener('click')

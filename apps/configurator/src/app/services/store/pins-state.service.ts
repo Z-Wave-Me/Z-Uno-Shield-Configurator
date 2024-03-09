@@ -137,9 +137,9 @@ export class PinsStateService {
 
     this._boardConfig$.next({...state, pins: updated, lastChangedTime: Date.now() });
 
-    console.group('Store');
-    console.log(this.snapshot);
-    console.groupEnd();
+    // console.group('Store');
+    // console.log(this.snapshot);
+    // console.groupEnd();
 
     this.updateRoute();
   }
