@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { filter, first, interval, map, of, startWith, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from './local-storage.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BoardConfig } from '@configurator/shared';
 import { Location } from '@angular/common';
 
@@ -23,7 +23,17 @@ export class ServerSyncService implements OnDestroy {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly location: Location,
-  ) { }
+  ) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      takeUntil(this.destroy$),
+    ).subscribe(() => {
+      const remoteUrl = this.localStorageService.get<BoardConfig>(this.currentKey)?.remoteUrl;
+      const query = this.router.createUrlTree([], {relativeTo: this.activatedRoute, queryParams: {url: remoteUrl}}).toString();
+
+      this.location.go(query);
+    })
+  }
 
   public init(callback: (config: BoardConfig) => void): void {
     this.activatedRoute.queryParams
