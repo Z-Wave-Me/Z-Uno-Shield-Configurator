@@ -86,7 +86,7 @@ ${
 
   private makeAction = (action: Action, associations: Association[]): string | null  => {
       const index = associations.findIndex(association => association.uuid === action.parentId);
-      const hasAssociation = action.template?.includes('{1}')
+      const hasAssociation = action.template?.includes('{0}')
       // TODO добавить сообщение об ошибке в форме (отсутствует ассоциация)
       if ((hasAssociation && index < 0) ||!action.template) {
         return null;
@@ -94,8 +94,8 @@ ${
 
       return `    ${
         action.template
-        .replace('{1}', (2 + index).toString())
-        .replace('{0}', makeLinear(action.parameters[0]))}`
+        .replace('{0}', 'CTRL_GROUP_' + (1 + index).toString())
+        .replace('{1}', makeLinear(action.parameters[0]))}`
   }
 
   private makeExpression(list: Expression[]): string {
