@@ -8,7 +8,7 @@
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_SET_VALUE",
           "title": "Send Set value command to group",
-          "template": "zunoSendToGroupSetValueCommand({1}, {0});",
+          "template": "zunoSendToGroupSetValueCommand({0}, {1});",
           "parameters": [
             {
               "title": "groupNumber",
@@ -31,7 +31,7 @@
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_SET_VALUE_AND_DIM",
           "title": "Send Set value command to group",
-          "template": "zunoSendToGroupSetValueCommand({1}, {0});",
+          "template": "zunoSendToGroupSetValueCommand({0}, {1});",
           "parameters": [
             {
               "title": "groupNumber",
@@ -48,7 +48,7 @@
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_SET_VALUE_AND_DIM",
           "title": "Send Dim Start command to group",
-          "template": "zunoSendToGroupDimmingCommand({1}, {0}, TRUE);",
+          "template": "zunoSendToGroupDimmingCommand({0}, {1}, TRUE);",
           "parameters": [
             {
               "title": "groupNumber",
@@ -78,7 +78,7 @@
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_SET_VALUE_AND_DIM",
           "title": "Send Dim Stop command to group",
-          "template": "zunoSendToGroupDimmingCommand({1}, FALSE, FALSE);",
+          "template": "zunoSendToGroupDimmingCommand({0}, FALSE, FALSE);",
           "parameters": [
             {
               "title": "groupNumber",
@@ -114,7 +114,7 @@
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_SCENE_CONTROL",
           "title": "Send Scene to group",
-          "template": "zunoSendToGroupScene({1}, {0});",
+          "template": "zunoSendToGroupScene({0}, {1});",
           "parameters": [
             {
               "title": "groupNumber",
@@ -137,7 +137,7 @@
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_DOORLOCK",
           "title": "Send Door Lock command to group",
-          "template": "zunoSendToGroupDoorlockControlTiming({1}, {0}, 0);",
+          "template": "zunoSendToGroupDoorlockControlTiming({0}, {1}, 0);",
           "parameters": [
             {
               "title": "groupNumber",
