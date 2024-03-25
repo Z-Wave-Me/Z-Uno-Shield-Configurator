@@ -137,7 +137,7 @@
         {
           "parentId": "ZUNO_ASSOCIATION_GROUP_DOORLOCK",
           "title": "Send Door Lock command to group",
-          "template": "zunoSendToGroupDoorlockControlTiming({1}, {0});",
+          "template": "zunoSendToGroupDoorlockControlTiming({1}, {0}, {2});",
           "parameters": [
             {
               "title": "groupNumber",
