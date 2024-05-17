@@ -139,5 +139,7 @@ function makeLinear(linear: LinearValues<Action> | null): string  {
     return `(${linear?.[1]} * ${linear?.[0].parentId ?? ''} + ${linear?.[2]})`;
   }
 
-  return linear?.[0].parentId ?? '';
+  if (linear?.[0] == null)
+    return ('');
+  return linear?.[0].parentId;
 }
