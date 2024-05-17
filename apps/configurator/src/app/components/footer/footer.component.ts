@@ -104,6 +104,8 @@ ${
         return `zunoChangedBy(${makeLinear(expression[0])}, ${makeLinear(expression[2])})`
       }
       else if (expression[1] === OperatorType.zunoChanged) {
+        if (makeLinear(expression[0]) === '')
+            return ('');
         return `zunoChanged(${makeLinear(expression[0])})`
       }
 
