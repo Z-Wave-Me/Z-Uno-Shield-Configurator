@@ -67,7 +67,7 @@ ${
     .join('\n')}`
   }
 
-    if(rule.expressions && rule.actions.filter(Boolean).length) {
+    if(rule.expressions && rule.actions.filter(Boolean).length && this.makeExpression(rule.expressions) !== '') {
       return `
   if (${this.makeExpression(rule.expressions)}) {
 ${
