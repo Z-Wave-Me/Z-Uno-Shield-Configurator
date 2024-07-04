@@ -33,5 +33,61 @@
       <svg:path id="rect30174" d="M1296.378-1303.937h1122.52v15.118h-1122.52z" style="fill:#000;stroke-width:1.00157"/>
       <svg:circle id="path3679" cx="1303.937" cy="-952.441" r="22.677" style="display:inline;opacity:1;fill:red;stroke-width:1.00157"/>
     </svg:g>
+    <svg:g *ngSwitchCase="'7'" id="g229944" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect229940" d="M937.323 593.386h15.118v143.622h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect250603" d="M937.323 721.89h1519.37v15.118H937.323z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="circle229942" cx="944.882" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
+      <svg:path id="rect229936" d="M2441.575-250.039h15.118v980.89h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    </svg:g>
+
+    <svg:g *ngSwitchCase="'8'" id="g229950" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect250601" d="M1028.032 721.89h1428.661v15.118H1028.032z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect229946" d="M1028.032 593.386h15.118v143.622h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="circle229948" cx="1035.591" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
+      <svg:path id="rect229936" d="M2441.575-250.039h15.118v980.89h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    </svg:g>
+
+    <svg:g *ngSwitchCase="'11'" id="g229962" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect250597" d="M1209.449 721.89h1247.244v15.118H1209.449z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect229958" d="M1209.449 593.386h15.118v143.622h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="circle229960" cx="1217.008" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
+      <svg:path id="rect229936" d="M2441.575-250.039h15.118v980.89h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    </svg:g>
+
+    <svg:g *ngSwitchCase="'12'" id="g229956" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect250599" d="M1118.74 721.89h1337.953v15.118H1118.74z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect229952" d="M1118.74 593.386h15.118v143.622h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="circle229954" cx="1126.299" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
+      <svg:path id="rect229936" d="M2441.575-250.039h15.118v980.89h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    </svg:g>
+
+    <svg:g *ngSwitchCase="'A0'" id="g229986" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect250589" d="M1568.504 721.89h888.189v15.118h-888.189z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect229982" d="M1568.504 593.386h15.118v143.622h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="circle229984" cx="1576.063" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
+      <svg:path id="rect229936" d="M2441.575-250.039h15.118v980.89h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    </svg:g>
+
+    <svg:g *ngSwitchCase="'A1'" id="g229980" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect250591" d="M1477.795 721.89h978.898v15.118h-978.898z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect229976" d="M1477.795 593.386h15.118v143.622h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="circle229978" cx="1485.354" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
+      <svg:path id="rect229936" d="M2441.575-250.039h15.118v980.89h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    </svg:g>
+
+    <svg:g *ngSwitchCase="'A2'" id="g229974" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect250593" d="M1387.087 721.89h1069.606v15.118H1387.087z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect229970" d="M1387.087 593.386h15.118v143.622h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="circle229972" cx="1394.646" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
+      <svg:path id="rect229936" d="M2441.575-250.039h15.118v980.89h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    </svg:g>
+
+    <svg:g *ngSwitchCase="'A3'" id="g229968" style="display:inline;opacity:1" transform="translate(0 1360.63)">
+      <svg:path id="rect250595" d="M1296.378 721.89h1160.315v15.118H1296.378z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:path id="rect229964" d="M1296.378 593.386h15.118v143.622h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+      <svg:circle id="circle229966" cx="1303.937" cy="464.882" r="22.677" style="fill:red;stroke-width:1.00157"/>
+      <svg:path id="rect229936" d="M2441.575-250.039h15.118v980.89h-15.118z" style="fill:#000;stroke-width:1.00157"/>
+    </svg:g>
+
   </ng-container>
 </svg:g>
