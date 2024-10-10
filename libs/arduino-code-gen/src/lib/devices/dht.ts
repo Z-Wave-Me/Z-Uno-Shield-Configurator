@@ -29,13 +29,13 @@ export class DHT extends BaseDevice {
   
   public override loop_post(channel: number): string {
     return `  // DHT sensor (@pin${this.config.id}) read procedure
-  if (zunoChangeBy(pin${this.config.id}DHTTemperatureState, 2)) {
+  if (zunoChangedBy(pin${this.config.id}DHTTemperatureState, 2)) {
     // the temperature has changed by at least 0.2*C
     zunoChangeUpdate(pin${this.config.id}DHTTemperatureState);
     zunoSendReport(${channel});
   }
 
-  if (zunoChangeBy(pin${this.config.id}DHTHumidityState, 10)) {
+  if (zunoChangedBy(pin${this.config.id}DHTHumidityState, 10)) {
     // the humidity has changed by at least 1%
     zunoChangeUpdate(pin${this.config.id}DHTHumidityState);
     zunoSendReport(${channel + 1});
